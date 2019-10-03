@@ -34,6 +34,8 @@ Frank Morrison, Peter Mangelsdorf, Ryan Kelley
  - Download Unity Hub
  - Install Unity Engine
     - Pick version 2019.2.xx
+	- Add "Linux Build Support"
+	- Add "Mac Build Support"
  - Download Github Desktop
  - Fork the Repository
     - Read the Git Guide (https://help.github.com/en/articles/fork-a-repo)
