@@ -1,7 +1,6 @@
 # Buddy-Ball
 ![image](https://drive.google.com/uc?export=view&id=1oIxbxCgxm0TAaw3DIaL684eTKgDVSbcQ)
 A GMAP 377 Team Project By Massive Shrimp Games
-![image](https://drive.google.com/uc?export=view&id=16lsOjNKFDT_Mbfg_prSVg-_OC5hIt2WE)
 
 
 ## Overview
@@ -52,3 +51,8 @@ Frank Morrison, Peter Mangelsdorf, Ryan Kelley
 
 ## License
 MIT Software License (C) 2019
+
+
+![image](https://drive.google.com/uc?export=view&id=16lsOjNKFDT_Mbfg_prSVg-_OC5hIt2WE)
+Beware the shrimp...
+
