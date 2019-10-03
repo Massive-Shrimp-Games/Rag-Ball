@@ -1,13 +1,13 @@
 # Buddy-Ball
 ![image](https://drive.google.com/uc?export=view&id=1oIxbxCgxm0TAaw3DIaL684eTKgDVSbcQ)
-A GMAP 377 Team Project
+A GMAP 377 Team Project By Massive Shrimp Games
 
-By Massive Shrimp Games
 
 ## Overview
 Throw your friends!
 
 Throw your enemies!
+
 
 ## About
 Drexel University Fall 2019
@@ -20,9 +20,13 @@ Alex Bowe, Austin Abrams, Cate Byrd,
 
 Frank Morrison, Peter Mangelsdorf, Ryan Kelley
 
+[Visit our Website!](https://massiveshrimpgames.wordpress.com/)
+
+
 ## Installation
  - See, "Releases," for our latest edition.
  - Download and Run the executable file.
+
 
 ## Contribution
  - Email Peter for an invitation to contribute
@@ -43,6 +47,7 @@ Frank Morrison, Peter Mangelsdorf, Ryan Kelley
  - Open the project from Unity Hub
     - Click, "Add," on the Projects page
     - Navigate to the folder of the Clone
+
 
 ## License
 MIT Software License (C) 2019
