@@ -1,4 +1,4 @@
-# Buddy-Ball
+# Rag-Ball
 ![image](https://drive.google.com/uc?export=view&id=1oIxbxCgxm0TAaw3DIaL684eTKgDVSbcQ)
 A GMAP 377 Team Project By Massive Shrimp Games
 
