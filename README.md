@@ -1,17 +1,23 @@
 # Buddy-Ball
 ![image](https://drive.google.com/uc?export=view&id=1oIxbxCgxm0TAaw3DIaL684eTKgDVSbcQ)
 A GMAP 377 Team Project
+
 By Massive Shrimp Games
 
 ## Overview
 Throw your friends!
+
 Throw your enemies!
 
 ## About
 Drexel University Fall 2019
+
 GMAP 377: Game Workshop I
+
 Professor Diefenbach
+
 Alex Bowe, Austin Abrams, Cate Byrd,
+
 Frank Morrison, Peter Mangelsdorf, Ryan Kelley
 
 ## Installation
