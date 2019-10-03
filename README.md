@@ -33,7 +33,7 @@ Frank Morrison, Peter Mangelsdorf, Ryan Kelley
     - pjm349 at drexel dot edu
  - Download Unity Hub
  - Install Unity Engine
-    - Pick version 1.4
+    - Pick version 2019.2.xx
  - Download Github Desktop
  - Fork the Repository
     - Read the Git Guide (https://help.github.com/en/articles/fork-a-repo)
