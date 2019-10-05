@@ -33,7 +33,7 @@ Frank Morrison, Peter Mangelsdorf, Ryan Kelley
     - pjm349 at drexel dot edu
  - Download Unity Hub
  - Install Unity Engine
-    - Pick version 2019.2.xx
+    - Pick version 2019.1.f
 	- Add "Linux Build Support"
 	- Add "Mac Build Support"
  - Download Github Desktop
