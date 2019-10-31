@@ -497,6 +497,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b0dfdd7bbf2cfd4182e87abe6afe517, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  players:
+  - {fileID: 2082979943}
+  - {fileID: 370227925}
+  - {fileID: 1264348882}
+  - {fileID: 163734117}
   use_X_Input: 1
   connectedControllers: 0
 --- !u!4 &666338262

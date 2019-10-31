@@ -18,6 +18,8 @@ namespace LocalCoop {
         GamePadState controller3state;
         GamePadState controller4state;
 
+        public GameObject[] players = new GameObject[4];
+
         public bool use_X_Input = true;
         public int connectedControllers = 0;   //if this variable changes, we need to call an update on the gamepads
 
@@ -131,8 +133,16 @@ namespace LocalCoop {
                 //vvv
                 if (controller1state.IsConnected) {
                     controller1state = GamePad.GetState(controllerID1);
-                    //if (controller1state == ButtonState.Pressed) {
-                    //}
+                    if (controller1state.Buttons.A == ButtonState.Pressed) {
+                        players[0].GetComponent<Rigidbody>().AddForce(players[0].GetComponent<Transform>().up * 10);
+                    }
+                }
+
+                if (controller2state.IsConnected) {
+                    controller2state = GamePad.GetState(controllerID2);
+                    if (controller2state.Buttons.A == ButtonState.Pressed) {
+                        players[1].GetComponent<Rigidbody>().AddForce(players[1].GetComponent<Transform>().up * 10);
+                    }
                 }
                 //^^^
 
