@@ -131,11 +131,32 @@ namespace LocalCoop {
                 }
 
                 //vvv
+                //Player 1 Movement
+                float H = controller1state.ThumbSticks.Left.X + controller1state.ThumbSticks.Right.X;
+                float V = controller1state.ThumbSticks.Left.Y + controller1state.ThumbSticks.Right.Y;
+
+                Vector3 Movement = new Vector3();
+                Movement.Set(H, 0f, V);
+                Movement = Movement.normalized * 2 * Time.deltaTime;
+                players[0].GetComponent<Rigidbody>().MovePosition(players[0].GetComponent<Transform>().position + Movement);
+
+
+                //Player 2 Movement (FIX LATER)
+                H = controller2state.ThumbSticks.Left.X + controller2state.ThumbSticks.Right.X;
+                V = controller2state.ThumbSticks.Left.Y + controller2state.ThumbSticks.Right.Y;
+
+                Movement = new Vector3();
+                Movement.Set(H, 0f, V);
+                Movement = Movement.normalized * 2 * Time.deltaTime;
+                players[1].GetComponent<Rigidbody>().MovePosition(players[1].GetComponent<Transform>().position + Movement);
+
+
                 if (controller1state.IsConnected) {
                     controller1state = GamePad.GetState(controllerID1);
                     if (controller1state.Buttons.A == ButtonState.Pressed) {
                         players[0].GetComponent<Rigidbody>().AddForce(players[0].GetComponent<Transform>().up * 10);
                     }
+                    //if (controller1state.ThumbSticks.Left.X != 0)
                 }
 
                 if (controller2state.IsConnected) {
