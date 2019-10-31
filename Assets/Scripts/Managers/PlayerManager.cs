@@ -146,8 +146,8 @@ namespace LocalCoop {
                 //players[0].GetComponent<Rigidbody>().MovePosition(players[0].GetComponent<Transform>().position + Movement);
                 players[0].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * 1000f);
 
-                float horizontalSpeed = 1f;
-                Debug.Log(players[0].transform.forward.x + ", " + Movement.x);
+                float horizontalSpeed = .02f;
+                //Debug.Log(players[0].transform.forward.x + ", " + Movement.x);
 
 /*
                 float speed = 5f;
@@ -156,7 +156,15 @@ namespace LocalCoop {
                 Debug.DrawRay(players[0].transform.position, newDir, Color.red);
                 players[0].transform.Find("Player").transform.rotation = Quaternion.LookRotation(newDir);
 */
-                
+/*               
+                var lookat = Movement;
+                lookat.z = 0;
+                if (lookat.magnitude > 0)
+                {
+                    players[0].transform.Find("Player").transform.LookAt(players[0].transform.Find("Player").transform.position + lookat, players[0].transform.Find("Player").transform.forward);
+                }
+*/
+/*
                 if (players[0].transform.forward.x < Movement.x)
                 {
                     rotatePlayer1.RotateAround(pivot1.position, Vector3.up, Mathf.Abs(players[0].transform.forward.x - Movement.x) * horizontalSpeed / Time.deltaTime);
@@ -165,7 +173,16 @@ namespace LocalCoop {
                 {
                     rotatePlayer1.RotateAround(pivot1.position, Vector3.up, -Mathf.Abs(players[0].transform.forward.x - Movement.x) * horizontalSpeed / Time.deltaTime);
                 }
+*/
 
+                if (players[0].transform.forward.x < Movement.x)
+                {
+                    rotatePlayer1.RotateAround(pivot1.position, Vector3.up, -H * horizontalSpeed / Time.deltaTime);
+                }
+                else
+                {
+                    rotatePlayer1.RotateAround(pivot1.position, Vector3.up, H * horizontalSpeed / Time.deltaTime);
+                }
 
                 if (Movement.magnitude >= 0.03)
                 {
