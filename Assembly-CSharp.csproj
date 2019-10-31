@@ -62,6 +62,13 @@
      <Compile Include="Assets\Scripts\PlayerInput.cs" />
      <None Include="Assets\ControllerSamples\XInputDotNet\Docs.txt" />
      <None Include="Assets\ControllerSamples\XInputDotNet\MITLicense.txt" />
+     <None Include="Assets\Models\BLANK.txt" />
+     <None Include="Assets\GUI\BLANK.txt" />
+     <None Include="Assets\Sounds\BLANK.txt" />
+     <None Include="Assets\Music\BLANK.txt" />
+     <None Include="Assets\Animations\BLANK.txt" />
+     <None Include="Assets\Textures\BLANK.txt" />
+     <None Include="Assets\Effects\BLANK.txt" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Users/fjm52/Documents/BrandNew_Ragball/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
