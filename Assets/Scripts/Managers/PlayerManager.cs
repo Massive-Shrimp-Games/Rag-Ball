@@ -24,6 +24,9 @@ namespace LocalCoop {
         public Animator animator1;
         public Transform rotatePlayer1;
         public Transform pivot1;
+        public Animator animator2;
+        public Transform rotatePlayer2;
+        public Transform pivot2;
 
         public bool use_X_Input = true;
         public int connectedControllers = 0;   //if this variable changes, we need to call an update on the gamepads
@@ -148,6 +151,23 @@ namespace LocalCoop {
 
                 float horizontalSpeed = .02f;
                 //Debug.Log(players[0].transform.forward.x + ", " + Movement.x);
+                if (players[0].transform.forward.x < Movement.x)
+                {
+                    rotatePlayer1.RotateAround(pivot1.position, Vector3.up, -H * horizontalSpeed / Time.deltaTime);
+                }
+                else
+                {
+                    rotatePlayer1.RotateAround(pivot1.position, Vector3.up, H * horizontalSpeed / Time.deltaTime);
+                }
+
+                if (Movement.magnitude >= 0.03)
+                {
+                    animator1.Play("Walk");
+                }
+                else
+                {
+                    animator1.Play("Idle");
+                }
 
 /*
                 float speed = 5f;
@@ -175,24 +195,6 @@ namespace LocalCoop {
                 }
 */
 
-                if (players[0].transform.forward.x < Movement.x)
-                {
-                    rotatePlayer1.RotateAround(pivot1.position, Vector3.up, -H * horizontalSpeed / Time.deltaTime);
-                }
-                else
-                {
-                    rotatePlayer1.RotateAround(pivot1.position, Vector3.up, H * horizontalSpeed / Time.deltaTime);
-                }
-
-                if (Movement.magnitude >= 0.03)
-                {
-                    animator1.Play("Walk");
-                }
-                else
-                {
-                    animator1.Play("Idle");
-                }
-
 
                 //Player 2 Movement (FIX LATER)
                 H = controller2state.ThumbSticks.Left.X + controller2state.ThumbSticks.Right.X;
@@ -201,8 +203,26 @@ namespace LocalCoop {
                 Movement = new Vector3();
                 Movement.Set(H, 0f, V);
                 Movement = Movement.normalized * 2 * Time.deltaTime;
-                players[1].GetComponent<Rigidbody>().MovePosition(players[1].GetComponent<Transform>().position + Movement);
+                //players[1].GetComponent<Rigidbody>().MovePosition(players[1].GetComponent<Transform>().position + Movement);
+                players[1].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * 1000f);
 
+                if (players[1].transform.forward.x < Movement.x)
+                {
+                    rotatePlayer2.RotateAround(pivot2.position, Vector3.up, -H * horizontalSpeed / Time.deltaTime);
+                }
+                else
+                {
+                    rotatePlayer2.RotateAround(pivot2.position, Vector3.up, H * horizontalSpeed / Time.deltaTime);
+                }
+
+                if (Movement.magnitude >= 0.03)
+                {
+                    animator2.Play("Walk");
+                }
+                else
+                {
+                    animator2.Play("Idle");
+                }
 
                 if (controller1state.IsConnected) {
                     controller1state = GamePad.GetState(controllerID1);
@@ -215,7 +235,7 @@ namespace LocalCoop {
                 if (controller2state.IsConnected) {
                     controller2state = GamePad.GetState(controllerID2);
                     if (controller2state.Buttons.A == ButtonState.Pressed) {
-                        players[1].GetComponent<Rigidbody>().AddForce(players[1].GetComponent<Transform>().up * 10);
+                        animator2.Play("JumpHold");
                     }
                 }
                 //^^^
