@@ -55,6 +55,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\_RagBall\Scripts\CameraManager.cs" />
+     <Compile Include="Assets\_RagBall\Scripts\ControllerManager.cs" />
+     <Compile Include="Assets\_RagBall\Scripts\GameplayManager.cs" />
+     <Compile Include="Assets\_RagBall\Scripts\InGameMenu.cs" />
+     <Compile Include="Assets\_RagBall\Scripts\MainMenu.cs" />
+     <Compile Include="Assets\_RagBall\Scripts\PauseMenu.cs" />
+     <Compile Include="Assets\_RagBall\Scripts\ScoreManager.cs" />
+     <Compile Include="Assets\_RagBall\Scripts\SettingsMenu.cs" />
+     <Compile Include="Assets\_RagBall\Scripts\TriggerRespawn.cs" />
+     <Compile Include="Assets\_RagDoll\Scripts\animController.cs" />
+     <Compile Include="Assets\_RagDoll\Scripts\cameraController.cs" />
+     <Compile Include="Assets\_RagDoll\Scripts\FallingAndStanding.cs" />
+     <Compile Include="Assets\_RagDoll\Scripts\followHip.cs" />
+     <Compile Include="Assets\_RagDoll\Scripts\JointFollowAnimRot.cs" />
+     <Compile Include="Assets\_RagDoll\Scripts\noncameraController.cs" />
+     <Compile Include="Assets\_RagDoll\Scripts\noncameraController2.cs" />
+     <Compile Include="Assets\_RagDoll\Scripts\SwitchingCameras.cs" />
      <Compile Include="Assets\ControllerSamples\XInputDotNet\Examples\XInputTestCS.cs" />
      <Compile Include="Assets\Scripts\GUI\Core\CustomEventSystem.cs" />
      <Compile Include="Assets\Scripts\GUI\Core\X_InputModule.cs" />

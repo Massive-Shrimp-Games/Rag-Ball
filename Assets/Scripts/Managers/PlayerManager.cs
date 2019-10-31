@@ -20,6 +20,11 @@ namespace LocalCoop {
 
         public GameObject[] players = new GameObject[4];
 
+        //PER PLAYER
+        public Animator animator1;
+        public Transform rotatePlayer1;
+        public Transform pivot1;
+
         public bool use_X_Input = true;
         public int connectedControllers = 0;   //if this variable changes, we need to call an update on the gamepads
 
@@ -131,14 +136,45 @@ namespace LocalCoop {
                 }
 
                 //vvv
-                //Player 1 Movement
+                //Player 1 Movement (FIX LATER)
                 float H = controller1state.ThumbSticks.Left.X + controller1state.ThumbSticks.Right.X;
                 float V = controller1state.ThumbSticks.Left.Y + controller1state.ThumbSticks.Right.Y;
 
                 Vector3 Movement = new Vector3();
                 Movement.Set(H, 0f, V);
                 Movement = Movement.normalized * 2 * Time.deltaTime;
-                players[0].GetComponent<Rigidbody>().MovePosition(players[0].GetComponent<Transform>().position + Movement);
+                //players[0].GetComponent<Rigidbody>().MovePosition(players[0].GetComponent<Transform>().position + Movement);
+                players[0].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * 1000f);
+
+                float horizontalSpeed = 1f;
+                Debug.Log(players[0].transform.forward.x + ", " + Movement.x);
+
+/*
+                float speed = 5f;
+                float step = speed * Time.deltaTime;
+                Vector3 newDir = Vector3.RotateTowards(players[0].transform.forward.normalized, Movement.normalized, step, 0.0f);
+                Debug.DrawRay(players[0].transform.position, newDir, Color.red);
+                players[0].transform.Find("Player").transform.rotation = Quaternion.LookRotation(newDir);
+*/
+                
+                if (players[0].transform.forward.x < Movement.x)
+                {
+                    rotatePlayer1.RotateAround(pivot1.position, Vector3.up, Mathf.Abs(players[0].transform.forward.x - Movement.x) * horizontalSpeed / Time.deltaTime);
+                }
+                else
+                {
+                    rotatePlayer1.RotateAround(pivot1.position, Vector3.up, -Mathf.Abs(players[0].transform.forward.x - Movement.x) * horizontalSpeed / Time.deltaTime);
+                }
+
+
+                if (Movement.magnitude >= 0.03)
+                {
+                    animator1.Play("Walk");
+                }
+                else
+                {
+                    animator1.Play("Idle");
+                }
 
 
                 //Player 2 Movement (FIX LATER)
@@ -154,9 +190,9 @@ namespace LocalCoop {
                 if (controller1state.IsConnected) {
                     controller1state = GamePad.GetState(controllerID1);
                     if (controller1state.Buttons.A == ButtonState.Pressed) {
-                        players[0].GetComponent<Rigidbody>().AddForce(players[0].GetComponent<Transform>().up * 10);
+                        //players[0].GetComponent<Rigidbody>().AddForce(players[0].GetComponent<Transform>().up * 10);
+                        animator1.Play("JumpHold");
                     }
-                    //if (controller1state.ThumbSticks.Left.X != 0)
                 }
 
                 if (controller2state.IsConnected) {
