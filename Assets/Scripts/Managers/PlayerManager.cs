@@ -19,14 +19,22 @@ namespace LocalCoop {
         GamePadState controller4state;
 
         public GameObject[] players = new GameObject[4];
+        GamePadState[] GamePadStates;
+        public Animator[] Animators;
+        public Transform[] RotatePlayers;
+        public Transform[] Pivots;
+        private PlayerIndex[] PlayerIndexes;
 
         //PER PLAYER
-        public Animator animator1;
-        public Transform rotatePlayer1;
-        public Transform pivot1;
-        public Animator animator2;
-        public Transform rotatePlayer2;
-        public Transform pivot2;
+        //public Animator animator1;
+        //public Transform rotatePlayer1;
+        //public Transform pivot1;
+        //public Animator animator2;
+        //public Transform rotatePlayer2;
+        //public Transform pivot2;
+        //public Animator animator3;
+        //public Transform rotatePlayer3;
+        //public Transform pivot3;
 
         public bool use_X_Input = true;
         public int connectedControllers = 0;   //if this variable changes, we need to call an update on the gamepads
@@ -51,6 +59,43 @@ namespace LocalCoop {
         void Start() {
             connectedControllers = CheckControllerAmount();
             Assign_X_Input_Controllers();
+
+            GamePadStates = new GamePadState[] {
+                controller1state,
+                controller2state,
+                controller3state,
+                controller4state,
+            };
+
+            /*
+            Animators = new Animator[] {
+                animator1,
+                animator2,
+                //animator3,
+                //animator4,
+            };
+
+            RotatePlayers = new Transform[] {
+                rotatePlayer1,
+                rotatePlayer2,
+                //rotatePlayer3,
+                //rotatePlayer4,
+            };
+
+            Pivots = new Transform[] {
+                pivot1,
+                pivot2,
+                //pivot3,
+                //pivot4,
+            };
+            */
+
+            PlayerIndexes = new PlayerIndex[] {
+                controllerID1,
+                controllerID2,
+                controllerID3,
+                controllerID4,
+            };
         }
 
         void Assign_X_Input_Controllers() {
@@ -139,6 +184,50 @@ namespace LocalCoop {
                 }
 
                 //vvv
+                for (int i = 0; i < 4; i++)
+                {
+                    float H = GamePadStates[i].ThumbSticks.Left.X + GamePadStates[i].ThumbSticks.Right.X;
+                    float V = GamePadStates[i].ThumbSticks.Left.Y + GamePadStates[i].ThumbSticks.Right.Y;
+
+                    //movement
+                    Vector3 Movement = new Vector3();
+                    Movement.Set(H, 0f, V);
+                    Movement = Movement.normalized * 2 * Time.deltaTime;
+                    players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * 1000f);
+
+                    //turning
+                    float horizontalSpeed = .02f;
+                    if (players[0].transform.forward.x < Movement.x)
+                    {
+                        RotatePlayers[i].RotateAround(Pivots[i].position, Vector3.up, -H * horizontalSpeed / Time.deltaTime);
+                    }
+                    else
+                    {
+                        RotatePlayers[i].RotateAround(Pivots[i].position, Vector3.up, H * horizontalSpeed / Time.deltaTime);
+                    }
+
+                    if (Movement.magnitude >= 0.03)
+                    {
+                        Animators[i].Play("Walk");
+                    }
+                    else
+                    {
+                        Animators[i].Play("Idle");
+                    }
+
+                    if (GamePadStates[i].IsConnected)
+                    {
+                        GamePadStates[i] = GamePad.GetState(PlayerIndexes[i]);
+                        if (GamePadStates[i].Buttons.A == ButtonState.Pressed)
+                        {
+                            Animators[i].Play("JumpHold");
+                        }
+                    }
+                }
+                //^^^
+
+                /*
+                //vvv
                 //Player 1 Movement (FIX LATER)
                 float H = controller1state.ThumbSticks.Left.X + controller1state.ThumbSticks.Right.X;
                 float V = controller1state.ThumbSticks.Left.Y + controller1state.ThumbSticks.Right.Y;
@@ -169,31 +258,30 @@ namespace LocalCoop {
                     animator1.Play("Idle");
                 }
 
-/*
-                float speed = 5f;
-                float step = speed * Time.deltaTime;
-                Vector3 newDir = Vector3.RotateTowards(players[0].transform.forward.normalized, Movement.normalized, step, 0.0f);
-                Debug.DrawRay(players[0].transform.position, newDir, Color.red);
-                players[0].transform.Find("Player").transform.rotation = Quaternion.LookRotation(newDir);
-*/
-/*               
-                var lookat = Movement;
-                lookat.z = 0;
-                if (lookat.magnitude > 0)
-                {
-                    players[0].transform.Find("Player").transform.LookAt(players[0].transform.Find("Player").transform.position + lookat, players[0].transform.Find("Player").transform.forward);
-                }
-*/
-/*
-                if (players[0].transform.forward.x < Movement.x)
-                {
-                    rotatePlayer1.RotateAround(pivot1.position, Vector3.up, Mathf.Abs(players[0].transform.forward.x - Movement.x) * horizontalSpeed / Time.deltaTime);
-                }
-                else
-                {
-                    rotatePlayer1.RotateAround(pivot1.position, Vector3.up, -Mathf.Abs(players[0].transform.forward.x - Movement.x) * horizontalSpeed / Time.deltaTime);
-                }
-*/
+                //float speed = 5f;
+                //float step = speed * Time.deltaTime;
+                //Vector3 newDir = Vector3.RotateTowards(players[0].transform.forward.normalized, Movement.normalized, step, 0.0f);
+                //Debug.DrawRay(players[0].transform.position, newDir, Color.red);
+                //players[0].transform.Find("Player").transform.rotation = Quaternion.LookRotation(newDir);
+
+
+                //var lookat = Movement;
+                //lookat.z = 0;
+                //if (lookat.magnitude > 0)
+                //{
+                //    players[0].transform.Find("Player").transform.LookAt(players[0].transform.Find("Player").transform.position + lookat, players[0].transform.Find("Player").transform.forward);
+                //}
+
+
+                //if (players[0].transform.forward.x < Movement.x)
+                //{
+                //    rotatePlayer1.RotateAround(pivot1.position, Vector3.up, Mathf.Abs(players[0].transform.forward.x - Movement.x) * horizontalSpeed / Time.deltaTime);
+                //}
+                //else
+                //{
+                //    rotatePlayer1.RotateAround(pivot1.position, Vector3.up, -Mathf.Abs(players[0].transform.forward.x - Movement.x) * horizontalSpeed / Time.deltaTime);
+                //}
+
 
 
                 //Player 2 Movement (FIX LATER)
@@ -239,6 +327,7 @@ namespace LocalCoop {
                     }
                 }
                 //^^^
+                */
 
             }
             else {
