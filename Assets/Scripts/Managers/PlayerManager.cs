@@ -197,7 +197,7 @@ namespace LocalCoop {
 
                     //turning
                     float horizontalSpeed = .02f;
-                    if (players[0].transform.forward.x < Movement.x)
+                    if (players[i].transform.Find("Player").transform.forward.x < Movement.x)
                     {
                         RotatePlayers[i].RotateAround(Pivots[i].position, Vector3.up, -H * horizontalSpeed / Time.deltaTime);
                     }
@@ -206,6 +206,7 @@ namespace LocalCoop {
                         RotatePlayers[i].RotateAround(Pivots[i].position, Vector3.up, H * horizontalSpeed / Time.deltaTime);
                     }
 
+                    //animations
                     if (Movement.magnitude >= 0.03)
                     {
                         Animators[i].Play("Walk");
@@ -215,6 +216,7 @@ namespace LocalCoop {
                         Animators[i].Play("Idle");
                     }
 
+                    //jumping
                     if (GamePadStates[i].IsConnected)
                     {
                         GamePadStates[i] = GamePad.GetState(PlayerIndexes[i]);
