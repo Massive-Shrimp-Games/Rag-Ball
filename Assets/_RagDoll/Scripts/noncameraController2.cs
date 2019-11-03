@@ -18,12 +18,12 @@ public class noncameraController2 : MonoBehaviour
 
 
     
-    void Update()
+    /*void Update()
     {
         float h = Input.GetAxis("Mouse X") * horizontalSpeed;
         float v = Input.GetAxis("Mouse Y") * verticalSpeed;
         rotatePlayer.RotateAround(pivot.position, Vector3.up, h * horizontalSpeed / Time.deltaTime);
-    }
+    }*/
 
 
 
