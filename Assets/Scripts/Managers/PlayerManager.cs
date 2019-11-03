@@ -208,6 +208,8 @@ namespace LocalCoop {
                         RotatePlayers[i].RotateAround(Pivots[i].position, Vector3.up, H * horizontalSpeed / Time.deltaTime);
                     }
                     */
+
+                    //turning (also causes model to lean back a bit)
                     if (Movement != Vector3.zero)
                     {
                         players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.forward = Movement;
