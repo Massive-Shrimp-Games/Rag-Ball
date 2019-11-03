@@ -194,9 +194,11 @@ namespace LocalCoop {
                     Movement.Set(H, 0f, V);
                     Movement = Movement.normalized * 2 * Time.deltaTime;
                     players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * 1000f);
+                    //RotatePlayers[i].transform.position = players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.position;
 
                     //turning
-                    float horizontalSpeed = .02f;
+                    /*
+                    float horizontalSpeed = 1f;
                     if (players[i].transform.Find("Player").transform.forward.x < Movement.x)
                     {
                         RotatePlayers[i].RotateAround(Pivots[i].position, Vector3.up, -H * horizontalSpeed / Time.deltaTime);
@@ -204,6 +206,11 @@ namespace LocalCoop {
                     else
                     {
                         RotatePlayers[i].RotateAround(Pivots[i].position, Vector3.up, H * horizontalSpeed / Time.deltaTime);
+                    }
+                    */
+                    if (Movement != Vector3.zero)
+                    {
+                        players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.forward = Movement;
                     }
 
                     //animations
