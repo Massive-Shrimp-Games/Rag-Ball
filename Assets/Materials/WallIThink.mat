@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FloorTexture_01
+  m_Name: WallIThink
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -37,12 +37,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 2.83, y: 1.45}
-        m_Offset: {x: 1.08, y: -0.72}
+        m_Scale: {x: 20.41, y: 15}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 1681a59877e242042a8eea0d02ad9990, type: 3}
-        m_Scale: {x: 2.83, y: 1.45}
-        m_Offset: {x: 1.08, y: -0.72}
+        m_Texture: {fileID: 2800000, guid: 96d4bc8973190d546bf83c9fbeaa8883, type: 3}
+        m_Scale: {x: 20.41, y: 15}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
