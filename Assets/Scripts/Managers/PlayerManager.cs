@@ -24,7 +24,10 @@ namespace LocalCoop {
         public Transform[] RotatePlayers;
         public Transform[] Pivots;
         private PlayerIndex[] PlayerIndexes;
+
+        //button arrays
         private bool[] BwasPressed;
+        private bool[] YwasPressed;
 
         //PER PLAYER
         //public Animator animator1;
@@ -76,6 +79,13 @@ namespace LocalCoop {
             };
 
             BwasPressed = new bool[] {
+                false,
+                false,
+                false,
+                false,
+            };
+
+            YwasPressed = new bool[] {
                 false,
                 false,
                 false,
@@ -197,24 +207,36 @@ namespace LocalCoop {
                         Animators[i].Play("Idle");
                     }
 
-                    //jumping
+                    //buttons
                     if (GamePadStates[i].IsConnected)
                     {
+                        //A (jumping)
                         GamePadStates[i] = GamePad.GetState(PlayerIndexes[i]);
                         if (GamePadStates[i].Buttons.A == ButtonState.Pressed)
                         {
                             Animators[i].Play("JumpHold");
                         }
 
+                        //B (dashing)
                         if (GamePadStates[i].Buttons.B == ButtonState.Pressed && !BwasPressed[i])
                         {
+                            BwasPressed[i] = true;
                             Vector3 boostDir = players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.forward;
                             players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(boostDir * 10000f);
-                            BwasPressed[i] = true;
                         }
                         else if (GamePadStates[i].Buttons.B == ButtonState.Released && BwasPressed[i])
                         {
                             BwasPressed[i] = false;
+                        }
+
+                        //Y (respawning)
+                        if (GamePadStates[i].Buttons.Y == ButtonState.Pressed && !YwasPressed[i])
+                        {
+                            YwasPressed[i] = true;
+                        }
+                        else if (GamePadStates[i].Buttons.Y == ButtonState.Released && YwasPressed[i])
+                        {
+                            YwasPressed[i] = false;
                         }
                     }
                 }
