@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 4068392106541256807}
   - component: {fileID: 4068392106541256806}
   - component: {fileID: 4068392106541256805}
-  - component: {fileID: 4834343284273495649}
+  - component: {fileID: 4386644223773206142}
+  - component: {fileID: 7479133020339874397}
   m_Layer: 0
   m_Name: InvisibleGoal
   m_TagString: Untagged
@@ -92,7 +93,20 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4834343284273495649
+--- !u!114 &4386644223773206142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4068392106541256827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d29a8582d005643a9f49b10d861a55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GoalColor: 
+--- !u!114 &7479133020339874397
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

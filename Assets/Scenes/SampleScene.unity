@@ -914,6 +914,21 @@ PrefabInstance:
       propertyPath: PlayerNumber
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4399202085510371351, guid: fe92d13e5c5867c49ab79fbc44bbd491,
+        type: 3}
+      propertyPath: PlayerColor
+      value: blue
+      objectReference: {fileID: 0}
+    - target: {fileID: 4399202085510371351, guid: fe92d13e5c5867c49ab79fbc44bbd491,
+        type: 3}
+      propertyPath: scoremanager
+      value: 
+      objectReference: {fileID: 82294041}
+    - target: {fileID: 4399202085510371351, guid: fe92d13e5c5867c49ab79fbc44bbd491,
+        type: 3}
+      propertyPath: playermanager
+      value: 
+      objectReference: {fileID: 666338261}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe92d13e5c5867c49ab79fbc44bbd491, type: 3}
 --- !u!4 &238548152 stripped
@@ -1256,6 +1271,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4068392106541256806, guid: dcb60a586670127489bf2f5e852b6f4b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4068392106541256805, guid: dcb60a586670127489bf2f5e852b6f4b,
         type: 3}
       propertyPath: m_IsTrigger
@@ -1276,6 +1296,26 @@ PrefabInstance:
       propertyPath: playermanager
       value: 
       objectReference: {fileID: 666338261}
+    - target: {fileID: 4386644223773206142, guid: dcb60a586670127489bf2f5e852b6f4b,
+        type: 3}
+      propertyPath: GoalColor
+      value: red
+      objectReference: {fileID: 0}
+    - target: {fileID: 7479133020339874397, guid: dcb60a586670127489bf2f5e852b6f4b,
+        type: 3}
+      propertyPath: scoremanager
+      value: 
+      objectReference: {fileID: 82294041}
+    - target: {fileID: 7479133020339874397, guid: dcb60a586670127489bf2f5e852b6f4b,
+        type: 3}
+      propertyPath: playermanager
+      value: 
+      objectReference: {fileID: 666338261}
+    - target: {fileID: 7479133020339874397, guid: dcb60a586670127489bf2f5e852b6f4b,
+        type: 3}
+      propertyPath: goalcolor
+      value: red
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcb60a586670127489bf2f5e852b6f4b, type: 3}
 --- !u!4 &499319598 stripped
@@ -1799,6 +1839,7 @@ MonoBehaviour:
     type: 3}
   RespawnPoint: {fileID: 1402385468}
   AnimatorRespawnPoint: {fileID: 62415731}
+  scoremanager: {fileID: 82294041}
   use_X_Input: 1
   connectedControllers: 0
 --- !u!4 &666338262
@@ -2367,6 +2408,21 @@ PrefabInstance:
       propertyPath: PlayerNumber
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4399202085510371351, guid: fe92d13e5c5867c49ab79fbc44bbd491,
+        type: 3}
+      propertyPath: PlayerColor
+      value: blue
+      objectReference: {fileID: 0}
+    - target: {fileID: 4399202085510371351, guid: fe92d13e5c5867c49ab79fbc44bbd491,
+        type: 3}
+      propertyPath: playermanager
+      value: 
+      objectReference: {fileID: 666338261}
+    - target: {fileID: 4399202085510371351, guid: fe92d13e5c5867c49ab79fbc44bbd491,
+        type: 3}
+      propertyPath: scoremanager
+      value: 
+      objectReference: {fileID: 82294041}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe92d13e5c5867c49ab79fbc44bbd491, type: 3}
 --- !u!4 &840308717 stripped
@@ -2957,6 +3013,21 @@ PrefabInstance:
       propertyPath: PlayerNumber
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4579014817530902481, guid: 665d0a053fe76474da04a640e094a0ca,
+        type: 3}
+      propertyPath: PlayerColor
+      value: red
+      objectReference: {fileID: 0}
+    - target: {fileID: 4579014817530902481, guid: 665d0a053fe76474da04a640e094a0ca,
+        type: 3}
+      propertyPath: playermanager
+      value: 
+      objectReference: {fileID: 666338261}
+    - target: {fileID: 4579014817530902481, guid: 665d0a053fe76474da04a640e094a0ca,
+        type: 3}
+      propertyPath: scoremanager
+      value: 
+      objectReference: {fileID: 82294041}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 665d0a053fe76474da04a640e094a0ca, type: 3}
 --- !u!4 &1007003333 stripped
@@ -3490,7 +3561,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1402385468}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.73, y: 3.409, z: -7.823}
+  m_LocalPosition: {x: 1.193, y: 3.342, z: -7.823}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 252444745}
@@ -3731,6 +3802,21 @@ PrefabInstance:
       propertyPath: PlayerNumber
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4579014817530902481, guid: 665d0a053fe76474da04a640e094a0ca,
+        type: 3}
+      propertyPath: PlayerColor
+      value: red
+      objectReference: {fileID: 0}
+    - target: {fileID: 4579014817530902481, guid: 665d0a053fe76474da04a640e094a0ca,
+        type: 3}
+      propertyPath: playermanager
+      value: 
+      objectReference: {fileID: 666338261}
+    - target: {fileID: 4579014817530902481, guid: 665d0a053fe76474da04a640e094a0ca,
+        type: 3}
+      propertyPath: scoremanager
+      value: 
+      objectReference: {fileID: 82294041}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 665d0a053fe76474da04a640e094a0ca, type: 3}
 --- !u!4 &1534750448 stripped
@@ -5011,7 +5097,7 @@ PrefabInstance:
     - target: {fileID: 4068392106541256806, guid: dcb60a586670127489bf2f5e852b6f4b,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4068392106541256805, guid: dcb60a586670127489bf2f5e852b6f4b,
         type: 3}
@@ -5033,5 +5119,25 @@ PrefabInstance:
       propertyPath: playermanager
       value: 
       objectReference: {fileID: 666338261}
+    - target: {fileID: 4386644223773206142, guid: dcb60a586670127489bf2f5e852b6f4b,
+        type: 3}
+      propertyPath: GoalColor
+      value: blue
+      objectReference: {fileID: 0}
+    - target: {fileID: 7479133020339874397, guid: dcb60a586670127489bf2f5e852b6f4b,
+        type: 3}
+      propertyPath: scoremanager
+      value: 
+      objectReference: {fileID: 82294041}
+    - target: {fileID: 7479133020339874397, guid: dcb60a586670127489bf2f5e852b6f4b,
+        type: 3}
+      propertyPath: playermanager
+      value: 
+      objectReference: {fileID: 666338261}
+    - target: {fileID: 7479133020339874397, guid: dcb60a586670127489bf2f5e852b6f4b,
+        type: 3}
+      propertyPath: goalcolor
+      value: blue
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcb60a586670127489bf2f5e852b6f4b, type: 3}

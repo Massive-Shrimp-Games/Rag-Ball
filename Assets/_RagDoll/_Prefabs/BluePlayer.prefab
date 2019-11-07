@@ -1161,6 +1161,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8792772798496386442}
   - component: {fileID: 4399202085510371351}
+  - component: {fileID: 3463814532333759819}
   m_Layer: 0
   m_Name: BluePlayer
   m_TagString: Untagged
@@ -1198,6 +1199,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c851289cd9ad8fe418b81bc8d46b03a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerNumber: -1111111111
+  PlayerColor: blue
+  scoremanager: {fileID: 0}
+  playermanager: {fileID: 0}
+--- !u!136 &3463814532333759819
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5502674848353017753}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.29
+  m_Height: 2.1
+  m_Direction: 1
+  m_Center: {x: -0.42, y: 1.1, z: 0.13}
 --- !u!1 &6009530648626504893
 GameObject:
   m_ObjectHideFlags: 0

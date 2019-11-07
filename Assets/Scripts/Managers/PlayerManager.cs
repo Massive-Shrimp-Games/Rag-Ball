@@ -34,6 +34,7 @@ using XInputDotNetPure; // Required in C#
         public GameObject BluePlayer;
         public GameObject RespawnPoint;
         public GameObject AnimatorRespawnPoint;
+        public ScoreManager scoremanager;
 
         //PER PLAYER
         //public Animator animator1;
@@ -146,7 +147,7 @@ using XInputDotNetPure; // Required in C#
         }
 
 
-        void respawn(int pNumber)
+        public void respawn(int pNumber)
         {
             GameObject newPlayer;
 
@@ -156,14 +157,16 @@ using XInputDotNetPure; // Required in C#
                 //Instantiate(myPrefab, new Vector3(0, 0, 0), Quaternion.identity);
                 //newPlayer = BluePlayer;
                 newPlayer = Instantiate(BluePlayer, RespawnPoint.transform.position, Quaternion.identity);
-            }
+                newPlayer.GetComponent<PlayerModel>().PlayerColor = "blue";
+        }
             //Spawn Red Player
             else
             {
                 //Instantiate(myPrefab, new Vector3(0, 0, 0), Quaternion.identity);
                 //newPlayer = RedPlayer;
                 newPlayer = Instantiate(RedPlayer, RespawnPoint.transform.position, Quaternion.identity);
-            }
+                newPlayer.GetComponent<PlayerModel>().PlayerColor = "red";
+        }
             Destroy(players[pNumber]);
             newPlayer.transform.Find("MediumStaticAnimator").transform.position = AnimatorRespawnPoint.transform.position;
             //newPlayer.transform.position = RespawnPoint.transform.position;
@@ -173,7 +176,9 @@ using XInputDotNetPure; // Required in C#
             Pivots[pNumber] = newPlayer.transform.Find("Pivot");
             newPlayer.GetComponent<PlayerModel>().PlayerNumber = pNumber;
             newPlayer.transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(0, -2500, 0);
-        }
+            newPlayer.GetComponent<PlayerModel>().playermanager = this;
+            newPlayer.GetComponent<PlayerModel>().scoremanager = scoremanager;
+    }
 
         // Update is called once per frame
         void Update() {
