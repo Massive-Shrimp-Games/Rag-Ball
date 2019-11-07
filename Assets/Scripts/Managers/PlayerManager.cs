@@ -24,6 +24,7 @@ namespace LocalCoop {
         public Transform[] RotatePlayers;
         public Transform[] Pivots;
         private PlayerIndex[] PlayerIndexes;
+        private bool[] BwasPressed;
 
         //PER PLAYER
         //public Animator animator1;
@@ -67,34 +68,18 @@ namespace LocalCoop {
                 controller4state,
             };
 
-            /*
-            Animators = new Animator[] {
-                animator1,
-                animator2,
-                //animator3,
-                //animator4,
-            };
-
-            RotatePlayers = new Transform[] {
-                rotatePlayer1,
-                rotatePlayer2,
-                //rotatePlayer3,
-                //rotatePlayer4,
-            };
-
-            Pivots = new Transform[] {
-                pivot1,
-                pivot2,
-                //pivot3,
-                //pivot4,
-            };
-            */
-
             PlayerIndexes = new PlayerIndex[] {
                 controllerID1,
                 controllerID2,
                 controllerID3,
                 controllerID4,
+            };
+
+            BwasPressed = new bool[] {
+                false,
+                false,
+                false,
+                false,
             };
         }
 
@@ -196,19 +181,6 @@ namespace LocalCoop {
                     players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * 1000f);
                     //RotatePlayers[i].transform.position = players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.position;
 
-                    //turning
-                    /*
-                    float horizontalSpeed = 1f;
-                    if (players[i].transform.Find("Player").transform.forward.x < Movement.x)
-                    {
-                        RotatePlayers[i].RotateAround(Pivots[i].position, Vector3.up, -H * horizontalSpeed / Time.deltaTime);
-                    }
-                    else
-                    {
-                        RotatePlayers[i].RotateAround(Pivots[i].position, Vector3.up, H * horizontalSpeed / Time.deltaTime);
-                    }
-                    */
-
                     //turning (also causes model to lean back a bit)
                     if (Movement != Vector3.zero)
                     {
@@ -233,24 +205,24 @@ namespace LocalCoop {
                         {
                             Animators[i].Play("JumpHold");
                         }
+
+                        if (GamePadStates[i].Buttons.B == ButtonState.Pressed && !BwasPressed[i])
+                        {
+                            Vector3 boostDir = players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.forward;
+                            players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(boostDir * 10000f);
+                            BwasPressed[i] = true;
+                        }
+                        else if (GamePadStates[i].Buttons.B == ButtonState.Released && BwasPressed[i])
+                        {
+                            BwasPressed[i] = false;
+                        }
                     }
                 }
                 //^^^
 
                 /*
-                //vvv
-                //Player 1 Movement (FIX LATER)
-                float H = controller1state.ThumbSticks.Left.X + controller1state.ThumbSticks.Right.X;
-                float V = controller1state.ThumbSticks.Left.Y + controller1state.ThumbSticks.Right.Y;
-
-                Vector3 Movement = new Vector3();
-                Movement.Set(H, 0f, V);
-                Movement = Movement.normalized * 2 * Time.deltaTime;
-                //players[0].GetComponent<Rigidbody>().MovePosition(players[0].GetComponent<Transform>().position + Movement);
-                players[0].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * 1000f);
-
-                float horizontalSpeed = .02f;
-                //Debug.Log(players[0].transform.forward.x + ", " + Movement.x);
+                //Some previous attempts at turning
+                float horizontalSpeed = 1f;
                 if (players[0].transform.forward.x < Movement.x)
                 {
                     rotatePlayer1.RotateAround(pivot1.position, Vector3.up, -H * horizontalSpeed / Time.deltaTime);
@@ -292,52 +264,6 @@ namespace LocalCoop {
                 //{
                 //    rotatePlayer1.RotateAround(pivot1.position, Vector3.up, -Mathf.Abs(players[0].transform.forward.x - Movement.x) * horizontalSpeed / Time.deltaTime);
                 //}
-
-
-
-                //Player 2 Movement (FIX LATER)
-                H = controller2state.ThumbSticks.Left.X + controller2state.ThumbSticks.Right.X;
-                V = controller2state.ThumbSticks.Left.Y + controller2state.ThumbSticks.Right.Y;
-
-                Movement = new Vector3();
-                Movement.Set(H, 0f, V);
-                Movement = Movement.normalized * 2 * Time.deltaTime;
-                //players[1].GetComponent<Rigidbody>().MovePosition(players[1].GetComponent<Transform>().position + Movement);
-                players[1].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * 1000f);
-
-                if (players[1].transform.forward.x < Movement.x)
-                {
-                    rotatePlayer2.RotateAround(pivot2.position, Vector3.up, -H * horizontalSpeed / Time.deltaTime);
-                }
-                else
-                {
-                    rotatePlayer2.RotateAround(pivot2.position, Vector3.up, H * horizontalSpeed / Time.deltaTime);
-                }
-
-                if (Movement.magnitude >= 0.03)
-                {
-                    animator2.Play("Walk");
-                }
-                else
-                {
-                    animator2.Play("Idle");
-                }
-
-                if (controller1state.IsConnected) {
-                    controller1state = GamePad.GetState(controllerID1);
-                    if (controller1state.Buttons.A == ButtonState.Pressed) {
-                        //players[0].GetComponent<Rigidbody>().AddForce(players[0].GetComponent<Transform>().up * 10);
-                        animator1.Play("JumpHold");
-                    }
-                }
-
-                if (controller2state.IsConnected) {
-                    controller2state = GamePad.GetState(controllerID2);
-                    if (controller2state.Buttons.A == ButtonState.Pressed) {
-                        animator2.Play("JumpHold");
-                    }
-                }
-                //^^^
                 */
 
             }
