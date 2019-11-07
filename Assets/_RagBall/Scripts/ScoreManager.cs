@@ -11,34 +11,38 @@ public class ScoreManager : MonoBehaviour
     public int RedScore;
     public int BlueScore;
     public int WinScore = 5;
-    public int BlueLayer;
-    public int RedLayer;
-    public TextMeshProUGUI BlueScoreText;
-    public TextMeshProUGUI RedScoreText;
+    public GameObject redscoreboard;
+    public GameObject bluescoreboard;
+    public string BlueScoreText;
+    public string RedScoreText;
 
     // Start is called before the first frame update
     void Start()
     {
-        RedScore = 0;
-        BlueScore = 0;
+        RedScore = 00;
+        BlueScore = 00;
     }
 
     // Update is called once per frame
     void Update()
     {
-        RedScoreText.text = RedScore.ToString();
-        BlueScoreText.text = BlueScore.ToString();
+        //Red Score
+        RedScoreText = RedScore.ToString();
+        if (RedScore < 10) RedScoreText = "0" + RedScoreText;
+        redscoreboard.GetComponent<TextMeshPro>().text = RedScoreText;
+
+        //Blue Score
+        BlueScoreText = BlueScore.ToString();
+        if (BlueScore < 10) BlueScoreText = "0" + BlueScoreText;
+        bluescoreboard.GetComponent<TextMeshPro>().text = BlueScoreText;
     }
 
-    public void AddScore(int Layer)
+    public void AddRedScore()
     {
-        if (Layer == RedLayer)
-        {
-            RedScore += 1;
-        }
-        else if (Layer == BlueLayer)
-        {
-            BlueScore += 1;
-        }
+        RedScore += 1;
+    }
+    public void AddBlueScore()
+    {
+        BlueScore += 1;
     }
 }

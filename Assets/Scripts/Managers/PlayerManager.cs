@@ -154,29 +154,25 @@ namespace LocalCoop {
             if (pNumber % 2 == 1)
             {
                 //Instantiate(myPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-                newPlayer = BluePlayer;
-                Destroy(players[pNumber]);
+                //newPlayer = BluePlayer;
                 newPlayer = Instantiate(BluePlayer, RespawnPoint.transform.position, Quaternion.identity);
-                newPlayer.transform.Find("MediumStaticAnimator").transform.position = AnimatorRespawnPoint.transform.position;
-                //newPlayer.transform.position = RespawnPoint.transform.position;
-                players[pNumber] = newPlayer;
-                Animators[pNumber] = newPlayer.transform.Find("MediumStaticAnimator").GetComponent<Animator>();
-                RotatePlayers[pNumber] = newPlayer.transform.Find("Player").transform;
-                Pivots[pNumber] = newPlayer.transform.Find("Pivot");
             }
             //Spawn Red Player
             else
             {
                 //Instantiate(myPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-                newPlayer = BluePlayer;
+                //newPlayer = RedPlayer;
                 newPlayer = Instantiate(RedPlayer, RespawnPoint.transform.position, Quaternion.identity);
-                newPlayer.transform.Find("MediumStaticAnimator").transform.position = AnimatorRespawnPoint.transform.position;
-                //newPlayer.transform.position = RespawnPoint.transform.position;
-                players[pNumber] = newPlayer;
-                Animators[pNumber] = newPlayer.transform.Find("MediumStaticAnimator").GetComponent<Animator>();
-                RotatePlayers[pNumber] = newPlayer.transform.Find("Player").transform;
-                Pivots[pNumber] = newPlayer.transform.Find("Pivot");
             }
+            Destroy(players[pNumber]);
+            newPlayer.transform.Find("MediumStaticAnimator").transform.position = AnimatorRespawnPoint.transform.position;
+            //newPlayer.transform.position = RespawnPoint.transform.position;
+            players[pNumber] = newPlayer;
+            Animators[pNumber] = newPlayer.transform.Find("MediumStaticAnimator").GetComponent<Animator>();
+            RotatePlayers[pNumber] = newPlayer.transform.Find("Player").transform;
+            Pivots[pNumber] = newPlayer.transform.Find("Pivot");
+            newPlayer.GetComponent<PlayerModel>().PlayerNumber = pNumber;
+            newPlayer.transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(0, -2500, 0);
         }
 
         // Update is called once per frame

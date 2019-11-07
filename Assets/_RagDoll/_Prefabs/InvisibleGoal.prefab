@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4068392106541256807}
   - component: {fileID: 4068392106541256806}
   - component: {fileID: 4068392106541256805}
+  - component: {fileID: 4834343284273495649}
   m_Layer: 0
   m_Name: InvisibleGoal
   m_TagString: Untagged
@@ -91,3 +92,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4834343284273495649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4068392106541256827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5125d43613034154a94a7ec20e60bdf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RespawnPosition: {fileID: 0}
+  SoundSource: {fileID: 0}
+  ScoreLayer: 0
+  _ScoreManager: {fileID: 0}
