@@ -29,6 +29,12 @@ namespace LocalCoop {
         private bool[] BwasPressed;
         private bool[] YwasPressed;
 
+        //respawn objects
+        public GameObject RedPlayer;
+        public GameObject BluePlayer;
+        public GameObject RespawnPoint;
+        public GameObject AnimatorRespawnPoint;
+
         //PER PLAYER
         //public Animator animator1;
         //public Transform rotatePlayer1;
@@ -139,6 +145,39 @@ namespace LocalCoop {
             return amount;
         }
 
+
+        void respawn(int pNumber)
+        {
+            GameObject newPlayer;
+
+            //Spawn Blue Player
+            if (pNumber % 2 == 1)
+            {
+                //Instantiate(myPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                newPlayer = BluePlayer;
+                newPlayer = Instantiate(BluePlayer, RespawnPoint.transform.position, Quaternion.identity);
+                newPlayer.transform.Find("MediumStaticAnimator").transform.position = AnimatorRespawnPoint.transform.position;
+                //newPlayer.transform.position = RespawnPoint.transform.position;
+                players[pNumber] = newPlayer;
+                Animators[pNumber] = newPlayer.transform.Find("MediumStaticAnimator").GetComponent<Animator>();
+                RotatePlayers[pNumber] = newPlayer.transform.Find("Player").transform;
+                Pivots[pNumber] = newPlayer.transform.Find("Pivot");
+            }
+            //Spawn Red Player
+            else
+            {
+                //Instantiate(myPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                newPlayer = BluePlayer;
+                newPlayer = Instantiate(RedPlayer, RespawnPoint.transform.position, Quaternion.identity);
+                newPlayer.transform.Find("MediumStaticAnimator").transform.position = AnimatorRespawnPoint.transform.position;
+                //newPlayer.transform.position = RespawnPoint.transform.position;
+                players[pNumber] = newPlayer;
+                Animators[pNumber] = newPlayer.transform.Find("MediumStaticAnimator").GetComponent<Animator>();
+                RotatePlayers[pNumber] = newPlayer.transform.Find("Player").transform;
+                Pivots[pNumber] = newPlayer.transform.Find("Pivot");
+            }
+        }
+
         // Update is called once per frame
         void Update() {
             if (use_X_Input) {
@@ -215,12 +254,14 @@ namespace LocalCoop {
                         if (GamePadStates[i].Buttons.A == ButtonState.Pressed)
                         {
                             Animators[i].Play("JumpHold");
+                            Debug.Log("A Button was pressed!");
                         }
 
                         //B (dashing)
                         if (GamePadStates[i].Buttons.B == ButtonState.Pressed && !BwasPressed[i])
                         {
                             BwasPressed[i] = true;
+                            Debug.Log("B Button was pressed!");
                             Vector3 boostDir = players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.forward;
                             players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(boostDir * 10000f);
                         }
@@ -233,6 +274,8 @@ namespace LocalCoop {
                         if (GamePadStates[i].Buttons.Y == ButtonState.Pressed && !YwasPressed[i])
                         {
                             YwasPressed[i] = true;
+                            Debug.Log("Y Button was pressed!");
+                            respawn(i);
                         }
                         else if (GamePadStates[i].Buttons.Y == ButtonState.Released && YwasPressed[i])
                         {
