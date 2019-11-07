@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using XInputDotNetPure; // Required in C#
 
-namespace LocalCoop {
+//namespace LocalCoop {
     /// <summary>
     /// A manager that can be used to add players without having pre-assigned controlled ID's to the input
     /// </summary>
@@ -346,4 +346,4 @@ namespace LocalCoop {
             }
         }
     }
-}
+//}

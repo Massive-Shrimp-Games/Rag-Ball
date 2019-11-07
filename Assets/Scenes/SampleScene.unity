@@ -548,7 +548,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 163734117}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.83, y: 0.6645935, z: 4.932}
+  m_LocalPosition: {x: 4, y: 0.6645935, z: -0.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 666338262}
@@ -1256,6 +1256,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4068392106541256805, guid: dcb60a586670127489bf2f5e852b6f4b,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4834343284273495649, guid: dcb60a586670127489bf2f5e852b6f4b,
+        type: 3}
+      propertyPath: scoremanager
+      value: 
+      objectReference: {fileID: 82294041}
+    - target: {fileID: 4834343284273495649, guid: dcb60a586670127489bf2f5e852b6f4b,
+        type: 3}
+      propertyPath: goalcolor
+      value: red
+      objectReference: {fileID: 0}
+    - target: {fileID: 4834343284273495649, guid: dcb60a586670127489bf2f5e852b6f4b,
+        type: 3}
+      propertyPath: playermanager
+      value: 
+      objectReference: {fileID: 666338261}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcb60a586670127489bf2f5e852b6f4b, type: 3}
 --- !u!4 &499319598 stripped
@@ -3208,7 +3228,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1264348882}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.42, y: 0.6645935, z: 5.004}
+  m_LocalPosition: {x: -7.42, y: 0.6645935, z: -0.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 666338262}
@@ -4988,5 +5008,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4068392106541256806, guid: dcb60a586670127489bf2f5e852b6f4b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4068392106541256805, guid: dcb60a586670127489bf2f5e852b6f4b,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4834343284273495649, guid: dcb60a586670127489bf2f5e852b6f4b,
+        type: 3}
+      propertyPath: scoremanager
+      value: 
+      objectReference: {fileID: 82294041}
+    - target: {fileID: 4834343284273495649, guid: dcb60a586670127489bf2f5e852b6f4b,
+        type: 3}
+      propertyPath: goalcolor
+      value: blue
+      objectReference: {fileID: 0}
+    - target: {fileID: 4834343284273495649, guid: dcb60a586670127489bf2f5e852b6f4b,
+        type: 3}
+      propertyPath: playermanager
+      value: 
+      objectReference: {fileID: 666338261}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcb60a586670127489bf2f5e852b6f4b, type: 3}
