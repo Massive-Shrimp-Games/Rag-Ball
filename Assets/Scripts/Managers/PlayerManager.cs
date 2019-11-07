@@ -155,6 +155,7 @@ namespace LocalCoop {
             {
                 //Instantiate(myPrefab, new Vector3(0, 0, 0), Quaternion.identity);
                 newPlayer = BluePlayer;
+                Destroy(players[pNumber]);
                 newPlayer = Instantiate(BluePlayer, RespawnPoint.transform.position, Quaternion.identity);
                 newPlayer.transform.Find("MediumStaticAnimator").transform.position = AnimatorRespawnPoint.transform.position;
                 //newPlayer.transform.position = RespawnPoint.transform.position;
