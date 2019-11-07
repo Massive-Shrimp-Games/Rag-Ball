@@ -1161,7 +1161,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8792772798496386442}
   - component: {fileID: 4399202085510371351}
-  - component: {fileID: 3463814532333759819}
   m_Layer: 0
   m_Name: BluePlayer
   m_TagString: Untagged
@@ -1203,20 +1202,6 @@ MonoBehaviour:
   PlayerColor: blue
   scoremanager: {fileID: 0}
   playermanager: {fileID: 0}
---- !u!136 &3463814532333759819
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5502674848353017753}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.29
-  m_Height: 2.1
-  m_Direction: 1
-  m_Center: {x: -0.42, y: 1.1, z: 0.13}
 --- !u!1 &6009530648626504893
 GameObject:
   m_ObjectHideFlags: 0
@@ -1506,6 +1491,7 @@ GameObject:
   - component: {fileID: 5805032282473370674}
   - component: {fileID: 6739288261858623529}
   - component: {fileID: 6739288261858623534}
+  - component: {fileID: 2449699173160983505}
   m_Layer: 0
   m_Name: hips
   m_TagString: Untagged
@@ -1559,6 +1545,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!136 &2449699173160983505
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6739288261858623535}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.003
+  m_Height: 0.02
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.002, z: 0}
 --- !u!1 &6970539895656409426
 GameObject:
   m_ObjectHideFlags: 0

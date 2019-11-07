@@ -151,6 +151,7 @@ GameObject:
   - component: {fileID: 407025933801474930}
   - component: {fileID: 625814544212615017}
   - component: {fileID: 625814544212615022}
+  - component: {fileID: 5167229886388877192}
   m_Layer: 0
   m_Name: hips
   m_TagString: Untagged
@@ -204,6 +205,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!136 &5167229886388877192
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625814544212615023}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.003
+  m_Height: 0.02
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.002, z: 0}
 --- !u!1 &1121847901622460818
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,7 +707,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.29
+  m_Radius: 0.56
   m_Height: 2.11
   m_Direction: 1
   m_Center: {x: -0.46, y: 1.14, z: 0.16}

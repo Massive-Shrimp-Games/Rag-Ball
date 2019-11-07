@@ -25,7 +25,7 @@ public class AnotherGoalScript : MonoBehaviour
     public int findPlayerNumber(GameObject myobject)
     {
         GameObject myparent = myobject.transform.parent.gameObject;
-        if (myparent.name == "PlayerManager")
+        if (myparent.name == "Player1" || myparent.name == "Player2" || myparent.name == "Player3" || myparent.name == "Player4" || myparent.name == "PlayerManager")
         {
             return myobject.GetComponent<PlayerModel>().PlayerNumber;
         }

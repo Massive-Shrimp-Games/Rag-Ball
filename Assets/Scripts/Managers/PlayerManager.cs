@@ -24,10 +24,13 @@ using XInputDotNetPure; // Required in C#
         public Transform[] RotatePlayers;
         public Transform[] Pivots;
         private PlayerIndex[] PlayerIndexes;
+        public GameObject[,] PlayerHands;
+        public GameObject[] PlayerHips;
 
         //button arrays
         private bool[] BwasPressed;
         private bool[] YwasPressed;
+        private bool[] XwasPressed;
 
         //respawn objects
         public GameObject RedPlayer;
@@ -85,6 +88,28 @@ using XInputDotNetPure; // Required in C#
                 controllerID4,
             };
 
+            //Player 1: [0 0] [0 1]
+            //Player 2: [1 0] [1 1]
+            //Player 3: [2 0] [2 1]
+            //Player 4: [3 0] [3 1]
+            PlayerHands = new GameObject[,] {
+                { players[0].transform.Find("Player/metarig/hips/spine/chest/shoulder.L/upper_arm.L/forearm.L").gameObject,
+                    players[0].transform.Find("Player/metarig/hips/spine/chest/shoulder.R/upper_arm.R/forearm.R").gameObject},
+                { players[1].transform.Find("Player/metarig/hips/spine/chest/shoulder.L/upper_arm.L/forearm.L").gameObject,
+                    players[1].transform.Find("Player/metarig/hips/spine/chest/shoulder.R/upper_arm.R/forearm.R").gameObject},
+                { players[2].transform.Find("Player/metarig/hips/spine/chest/shoulder.L/upper_arm.L/forearm.L").gameObject,
+                    players[2].transform.Find("Player/metarig/hips/spine/chest/shoulder.R/upper_arm.R/forearm.R").gameObject},
+                { players[3].transform.Find("Player/metarig/hips/spine/chest/shoulder.L/upper_arm.L/forearm.L").gameObject,
+                    players[3].transform.Find("Player/metarig/hips/spine/chest/shoulder.R/upper_arm.R/forearm.R").gameObject},
+            };
+
+            PlayerHips = new GameObject[] {
+                players[0].transform.Find("Player/metarig/hips").gameObject,
+                players[1].transform.Find("Player/metarig/hips").gameObject,
+                players[2].transform.Find("Player/metarig/hips").gameObject,
+                players[3].transform.Find("Player/metarig/hips").gameObject,
+            };
+
             BwasPressed = new bool[] {
                 false,
                 false,
@@ -98,7 +123,14 @@ using XInputDotNetPure; // Required in C#
                 false,
                 false,
             };
-        }
+
+            XwasPressed = new bool[] {
+                false,
+                false,
+                false,
+                false,
+            };
+    }
 
         void Assign_X_Input_Controllers() {
             for (int i = 0; i < 4; ++i) {
@@ -158,7 +190,7 @@ using XInputDotNetPure; // Required in C#
                 //newPlayer = BluePlayer;
                 newPlayer = Instantiate(BluePlayer, RespawnPoint.transform.position, Quaternion.identity);
                 newPlayer.GetComponent<PlayerModel>().PlayerColor = "blue";
-        }
+            }
             //Spawn Red Player
             else
             {
@@ -166,7 +198,7 @@ using XInputDotNetPure; // Required in C#
                 //newPlayer = RedPlayer;
                 newPlayer = Instantiate(RedPlayer, RespawnPoint.transform.position, Quaternion.identity);
                 newPlayer.GetComponent<PlayerModel>().PlayerColor = "red";
-        }
+            }
             Destroy(players[pNumber]);
             newPlayer.transform.Find("MediumStaticAnimator").transform.position = AnimatorRespawnPoint.transform.position;
             //newPlayer.transform.position = RespawnPoint.transform.position;
@@ -178,7 +210,20 @@ using XInputDotNetPure; // Required in C#
             newPlayer.transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(0, -2500, 0);
             newPlayer.GetComponent<PlayerModel>().playermanager = this;
             newPlayer.GetComponent<PlayerModel>().scoremanager = scoremanager;
-    }
+            PlayerHands[pNumber, 0] = newPlayer.transform.Find("Player/metarig/hips/spine/chest/shoulder.L/upper_arm.L/forearm.L").gameObject;
+            PlayerHands[pNumber, 1] = newPlayer.transform.Find("Player/metarig/hips/spine/chest/shoulder.R/upper_arm.R/forearm.R").gameObject;
+            PlayerHips[pNumber] = newPlayer.transform.Find("Player/metarig/hips").gameObject;
+            newPlayer.name = "Player" + (pNumber+1).ToString();
+        }
+
+        public void Grab(int Grabber)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                //TODO
+                //if (players[i].)
+            }
+        }
 
         // Update is called once per frame
         void Update() {
@@ -282,6 +327,18 @@ using XInputDotNetPure; // Required in C#
                         else if (GamePadStates[i].Buttons.Y == ButtonState.Released && YwasPressed[i])
                         {
                             YwasPressed[i] = false;
+                        }
+
+                        //X (grabbing/throwing)
+                        if (GamePadStates[i].Buttons.X == ButtonState.Pressed && !XwasPressed[i])
+                        {
+                            XwasPressed[i] = true;
+                            Debug.Log("X Button was pressed!");
+                            Grab(i);
+                        }
+                        else if (GamePadStates[i].Buttons.X == ButtonState.Released && XwasPressed[i])
+                        {
+                            XwasPressed[i] = false;
                         }
                     }
                 }
