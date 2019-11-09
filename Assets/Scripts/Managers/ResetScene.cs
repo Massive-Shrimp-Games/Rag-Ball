@@ -11,5 +11,9 @@ public class ResetScene : MonoBehaviour
         {
             SceneManager.LoadScene(0);
         }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(1);
+        }
     }
 }
