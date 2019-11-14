@@ -350,6 +350,10 @@ public class PlayerManager : MonoBehaviour {
         // https://answers.unity.com/questions/983433/how-to-freeze-z-axis-rotation-in-code.html
         // https://answers.unity.com/questions/1368164/cannot-get-rigidbody-constraint-to-unfreeze.html
 
+        // Ok, now th players are inexplicably drifting
+        // I think this is why:
+        // https://answers.unity.com/questions/1128326/object-drifting-to-left-or-right-without-reason.html
+
         Debug.Log("We really tryin grab here!");
 
         // TEST
