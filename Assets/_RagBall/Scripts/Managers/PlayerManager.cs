@@ -110,6 +110,7 @@ public class PlayerManager : MonoBehaviour {
     private bool[] YwasPressed;
     private bool[] XwasPressed;
     private bool[] StartwasPressed;
+    private bool[] RightwasPressed;
 
     //respawn objects
     public GameObject RedPlayer;
@@ -392,6 +393,7 @@ public class PlayerManager : MonoBehaviour {
         tharHips.transform.parent = yerMommy;
 
         // Applicaticize this here force on thad thar fella's pelvis
+        tharHips.GetComponent<Rigidbody>().AddForce(maHips.transform.forward * 10000f);
 
         // Reset thar grabblerability
         theirGrabbable.iCanGrab = true;
@@ -665,17 +667,17 @@ public class PlayerManager : MonoBehaviour {
                         XwasPressed[i] = false;
                     }
                     
-                    //B (throwing)
-                    if (GamePadStates[i].Buttons.B == ButtonState.Pressed && !BwasPressed[i])
+                    //RT (throwing)
+                    if (GamePadStates[i].Triggers.Right >= 0.6f && !RightwasPressed[i])
                     {
-                        BwasPressed[i] = true;
-                        Debug.Log("B Button was pressed!");
+                        RightwasPressed[i] = true;
+                        Debug.Log("R Trigger was pressed!");
                         UpdateGrabInfo(i);
                         Throw();
                     }
-                    else if (GamePadStates[i].Buttons.B == ButtonState.Released && BwasPressed[i])
+                    else if (GamePadStates[i].Triggers.Right <= 0.48f && RightwasPressed[i])
                     {
-                        BwasPressed[i] = false;
+                        RightwasPressed[i] = false;
                     }
 
                     //Start (pausing)
