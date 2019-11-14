@@ -433,9 +433,12 @@ public class PlayerManager : MonoBehaviour {
         // Reset thar grabblerability
         theirGrabbable.iCanGrab = true;
 
-        //Fix the mode!
+        // Fix the mode!
         maGrabbable.grabMode = "free";
         maGrabbable.oldHips = null;
+
+        // Play audio
+        AudioManager.transform.Find("Throw_AudioSource").GetComponent<AudioSource>().Play();
     }
 
 
