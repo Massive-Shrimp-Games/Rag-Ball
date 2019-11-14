@@ -13,6 +13,8 @@ public class ScoreManager : MonoBehaviour
     public int WinScore = 5;
     public GameObject redscoreboard;
     public GameObject bluescoreboard;
+    public GameObject Pause_redscoreboard;
+    public GameObject Pause_bluescoreboard;
     public string BlueScoreText;
     public string RedScoreText;
 
@@ -30,11 +32,13 @@ public class ScoreManager : MonoBehaviour
         RedScoreText = RedScore.ToString();
         if (RedScore < 10) RedScoreText = "0" + RedScoreText;
         redscoreboard.GetComponent<TextMeshPro>().text = RedScoreText;
+        Pause_redscoreboard.GetComponent<TextMeshPro>().text = RedScoreText;
 
         //Blue Score
         BlueScoreText = BlueScore.ToString();
         if (BlueScore < 10) BlueScoreText = "0" + BlueScoreText;
         bluescoreboard.GetComponent<TextMeshPro>().text = BlueScoreText;
+        Pause_bluescoreboard.GetComponent<TextMeshPro>().text = BlueScoreText;
     }
 
     public void AddRedScore()

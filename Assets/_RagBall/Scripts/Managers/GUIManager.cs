@@ -9,6 +9,7 @@ public class GUIManager : MonoBehaviour
     public Canvas PauseMenu;
     public RawImage ControlsImage;
     public PlayerManager playerManager;
+    public Canvas ParameterCanvas;
 
     public void Resume()
     {
@@ -26,7 +27,9 @@ public class GUIManager : MonoBehaviour
 
     public void Options()
     {
-        
+        ParameterCanvas.enabled = true;
+        ParameterCanvas.GetComponent<CanvasGroup>().interactable = true;
+        PauseMenu.GetComponent<CanvasGroup>().interactable = false;
     }
 
     public void Quit()

@@ -102,6 +102,8 @@ public class PlayerManager : MonoBehaviour {
     private PlayerIndex[] PlayerIndexes;
     public GameObject[,] PlayerHands;
     public GameObject[] PlayerHips;
+    public int[] Dashes;
+    public float[] DashTimes;
 
     //button arrays
     private bool[] BwasPressed;
@@ -134,6 +136,7 @@ public class PlayerManager : MonoBehaviour {
     public static PlayerManager singleton = null;
 
     public Canvas PauseMenu;
+    public Canvas ParameterCanvas;
 
     void Awake() {
         //Check if instance already exists
@@ -188,6 +191,20 @@ public class PlayerManager : MonoBehaviour {
             players[1].transform.Find("Player/metarig/hips").gameObject,
             players[2].transform.Find("Player/metarig/hips").gameObject,
             players[3].transform.Find("Player/metarig/hips").gameObject,
+        };
+
+        Dashes = new int[] {
+            5,
+            5,
+            5,
+            5,
+        };
+
+        DashTimes = new float[] {
+            3,
+            3,
+            3,
+            3,
         };
 
         BwasPressed = new bool[] {
@@ -304,6 +321,10 @@ public class PlayerManager : MonoBehaviour {
         newPlayer.transform.Find("Player/metarig/hips/").gameObject.GetComponent<Grabbable>().myPlayer = pNumber;
         GameObject theHips = newPlayer.transform.Find("Player/metarig/hips/").gameObject;
         Debug.Log("Player's Hips are: " + theHips.GetComponent<Grabbable>().myPlayer.ToString());
+
+        //refresh attributes
+        Dashes[pNumber] = 5;
+        DashTimes[pNumber] = 3;
     }
 
     public void Grab(int Grabber)
@@ -336,24 +357,35 @@ public class PlayerManager : MonoBehaviour {
             
         }
     }
-//TIME CHANGER
-//Updates any timers you want to use
-//dashes[i] corresponds to players[i] and is an integer array of remaining dashes (0 - None, 5 - Max)
-//staminas[i] corresponds to players[i] and is an float array of remaining balance (0 - None, 100 - Max)
-//dashtimes[i] corresponds to players[i] and is a float array of time until a dash is added
-//staminatimes[i] corresponds to players[i] and is a float array of time until balance is added
-private void UpdateTimers()
-{
-    for (int i = 0; i < 4; i++)
+    //TIME CHANGER
+    //Updates any timers you want to use
+    //dashes[i] corresponds to players[i] and is an integer array of remaining dashes (0 - None, 5 - Max)
+    //staminas[i] corresponds to players[i] and is an float array of remaining balance (0 - None, 100 - Max)
+    //dashtimes[i] corresponds to players[i] and is a float array of time until a dash is added
+    //staminatimes[i] corresponds to players[i] and is a float array of time until balance is added
+    private void UpdateTimers()
     {
-        // TODO
-        //dashtimes[i] - Time.DeltaTime
-        //if (dashtimes[i] <= 0)
-        //{
-        //dashes[i] += 1;
-        //}
+        for (int i = 0; i < 4; i++)
+        {
+            // TODO
+            //dashtimes[i] - Time.DeltaTime
+            //if (dashtimes[i] <= 0)
+            //{
+            //dashes[i] += 1;
+            //}
+            DashTimes[i] -= Time.deltaTime;
+            if (DashTimes[i] <= 0 && Dashes[i] < 5)
+            {
+                Dashes[i] += 1;
+                DashTimes[i] = 3;
+            }
+            else if (Dashes[i] == 5)
+            {
+                DashTimes[i] = 3;
+            }
+        
+        }
     }
-}
 
     // Update is called once per frame
     void Update() {
@@ -435,18 +467,28 @@ private void UpdateTimers()
                     }
 
                     //B (dashing)
-                    if (GamePadStates[i].Buttons.B == ButtonState.Pressed && !BwasPressed[i] && !GameIsPaused)
+                    if (GamePadStates[i].Buttons.B == ButtonState.Pressed && !BwasPressed[i] && !GameIsPaused && Dashes[i] > 0)
                     {
                         BwasPressed[i] = true;
                         Debug.Log("B Button was pressed!");
                         Vector3 boostDir = players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.forward;
                         players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(boostDir * 10000f);
+                        Dashes[i] -= 1;
+                        if (Dashes[i] < 0)
+                        {
+                            Dashes[i] = 0;
+                        }
                     }
                     else if (GamePadStates[i].Buttons.B == ButtonState.Pressed && GameIsPaused)
                     {
                         if (PauseMenu.transform.Find("ControlImage").GetComponent<RawImage>().enabled)
                         {
                             PauseMenu.transform.Find("ControlImage").GetComponent<RawImage>().enabled = false;
+                            PauseMenu.GetComponent<CanvasGroup>().interactable = true;
+                        }
+                        else if (ParameterCanvas.enabled)
+                        {
+                            ParameterCanvas.enabled = false;
                             PauseMenu.GetComponent<CanvasGroup>().interactable = true;
                         }
                         //else if (PauseMenu.enabled)
