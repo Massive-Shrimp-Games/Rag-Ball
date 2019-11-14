@@ -376,8 +376,8 @@ public class PlayerManager : MonoBehaviour {
             theirGrabbable.iCanGrab = false;
             tharHips.transform.parent = maHips.transform;
             tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
-            tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
-            tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
+            //tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
+            //tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
 
             //Fix the mode!
             maGrabbable.grabMode = "grabbing";
