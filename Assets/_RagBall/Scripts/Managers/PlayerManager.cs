@@ -128,6 +128,13 @@ public class PlayerManager : MonoBehaviour {
     //public Transform rotatePlayer3;
     //public Transform pivot3;
 
+    //GRABBING STUFF
+    GameObject theGrabbler;
+    GameObject maHips;
+    Grabbable maGrabbable;
+    GameObject tharHips;
+    Grabbable theirGrabbable;
+
     public bool use_X_Input = true;
     public int connectedControllers = 0;   //if this variable changes, we need to call an update on the gamepads
 
@@ -306,18 +313,19 @@ public class PlayerManager : MonoBehaviour {
         Debug.Log("Player's Hips are: " + theHips.GetComponent<Grabbable>().myPlayer.ToString());
     }
 
-    public void Grab(int Grabber)
+    public void Grab()
     {
-        //ALERT!
-        Debug.Log("OH yeah boyyyy");
+        // theGrabbler - Who is trying to grab
+        // maHips - How we reference who is trying to grab
+        // maGrabbable - Who is being grabbed
+        // tharHips - How we reference who is being grabbed
+        // theirGrabbable - How we enable/disable the victim
 
-        // Find Tha Hips
-        GameObject theGrabbler = players[Grabber];
-        GameObject maHips = theGrabbler.transform.Find("Player/metarig/hips/").gameObject;
-        GameObject tharHips = theGrabbler.transform.Find("Player/metarig/hips/").gameObject.GetComponent<Grabbable>().tharHips;
+        Debug.Log("We really tryin grab here!");
 
+        // TEST
         if (tharHips != null)
-        { 
+        {
             Debug.Log("And here we go");
         }
         else
@@ -325,7 +333,7 @@ public class PlayerManager : MonoBehaviour {
             Debug.Log("OHHHHHHHHHHH NOOOOOOOOOOOOOOOOO!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         }
 
-        //Check if he can throw
+        //Check if he can grab
         if (maHips.GetComponent<Grabbable>().iCanGrab == true)
         {
             // Move 'im up
@@ -333,16 +341,126 @@ public class PlayerManager : MonoBehaviour {
             tharHips.transform.Translate(0f, 1.5f, 0f);
 
             // Lock 'im in, Yup!
-            
+            theirGrabbable.iCanGrab = false;
+
+            //Fix the mode!
+            maGrabbable.grabMode = "grabbing";
+
         }
     }
-//TIME CHANGER
-//Updates any timers you want to use
-//dashes[i] corresponds to players[i] and is an integer array of remaining dashes (0 - None, 5 - Max)
-//staminas[i] corresponds to players[i] and is an float array of remaining balance (0 - None, 100 - Max)
-//dashtimes[i] corresponds to players[i] and is a float array of time until a dash is added
-//staminatimes[i] corresponds to players[i] and is a float array of time until balance is added
-private void UpdateTimers()
+
+    public void Throw()
+    {
+        // GameObject theGrabbler - Who is trying to grab
+        // GameObject maHips - How we reference who is trying to grab
+        // Grabbable maGrabbable - Who is being grabbed
+        // GameObject tharHips - How we reference who is being grabbed
+        // Grabbable theirGrabbable - How we enable/disable the victim
+
+        // Unkinemasicize thad guy
+
+        // Applicaticize this here force on thad thar fella's pelvis
+
+        // Reset thar grabblerability
+        theirGrabbable.iCanGrab = true;
+
+        //Fix the mode!
+        maGrabbable.grabMode = "free";
+    }
+
+
+    public void Drop()
+    {
+        // GameObject theGrabbler - Who is trying to grab
+        // GameObject maHips - How we reference who is trying to grab
+        // Grabbable maGrabbable - Who is being grabbed
+        // GameObject tharHips - How we reference who is being grabbed
+        // Grabbable theirGrabbable - How we enable/disable the victim
+
+
+        // Unkinemasticize thad guy
+
+        // Reset thar grabblerability
+        theirGrabbable.iCanGrab = true;
+
+        //Fix the mode!
+        maGrabbable.grabMode = "free";
+    }
+
+    public void GrabDecide()
+    {
+        // GameObject theGrabbler - Who is trying to grab
+        // GameObject maHips - How we reference who is trying to grab
+        // Grabbable maGrabbable - Who is being grabbed
+        // GameObject tharHips - How we reference who is being grabbed
+        // Grabbable theirGrabbable - How we enable/disable the victim
+
+
+        // Pick a poison
+        if (maGrabbable.grabMode == "free")
+        {
+            Debug.Log("Imma try grabbin!");
+            Grab();
+        }
+        else if (maGrabbable.grabMode == "grabbing")
+        {
+            Debug.Log("Imma let go now!");
+            Drop();
+        }
+        else
+        {
+            Debug.Log("What did you do??!?!!?\nThat mode of grabbing may not exist yet!");
+        }
+
+        //Reset tha stuffs
+        theGrabbler = null;
+        maHips = null;
+        maGrabbable = null;
+        tharHips = null;
+        theirGrabbable = null;
+    }
+
+    /*
+     * 
+     * OK, so generics inside CSharp frickin suck.
+     * Globals it is, fellas.
+     * 
+     * 
+    public List<T> GrabInfo<T> (int Grabbler)
+    {
+        // Find Yer Stuff
+        // I was copying this code a lot, so here is a method to provide parameters
+        // https://learn.unity.com/tutorial/generics#5c8923c5edbc2a113b6bc335
+
+        GameObject theGrabbler = players[Grabbler];
+        GameObject maHips = theGrabbler.transform.Find("Player/metarig/hips/").gameObject;
+        Grabbable maGrabbable = maHips.GetComponent<Grabbable>();
+        GameObject tharHips = maGrabbable.tharHips;
+        Grabbable theirGrabbable = tharHips.GetComponent<Grabbable>();
+        return new List<T>() { theGrabbler, maHips, maGrabbable, tharHips, theirGrabbable };
+    }
+    */
+
+    public void UpdateGrabInfo(int Grabbler)
+    {
+        Debug.Log("Trying to get sum stats!");
+
+        theGrabbler = players[Grabbler];
+        maHips = theGrabbler.transform.Find("Player/metarig/hips/").gameObject;
+        maGrabbable = maHips.GetComponent<Grabbable>();
+        tharHips = maGrabbable.tharHips;
+        theirGrabbable = tharHips.GetComponent<Grabbable>();
+
+        Debug.Log("And I sur' hope I can see this!");
+    }
+
+    //TIME CHANGER
+    //Updates any timers you want to use
+    //dashes[i] corresponds to players[i] and is an integer array of remaining dashes (0 - None, 5 - Max)
+    //staminas[i] corresponds to players[i] and is an float array of remaining balance (0 - None, 100 - Max)
+    //dashtimes[i] corresponds to players[i] and is a float array of time until a dash is added
+    //staminatimes[i] corresponds to players[i] and is a float array of time until balance is added
+    private void UpdateTimers()
 {
     for (int i = 0; i < 4; i++)
     {
@@ -471,16 +589,30 @@ private void UpdateTimers()
                         YwasPressed[i] = false;
                     }
 
-                    //X (grabbing/throwing)
+                    //X (grabbing)
                     if (GamePadStates[i].Buttons.X == ButtonState.Pressed && !XwasPressed[i])
                     {
                         XwasPressed[i] = true;
                         Debug.Log("X Button was pressed!");
-                        Grab(i);
+                        UpdateGrabInfo(i);
+                        GrabDecide();
                     }
                     else if (GamePadStates[i].Buttons.X == ButtonState.Released && XwasPressed[i])
                     {
                         XwasPressed[i] = false;
+                    }
+
+                    //B (throwing)
+                    if (GamePadStates[i].Buttons.B == ButtonState.Pressed && !BwasPressed[i])
+                    {
+                        BwasPressed[i] = true;
+                        Debug.Log("B Button was pressed!");
+                        UpdateGrabInfo(i);
+                        Throw();
+                    }
+                    else if (GamePadStates[i].Buttons.B == ButtonState.Released && BwasPressed[i])
+                    {
+                        BwasPressed[i] = false;
                     }
 
                     //Start (pausing)
