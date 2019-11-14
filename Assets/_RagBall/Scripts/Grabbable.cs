@@ -12,6 +12,7 @@ public class Grabbable : MonoBehaviour
 
     public int myPlayer = -666;
     public GameObject tharHips;
+    public GameObject oldHips;
     public bool iCanGrab = true;
     public string grabMode = "free";
 
@@ -31,12 +32,16 @@ public class Grabbable : MonoBehaviour
     public void OnTriggerEnter(Collider theTriggerer)
     {
 
-        //Deb
+        Debug.Log("I AM OFFICIALLY TRIGGERED!!!!!!!!!");
 
         Grabbable testGrabbable = theTriggerer.GetComponent<Grabbable>();
         if (testGrabbable != null)
         {
             AssignTrigger(theTriggerer);
+        }
+        else
+        {
+            Debug.Log("WTF is this?!?!?: " + theTriggerer);
         }
     }
 
@@ -50,6 +55,7 @@ public class Grabbable : MonoBehaviour
         {
             Debug.Log("An' its got sum HIPS BOI!");
             tharHips = theTriggerer.gameObject;
+            oldHips = tharHips;
         }
     }
 

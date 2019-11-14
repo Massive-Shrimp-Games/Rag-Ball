@@ -472,9 +472,16 @@ public class PlayerManager : MonoBehaviour {
         theGrabbler = players[Grabbler];
         maHips = theGrabbler.transform.Find("Player/metarig/hips/").gameObject;
         maGrabbable = maHips.GetComponent<Grabbable>();
-        tharHips = maGrabbable.tharHips;
-        theirGrabbable = tharHips.GetComponent<Grabbable>();
-
+        try
+        { 
+            tharHips = maGrabbable.tharHips;
+            theirGrabbable = tharHips.GetComponent<Grabbable>();
+        }
+        catch
+        {
+            tharHips = maGrabbable.oldHips;
+            theirGrabbable = tharHips.GetComponent<Grabbable>();
+        }
         Debug.Log("And I sur' hope I can see this!");
     }
 
