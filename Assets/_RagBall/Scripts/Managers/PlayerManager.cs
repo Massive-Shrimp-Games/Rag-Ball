@@ -1,13 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using XInputDotNetPure; // Required in C#
-
-
-
-
-
-
 
 
 
@@ -112,6 +107,7 @@ public class PlayerManager : MonoBehaviour {
     private bool[] BwasPressed;
     private bool[] YwasPressed;
     private bool[] XwasPressed;
+    private bool[] StartwasPressed;
 
     //respawn objects
     public GameObject RedPlayer;
@@ -135,6 +131,8 @@ public class PlayerManager : MonoBehaviour {
     public int connectedControllers = 0;   //if this variable changes, we need to call an update on the gamepads
 
     public static PlayerManager singleton = null;
+
+    public Canvas PauseMenu;
 
     void Awake() {
         //Check if instance already exists
@@ -211,7 +209,14 @@ public class PlayerManager : MonoBehaviour {
             false,
             false,
         };
-}
+
+        StartwasPressed = new bool[] {
+            false,
+            false,
+            false,
+            false,
+        };
+    }
 
     void Assign_X_Input_Controllers() {
         for (int i = 0; i < 4; ++i) {
@@ -463,6 +468,27 @@ private void UpdateTimers()
                     else if (GamePadStates[i].Buttons.X == ButtonState.Released && XwasPressed[i])
                     {
                         XwasPressed[i] = false;
+                    }
+
+                    //Start (pausing)
+                    if (GamePadStates[i].Buttons.Start == ButtonState.Pressed && !StartwasPressed[i] && !PauseMenu.enabled)
+                    {
+                        StartwasPressed[i] = true;
+                        PauseMenu.enabled = true;
+                        PauseMenu.GetComponent<CanvasGroup>().interactable = true;
+                        PauseMenu.transform.Find("Resume_Button").GetComponent<Button>().Select();
+                        Time.timeScale = 0f;
+                    }
+                    else if (GamePadStates[i].Buttons.Start == ButtonState.Pressed && !StartwasPressed[i] && PauseMenu.enabled)
+                    {
+                        StartwasPressed[i] = true;
+                        PauseMenu.enabled = false;
+                        PauseMenu.GetComponent<CanvasGroup>().interactable = false;
+                        Time.timeScale = 1f;
+                    }
+                    else if (GamePadStates[i].Buttons.Start == ButtonState.Released && StartwasPressed[i])
+                    {
+                        StartwasPressed[i] = false;
                     }
                 }
             }
