@@ -389,6 +389,9 @@ public class PlayerManager : MonoBehaviour {
         // GameObject tharHips - How we reference who is being grabbed
         // Grabbable theirGrabbable - How we enable/disable the victim
 
+        // Alert
+        Debug.Log("THROW IT!!!!!");
+
         // Unkinemasicize thad guy
         tharHips.transform.parent = yerMommy;
 
@@ -670,6 +673,9 @@ public class PlayerManager : MonoBehaviour {
                     //RT (throwing)
                     if (GamePadStates[i].Triggers.Right >= 0.6f && !RightwasPressed[i])
                     {
+                        // Alert
+                        Debug.Log("THROW IT!!!!!");
+
                         RightwasPressed[i] = true;
                         Debug.Log("R Trigger was pressed!");
                         UpdateGrabInfo(i);
@@ -677,6 +683,9 @@ public class PlayerManager : MonoBehaviour {
                     }
                     else if (GamePadStates[i].Triggers.Right <= 0.48f && RightwasPressed[i])
                     {
+                        // Alert
+                        Debug.Log("GET OVER IT!!!!!");
+
                         RightwasPressed[i] = false;
                     }
 
