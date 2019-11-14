@@ -102,8 +102,10 @@ public class PlayerManager : MonoBehaviour {
     private PlayerIndex[] PlayerIndexes;
     public GameObject[,] PlayerHands;
     public GameObject[] PlayerHips;
-    public int[] Dashes;
-    public float[] DashTimes;
+    public int[] Dashes;            // How many dashes player has (0 - 5)
+    public float[] DashTimes;       // Time until next recovered dash (3 seconds)
+    public float[] Staminas;        // How much stamina player has (0 - 100)
+    public float[] StaminaTimes;    // Time until next recovered stamina point (0.3 seconds)
 
     //button arrays
     private bool[] BwasPressed;
@@ -217,6 +219,20 @@ public class PlayerManager : MonoBehaviour {
             3,
             3,
             3,
+        };
+
+        Staminas = new float[] {
+            100f,
+            100f,
+            100f,
+            100f,
+        };
+
+        StaminaTimes = new float[] {
+            0.3f,
+            0.3f,
+            0.3f,
+            0.3f,
         };
 
         BwasPressed = new bool[] {
@@ -530,13 +546,10 @@ public class PlayerManager : MonoBehaviour {
     {
         for (int i = 0; i < 4; i++)
         {
-            // TODO
-            //dashtimes[i] - Time.DeltaTime
-            //if (dashtimes[i] <= 0)
-            //{
-            //dashes[i] += 1;
-            //}
+            // DASHING
+            // Update Time
             DashTimes[i] -= Time.deltaTime;
+            // Update Count
             if (DashTimes[i] <= 0 && Dashes[i] < 5)
             {
                 Dashes[i] += 1;
@@ -546,8 +559,22 @@ public class PlayerManager : MonoBehaviour {
             {
                 DashTimes[i] = 3;
             }
-
+            // Update UI
             Stamina_Heads[i].sprite = StaminaPics[Dashes[i]];
+
+            // STAGGERING
+            // Update Time
+            StaminaTimes[i] -= Time.deltaTime;
+            // Update Count
+            if (StaminaTimes[i] <= 0 && Staminas[i] < 100f)
+            {
+                Staminas[i] += 5f;
+                StaminaTimes[i] = 0.3f;
+            }
+            else if (Staminas[i] == 100f)
+            {
+                StaminaTimes[i] = 0.3f;
+            }
         }
     }
 
