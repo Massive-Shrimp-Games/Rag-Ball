@@ -347,6 +347,8 @@ public class PlayerManager : MonoBehaviour {
         // theirGrabbable - How we enable/disable the victim
 
         // https://answers.unity.com/questions/989146/how-to-attach-an-object-onto-another-object.html
+        // https://answers.unity.com/questions/983433/how-to-freeze-z-axis-rotation-in-code.html
+        // https://answers.unity.com/questions/1368164/cannot-get-rigidbody-constraint-to-unfreeze.html
 
         Debug.Log("We really tryin grab here!");
 
@@ -373,6 +375,7 @@ public class PlayerManager : MonoBehaviour {
             // Lock 'im in, Yup!
             theirGrabbable.iCanGrab = false;
             tharHips.transform.parent = maHips.transform;
+            tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
 
             //Fix the mode!
             maGrabbable.grabMode = "grabbing";
@@ -394,6 +397,7 @@ public class PlayerManager : MonoBehaviour {
 
         // Unkinemasicize thad guy
         tharHips.transform.parent = yerMommy;
+        tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 
         // Applicaticize this here force on thad thar fella's pelvis
         tharHips.GetComponent<Rigidbody>().AddForce(maHips.transform.forward * 10000f);
@@ -417,6 +421,7 @@ public class PlayerManager : MonoBehaviour {
 
         // Unkinemasticize thad guy
         tharHips.transform.parent = yerMommy;
+        tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 
         // Reset thar grabblerability
         theirGrabbable.iCanGrab = true;
@@ -690,7 +695,7 @@ public class PlayerManager : MonoBehaviour {
                         RightwasPressed[i] = false;
                     }
                     */
-
+                    /*
                     //RT (throwing)
                     if (GamePadStates[i].Buttons.RightShoulder == ButtonState.Pressed && !RightwasPressed[i])
                     {
@@ -708,6 +713,18 @@ public class PlayerManager : MonoBehaviour {
                         Debug.Log("GET OVER IT!!!!!");
 
                         RightwasPressed[i] = false;
+                    }
+                    */
+
+                    //RT (throwing)
+                    if (GamePadStates[i].Buttons.RightShoulder == ButtonState.Pressed)
+                    {
+                        // Alert
+                        Debug.Log("THROW IT!!!!!");
+
+                        Debug.Log("R Trigger was pressed!");
+                        UpdateGrabInfo(i);
+                        Throw();
                     }
 
                     //Start (pausing)
