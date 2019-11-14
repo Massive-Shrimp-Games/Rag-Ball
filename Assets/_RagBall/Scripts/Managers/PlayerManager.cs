@@ -562,10 +562,13 @@ public class PlayerManager : MonoBehaviour {
             // Update UI
             Stamina_Heads[i].sprite = StaminaPics[Dashes[i]];
 
+
+
             // STAGGERING
+            // https://docs.unity3d.com/ScriptReference/Collision-relativeVelocity.html
             // Update Time
             StaminaTimes[i] -= Time.deltaTime;
-            // Update Count
+            // Update Count (Time)
             if (StaminaTimes[i] <= 0 && Staminas[i] < 100f)
             {
                 Staminas[i] += 5f;
@@ -575,6 +578,8 @@ public class PlayerManager : MonoBehaviour {
             {
                 StaminaTimes[i] = 0.3f;
             }
+            // Update Count (Force)
+
         }
     }
 
