@@ -1056,6 +1056,11 @@ PrefabInstance:
       propertyPath: playermanager
       value: 
       objectReference: {fileID: 666338261}
+    - target: {fileID: 2252030978914391697, guid: fe92d13e5c5867c49ab79fbc44bbd491,
+        type: 3}
+      propertyPath: myPlayer
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe92d13e5c5867c49ab79fbc44bbd491, type: 3}
 --- !u!4 &238548152 stripped
@@ -2645,6 +2650,11 @@ PrefabInstance:
       propertyPath: scoremanager
       value: 
       objectReference: {fileID: 82294041}
+    - target: {fileID: 2252030978914391697, guid: fe92d13e5c5867c49ab79fbc44bbd491,
+        type: 3}
+      propertyPath: myPlayer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe92d13e5c5867c49ab79fbc44bbd491, type: 3}
 --- !u!4 &840308717 stripped
@@ -3250,6 +3260,11 @@ PrefabInstance:
       propertyPath: scoremanager
       value: 
       objectReference: {fileID: 82294041}
+    - target: {fileID: 5427729747154638006, guid: 665d0a053fe76474da04a640e094a0ca,
+        type: 3}
+      propertyPath: myPlayer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 665d0a053fe76474da04a640e094a0ca, type: 3}
 --- !u!4 &1007003333 stripped
@@ -3301,11 +3316,6 @@ PrefabInstance:
       value: Room
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 2812a87a95c424543bb702816382a0a9,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: -3452698876176494325, guid: 2812a87a95c424543bb702816382a0a9,
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
@@ -3364,6 +3374,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3452698876176494325, guid: 2812a87a95c424543bb702816382a0a9,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 8388063918083465480, guid: 2812a87a95c424543bb702816382a0a9,
         type: 3}

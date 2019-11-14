@@ -1492,6 +1492,7 @@ GameObject:
   - component: {fileID: 6739288261858623529}
   - component: {fileID: 6739288261858623534}
   - component: {fileID: 2449699173160983505}
+  - component: {fileID: 2252030978914391697}
   m_Layer: 0
   m_Name: hips
   m_TagString: Untagged
@@ -1555,10 +1556,25 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.003
+  m_Radius: 0.01
   m_Height: 0.02
   m_Direction: 1
   m_Center: {x: 0, y: 0.002, z: 0}
+--- !u!114 &2252030978914391697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6739288261858623535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce51ad3ed820d134d97bbe1e5a827095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myPlayer: 0
+  tharHips: {fileID: 0}
+  iCanGrab: 1
 --- !u!1 &6970539895656409426
 GameObject:
   m_ObjectHideFlags: 0
