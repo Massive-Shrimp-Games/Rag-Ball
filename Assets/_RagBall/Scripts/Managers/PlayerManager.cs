@@ -669,7 +669,8 @@ public class PlayerManager : MonoBehaviour {
                     {
                         XwasPressed[i] = false;
                     }
-                    
+
+                    /*
                     //RT (throwing)
                     if (GamePadStates[i].Triggers.Right >= 0.6f && !RightwasPressed[i])
                     {
@@ -682,6 +683,26 @@ public class PlayerManager : MonoBehaviour {
                         Throw();
                     }
                     else if (GamePadStates[i].Triggers.Right <= 0.48f && RightwasPressed[i])
+                    {
+                        // Alert
+                        Debug.Log("GET OVER IT!!!!!");
+
+                        RightwasPressed[i] = false;
+                    }
+                    */
+
+                    //RT (throwing)
+                    if (GamePadStates[i].Buttons.RightShoulder == ButtonState.Pressed && !RightwasPressed[i])
+                    {
+                        // Alert
+                        Debug.Log("THROW IT!!!!!");
+
+                        RightwasPressed[i] = true;
+                        Debug.Log("R Trigger was pressed!");
+                        UpdateGrabInfo(i);
+                        Throw();
+                    }
+                    else if (GamePadStates[i].Buttons.RightShoulder == ButtonState.Pressed && RightwasPressed[i])
                     {
                         // Alert
                         Debug.Log("GET OVER IT!!!!!");
