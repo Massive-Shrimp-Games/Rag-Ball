@@ -8,10 +8,13 @@ public class GUIManager : MonoBehaviour
 
     public Canvas PauseMenu;
     public RawImage ControlsImage;
+    public PlayerManager playerManager;
+
     public void Resume()
     {
         PauseMenu.enabled = false;
         PauseMenu.GetComponent<CanvasGroup>().interactable = false;
+        playerManager.GameIsPaused = false;
         Time.timeScale = 1f;
     }
 

@@ -7,7 +7,7 @@ public class StartScreen: MonoBehaviour
 {
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("Start") || Input.GetButtonDown("Start1") || Input.GetButtonDown("Start2") || Input.GetButtonDown("Start3") || Input.GetButtonDown("Start4"))
         {
             SceneManager.LoadScene(1);
         }

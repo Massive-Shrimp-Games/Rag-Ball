@@ -4502,7 +4502,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalAxis: Left Stick X Axis1
-  m_VerticalAxis: Left Stick X Axis1
+  m_VerticalAxis: Left Stick Y Axis1
   m_SubmitButton: A1
   m_CancelButton: B1
   m_InputActionsPerSecond: 10
@@ -4551,6 +4551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PauseMenu: {fileID: 2070324701}
   ControlsImage: {fileID: 449575456}
+  playerManager: {fileID: 666338261}
 --- !u!1 &1402385468
 GameObject:
   m_ObjectHideFlags: 0
