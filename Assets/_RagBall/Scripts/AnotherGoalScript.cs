@@ -24,13 +24,31 @@ public class AnotherGoalScript : MonoBehaviour
 
     public int findPlayerNumber(GameObject myobject)
     {
+        Debug.Log("Looking for the number!");
         GameObject myparent = myobject.transform.parent.gameObject;
-        if (myparent.name == "Player1" || myparent.name == "Player2" || myparent.name == "Player3" || myparent.name == "Player4" || myparent.name == "PlayerManager")
+        if (myparent.name == "Player1")
         {
-            return myobject.GetComponent<PlayerModel>().PlayerNumber;
+            Debug.Log("Found 1");
+            return 0;
+        }
+        else if (myparent.name == "Player2")
+        {
+            Debug.Log("Found 2");
+            return 1;
+        }
+        else if (myparent.name == "Player3")
+        {
+            Debug.Log("Found 3");
+            return 2;
+        }
+        else if (myparent.name == "Player4")
+        {
+            Debug.Log("Found 4");
+            return 3;
         }
         else
         {
+            Debug.Log("Found NONE");
             return findPlayerNumber(myobject.transform.parent.gameObject);
         }
     }
@@ -41,16 +59,19 @@ public class AnotherGoalScript : MonoBehaviour
         playernumber = findPlayerNumber(collision.gameObject);
         if (playernumber % 2 == 1)
         {
+            Debug.Log("Player is BLUE");
             playercolor = "blue";
         }
         else
         {
+            Debug.Log("Player is RED");
             playercolor = "red";
         }
 
         //if blue goal
         if ((goalcolor == "blue") && (playercolor == "blue"))
         {
+            Debug.Log("===== BLUE SCORES =====");
             scoremanager.AddBlueScore();
             playermanager.respawn(playernumber);
         }
@@ -58,6 +79,7 @@ public class AnotherGoalScript : MonoBehaviour
         //if red goal
         else if ((goalcolor == "red") && (playercolor == "red"))
         {
+            Debug.Log("===== RED SCORES =====");
             scoremanager.AddRedScore();
             playermanager.respawn(playernumber);
         }
