@@ -449,7 +449,10 @@ private void UpdateTimers()
                             PauseMenu.transform.Find("ControlImage").GetComponent<RawImage>().enabled = false;
                             PauseMenu.GetComponent<CanvasGroup>().interactable = true;
                         }
-                        else if (PauseMenu.enabled)
+                        //else if (PauseMenu.enabled)
+                        //{
+                        //    PauseMenu.enabled = false;
+                        //}
                     }
                     else if (GamePadStates[i].Buttons.B == ButtonState.Released && BwasPressed[i])
                     {
@@ -485,6 +488,7 @@ private void UpdateTimers()
                     {
                         StartwasPressed[i] = true;
                         PauseMenu.enabled = true;
+                        GameIsPaused = true;
                         PauseMenu.GetComponent<CanvasGroup>().interactable = true;
                         PauseMenu.transform.Find("Resume_Button").GetComponent<Button>().Select();
                         Time.timeScale = 0f;
@@ -493,6 +497,7 @@ private void UpdateTimers()
                     {
                         StartwasPressed[i] = true;
                         PauseMenu.enabled = false;
+                        GameIsPaused = false;
                         PauseMenu.GetComponent<CanvasGroup>().interactable = false;
                         Time.timeScale = 1f;
                     }

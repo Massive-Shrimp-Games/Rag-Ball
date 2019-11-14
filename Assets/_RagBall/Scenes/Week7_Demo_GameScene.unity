@@ -1604,7 +1604,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 449575454}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -2403,6 +2403,7 @@ MonoBehaviour:
   RespawnPoint: {fileID: 1402385468}
   AnimatorRespawnPoint: {fileID: 62415731}
   scoremanager: {fileID: 82294041}
+  GameIsPaused: 0
   use_X_Input: 1
   connectedControllers: 0
   PauseMenu: {fileID: 2070324701}
@@ -4549,6 +4550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PauseMenu: {fileID: 2070324701}
+  ControlsImage: {fileID: 449575456}
 --- !u!1 &1402385468
 GameObject:
   m_ObjectHideFlags: 0
@@ -6316,7 +6318,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2070324697}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
