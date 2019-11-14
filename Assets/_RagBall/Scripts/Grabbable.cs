@@ -17,6 +17,18 @@ public class Grabbable : MonoBehaviour
 
     public void OnTriggerEnter(Collider theTriggerer)
     {
+        if (theTriggerer.gameObject.layer != 13)
+        {
+            AssignTrigger(theTriggerer);
+        }
+        else
+        {
+            Debug.Log("Da floor is not alloweD!");
+        }
+    }
+
+    public void AssignTrigger(Collider theTriggerer)
+    {
         Debug.Log("I can FEEEL somethin!");
 
         Grabbable theirGrabbable = theTriggerer.GetComponent<Grabbable>();
@@ -34,3 +46,9 @@ public class Grabbable : MonoBehaviour
     }
 
 }
+
+
+
+// Had to ignore the floor, but of course
+// https://answers.unity.com/questions/686915/how-do-i-get-some-objects-to-ignore-collision-with.html
+
