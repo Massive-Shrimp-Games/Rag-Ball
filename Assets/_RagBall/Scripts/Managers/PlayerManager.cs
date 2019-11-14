@@ -113,6 +113,7 @@ public class PlayerManager : MonoBehaviour {
     private bool[] XwasPressed;
     private bool[] StartwasPressed;
     private bool[] RightwasPressed;
+    private bool[] LeftwasPressed;
 
     //respawn objects
     public GameObject RedPlayer;
@@ -257,6 +258,21 @@ public class PlayerManager : MonoBehaviour {
         };
 
         StartwasPressed = new bool[] {
+            false,
+            false,
+            false,
+            false,
+        };
+
+
+        RightwasPressed = new bool[] {
+            false,
+            false,
+            false,
+            false,
+        };
+
+        LeftwasPressed = new bool[] {
             false,
             false,
             false,
@@ -412,6 +428,36 @@ public class PlayerManager : MonoBehaviour {
 
 
     public void Throw()
+    {
+        // GameObject theGrabbler - Who is trying to grab
+        // GameObject maHips - How we reference who is trying to grab
+        // Grabbable maGrabbable - Who is being grabbed
+        // GameObject tharHips - How we reference who is being grabbed
+        // Grabbable theirGrabbable - How we enable/disable the victim
+
+        // Alert
+        Debug.Log("THROW IT!!!!!");
+
+        // Unkinemasicize thad guy
+        tharHips.transform.parent = yerMommy;
+        tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        tharHips.GetComponent<Rigidbody>().isKinematic = false;
+
+        // Applicaticize this here force on thad thar fella's pelvis
+        tharHips.GetComponent<Rigidbody>().AddForce(maHips.transform.forward * 13000f);
+
+        // Reset thar grabblerability
+        theirGrabbable.iCanGrab = true;
+
+        // Fix the mode!
+        maGrabbable.grabMode = "free";
+        maGrabbable.oldHips = null;
+
+        // Play audio
+        AudioManager.transform.Find("Throw_AudioSource").GetComponent<AudioSource>().Play();
+    }
+
+    public void ThrowArc()
     {
         // GameObject theGrabbler - Who is trying to grab
         // GameObject maHips - How we reference who is trying to grab
@@ -767,14 +813,35 @@ public class PlayerManager : MonoBehaviour {
                     */
 
                     //RT (throwing)
-                    if (GamePadStates[i].Buttons.RightShoulder == ButtonState.Pressed)
+                    if (GamePadStates[i].Buttons.RightShoulder == ButtonState.Pressed && !RightwasPressed[i])
                     {
                         // Alert
                         Debug.Log("THROW IT!!!!!");
 
                         Debug.Log("R Trigger was pressed!");
+                        RightwasPressed[i] = true;
                         UpdateGrabInfo(i);
                         Throw();
+                    }
+                    else
+                    {
+                        RightwasPressed[i] = false;
+                    }
+
+                    //LT (throwing)
+                    if (GamePadStates[i].Buttons.LeftShoulder == ButtonState.Pressed && !LeftwasPressed[i])
+                    {
+                        // Alert
+                        Debug.Log("THROW IT!!!!!");
+
+                        Debug.Log("R Trigger was pressed!");
+                        LeftwasPressed[i] = true;
+                        UpdateGrabInfo(i);
+                        ThrowArc();
+                    }
+                    else
+                    {
+                        RightwasPressed[i] = false;
                     }
 
                     //Start (pausing)
