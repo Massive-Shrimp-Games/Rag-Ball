@@ -15,15 +15,28 @@ public class Grabbable : MonoBehaviour
     public bool iCanGrab = true;
     public string grabMode = "free";
 
+    /*
+        public void OnTriggerEnter(Collider theTriggerer)
+        {
+            if (theTriggerer.gameObject.layer != 13)
+            {
+                AssignTrigger(theTriggerer);
+            }
+            else
+            {
+                Debug.Log("Da floor is not alloweD!");
+            }
+        }
+    */
     public void OnTriggerEnter(Collider theTriggerer)
     {
-        if (theTriggerer.gameObject.layer != 13)
+
+        //Deb
+
+        Grabbable testGrabbable = theTriggerer.GetComponent<Grabbable>();
+        if (testGrabbable != null)
         {
             AssignTrigger(theTriggerer);
-        }
-        else
-        {
-            Debug.Log("Da floor is not alloweD!");
         }
     }
 
