@@ -354,6 +354,9 @@ public class PlayerManager : MonoBehaviour {
         // I think this is why:
         // https://answers.unity.com/questions/1128326/object-drifting-to-left-or-right-without-reason.html
 
+        // The other cause could be:
+        // https://docs.unity3d.com/ScriptReference/Rigidbody-isKinematic.html
+
         Debug.Log("We really tryin grab here!");
 
         // TEST
@@ -382,6 +385,7 @@ public class PlayerManager : MonoBehaviour {
             tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
             //tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
             //tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
+            tharHips.GetComponent<Rigidbody>().isKinematic = true;
 
             //Fix the mode!
             maGrabbable.grabMode = "grabbing";
@@ -404,6 +408,7 @@ public class PlayerManager : MonoBehaviour {
         // Unkinemasicize thad guy
         tharHips.transform.parent = yerMommy;
         tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        tharHips.GetComponent<Rigidbody>().isKinematic = false;
 
         // Applicaticize this here force on thad thar fella's pelvis
         tharHips.GetComponent<Rigidbody>().AddForce(maHips.transform.forward * 20000f);
@@ -429,6 +434,7 @@ public class PlayerManager : MonoBehaviour {
         // Unkinemasticize thad guy
         tharHips.transform.parent = yerMommy;
         tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        tharHips.GetComponent<Rigidbody>().isKinematic = false;
 
         // Reset thar grabblerability
         theirGrabbable.iCanGrab = true;
