@@ -136,6 +136,7 @@ public class PlayerManager : MonoBehaviour {
     Grabbable maGrabbable;
     GameObject tharHips;
     Grabbable theirGrabbable;
+    Transform yerMommy;
 
     public bool use_X_Input = true;
     public int connectedControllers = 0;   //if this variable changes, we need to call an update on the gamepads
@@ -344,6 +345,8 @@ public class PlayerManager : MonoBehaviour {
         // tharHips - How we reference who is being grabbed
         // theirGrabbable - How we enable/disable the victim
 
+        // https://answers.unity.com/questions/989146/how-to-attach-an-object-onto-another-object.html
+
         Debug.Log("We really tryin grab here!");
 
         // TEST
@@ -363,8 +366,12 @@ public class PlayerManager : MonoBehaviour {
             tharHips.transform.position = maHips.transform.position;
             tharHips.transform.Translate(0f, 1.5f, 0f);
 
+            //Find da parent
+            yerMommy = tharHips.transform.parent;
+
             // Lock 'im in, Yup!
             theirGrabbable.iCanGrab = false;
+            tharHips.transform.parent = maHips.transform;
 
             //Fix the mode!
             maGrabbable.grabMode = "grabbing";
@@ -382,6 +389,7 @@ public class PlayerManager : MonoBehaviour {
         // Grabbable theirGrabbable - How we enable/disable the victim
 
         // Unkinemasicize thad guy
+        tharHips.transform.parent = yerMommy;
 
         // Applicaticize this here force on thad thar fella's pelvis
 
@@ -403,6 +411,7 @@ public class PlayerManager : MonoBehaviour {
 
 
         // Unkinemasticize thad guy
+        tharHips.transform.parent = yerMommy;
 
         // Reset thar grabblerability
         theirGrabbable.iCanGrab = true;
