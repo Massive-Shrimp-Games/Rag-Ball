@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GUIManager : MonoBehaviour
 {
 
     public Canvas PauseMenu;
+    public RawImage ControlsImage;
     public void Resume()
     {
         PauseMenu.enabled = false;
@@ -15,7 +17,8 @@ public class GUIManager : MonoBehaviour
 
     public void Controls()
     {
-        
+        ControlsImage.enabled = true;
+        PauseMenu.GetComponent<CanvasGroup>().interactable = false;
     }
 
     public void Options()

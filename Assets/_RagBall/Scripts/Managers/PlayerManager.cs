@@ -115,6 +115,7 @@ public class PlayerManager : MonoBehaviour {
     public GameObject RespawnPoint;
     public GameObject AnimatorRespawnPoint;
     public ScoreManager scoremanager;
+    public bool GameIsPaused;
 
     //PER PLAYER
     //public Animator animator1;
@@ -434,12 +435,21 @@ private void UpdateTimers()
                     }
 
                     //B (dashing)
-                    if (GamePadStates[i].Buttons.B == ButtonState.Pressed && !BwasPressed[i])
+                    if (GamePadStates[i].Buttons.B == ButtonState.Pressed && !BwasPressed[i] && !GameIsPaused)
                     {
                         BwasPressed[i] = true;
                         Debug.Log("B Button was pressed!");
                         Vector3 boostDir = players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.forward;
                         players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(boostDir * 10000f);
+                    }
+                    else if (GamePadStates[i].Buttons.B == ButtonState.Pressed && GameIsPaused)
+                    {
+                        if (PauseMenu.transform.Find("ControlImage").GetComponent<RawImage>().enabled)
+                        {
+                            PauseMenu.transform.Find("ControlImage").GetComponent<RawImage>().enabled = false;
+                            PauseMenu.GetComponent<CanvasGroup>().interactable = true;
+                        }
+                        else if (PauseMenu.enabled)
                     }
                     else if (GamePadStates[i].Buttons.B == ButtonState.Released && BwasPressed[i])
                     {
