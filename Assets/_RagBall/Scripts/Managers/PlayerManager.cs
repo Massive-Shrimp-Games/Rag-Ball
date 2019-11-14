@@ -402,7 +402,7 @@ public class PlayerManager : MonoBehaviour {
         tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 
         // Applicaticize this here force on thad thar fella's pelvis
-        tharHips.GetComponent<Rigidbody>().AddForce(maHips.transform.forward * 10000f);
+        tharHips.GetComponent<Rigidbody>().AddForce(maHips.transform.forward * 20000f);
 
         // Reset thar grabblerability
         theirGrabbable.iCanGrab = true;
