@@ -11,6 +11,7 @@ public class AnotherGoalScript : MonoBehaviour
     public string goalcolor;
     private int playernumber;
     private string playercolor;
+    public GameObject audiomanager;
 
 
 
@@ -83,6 +84,9 @@ public class AnotherGoalScript : MonoBehaviour
             scoremanager.AddRedScore();
             playermanager.respawn(playernumber);
         }
+
+        //play goal audio
+        audiomanager.transform.Find("Goal_AudioSource").GetComponent<AudioSource>().Play();
 
 
     }

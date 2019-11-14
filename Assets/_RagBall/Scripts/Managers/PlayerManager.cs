@@ -148,6 +148,7 @@ public class PlayerManager : MonoBehaviour {
     public Canvas ParameterCanvas;
     public Image[] Stamina_Heads;
     public Sprite[] StaminaPics;
+    public GameObject AudioManager;
 
     void Awake() {
         //Check if instance already exists
