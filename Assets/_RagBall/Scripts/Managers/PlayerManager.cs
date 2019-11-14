@@ -144,6 +144,8 @@ public class PlayerManager : MonoBehaviour {
 
     public Canvas PauseMenu;
     public Canvas ParameterCanvas;
+    public Image[] Stamina_Heads;
+    public Sprite[] StaminaPics;
 
     void Awake() {
         //Check if instance already exists
@@ -504,6 +506,7 @@ public class PlayerManager : MonoBehaviour {
                 DashTimes[i] = 3;
             }
 
+            Stamina_Heads[i].sprite = StaminaPics[Dashes[i]];
         }
     }
 
