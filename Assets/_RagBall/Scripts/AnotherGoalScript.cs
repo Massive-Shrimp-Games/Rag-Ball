@@ -12,7 +12,7 @@ public class AnotherGoalScript : MonoBehaviour
     private int playernumber;
     private string playercolor;
     public GameObject audiomanager;
-
+    public ParticleSystem Confetti;
 
 
 
