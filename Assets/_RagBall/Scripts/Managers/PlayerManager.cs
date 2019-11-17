@@ -629,6 +629,9 @@ public class PlayerManager : MonoBehaviour {
             }
             // Update Count (Force)
 
+            // Debug
+            Debug.Log("Stamina: " + Staminas[i]);
+
         }
     }
 
