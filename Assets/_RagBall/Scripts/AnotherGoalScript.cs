@@ -87,6 +87,7 @@ public class AnotherGoalScript : MonoBehaviour
 
         //play goal audio
         audiomanager.transform.Find("Goal_AudioSource").GetComponent<AudioSource>().Play();
+        Confetti.Play();
 
 
     }
