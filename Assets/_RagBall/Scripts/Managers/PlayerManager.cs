@@ -138,7 +138,7 @@ public class PlayerManager : MonoBehaviour {
     GameObject theGrabbler;
     GameObject maHips;
     Grabbable maGrabbable;
-    GameObject tharHips;
+    GameObject theirHips;
     Grabbable theirGrabbable;
     Transform yerMommy;
 
@@ -376,7 +376,7 @@ public class PlayerManager : MonoBehaviour {
         // theGrabbler - Who is trying to grab
         // maHips - How we reference who is trying to grab
         // maGrabbable - Who is being grabbed
-        // tharHips - How we reference who is being grabbed
+        // theirHips - How we reference who is being grabbed
         // theirGrabbable - How we enable/disable the victim
 
         // https://answers.unity.com/questions/989146/how-to-attach-an-object-onto-another-object.html
@@ -393,7 +393,7 @@ public class PlayerManager : MonoBehaviour {
         Debug.Log("We really tryin grab here!");
 
         // TEST
-        if (tharHips != null)
+        if (theirHips != null)
         {
             Debug.Log("And here we go");
         }
@@ -406,19 +406,19 @@ public class PlayerManager : MonoBehaviour {
         if (maHips.GetComponent<Grabbable>().iCanGrab == true)
         {
             // Move 'im up
-            tharHips.transform.position = maHips.transform.position;
-            tharHips.transform.Translate(0f, 1.5f, 0f);
+            theirHips.transform.position = maHips.transform.position;
+            theirHips.transform.Translate(0f, 1.5f, 0f);
 
             //Find da parent
-            yerMommy = tharHips.transform.parent;
+            yerMommy = theirHips.transform.parent;
 
             // Lock 'im in, Yup!
             theirGrabbable.iCanGrab = false;
-            tharHips.transform.parent = maHips.transform;
-            tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
-            //tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
-            //tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
-            tharHips.GetComponent<Rigidbody>().isKinematic = true;
+            theirHips.transform.parent = maHips.transform;
+            theirHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
+            //theirHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
+            //theirHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
+            theirHips.GetComponent<Rigidbody>().isKinematic = true;
 
             //Fix the mode!
             maGrabbable.grabMode = "grabbing";
@@ -432,19 +432,19 @@ public class PlayerManager : MonoBehaviour {
         // GameObject theGrabbler - Who is trying to grab
         // GameObject maHips - How we reference who is trying to grab
         // Grabbable maGrabbable - Who is being grabbed
-        // GameObject tharHips - How we reference who is being grabbed
+        // GameObject theirHips - How we reference who is being grabbed
         // Grabbable theirGrabbable - How we enable/disable the victim
 
         // Alert
         Debug.Log("THROW IT!!!!!");
 
         // Unkinemasicize thad guy
-        tharHips.transform.parent = yerMommy;
-        tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        tharHips.GetComponent<Rigidbody>().isKinematic = false;
+        theirHips.transform.parent = yerMommy;
+        theirHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        theirHips.GetComponent<Rigidbody>().isKinematic = false;
 
         // Applicaticize this here force on thad thar fella's pelvis
-        tharHips.GetComponent<Rigidbody>().AddForce(maHips.transform.forward * 13000f);
+        theirHips.GetComponent<Rigidbody>().AddForce(maHips.transform.forward * 13000f);
 
         // Reset thar grabblerability
         theirGrabbable.iCanGrab = true;
@@ -462,19 +462,19 @@ public class PlayerManager : MonoBehaviour {
         // GameObject theGrabbler - Who is trying to grab
         // GameObject maHips - How we reference who is trying to grab
         // Grabbable maGrabbable - Who is being grabbed
-        // GameObject tharHips - How we reference who is being grabbed
+        // GameObject theirHips - How we reference who is being grabbed
         // Grabbable theirGrabbable - How we enable/disable the victim
 
         // Alert
         Debug.Log("THROW IT!!!!!");
 
         // Unkinemasicize thad guy
-        tharHips.transform.parent = yerMommy;
-        tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        tharHips.GetComponent<Rigidbody>().isKinematic = false;
+        theirHips.transform.parent = yerMommy;
+        theirHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        theirHips.GetComponent<Rigidbody>().isKinematic = false;
 
         // Applicaticize this here force on thad thar fella's pelvis
-        tharHips.GetComponent<Rigidbody>().AddForce((maHips.transform.forward + maHips.transform.up) * 6000f);
+        theirHips.GetComponent<Rigidbody>().AddForce((maHips.transform.forward + maHips.transform.up) * 6000f);
 
         // Reset thar grabblerability
         theirGrabbable.iCanGrab = true;
@@ -493,14 +493,14 @@ public class PlayerManager : MonoBehaviour {
         // GameObject theGrabbler - Who is trying to grab
         // GameObject maHips - How we reference who is trying to grab
         // Grabbable maGrabbable - Who is being grabbed
-        // GameObject tharHips - How we reference who is being grabbed
+        // GameObject theirHips - How we reference who is being grabbed
         // Grabbable theirGrabbable - How we enable/disable the victim
 
 
         // Unkinemasticize thad guy
-        tharHips.transform.parent = yerMommy;
-        tharHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        tharHips.GetComponent<Rigidbody>().isKinematic = false;
+        theirHips.transform.parent = yerMommy;
+        theirHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        theirHips.GetComponent<Rigidbody>().isKinematic = false;
 
         // Reset thar grabblerability
         theirGrabbable.iCanGrab = true;
@@ -515,7 +515,7 @@ public class PlayerManager : MonoBehaviour {
         // GameObject theGrabbler - Who is trying to grab
         // GameObject maHips - How we reference who is trying to grab
         // Grabbable maGrabbable - Who is being grabbed
-        // GameObject tharHips - How we reference who is being grabbed
+        // GameObject theirHips - How we reference who is being grabbed
         // Grabbable theirGrabbable - How we enable/disable the victim
 
 
@@ -539,7 +539,7 @@ public class PlayerManager : MonoBehaviour {
         theGrabbler = null;
         maHips = null;
         maGrabbable = null;
-        tharHips = null;
+        theirHips = null;
         theirGrabbable = null;
     }
 
@@ -558,9 +558,9 @@ public class PlayerManager : MonoBehaviour {
         GameObject theGrabbler = players[Grabbler];
         GameObject maHips = theGrabbler.transform.Find("Player/metarig/hips/").gameObject;
         Grabbable maGrabbable = maHips.GetComponent<Grabbable>();
-        GameObject tharHips = maGrabbable.tharHips;
-        Grabbable theirGrabbable = tharHips.GetComponent<Grabbable>();
-        return new List<T>() { theGrabbler, maHips, maGrabbable, tharHips, theirGrabbable };
+        GameObject theirHips = maGrabbable.theirHips;
+        Grabbable theirGrabbable = theirHips.GetComponent<Grabbable>();
+        return new List<T>() { theGrabbler, maHips, maGrabbable, theirHips, theirGrabbable };
     }
     */
 
@@ -573,13 +573,13 @@ public class PlayerManager : MonoBehaviour {
         maGrabbable = maHips.GetComponent<Grabbable>();
         try
         { 
-            tharHips = maGrabbable.tharHips;
-            theirGrabbable = tharHips.GetComponent<Grabbable>();
+            theirHips = maGrabbable.tharHips;
+            theirGrabbable = theirHips.GetComponent<Grabbable>();
         }
         catch
         {
-            tharHips = maGrabbable.oldHips;
-            theirGrabbable = tharHips.GetComponent<Grabbable>();
+            theirHips = maGrabbable.oldHips;
+            theirGrabbable = theirHips.GetComponent<Grabbable>();
         }
         Debug.Log("And I sur' hope I can see this!");
     }
@@ -841,7 +841,7 @@ public class PlayerManager : MonoBehaviour {
                     }
                     else
                     {
-                        RightwasPressed[i] = false;
+                        LeftwasPressed[i] = false;
                     }
 
                     //Start (pausing)

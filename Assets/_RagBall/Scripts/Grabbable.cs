@@ -6,7 +6,7 @@ public class Grabbable : MonoBehaviour
 {
 
     // myPlayer = player tracking integer
-    // tharHips = any triggering object's possible hips
+    // theirHips = any triggering object's possible hips
     // iCanGrab = stops player from grabbing if they are currently being grabbed
     // grabMode = provides context to the grab button in godscript
 
