@@ -152,6 +152,7 @@ public class PlayerManager : MonoBehaviour {
     public Image[] Stamina_Heads;
     public Sprite[] StaminaPics;
     public GameObject AudioManager;
+    public float dashForce = 10000f;
 
     void Awake() {
         //Check if instance already exists
@@ -635,8 +636,10 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
+
     // Update is called once per frame
     void Update() {
+
         if (use_X_Input) {
             if (connectedControllers != CheckControllerAmount()) {
                 connectedControllers = CheckControllerAmount();
@@ -714,13 +717,13 @@ public class PlayerManager : MonoBehaviour {
                         Debug.Log("A Button was pressed!");
                     }
 
-                    //B (dashing)
+                        //B (dashing)
                     if (GamePadStates[i].Buttons.B == ButtonState.Pressed && !BwasPressed[i] && !GameIsPaused && Dashes[i] > 0)
                     {
                         BwasPressed[i] = true;
                         Debug.Log("B Button was pressed!");
                         Vector3 boostDir = players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.forward;
-                        players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(boostDir * 10000f);
+                        players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(boostDir * dashForce);
                         Dashes[i] -= 1;
                         if (Dashes[i] < 0)
                         {
