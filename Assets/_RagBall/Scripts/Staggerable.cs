@@ -24,30 +24,38 @@ public class Staggerable : MonoBehaviour
     public ConfigurableJoint ShinR_CJ;
     */
 
-    private RigidbodyConstraints hipsRBC;
+    //private RigidbodyConstraints hipsRBC;
+    private Rigidbody maHips;
     public PlayerManager ourSavior;
     public int myPlayer = -666;
     private int maSpeed;
+    public string grabMode;
 
     private void Awake()
     {
         Debug.Log("STAGGER: READY");
-        hipsRBC = this.gameObject.GetComponent<Rigidbody>().constraints;
+        //hipsRBC = this.gameObject.GetComponent<Rigidbody>().constraints;
+        maHips = this.gameObject.GetComponent<Rigidbody>();
         myPlayer = this.gameObject.GetComponent<Grabbable>().myPlayer;
+        grabMode = this.gameObject.GetComponent<Grabbable>().grabMode;
     }
 
     public void Stagger()
     {
-        Debug.Log("STAGGER:\n!!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!!");
-        hipsRBC = RigidbodyConstraints.None;
+        //Debug.Log("STAGGER:\n!!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!!");
+        maHips.constraints = RigidbodyConstraints.None;
+        grabMode = "stunned";
+        //Debug.Log(hipsRBC);
     }
 
     public void UnStagger()
     {
-        Debug.Log("STAGGER:\n????????????????????????????\n?????????????????????");
-        hipsRBC = RigidbodyConstraints.FreezeRotationX;
-        hipsRBC = RigidbodyConstraints.FreezeRotationY;
-        hipsRBC = RigidbodyConstraints.FreezeRotationZ;
+        //Debug.Log("STAGGER:\n????????????????????????????\n?????????????????????");
+        maHips.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+        //maHips.constraints = RigidbodyConstraints.FreezeRotationY;
+        //maHips.constraints = RigidbodyConstraints.FreezeRotationZ;
+        grabMode = "free";
+        //Debug.Log(hipsRBC);
     }
 
     void OnCollisionEnter(Collision collision)

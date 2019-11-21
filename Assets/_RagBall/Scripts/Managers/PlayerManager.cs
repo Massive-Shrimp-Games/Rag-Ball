@@ -114,11 +114,13 @@ public class PlayerManager : MonoBehaviour {
     // ButtonArrayVariables
     private bool[] BwasPressed;
     private bool[] YwasPressed;
+    private bool[] YisRagdolling;
     private bool[] XwasPressed;
     private bool[] StartwasPressed;
     private bool[] RightwasPressed;
     private bool[] LeftwasPressed;
     private bool LwasPressed = false;
+    private bool MwasPressed = false;
 
     // RespawnObjectVariables
     public GameObject RedPlayer;
@@ -147,6 +149,8 @@ public class PlayerManager : MonoBehaviour {
     GameObject theirHips;
     Grabbable theirGrabbable;
     Transform yerMommy;
+
+    private float[] movementForce;
 
     // XInputVariables
     public bool use_X_Input = true;
@@ -211,6 +215,14 @@ public class PlayerManager : MonoBehaviour {
                 players[2].transform.Find("Player/metarig/hips/spine/chest/shoulder.R/upper_arm.R/forearm.R").gameObject},
             { players[3].transform.Find("Player/metarig/hips/spine/chest/shoulder.L/upper_arm.L/forearm.L").gameObject,
                 players[3].transform.Find("Player/metarig/hips/spine/chest/shoulder.R/upper_arm.R/forearm.R").gameObject},
+        };
+
+        movementForce = new float[]
+        {
+            1000f,
+            1000f,
+            1000f,
+            1000f,
         };
 
         PlayerHips = new GameObject[] 
@@ -278,6 +290,14 @@ public class PlayerManager : MonoBehaviour {
         };
 
         YwasPressed = new bool[] 
+        {
+            false,
+            false,
+            false,
+            false,
+        };
+
+        YisRagdolling = new bool[]
         {
             false,
             false,
@@ -691,7 +711,7 @@ public class PlayerManager : MonoBehaviour {
                 StaminaTimes[i] = 2f;
             }
             // Debug
-            Debug.Log("Stamina: " + Staminas[i]);
+            //Debug.Log("Stamina: " + Staminas[i]);
             // Update Staggerness
             // https://docs.unity3d.com/ScriptReference/Collision-relativeVelocity.html
 
@@ -779,7 +799,7 @@ public class PlayerManager : MonoBehaviour {
 
 
 
-
+    MovementPair movementPair = new MovementPair();
     // Update is called once per frame
     void Update() {
 
@@ -826,7 +846,7 @@ public class PlayerManager : MonoBehaviour {
             // ControllerMotionTranslator
             for (int i = 0; i < 4; i++)
             {
-                MovementPair movementPair = new MovementPair();
+                
 
                 movementPair.H = GamePadStates[i].ThumbSticks.Left.X + GamePadStates[i].ThumbSticks.Right.X;
                 movementPair.V = GamePadStates[i].ThumbSticks.Left.Y + GamePadStates[i].ThumbSticks.Right.Y;
@@ -838,7 +858,7 @@ public class PlayerManager : MonoBehaviour {
                     movementPair = KeyboardControls(movementPair);
                     Movement.Set(movementPair.H, 0f, movementPair.V);
                     Movement = Movement.normalized * 2 * Time.deltaTime;
-                    players[2].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * 1000f);
+                    players[2].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * movementForce[i]);
                 }
                 Movement.Set(movementPair.H, 0f, movementPair.V);
                 Movement = Movement.normalized * 2 * Time.deltaTime;
@@ -908,7 +928,7 @@ public class PlayerManager : MonoBehaviour {
                         BwasPressed[i] = false;
                     }
 
-                    //Y (respawning)
+                    /*//Y (respawning)
                     if (GamePadStates[i].Buttons.Y == ButtonState.Pressed && !YwasPressed[i])
                     {
                         YwasPressed[i] = true;
@@ -918,6 +938,29 @@ public class PlayerManager : MonoBehaviour {
                     else if (GamePadStates[i].Buttons.Y == ButtonState.Released && YwasPressed[i])
                     {
                         YwasPressed[i] = false;
+                    }*/
+
+                    //Y (ragdolling)
+                    if (GamePadStates[i].Buttons.Y == ButtonState.Pressed && !YwasPressed[i] && !YisRagdolling[i])
+                    {
+                        YwasPressed[i] = true;
+                        YisRagdolling[i] = true;
+                        movementForce[i] = 10f;
+                        Debug.Log("Y Button was pressed!");
+                        Staggers[i].Stagger();
+                    }
+                    else if (GamePadStates[i].Buttons.Y == ButtonState.Pressed && !YwasPressed[i] && YisRagdolling[i])
+                    {
+                        YwasPressed[i] = true;
+                        YisRagdolling[i] = false;
+                        movementForce[i] = 1000f;
+                        Debug.Log("Y Button was pressed!");
+                        Staggers[i].UnStagger();
+                    }
+                    else if (GamePadStates[i].Buttons.Y == ButtonState.Released && YwasPressed[i])
+                    {
+                        YwasPressed[i] = false;
+                        //Staggers[i].UnStagger();
                     }
 
                     //X (grabbing)
@@ -945,7 +988,25 @@ public class PlayerManager : MonoBehaviour {
                         KeysEnabled = false;
                         LwasPressed = false;
                     }
-
+                    // M (Stagger All)
+                    if (Input.GetKeyDown("m") && !MwasPressed)
+                    {
+                        Debug.Log("Stagger Override All!");
+                        Staggers[0].Stagger();
+                        Staggers[1].Stagger();
+                        Staggers[2].Stagger();
+                        Staggers[3].Stagger();
+                        MwasPressed = true;
+                    }
+                    else if (Input.GetKeyDown("m") && MwasPressed)
+                    {
+                        Debug.Log("Stagger Deactivate All!");
+                        Staggers[0].UnStagger();
+                        Staggers[1].UnStagger();
+                        Staggers[2].UnStagger();
+                        Staggers[3].UnStagger();
+                        MwasPressed = false;
+                    }
 
                     /*
                     //RT (throwing)
