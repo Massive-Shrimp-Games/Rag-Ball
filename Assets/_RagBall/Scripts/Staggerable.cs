@@ -30,6 +30,7 @@ public class Staggerable : MonoBehaviour
     public int myPlayer = -666;
     private int maSpeed;
     public string grabMode;
+    public Animator maAnimator;
 
     private void Awake()
     {
@@ -38,6 +39,7 @@ public class Staggerable : MonoBehaviour
         maHips = this.gameObject.GetComponent<Rigidbody>();
         myPlayer = this.gameObject.GetComponent<Grabbable>().myPlayer;
         grabMode = this.gameObject.GetComponent<Grabbable>().grabMode;
+        maAnimator = this.gameObject.transform.parent.parent.parent.GetChild(1).GetComponent<animController>().anim;
     }
 
     public void Stagger()
@@ -45,6 +47,7 @@ public class Staggerable : MonoBehaviour
         //Debug.Log("STAGGER:\n!!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!!");
         maHips.constraints = RigidbodyConstraints.None;
         grabMode = "stunned";
+        maAnimator.enabled = false;
         //Debug.Log(hipsRBC);
     }
 
@@ -54,6 +57,7 @@ public class Staggerable : MonoBehaviour
         maHips.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         //maHips.constraints = RigidbodyConstraints.FreezeRotationY;
         //maHips.constraints = RigidbodyConstraints.FreezeRotationZ;
+        maAnimator.enabled = true;
         grabMode = "free";
         //Debug.Log(hipsRBC);
     }
@@ -78,7 +82,8 @@ public class Staggerable : MonoBehaviour
     // https://docs.unity3d.com/Manual/class-CharacterJoint.html
     // https://answers.unity.com/questions/11460/how-do-i-lock-out-a-axis.html
     // Scripts
-
+    // https://answers.unity.com/questions/1412772/how-to-stop-animation-from-playing-in-c.html
+    // https://docs.unity3d.com/ScriptReference/Transform.GetChild.html
     // Constraints
     // https://docs.unity3d.com/ScriptReference/Rigidbody-constraints.html
 }
