@@ -6,6 +6,7 @@ using UnityEngine;
 public class AnotherGoalScript : MonoBehaviour
 {
 
+    // Variables
     public ScoreManager scoremanager;
     public PlayerManager playermanager;
     public string goalcolor;
@@ -15,8 +16,6 @@ public class AnotherGoalScript : MonoBehaviour
     public ParticleSystem Confetti;
 
 
-
-    // Start is called before the first frame update
     void Start()
     {
         Debug.Log("THE GOAL HAS LOADED");
