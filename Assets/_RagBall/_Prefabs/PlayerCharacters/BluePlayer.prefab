@@ -468,6 +468,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1180,7 +1181,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7166371695166824862}
-  - {fileID: 7166371693453302231}
   - {fileID: 7166371695354652666}
   - {fileID: 7166371695177276731}
   m_Father: {fileID: 0}
@@ -1574,7 +1574,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myPlayer: 0
   tharHips: {fileID: 0}
+  oldHips: {fileID: 0}
   iCanGrab: 1
+  grabMode: free
 --- !u!1 &6970539895656409426
 GameObject:
   m_ObjectHideFlags: 0
@@ -1753,12 +1755,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7166371693453302228}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.43, y: 0.12, z: 0.12}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.43011522, y: -0.105555296, z: 0.119999886}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 8792772798496386442}
-  m_RootOrder: 1
+  m_Father: {fileID: 7166371695166824862}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7166371693453302230
 MonoBehaviour:
@@ -2262,6 +2264,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2366,6 +2369,7 @@ Transform:
   m_Children:
   - {fileID: 3119396378512312406}
   - {fileID: 8640204991021546989}
+  - {fileID: 7166371693453302231}
   m_Father: {fileID: 8792772798496386442}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2417,7 +2421,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8792772798496386442}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7166371695177276730
 MonoBehaviour:
@@ -2503,7 +2507,7 @@ Transform:
   - {fileID: 7166371694782882137}
   - {fileID: 7166371693735774264}
   m_Father: {fileID: 8792772798496386442}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7166371695354652661
 Animator:
