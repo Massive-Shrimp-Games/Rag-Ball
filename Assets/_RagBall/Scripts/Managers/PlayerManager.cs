@@ -124,6 +124,7 @@ public class PlayerManager : MonoBehaviour {
     public GameObject RespawnPoint;
     public GameObject AnimatorRespawnPoint;
     public ScoreManager scoremanager;
+    public Dynamic_Cam DynamicCamera;
     public bool GameIsPaused;
 
     //PER PLAYER
@@ -371,6 +372,7 @@ public class PlayerManager : MonoBehaviour {
         newPlayer.transform.Find("Player/metarig/hips/").gameObject.GetComponent<Grabbable>().myPlayer = pNumber;
         GameObject theHips = newPlayer.transform.Find("Player/metarig/hips/").gameObject;
         Debug.Log("Player's Hips are: " + theHips.GetComponent<Grabbable>().myPlayer.ToString());
+        DynamicCamera.targets.Add(newPlayer.transform.Find("Player/Pivot"));
 
         //refresh attributes
         Dashes[pNumber] = 5;

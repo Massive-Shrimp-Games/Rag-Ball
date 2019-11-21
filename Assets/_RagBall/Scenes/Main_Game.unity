@@ -3063,9 +3063,11 @@ MonoBehaviour:
   RespawnPoint: {fileID: 1402385468}
   AnimatorRespawnPoint: {fileID: 62415731}
   scoremanager: {fileID: 82294041}
+  DynamicCamera: {fileID: 963194229}
   GameIsPaused: 0
   use_X_Input: 1
   connectedControllers: 0
+  KeysEnabled: 0
   PauseMenu: {fileID: 2070324701}
   ParameterCanvas: {fileID: 735746221}
   Stamina_Heads:
