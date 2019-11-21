@@ -116,6 +116,7 @@ public class PlayerManager : MonoBehaviour {
     private bool[] StartwasPressed;
     private bool[] RightwasPressed;
     private bool[] LeftwasPressed;
+    private bool LwasPressed = false;
 
     // RespawnObjectVariables
     public GameObject RedPlayer;
@@ -148,6 +149,7 @@ public class PlayerManager : MonoBehaviour {
     public bool use_X_Input = true;
     public int connectedControllers = 0;   //if this variable changes, we need to call an update on the gamepads
     public static PlayerManager singleton = null;
+    public bool KeysEnabled = false;
 
     // PauseControlVariables
     public Canvas PauseMenu;
@@ -365,7 +367,7 @@ public class PlayerManager : MonoBehaviour {
         PlayerHands[pNumber, 0] = newPlayer.transform.Find("Player/metarig/hips/spine/chest/shoulder.L/upper_arm.L/forearm.L").gameObject;
         PlayerHands[pNumber, 1] = newPlayer.transform.Find("Player/metarig/hips/spine/chest/shoulder.R/upper_arm.R/forearm.R").gameObject;
         PlayerHips[pNumber] = newPlayer.transform.Find("Player/metarig/hips").gameObject;
-        newPlayer.name = "Player" + (pNumber+1).ToString();
+        newPlayer.name = "Player" + (pNumber + 1).ToString();
         newPlayer.transform.Find("Player/metarig/hips/").gameObject.GetComponent<Grabbable>().myPlayer = pNumber;
         GameObject theHips = newPlayer.transform.Find("Player/metarig/hips/").gameObject;
         Debug.Log("Player's Hips are: " + theHips.GetComponent<Grabbable>().myPlayer.ToString());
@@ -576,7 +578,7 @@ public class PlayerManager : MonoBehaviour {
         maHips = theGrabbler.transform.Find("Player/metarig/hips/").gameObject;
         maGrabbable = maHips.GetComponent<Grabbable>();
         try
-        { 
+        {
             theirHips = maGrabbable.tharHips;
             theirGrabbable = theirHips.GetComponent<Grabbable>();
         }
@@ -639,6 +641,70 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
+    public class MovementPair
+    {
+        public float H;
+        public float V;
+    }
+
+
+    private MovementPair KeyboardControls(MovementPair movementPair)
+    {
+        // https://answers.unity.com/questions/514932/multiple-parameter.html
+
+
+        // KeyboardMovement (for Player 3 [i=2])
+        // (A/D) Horizontal
+        if (Input.GetKeyDown("a") && !Input.GetKeyDown("d"))
+        {
+            movementPair.H = 1;
+        }
+        else if (!Input.GetKeyDown("a") && Input.GetKeyDown("d"))
+        {
+            movementPair.H = -1;
+        }
+        else
+        {
+            movementPair.H = 0;
+        }
+        // (W/S) Vertical
+        if (Input.GetKeyDown("d") && !Input.GetKeyDown("a"))
+        {
+            movementPair.V = 1;
+        }
+        else if (Input.GetKeyDown("a") && !Input.GetKeyDown("d"))
+        {
+            movementPair.V = -1;
+        }
+        else
+        {
+            movementPair.V = 0;
+        }
+        /*
+        // (E) Grab
+        if (GamePadStates[i].Buttons.X == ButtonState.Pressed && !XwasPressed[i])
+        {
+            XwasPressed[i] = true;
+            Debug.Log("X Button was pressed!");
+            UpdateGrabInfo(i);
+            GrabDecide();
+        }
+        else if (GamePadStates[i].Buttons.X == ButtonState.Released && XwasPressed[i])
+        {
+            XwasPressed[i] = false;
+        }
+        */
+        // (Q) Throw
+        // (P) Pause
+        // (F) Jump
+        // (Shift) Dash
+
+        // Done
+        return movementPair;
+    }
+
+
+
 
     // Update is called once per frame
     void Update() {
@@ -686,15 +752,25 @@ public class PlayerManager : MonoBehaviour {
             // ControllerMotionTranslator
             for (int i = 0; i < 4; i++)
             {
-                float H = GamePadStates[i].ThumbSticks.Left.X + GamePadStates[i].ThumbSticks.Right.X;
-                float V = GamePadStates[i].ThumbSticks.Left.Y + GamePadStates[i].ThumbSticks.Right.Y;
+                MovementPair movementPair = new MovementPair();
+
+                movementPair.H = GamePadStates[i].ThumbSticks.Left.X + GamePadStates[i].ThumbSticks.Right.X;
+                movementPair.V = GamePadStates[i].ThumbSticks.Left.Y + GamePadStates[i].ThumbSticks.Right.Y;
 
                 //movement
                 Vector3 Movement = new Vector3();
-                Movement.Set(H, 0f, V);
+                if (KeysEnabled)
+                { 
+                    movementPair = KeyboardControls(movementPair);
+                    Movement.Set(movementPair.H, 0f, movementPair.V);
+                    Movement = Movement.normalized * 2 * Time.deltaTime;
+                    players[2].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * 1000f);
+                }
+                Movement.Set(movementPair.H, 0f, movementPair.V);
                 Movement = Movement.normalized * 2 * Time.deltaTime;
                 players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * 1000f);
                 //RotatePlayers[i].transform.position = players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.position;
+
 
                 //turning (also causes model to lean back a bit)
                 if (Movement != Vector3.zero)
@@ -782,6 +858,20 @@ public class PlayerManager : MonoBehaviour {
                     {
                         XwasPressed[i] = false;
                     }
+                    // L (Keyboard Controls)
+                    if (Input.GetKeyDown("l") && !LwasPressed)
+                    {
+                        Debug.Log("Keys Enabled!");
+                        KeysEnabled = true;
+                        LwasPressed = true;
+                    }
+                    else if (Input.GetKeyDown("l") && LwasPressed)
+                    {
+                        Debug.Log("Keys Disabled!");
+                        KeysEnabled = false;
+                        LwasPressed = false;
+                    }
+
 
                     /*
                     //RT (throwing)
