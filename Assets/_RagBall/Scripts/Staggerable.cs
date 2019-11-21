@@ -71,6 +71,7 @@ public class Staggerable : MonoBehaviour
         if (maSpeed > 5)
         {
             ourSavior.DoStagger(myPlayer, maSpeed);
+            ourSavior.AudioManager.transform.Find("collision_AudioSource").GetComponent<AudioSource>().Play();
         }
     }
 
