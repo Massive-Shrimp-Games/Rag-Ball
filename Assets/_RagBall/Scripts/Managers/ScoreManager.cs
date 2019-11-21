@@ -6,6 +6,8 @@ using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
+
+    // Variables
     //public GameObject RedGoal;
     //public GameObject BlueGoal;
     public int RedScore;
