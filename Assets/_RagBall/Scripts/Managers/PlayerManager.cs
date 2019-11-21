@@ -122,6 +122,7 @@ public class PlayerManager : MonoBehaviour {
     private bool[] LeftwasPressed;
     private bool LwasPressed = false;
     private bool MwasPressed = false;
+    private bool[] motionEnabled;
 
     // RespawnObjectVariables
     public GameObject RedPlayer;
@@ -224,6 +225,14 @@ public class PlayerManager : MonoBehaviour {
             1000f,
             1000f,
             1000f,
+        };
+
+        motionEnabled = new bool[]
+        {
+            true,
+            true,
+            true,
+            true,
         };
 
         PlayerHips = new GameObject[] 
@@ -857,9 +866,11 @@ public class PlayerManager : MonoBehaviour {
             {
                 
 
-                movementPair.H = GamePadStates[i].ThumbSticks.Left.X + GamePadStates[i].ThumbSticks.Right.X;
-                movementPair.V = GamePadStates[i].ThumbSticks.Left.Y + GamePadStates[i].ThumbSticks.Right.Y;
-
+                if (motionEnabled[i])
+                { 
+                    movementPair.H = GamePadStates[i].ThumbSticks.Left.X + GamePadStates[i].ThumbSticks.Right.X;
+                    movementPair.V = GamePadStates[i].ThumbSticks.Left.Y + GamePadStates[i].ThumbSticks.Right.Y;
+                }
                 //movement
                 Vector3 Movement = new Vector3();
                 if (KeysEnabled)
@@ -869,11 +880,13 @@ public class PlayerManager : MonoBehaviour {
                     Movement = Movement.normalized * 2 * Time.deltaTime;
                     players[2].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * movementForce[i]);
                 }
-                Movement.Set(movementPair.H, 0f, movementPair.V);
-                Movement = Movement.normalized * 2 * Time.deltaTime;
-                players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * 1000f);
-                //RotatePlayers[i].transform.position = players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.position;
-
+                if(motionEnabled[i])
+                { 
+                    Movement.Set(movementPair.H, 0f, movementPair.V);
+                    Movement = Movement.normalized * 2 * Time.deltaTime;
+                    players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * 1000f);
+                    //RotatePlayers[i].transform.position = players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.position;
+                }
 
                 //turning (also causes model to lean back a bit)
                 if (Movement != Vector3.zero)
@@ -970,6 +983,7 @@ public class PlayerManager : MonoBehaviour {
                         YwasPressed[i] = true;
                         YisRagdolling[i] = true;
                         movementForce[i] = 10f;
+                        motionEnabled[i] = false;
                         Debug.Log("Y Button was pressed!");
                         Staggers[i].Stagger();
                     }
@@ -978,6 +992,7 @@ public class PlayerManager : MonoBehaviour {
                         YwasPressed[i] = true;
                         YisRagdolling[i] = false;
                         movementForce[i] = 1000f;
+                        motionEnabled[i] = true;
                         Debug.Log("Y Button was pressed!");
                         Staggers[i].UnStagger();
                     }
