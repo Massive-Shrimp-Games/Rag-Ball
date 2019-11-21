@@ -85,6 +85,7 @@ S:::::::::::::::SS      CCC::::::::::::CR::::::R     R:::::RI::::::::IP::::::::P
 /// </summary>
 public class PlayerManager : MonoBehaviour {
 
+    // ControllerVariables
     PlayerIndex controllerID1;
     PlayerIndex controllerID2;
     PlayerIndex controllerID3;
@@ -94,6 +95,7 @@ public class PlayerManager : MonoBehaviour {
     GamePadState controller3state;
     GamePadState controller4state;
 
+    // PlayerArrayVariables
     public GameObject[] players = new GameObject[4];
     GamePadState[] GamePadStates;
     public Animator[] Animators;
@@ -107,7 +109,7 @@ public class PlayerManager : MonoBehaviour {
     public float[] Staminas;        // How much stamina player has (0 - 100)
     public float[] StaminaTimes;    // Time until next recovered stamina point (0.3 seconds)
 
-    //button arrays
+    // ButtonArrayVariables
     private bool[] BwasPressed;
     private bool[] YwasPressed;
     private bool[] XwasPressed;
@@ -115,7 +117,7 @@ public class PlayerManager : MonoBehaviour {
     private bool[] RightwasPressed;
     private bool[] LeftwasPressed;
 
-    //respawn objects
+    // RespawnObjectVariables
     public GameObject RedPlayer;
     public GameObject BluePlayer;
     public GameObject RespawnPoint;
@@ -134,7 +136,7 @@ public class PlayerManager : MonoBehaviour {
     //public Transform rotatePlayer3;
     //public Transform pivot3;
 
-    //GRABBING STUFF
+    // GrabbingStuffVariables
     GameObject theGrabbler;
     GameObject maHips;
     Grabbable maGrabbable;
@@ -142,11 +144,12 @@ public class PlayerManager : MonoBehaviour {
     Grabbable theirGrabbable;
     Transform yerMommy;
 
+    // XInputVariables
     public bool use_X_Input = true;
     public int connectedControllers = 0;   //if this variable changes, we need to call an update on the gamepads
-
     public static PlayerManager singleton = null;
 
+    // PauseControlVariables
     public Canvas PauseMenu;
     public Canvas ParameterCanvas;
     public Image[] Stamina_Heads;
@@ -640,6 +643,8 @@ public class PlayerManager : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
+
+        // ControllerAssigner
         if (use_X_Input) {
             if (connectedControllers != CheckControllerAmount()) {
                 connectedControllers = CheckControllerAmount();
@@ -678,6 +683,7 @@ public class PlayerManager : MonoBehaviour {
             }
 
             //vvv
+            // ControllerMotionTranslator
             for (int i = 0; i < 4; i++)
             {
                 float H = GamePadStates[i].ThumbSticks.Left.X + GamePadStates[i].ThumbSticks.Right.X;
