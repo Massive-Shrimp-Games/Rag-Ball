@@ -240,10 +240,10 @@ public class PlayerManager : MonoBehaviour {
 
         Staminas = new int[] 
         {
-            100,
-            100,
-            100,
-            100,
+            10,
+            10,
+            10,
+            10,
         };
 
         Staggers = new Staggerable[]
@@ -431,7 +431,7 @@ public class PlayerManager : MonoBehaviour {
 
         // Refresh Stagger
         Staggered[pNumber] = false;
-        Staminas[pNumber] = 100;
+        Staminas[pNumber] = 10;
         StaminaTimes[pNumber] = 0.3f;
     }
 
@@ -651,6 +651,7 @@ public class PlayerManager : MonoBehaviour {
 
     public void DoStagger(int aPlayerNum, int daSpeed)
     {
+        Debug.Log("daSpeed: " + daSpeed);
         Staminas[aPlayerNum] -= daSpeed;
     }
 
@@ -694,7 +695,7 @@ public class PlayerManager : MonoBehaviour {
                 Staminas[i] += 1;
                 StaminaTimes[i] = 2f;
             }
-            else if (Staminas[i] == 10f)
+            else if (Staminas[i] >= 10)
             {
                 StaminaTimes[i] = 2f;
             }
@@ -709,12 +710,15 @@ public class PlayerManager : MonoBehaviour {
                 Staggers[i].Stagger();
                 Staggered[i] = true;
             }
-            else if ((Staminas[i] > 5f) && (Staggered[i]))
+            else if ((Staminas[i] >= 5) && (Staggered[i]))
             {
                 Staggers[i].UnStagger();
                 Staggered[i] = false;
             }
-
+            else if (Staminas[i] < 0)
+            {
+                Staminas[i] = 0;
+            }
         }
     }
 
