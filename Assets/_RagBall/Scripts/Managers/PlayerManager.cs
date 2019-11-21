@@ -104,9 +104,11 @@ public class PlayerManager : MonoBehaviour {
     private PlayerIndex[] PlayerIndexes;
     public GameObject[,] PlayerHands;
     public GameObject[] PlayerHips;
+    public Staggerable[] Staggers;
+    public bool[] Staggered;
     public int[] Dashes;            // How many dashes player has (0 - 5)
     public float[] DashTimes;       // Time until next recovered dash (3 seconds)
-    public float[] Staminas;        // How much stamina player has (0 - 100)
+    public int[] Staminas;        // How much stamina player has (0 - 100)
     public float[] StaminaTimes;    // Time until next recovered stamina point (0.3 seconds)
 
     // ButtonArrayVariables
@@ -179,14 +181,16 @@ public class PlayerManager : MonoBehaviour {
         connectedControllers = CheckControllerAmount();
         Assign_X_Input_Controllers();
 
-        GamePadStates = new GamePadState[] {
+        GamePadStates = new GamePadState[] 
+        {
             controller1state,
             controller2state,
             controller3state,
             controller4state,
         };
 
-        PlayerIndexes = new PlayerIndex[] {
+        PlayerIndexes = new PlayerIndex[] 
+        {
             controllerID1,
             controllerID2,
             controllerID3,
@@ -197,7 +201,8 @@ public class PlayerManager : MonoBehaviour {
         //Player 2: [1 0] [1 1]
         //Player 3: [2 0] [2 1]
         //Player 4: [3 0] [3 1]
-        PlayerHands = new GameObject[,] {
+        PlayerHands = new GameObject[,]
+        {
             { players[0].transform.Find("Player/metarig/hips/spine/chest/shoulder.L/upper_arm.L/forearm.L").gameObject,
                 players[0].transform.Find("Player/metarig/hips/spine/chest/shoulder.R/upper_arm.R/forearm.R").gameObject},
             { players[1].transform.Find("Player/metarig/hips/spine/chest/shoulder.L/upper_arm.L/forearm.L").gameObject,
@@ -208,63 +213,88 @@ public class PlayerManager : MonoBehaviour {
                 players[3].transform.Find("Player/metarig/hips/spine/chest/shoulder.R/upper_arm.R/forearm.R").gameObject},
         };
 
-        PlayerHips = new GameObject[] {
+        PlayerHips = new GameObject[] 
+        {
             players[0].transform.Find("Player/metarig/hips").gameObject,
             players[1].transform.Find("Player/metarig/hips").gameObject,
             players[2].transform.Find("Player/metarig/hips").gameObject,
             players[3].transform.Find("Player/metarig/hips").gameObject,
         };
 
-        Dashes = new int[] {
+        Dashes = new int[] 
+        {
             5,
             5,
             5,
             5,
         };
 
-        DashTimes = new float[] {
+        DashTimes = new float[]
+        {
             3,
             3,
             3,
             3,
         };
 
-        Staminas = new float[] {
+        Staminas = new int[] 
+        {
+            100,
+            100,
+            100,
+            100,
+        };
+
+        Staggers = new Staggerable[]
+        {
+            players[0].transform.Find("Player/metarig/hips").gameObject.GetComponent<Staggerable>(),
+            players[1].transform.Find("Player/metarig/hips").gameObject.GetComponent<Staggerable>(),
+            players[2].transform.Find("Player/metarig/hips").gameObject.GetComponent<Staggerable>(),
+            players[3].transform.Find("Player/metarig/hips").gameObject.GetComponent<Staggerable>(),
+        };
+
+        Staggered = new bool[]
+        {
+            false,
+            false,
+            false,
+            false,
+        };
+
+        StaminaTimes = new float[]
+        {
             100f,
             100f,
             100f,
             100f,
         };
 
-        StaminaTimes = new float[] {
-            0.3f,
-            0.3f,
-            0.3f,
-            0.3f,
-        };
-
-        BwasPressed = new bool[] {
+        BwasPressed = new bool[] 
+        {
             false,
             false,
             false,
             false,
         };
 
-        YwasPressed = new bool[] {
+        YwasPressed = new bool[] 
+        {
             false,
             false,
             false,
             false,
         };
 
-        XwasPressed = new bool[] {
+        XwasPressed = new bool[]
+        {
             false,
             false,
             false,
             false,
         };
 
-        StartwasPressed = new bool[] {
+        StartwasPressed = new bool[]
+        {
             false,
             false,
             false,
@@ -272,14 +302,16 @@ public class PlayerManager : MonoBehaviour {
         };
 
 
-        RightwasPressed = new bool[] {
+        RightwasPressed = new bool[]
+        {
             false,
             false,
             false,
             false,
         };
 
-        LeftwasPressed = new bool[] {
+        LeftwasPressed = new bool[]
+        {
             false,
             false,
             false,
@@ -287,12 +319,16 @@ public class PlayerManager : MonoBehaviour {
         };
     }
 
-    void Assign_X_Input_Controllers() {
-        for (int i = 0; i < 4; ++i) {
+    void Assign_X_Input_Controllers()
+    {
+        for (int i = 0; i < 4; ++i)
+        {
             PlayerIndex controllerID = (PlayerIndex)i;
             GamePadState testState = GamePad.GetState(controllerID);
-            if (testState.IsConnected) {
-                switch (i) {
+            if (testState.IsConnected)
+            {
+                switch (i)
+                {
                     case 0:
                         controllerID1 = controllerID;
                         controller1state = testState;
@@ -319,13 +355,16 @@ public class PlayerManager : MonoBehaviour {
     }
 
     //Checks if the amount of controllers changed when connecting/unplugging new controllers
-    int CheckControllerAmount() {
+    int CheckControllerAmount()
+    {
         int amount = 0;
 
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < 4; ++i)
+        {
             PlayerIndex controllerID = (PlayerIndex)i;
             GamePadState testState = GamePad.GetState(controllerID);
-            if (testState.IsConnected) {
+            if (testState.IsConnected)
+            {
                 amount++;
             }
         }
@@ -374,10 +413,17 @@ public class PlayerManager : MonoBehaviour {
         GameObject theHips = newPlayer.transform.Find("Player/metarig/hips/").gameObject;
         Debug.Log("Player's Hips are: " + theHips.GetComponent<Grabbable>().myPlayer.ToString());
         DynamicCamera.targets.Add(newPlayer.transform.Find("Player/Pivot"));
+        Staggers[pNumber] = PlayerHips[pNumber].GetComponent<Staggerable>();
+        Staggers[pNumber].ourSavior = this;
 
-        //refresh attributes
+        // Refresh Stamina
         Dashes[pNumber] = 5;
         DashTimes[pNumber] = 3;
+
+        // Refresh Stagger
+        Staggered[pNumber] = false;
+        Staminas[pNumber] = 100;
+        StaminaTimes[pNumber] = 0.3f;
     }
 
     public void Grab()
@@ -594,6 +640,14 @@ public class PlayerManager : MonoBehaviour {
     }
 
 
+    public void DoStagger(int aPlayerNum, int daSpeed)
+    {
+        Staminas[aPlayerNum] -= daSpeed;
+    }
+
+
+
+
     //TIME CHANGER
     //Updates any timers you want to use
     //dashes[i] corresponds to players[i] and is an integer array of remaining dashes (0 - None, 5 - Max)
@@ -623,23 +677,34 @@ public class PlayerManager : MonoBehaviour {
 
 
             // STAGGER RECOVERY
-            // https://docs.unity3d.com/ScriptReference/Collision-relativeVelocity.html
             // Update Time
             StaminaTimes[i] -= Time.deltaTime;
             // Update Count (Time)
-            if (StaminaTimes[i] <= 0 && Staminas[i] < 100f)
+            if (StaminaTimes[i] <= 0 && Staminas[i] < 10)
             {
-                Staminas[i] += 5f;
-                StaminaTimes[i] = 0.3f;
+                Staminas[i] += 1;
+                StaminaTimes[i] = 2f;
             }
-            else if (Staminas[i] == 100f)
+            else if (Staminas[i] == 10f)
             {
-                StaminaTimes[i] = 0.3f;
+                StaminaTimes[i] = 2f;
             }
-            // Update Count (Force)
-
             // Debug
             Debug.Log("Stamina: " + Staminas[i]);
+            // Update Staggerness
+            // https://docs.unity3d.com/ScriptReference/Collision-relativeVelocity.html
+
+            // Update Is Staggered
+            if ((Staminas[i] < 5) && (!Staggered[i]))
+            {
+                Staggers[i].Stagger();
+                Staggered[i] = true;
+            }
+            else if ((Staminas[i] > 5f) && (Staggered[i]))
+            {
+                Staggers[i].UnStagger();
+                Staggered[i] = false;
+            }
 
         }
     }

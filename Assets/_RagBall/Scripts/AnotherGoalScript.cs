@@ -24,7 +24,7 @@ public class AnotherGoalScript : MonoBehaviour
 
     public int findPlayerNumber(GameObject myobject)
     {
-        Debug.Log("Looking for the number!");
+        //Debug.Log("Looking for the number!");
         GameObject myparent = myobject.transform.parent.gameObject;
         if (myparent.name == "Player1")
         {

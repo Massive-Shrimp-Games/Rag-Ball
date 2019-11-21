@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,22 +25,41 @@ public class Staggerable : MonoBehaviour
     */
 
     private RigidbodyConstraints hipsRBC;
+    public PlayerManager ourSavior;
+    public int myPlayer = -666;
+    private int maSpeed;
 
     private void Awake()
     {
+        Debug.Log("STAGGER: READY");
         hipsRBC = this.gameObject.GetComponent<Rigidbody>().constraints;
+        myPlayer = this.gameObject.GetComponent<Grabbable>().myPlayer;
     }
 
     public void Stagger()
     {
+        Debug.Log("STAGGER:\n!!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!!!");
         hipsRBC = RigidbodyConstraints.None;
     }
 
     public void UnStagger()
     {
+        Debug.Log("STAGGER:\n????????????????????????????\n?????????????????????");
         hipsRBC = RigidbodyConstraints.FreezeRotationX;
         hipsRBC = RigidbodyConstraints.FreezeRotationY;
         hipsRBC = RigidbodyConstraints.FreezeRotationZ;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        float daSpeed = collision.relativeVelocity.magnitude;
+        if (daSpeed > 2)
+            maSpeed = Convert.ToInt32(daSpeed);
+            Debug.Log("\nI HIT SOMETHING OUCH! " + maSpeed + "\n");
+        if (maSpeed > 5)
+        {
+            ourSavior.DoStagger(myPlayer, maSpeed);
+        }
     }
 
     // NOTES

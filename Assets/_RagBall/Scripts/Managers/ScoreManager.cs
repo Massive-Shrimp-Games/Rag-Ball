@@ -36,11 +36,11 @@ public class ScoreManager : MonoBehaviour
         redscoreboard.GetComponent<TextMeshPro>().text = RedScoreText;
         //Pause_redscoreboard.GetComponent<TextMeshPro>().text = RedScoreText;
 
-        Debug.Log("=====================\n===================\n====================");
+        //Debug.Log("=====================\n===================\n====================");
 
         //Blue Score
         BlueScoreText = BlueScore.ToString();
-        Debug.Log("WHERE IS THE SCORE!\n" + BlueScoreText);
+        //Debug.Log("WHERE IS THE SCORE!\n" + BlueScoreText);
         if (BlueScore < 10) BlueScoreText = "0" + BlueScoreText;
         bluescoreboard.GetComponent<TextMeshPro>().text = BlueScoreText;
         //Pause_bluescoreboard.GetComponent<TextMeshPro>().text = BlueScoreText;
@@ -53,6 +53,6 @@ public class ScoreManager : MonoBehaviour
     public void AddBlueScore()
     {
         BlueScore += 1;
-        Debug.Log("We got the score!\n" + BlueScore);
+        //Debug.Log("We got the score!\n" + BlueScore);
     }
 }

@@ -33,28 +33,28 @@ public class Grabbable : MonoBehaviour
     public void OnTriggerEnter(Collider theTriggerer)
     {
 
-        Debug.Log("I AM OFFICIALLY TRIGGERED!!!!!!!!!");
+        //Debug.Log("I AM OFFICIALLY TRIGGERED!!!!!!!!!");
 
         Grabbable testGrabbable = theTriggerer.GetComponent<Grabbable>();
         if (testGrabbable != null)
         {
             AssignTrigger(theTriggerer);
         }
-        else
+        /*else
         {
             Debug.Log("WTF is this?!?!?: " + theTriggerer);
-        }
+        }*/
     }
 
     public void AssignTrigger(Collider theTriggerer)
     {
-        Debug.Log("I can FEEEL somethin!");
+        //Debug.Log("I can FEEEL somethin!");
 
         Grabbable theirGrabbable = theTriggerer.GetComponent<Grabbable>();
 
-        if (theirGrabbable != null)
+        if ((theirGrabbable != null) && grabMode.Equals("free"))
         {
-            Debug.Log("An' its got sum HIPS BOI!");
+            //Debug.Log("An' its got sum HIPS BOI!");
             tharHips = theTriggerer.gameObject;
             oldHips = tharHips;
         }
