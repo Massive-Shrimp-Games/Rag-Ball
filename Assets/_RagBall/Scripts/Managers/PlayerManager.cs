@@ -112,6 +112,7 @@ public class PlayerManager : MonoBehaviour {
     public float[] StaminaTimes;    // Time until next recovered stamina point (0.3 seconds)
 
     // ButtonArrayVariables
+    private bool[] AwasPressed;
     private bool[] BwasPressed;
     private bool[] YwasPressed;
     private bool[] XwasPressed;
@@ -267,6 +268,14 @@ public class PlayerManager : MonoBehaviour {
             100f,
             100f,
             100f,
+        };
+
+        AwasPressed = new bool[]
+        {
+            false,
+            false,
+            false,
+            false,
         };
 
         BwasPressed = new bool[] 
@@ -866,10 +875,17 @@ public class PlayerManager : MonoBehaviour {
                     if (GamePadStates[i].Buttons.A == ButtonState.Pressed)
                     {
                         Animators[i].Play("JumpHold");
+                        AwasPressed[i] = true;
                         Debug.Log("A Button was pressed!");
                     }
+                    else if (GamePadStates[i].Buttons.A == ButtonState.Released && AwasPressed[i])
+                    {
+                        AudioManager.transform.Find("Jump_AudioSource").GetComponent<AudioSource>().Play();
+                        AwasPressed[i] = false;
+                    }
 
-                        //B (dashing)
+
+                    //B (dashing)
                     if (GamePadStates[i].Buttons.B == ButtonState.Pressed && !BwasPressed[i] && !GameIsPaused && Dashes[i] > 0)
                     {
                         BwasPressed[i] = true;
@@ -881,6 +897,7 @@ public class PlayerManager : MonoBehaviour {
                         {
                             Dashes[i] = 0;
                         }
+                        AudioManager.transform.Find("Dash_AudioSource").GetComponent<AudioSource>().Play();
                     }
                     else if (GamePadStates[i].Buttons.B == ButtonState.Pressed && GameIsPaused)
                     {
