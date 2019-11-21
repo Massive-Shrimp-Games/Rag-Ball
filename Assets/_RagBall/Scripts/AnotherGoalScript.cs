@@ -13,7 +13,8 @@ public class AnotherGoalScript : MonoBehaviour
     private int playernumber;
     private string playercolor;
     public GameObject audiomanager;
-    public ParticleSystem Confetti;
+    public ParticleSystem ExitConfetti;
+    public ParticleSystem ScorePipeConfetti;
 
 
     void Start()
@@ -86,7 +87,8 @@ public class AnotherGoalScript : MonoBehaviour
 
         //play goal audio
         audiomanager.transform.Find("Goal_AudioSource").GetComponent<AudioSource>().Play();
-        Confetti.Play();
+        ExitConfetti.Play();
+        ScorePipeConfetti.Play();
 
 
     }
