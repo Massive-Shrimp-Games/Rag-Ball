@@ -354,6 +354,7 @@ public class PlayerManager : MonoBehaviour {
             newPlayer = Instantiate(RedPlayer, RespawnPoint.transform.position, Quaternion.identity);
             newPlayer.GetComponent<PlayerModel>().PlayerColor = "red";
         }
+        DynamicCamera.targets.Remove(players[pNumber].transform.Find("Player/Pivot"));
         Destroy(players[pNumber]);
         newPlayer.transform.Find("MediumStaticAnimator").transform.position = AnimatorRespawnPoint.transform.position;
         //newPlayer.transform.position = RespawnPoint.transform.position;
