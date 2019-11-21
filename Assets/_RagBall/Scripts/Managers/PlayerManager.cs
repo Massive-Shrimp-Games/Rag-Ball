@@ -622,7 +622,7 @@ public class PlayerManager : MonoBehaviour {
 
 
 
-            // STAGGERING
+            // STAGGER RECOVERY
             // https://docs.unity3d.com/ScriptReference/Collision-relativeVelocity.html
             // Update Time
             StaminaTimes[i] -= Time.deltaTime;
@@ -643,6 +643,8 @@ public class PlayerManager : MonoBehaviour {
 
         }
     }
+
+
 
     public class MovementPair
     {
@@ -975,11 +977,12 @@ public class PlayerManager : MonoBehaviour {
             }
 
 
-        //TIME CHANGER
-        //Updates any timers you want to use
-        //dashes[i] corresponds to players[i]
-        //staminas[i] corresponds to players[i]
-        UpdateTimers();
+            //TIME CHANGER
+            //Updates any timers you want to use
+            //dashes[i] corresponds to players[i]
+            //staminas[i] corresponds to players[i]
+            UpdateTimers();
+
 
             //^^^
 

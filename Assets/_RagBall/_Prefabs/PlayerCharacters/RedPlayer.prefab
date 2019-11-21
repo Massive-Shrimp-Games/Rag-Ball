@@ -153,6 +153,7 @@ GameObject:
   - component: {fileID: 625814544212615022}
   - component: {fileID: 5167229886388877192}
   - component: {fileID: 5427729747154638006}
+  - component: {fileID: 1212438594740289022}
   m_Layer: 0
   m_Name: hips
   m_TagString: Untagged
@@ -237,6 +238,18 @@ MonoBehaviour:
   oldHips: {fileID: 0}
   iCanGrab: 1
   grabMode: free
+--- !u!114 &1212438594740289022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625814544212615023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 258b205201bb56b44adc0734f61d5cf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1121847901622460818
 GameObject:
   m_ObjectHideFlags: 0
@@ -1568,7 +1581,6 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2707,7 +2719,6 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
