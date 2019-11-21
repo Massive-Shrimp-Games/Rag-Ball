@@ -6316,12 +6316,12 @@ PrefabInstance:
     - target: {fileID: 3917433359609822942, guid: 665d0a053fe76474da04a640e094a0ca,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.15
+      value: 1.74
       objectReference: {fileID: 0}
     - target: {fileID: 3917433359609822942, guid: 665d0a053fe76474da04a640e094a0ca,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.37
+      value: -0.13
       objectReference: {fileID: 0}
     - target: {fileID: 158242506497641814, guid: 665d0a053fe76474da04a640e094a0ca,
         type: 3}
@@ -6517,6 +6517,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: -0.0002647355
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427729747154638006, guid: 665d0a053fe76474da04a640e094a0ca,
+        type: 3}
+      propertyPath: myPlayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5941544835323652919, guid: 665d0a053fe76474da04a640e094a0ca,
         type: 3}
