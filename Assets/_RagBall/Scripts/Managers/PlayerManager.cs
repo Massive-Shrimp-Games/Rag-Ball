@@ -896,7 +896,7 @@ public class PlayerManager : MonoBehaviour {
                 {
                     //A (jumping)
                     GamePadStates[i] = GamePad.GetState(PlayerIndexes[i]);
-                    if (GamePadStates[i].Buttons.A == ButtonState.Pressed)
+                    if ((GamePadStates[i].Buttons.A == ButtonState.Pressed) && (Dashes[i] > 0))
                     {
                         Animators[i].Play("JumpHold");
                         AwasPressed[i] = true;
@@ -905,6 +905,13 @@ public class PlayerManager : MonoBehaviour {
                     else if (GamePadStates[i].Buttons.A == ButtonState.Released && AwasPressed[i])
                     {
                         AudioManager.transform.Find("Jump_AudioSource").GetComponent<AudioSource>().Play();
+                        Vector3 boostDir = players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.up;
+                        players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(boostDir * dashForce);
+                        Dashes[i] -= 1;
+                        if (Dashes[i] < 0)
+                        {
+                            Dashes[i] = 0;
+                        }
                         AwasPressed[i] = false;
                     }
 
