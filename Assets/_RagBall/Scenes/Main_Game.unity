@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.43975496, g: 0.4881792, b: 0.568398, a: 1}
+  m_IndirectSpecularColor: {r: 0.43975514, g: 0.48817998, b: 0.5683994, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2710,6 +2710,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EventSystemCoop
+      objectReference: {fileID: 0}
+    - target: {fileID: 2394094593197655601, guid: bf23e27b616e94b4ba3a0d4494a56ec3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2394094593197655606, guid: bf23e27b616e94b4ba3a0d4494a56ec3,
         type: 3}
