@@ -23,7 +23,7 @@ public class SettingsManager : MonoBehaviour
 
     public void Setting(Setting oldSetting, Object newValue)
     {
-        Settings.Find(oldSetting).Setting(newValue);
+        //Settings.Find(oldSetting).Setting(newValue);
     }
 
 
