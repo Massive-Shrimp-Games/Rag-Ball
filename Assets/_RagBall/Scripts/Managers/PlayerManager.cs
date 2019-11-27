@@ -1142,6 +1142,17 @@ public class PlayerManager : MonoBehaviour {
                     {
                         StartwasPressed[i] = false;
                     }
+
+                    //Show stagger stars
+                    RotatePlayers[i].transform.Find("metarig/hips/spine/chest/neck/head/StaggerStars").transform.Rotate(0, 5, 0);
+                    if (Staggered[i])
+                    {
+                        RotatePlayers[i].transform.Find("metarig/hips/spine/chest/neck/head/StaggerStars").GetComponent<MeshRenderer>().enabled = true;
+                    }
+                    else
+                    {
+                        RotatePlayers[i].transform.Find("metarig/hips/spine/chest/neck/head/StaggerStars").GetComponent<MeshRenderer>().enabled = false;
+                    }
                 }
             }
 
