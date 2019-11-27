@@ -881,10 +881,10 @@ public class PlayerManager : MonoBehaviour {
                     players[2].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * movementForce[i]);
                 }
                 if(motionEnabled[i])
-                { 
+                {
                     Movement.Set(movementPair.H, 0f, movementPair.V);
                     Movement = Movement.normalized * 2 * Time.deltaTime;
-                    players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * 1000f);
+                    players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * 3000f);
                     //RotatePlayers[i].transform.position = players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.position;
                 }
 
