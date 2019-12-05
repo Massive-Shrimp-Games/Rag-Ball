@@ -168,6 +168,8 @@ public class PlayerManager : MonoBehaviour {
     public GameObject AudioManager;
     public float dashForce = 10000f;
     public float PlayerSpeed = 3000f;
+    public float jumpForce = 5000f;
+    public float throwSpeed = 13000f;
 
     void Awake() {
         //Check if instance already exists
@@ -538,7 +540,7 @@ public class PlayerManager : MonoBehaviour {
         theirHips.GetComponent<Rigidbody>().isKinematic = false;
 
         // Applicaticize this here force on thad thar fella's pelvis
-        theirHips.GetComponent<Rigidbody>().AddForce(maHips.transform.forward * 13000f);
+        theirHips.GetComponent<Rigidbody>().AddForce(maHips.transform.forward * throwSpeed);
 
         // Reset thar grabblerability
         theirGrabbable.iCanGrab = true;
@@ -568,7 +570,7 @@ public class PlayerManager : MonoBehaviour {
         theirHips.GetComponent<Rigidbody>().isKinematic = false;
 
         // Applicaticize this here force on thad thar fella's pelvis
-        theirHips.GetComponent<Rigidbody>().AddForce((maHips.transform.forward + maHips.transform.up) * 6000f);
+        theirHips.GetComponent<Rigidbody>().AddForce((maHips.transform.forward + maHips.transform.up) * (throwSpeed/2));
 
         // Reset thar grabblerability
         theirGrabbable.iCanGrab = true;
@@ -910,17 +912,20 @@ public class PlayerManager : MonoBehaviour {
                 {
                     //A (jumping)
                     GamePadStates[i] = GamePad.GetState(PlayerIndexes[i]);
-                    if ((GamePadStates[i].Buttons.A == ButtonState.Pressed) && (Dashes[i] > 0) && PauseMenu.enabled != true)
+                    if ((GamePadStates[i].Buttons.A == ButtonState.Pressed) && (Dashes[i] > 0) && !PauseMenu.enabled && !AwasPressed[i])
                     {
                         Animators[i].Play("JumpHold");
                         AwasPressed[i] = true;
                         Debug.Log("A Button was pressed!");
                     }
-                    else if (GamePadStates[i].Buttons.A == ButtonState.Released && AwasPressed[i])
+                    
+                    
+                    else if (GamePadStates[i].Buttons.A == ButtonState.Released && AwasPressed[i] && !PauseMenu.enabled)
                     {
+                        print("Fuck you anyway");
                         AudioManager.transform.Find("Jump_AudioSource").GetComponent<AudioSource>().Play();
                         Vector3 boostDir = players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.up;
-                        players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(boostDir * dashForce);
+                        players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(boostDir * jumpForce);
                         Dashes[i] -= 1;
                         if (Dashes[i] < 0)
                         {
@@ -957,6 +962,18 @@ public class PlayerManager : MonoBehaviour {
                             PauseMenu.enabled = true;
                             PauseMenu.transform.Find("Resume_Button").GetComponent<Button>().Select();
                             PauseMenu.GetComponent<CanvasGroup>().interactable = true;
+                        }
+                        else
+                        {
+                            if (GameIsPaused)
+                            {
+                                StartwasPressed[i] = true;
+                                PauseMenu.enabled = false;
+                                GameIsPaused = false;
+                                PauseMenu.GetComponent<CanvasGroup>().interactable = false;
+                                Time.timeScale = 1f;
+                                BwasPressed[i] = true;
+                            }
                         }
                         //else if (PauseMenu.enabled)
                         //{
@@ -1137,6 +1154,11 @@ public class PlayerManager : MonoBehaviour {
                     //otherwise if paused then unpause
                     else if (GamePadStates[i].Buttons.Start == ButtonState.Pressed && !StartwasPressed[i] && PauseMenu.enabled)
                     {
+                        if (ParameterCanvas.enabled == true)
+                        {
+                            ParameterCanvas.enabled = false;
+                            
+                        }
                         StartwasPressed[i] = true;
                         PauseMenu.enabled = false;
                         GameIsPaused = false;
@@ -1235,9 +1257,17 @@ public class PlayerManager : MonoBehaviour {
         }
     }
     //Variables for sliders
-    public void ChangePlayerSpeed(int speed)
+    public void ChangePlayerSpeed(float speed)
     {
         PlayerSpeed = speed;
+    }
+    public void ChangePlayerJumpForce(float speed)
+    {
+        jumpForce = speed; //My name is barry allen and I am the fastest man alive (except for all the other speedsters who are faster than me"
+    }
+    public void ChangePlayerThrowSpeed(float speed)
+    {
+        throwSpeed = speed;
     }
 }
 //}
