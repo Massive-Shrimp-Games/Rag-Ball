@@ -145,12 +145,12 @@ public class PlayerManager : MonoBehaviour {
     //public Transform pivot3;
 
     // GrabbingStuffVariables
-    GameObject theGrabbler;
-    GameObject maHips;
-    Grabbable maGrabbable;
-    GameObject theirHips;
-    Grabbable theirGrabbable;
-    Transform yerMommy;
+    GameObject theGrabbler; //what is this
+    GameObject maHips; //what is thsi
+    Grabbable maGrabbable; //what is this
+    GameObject theirHips; //what is this
+    Grabbable theirGrabbable; //what is this
+    Transform yerMommy; //what is this
 
     private float[] movementForce;
 
@@ -719,7 +719,7 @@ public class PlayerManager : MonoBehaviour {
             // STAGGER RECOVERY
             // Update Time
             StaminaTimes[i] -= Time.deltaTime;
-            // Update Count (Time)
+            // Update Count (Time)r
             if (StaminaTimes[i] <= 0 && Staminas[i] < 10)
             {
                 Staminas[i] += 1;
@@ -910,7 +910,7 @@ public class PlayerManager : MonoBehaviour {
                 {
                     //A (jumping)
                     GamePadStates[i] = GamePad.GetState(PlayerIndexes[i]);
-                    if ((GamePadStates[i].Buttons.A == ButtonState.Pressed) && (Dashes[i] > 0))
+                    if ((GamePadStates[i].Buttons.A == ButtonState.Pressed) && (Dashes[i] > 0) && PauseMenu.enabled != true)
                     {
                         Animators[i].Play("JumpHold");
                         AwasPressed[i] = true;
@@ -954,6 +954,8 @@ public class PlayerManager : MonoBehaviour {
                         else if (ParameterCanvas.enabled)
                         {
                             ParameterCanvas.enabled = false;
+                            PauseMenu.enabled = true;
+                            PauseMenu.transform.Find("Resume_Button").GetComponent<Button>().Select();
                             PauseMenu.GetComponent<CanvasGroup>().interactable = true;
                         }
                         //else if (PauseMenu.enabled)
@@ -1007,7 +1009,7 @@ public class PlayerManager : MonoBehaviour {
                     if (GamePadStates[i].Buttons.X == ButtonState.Pressed && !XwasPressed[i])
                     {
                         XwasPressed[i] = true;
-                        Debug.Log("X Button was pressed!");
+                        Debug.Log("X Button was pressed! " + i);
                         UpdateGrabInfo(i);
                         GrabDecide();
                     }
@@ -1122,6 +1124,7 @@ public class PlayerManager : MonoBehaviour {
                     }
 
                     //Start (pausing)
+                    //if not paused then pause
                     if (GamePadStates[i].Buttons.Start == ButtonState.Pressed && !StartwasPressed[i] && !PauseMenu.enabled)
                     {
                         StartwasPressed[i] = true;
@@ -1131,6 +1134,7 @@ public class PlayerManager : MonoBehaviour {
                         PauseMenu.transform.Find("Resume_Button").GetComponent<Button>().Select();
                         Time.timeScale = 0f;
                     }
+                    //otherwise if paused then unpause
                     else if (GamePadStates[i].Buttons.Start == ButtonState.Pressed && !StartwasPressed[i] && PauseMenu.enabled)
                     {
                         StartwasPressed[i] = true;
