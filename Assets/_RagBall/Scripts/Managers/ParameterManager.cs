@@ -9,7 +9,7 @@ public class ParameterManager : MonoBehaviour
     public GameObject RedPipeParent;
     public GameObject BluePipeParent;
     public float PipeScale = 0.05f;
-    public Slider daddySlider;
+    public Slider pipeRescaleSlider;
 
 
 
@@ -23,7 +23,7 @@ public class ParameterManager : MonoBehaviour
 
     public void Update()
     {
-        PipeScale = daddySlider.value;
+        PipeScale = pipeRescaleSlider.value;
         RedPipeParent.transform.localScale = new Vector3(PipeScale, PipeScale, PipeScale);
         BluePipeParent.transform.localScale = new Vector3(PipeScale, PipeScale, PipeScale);
     }

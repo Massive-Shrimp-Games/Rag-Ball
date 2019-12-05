@@ -167,6 +167,7 @@ public class PlayerManager : MonoBehaviour {
     public Sprite[] StaminaPics;
     public GameObject AudioManager;
     public float dashForce = 10000f;
+    public float PlayerSpeed = 3000f;
 
     void Awake() {
         //Check if instance already exists
@@ -884,7 +885,7 @@ public class PlayerManager : MonoBehaviour {
                 {
                     Movement.Set(movementPair.H, 0f, movementPair.V);
                     Movement = Movement.normalized * 2 * Time.deltaTime;
-                    players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * 3000f);
+                    players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * PlayerSpeed);
                     //RotatePlayers[i].transform.position = players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.position;
                 }
 
@@ -1228,6 +1229,11 @@ public class PlayerManager : MonoBehaviour {
                 print("Start4");
             }
         }
+    }
+    //Variables for sliders
+    public void ChangePlayerSpeed(int speed)
+    {
+        PlayerSpeed = speed;
     }
 }
 //}
