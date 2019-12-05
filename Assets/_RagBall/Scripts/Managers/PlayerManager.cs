@@ -120,6 +120,7 @@ public class PlayerManager : MonoBehaviour {
     private bool[] StartwasPressed;
     private bool[] RightwasPressed;
     private bool[] LeftwasPressed;
+    private bool[] BackwasPressed;
     private bool LwasPressed = false;
     private bool MwasPressed = false;
     private bool[] motionEnabled;
@@ -168,7 +169,7 @@ public class PlayerManager : MonoBehaviour {
     public GameObject AudioManager;
     public float dashForce = 10000f;
     public float PlayerSpeed = 3000f;
-    public float jumpForce = 5000f;
+    public float jumpForce = 10000;
     public float throwSpeed = 13000f;
 
     void Awake() {
@@ -358,6 +359,14 @@ public class PlayerManager : MonoBehaviour {
             false,
             false,
         };
+        BackwasPressed = new bool[]
+        {
+            false,
+            false,
+            false,
+            false,
+        };
+        //jumpForce = 5000f;
     }
 
     void Assign_X_Input_Controllers()
@@ -824,7 +833,6 @@ public class PlayerManager : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-
         // ControllerAssigner
         if (use_X_Input) {
             if (connectedControllers != CheckControllerAmount()) {
@@ -912,7 +920,7 @@ public class PlayerManager : MonoBehaviour {
                 {
                     //A (jumping)
                     GamePadStates[i] = GamePad.GetState(PlayerIndexes[i]);
-                    if ((GamePadStates[i].Buttons.A == ButtonState.Pressed) && (Dashes[i] > 0) && !PauseMenu.enabled && !AwasPressed[i])
+                    if ((GamePadStates[i].Buttons.A == ButtonState.Pressed) && !PauseMenu.enabled && !AwasPressed[i])
                     {
                         Animators[i].Play("JumpHold");
                         AwasPressed[i] = true;
@@ -920,7 +928,7 @@ public class PlayerManager : MonoBehaviour {
                     }
                     
                     
-                    else if (GamePadStates[i].Buttons.A == ButtonState.Released && AwasPressed[i] && !PauseMenu.enabled)
+                    else if (GamePadStates[i].Buttons.A == ButtonState.Released && AwasPressed[i] && !PauseMenu.enabled && Dashes[i] > 0)
                     {
                         print("Fuck you anyway");
                         AudioManager.transform.Find("Jump_AudioSource").GetComponent<AudioSource>().Play();
@@ -985,17 +993,17 @@ public class PlayerManager : MonoBehaviour {
                         BwasPressed[i] = false;
                     }
 
-                    /*//Y (respawning)
-                    if (GamePadStates[i].Buttons.Y == ButtonState.Pressed && !YwasPressed[i])
+                    //Back (respawning)
+                    if (GamePadStates[i].Buttons.Back == ButtonState.Pressed && !BackwasPressed[i])
                     {
-                        YwasPressed[i] = true;
-                        Debug.Log("Y Button was pressed!");
+                        BackwasPressed[i] = true;
+                        Debug.Log("Back Button was pressed!");
                         respawn(i);
                     }
-                    else if (GamePadStates[i].Buttons.Y == ButtonState.Released && YwasPressed[i])
+                    else if (GamePadStates[i].Buttons.Back == ButtonState.Released && BackwasPressed[i])
                     {
-                        YwasPressed[i] = false;
-                    }*/
+                        BackwasPressed[i] = false;
+                    }
 
                     //Y (ragdolling)
                     if (GamePadStates[i].Buttons.Y == ButtonState.Pressed && !YwasPressed[i] && !YisRagdolling[i])

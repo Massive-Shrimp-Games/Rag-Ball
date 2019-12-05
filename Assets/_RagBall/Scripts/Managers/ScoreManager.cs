@@ -19,6 +19,9 @@ public class ScoreManager : MonoBehaviour
     public GameObject Pause_bluescoreboard;
     public string BlueScoreText;
     public string RedScoreText;
+    public Canvas RedWinScreen;
+    public Canvas BlueWinScreen;
+
 
     // Start is called before the first frame update
     void Start()
@@ -49,10 +52,19 @@ public class ScoreManager : MonoBehaviour
     public void AddRedScore()
     {
         RedScore += 1;
+        if (RedScore >= WinScore)
+        {
+            RedWinScreen.enabled = true;
+            Debug.Log("RED WINS");
+        }
     }
     public void AddBlueScore()
     {
         BlueScore += 1;
-        //Debug.Log("We got the score!\n" + BlueScore);
+        if (BlueScore >= WinScore)
+        {
+            BlueWinScreen.enabled = true;
+            Debug.Log("BLUE WINS");
+        }
     }
 }
