@@ -9,22 +9,14 @@ public class CubeSpawner : MonoBehaviour
     public GameObject Cube;
     public float minScale = .5f;
     public float maxScale = 1.5f;
-    public int n;
+    
 
 
     public void SpawnCube()
-    {
-        n = 300;
-
-        for(int i = 0; i < n; i++)
-        {
+    {     
 			GameObject cube = Instantiate(Cube, transform.position, Quaternion.identity);
         	cube.GetComponent<Rigidbody>().AddForce(Random.Range(100, 500), 0, Random.Range(100, 500));
         	cube.transform.localScale = Vector3.one * Random.Range(minScale, maxScale);
         	cube.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-        }
-
-
-        
     }
 }
