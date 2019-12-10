@@ -108,7 +108,7 @@ public class PlayerManager : MonoBehaviour {
     public bool[] Staggered;
     public int[] Dashes;            // How many dashes player has (0 - 5)
     public float[] DashTimes;       // Time until next recovered dash (3 seconds)
-    public int[] Staminas;        // How much stamina player has (0 - 100)
+    public int[] Staminas;          // How much stamina player has (0 - 100)
     public float[] StaminaTimes;    // Time until next recovered stamina point (0.3 seconds)
 
     // ButtonArrayVariables
