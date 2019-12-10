@@ -75,6 +75,10 @@ public class AnotherGoalScript : MonoBehaviour
             Debug.Log("===== BLUE SCORES =====");
             scoremanager.AddBlueScore();
             playermanager.respawn(playernumber);
+            //play goal audio
+            audiomanager.transform.Find("Goal_AudioSource").GetComponent<AudioSource>().Play();
+            ExitConfetti.Play();
+            ScorePipeConfetti.Play();
         }
 
         //if red goal
@@ -83,12 +87,11 @@ public class AnotherGoalScript : MonoBehaviour
             Debug.Log("===== RED SCORES =====");
             scoremanager.AddRedScore();
             playermanager.respawn(playernumber);
+            //play goal audio
+            audiomanager.transform.Find("Goal_AudioSource").GetComponent<AudioSource>().Play();
+            ExitConfetti.Play();
+            ScorePipeConfetti.Play();
         }
-
-        //play goal audio
-        audiomanager.transform.Find("Goal_AudioSource").GetComponent<AudioSource>().Play();
-        ExitConfetti.Play();
-        ScorePipeConfetti.Play();
 
 
     }
