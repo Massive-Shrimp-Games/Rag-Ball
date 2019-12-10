@@ -2,11 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    [SerializeField] private Text TimerText;
+    [SerializeField] private TextMeshPro TimerText;
     [SerializeField] private float mainTimer;
+
+    public int RedScore;
+    public int BlueScore;
+    public int WinScore = 5;
+    public Canvas RedWinScreen;
+    public Canvas BlueWinScreen;
+    public ParticleSystem BluePipeConfetti;
+    public ParticleSystem RedPipeConfetti;
+    public ParticleSystem ExitPipeConfetti;
 
     private float timer;
     private bool canCount = true;
@@ -38,15 +48,14 @@ public class Timer : MonoBehaviour
     }
 
     void GameOver()
-    {
-        
+    {      
         RedPipeConfetti.loop = true;
         BluePipeConfetti.loop = true;
         ExitPipeConfetti.loop = true;
         RedPipeConfetti.Play();
         BluePipeConfetti.Play();
         ExitPipeConfetti.Play();
-        if (RedScore >= WinScore)
+        if (RedScore >= BlueScore)
         {
             RedWinScreen.enabled = true;
         }
