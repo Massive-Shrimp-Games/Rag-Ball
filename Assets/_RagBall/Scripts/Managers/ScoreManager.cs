@@ -19,6 +19,12 @@ public class ScoreManager : MonoBehaviour
     public GameObject Pause_bluescoreboard;
     public string BlueScoreText;
     public string RedScoreText;
+    public Canvas RedWinScreen;
+    public Canvas BlueWinScreen;
+    public ParticleSystem BluePipeConfetti;
+    public ParticleSystem RedPipeConfetti;
+    public ParticleSystem ExitPipeConfetti;
+
 
     // Start is called before the first frame update
     void Start()
@@ -49,10 +55,31 @@ public class ScoreManager : MonoBehaviour
     public void AddRedScore()
     {
         RedScore += 1;
+        if (RedScore >= WinScore)
+        {
+            RedWinScreen.enabled = true;
+            RedPipeConfetti.loop = true;
+            BluePipeConfetti.loop = true;
+            ExitPipeConfetti.loop = true;
+            RedPipeConfetti.Play();
+            BluePipeConfetti.Play();
+            ExitPipeConfetti.Play();
+            Debug.Log("RED WINS");
+        }
     }
     public void AddBlueScore()
     {
         BlueScore += 1;
-        //Debug.Log("We got the score!\n" + BlueScore);
+        if (BlueScore >= WinScore)
+        {
+            BlueWinScreen.enabled = true;
+            RedPipeConfetti.loop = true;
+            BluePipeConfetti.loop = true;
+            ExitPipeConfetti.loop = true;
+            RedPipeConfetti.Play();
+            BluePipeConfetti.Play();
+            ExitPipeConfetti.Play();
+            Debug.Log("BLUE WINS");
+        }
     }
 }

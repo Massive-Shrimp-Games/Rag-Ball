@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerModel : MonoBehaviour
 {
-    public int PlayerNumber = -1111111111;
+    public int PlayerNumber = 1;
     public string PlayerColor;
     public ScoreManager scoremanager;
     public PlayerManager playermanager;

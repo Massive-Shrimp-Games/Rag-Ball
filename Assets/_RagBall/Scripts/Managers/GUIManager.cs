@@ -22,14 +22,20 @@ public class GUIManager : MonoBehaviour
     public void Controls()
     {
         ControlsImage.enabled = true;
+       
         PauseMenu.GetComponent<CanvasGroup>().interactable = false;
     }
 
     public void Options()
     {
         ParameterCanvas.enabled = true;
+        //PauseMenu.enabled = false;
+        //PauseMenu.gameObject.SetActive(false);
         ParameterCanvas.GetComponent<CanvasGroup>().interactable = true;
         PauseMenu.GetComponent<CanvasGroup>().interactable = false;
+        Slider test = ParameterCanvas.transform.Find("GoalSize/GoalSizeSlider").GetComponent<Slider>();
+        test.Select();
+
     }
 
     public void Quit()

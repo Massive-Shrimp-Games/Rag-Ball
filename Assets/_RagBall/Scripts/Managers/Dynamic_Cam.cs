@@ -24,8 +24,16 @@ public class Dynamic_Cam : MonoBehaviour
 		cam = GetComponent<Camera>();
 	}
 
+    public void Update()
+    {
+        if (transform.position.y > 14.95f)
+        {
 
-	public void LateUpdate()
+        }
+    }
+
+
+    public void LateUpdate()
 	{
 		if (targets.Count == 0)
 		{

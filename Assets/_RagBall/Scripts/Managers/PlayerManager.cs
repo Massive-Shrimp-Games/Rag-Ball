@@ -120,6 +120,7 @@ public class PlayerManager : MonoBehaviour {
     private bool[] StartwasPressed;
     private bool[] RightwasPressed;
     private bool[] LeftwasPressed;
+    private bool[] BackwasPressed;
     private bool LwasPressed = false;
     private bool MwasPressed = false;
     private bool[] motionEnabled;
@@ -145,12 +146,12 @@ public class PlayerManager : MonoBehaviour {
     //public Transform pivot3;
 
     // GrabbingStuffVariables
-    GameObject theGrabbler;
-    GameObject maHips;
-    Grabbable maGrabbable;
-    GameObject theirHips;
-    Grabbable theirGrabbable;
-    Transform yerMommy;
+    GameObject theGrabbler; //what is this
+    GameObject maHips; //what is thsi
+    Grabbable maGrabbable; //what is this
+    GameObject theirHips; //what is this
+    Grabbable theirGrabbable; //what is this
+    Transform yerMommy; //what is this
 
     private float[] movementForce;
 
@@ -167,6 +168,9 @@ public class PlayerManager : MonoBehaviour {
     public Sprite[] StaminaPics;
     public GameObject AudioManager;
     public float dashForce = 10000f;
+    public float PlayerSpeed = 3000f;
+    public float jumpForce = 10000;
+    public float throwSpeed = 13000f;
 
     void Awake() {
         //Check if instance already exists
@@ -355,6 +359,14 @@ public class PlayerManager : MonoBehaviour {
             false,
             false,
         };
+        BackwasPressed = new bool[]
+        {
+            false,
+            false,
+            false,
+            false,
+        };
+        //jumpForce = 5000f;
     }
 
     void Assign_X_Input_Controllers()
@@ -537,7 +549,7 @@ public class PlayerManager : MonoBehaviour {
         theirHips.GetComponent<Rigidbody>().isKinematic = false;
 
         // Applicaticize this here force on thad thar fella's pelvis
-        theirHips.GetComponent<Rigidbody>().AddForce(maHips.transform.forward * 13000f);
+        theirHips.GetComponent<Rigidbody>().AddForce(maHips.transform.forward * throwSpeed);
 
         // Reset thar grabblerability
         theirGrabbable.iCanGrab = true;
@@ -567,7 +579,7 @@ public class PlayerManager : MonoBehaviour {
         theirHips.GetComponent<Rigidbody>().isKinematic = false;
 
         // Applicaticize this here force on thad thar fella's pelvis
-        theirHips.GetComponent<Rigidbody>().AddForce((maHips.transform.forward + maHips.transform.up) * 6000f);
+        theirHips.GetComponent<Rigidbody>().AddForce((maHips.transform.forward + maHips.transform.up) * (throwSpeed/2));
 
         // Reset thar grabblerability
         theirGrabbable.iCanGrab = true;
@@ -718,7 +730,7 @@ public class PlayerManager : MonoBehaviour {
             // STAGGER RECOVERY
             // Update Time
             StaminaTimes[i] -= Time.deltaTime;
-            // Update Count (Time)
+            // Update Count (Time)r
             if (StaminaTimes[i] <= 0 && Staminas[i] < 10)
             {
                 Staminas[i] += 1;
@@ -821,7 +833,6 @@ public class PlayerManager : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-
         // ControllerAssigner
         if (use_X_Input) {
             if (connectedControllers != CheckControllerAmount()) {
@@ -884,7 +895,7 @@ public class PlayerManager : MonoBehaviour {
                 {
                     Movement.Set(movementPair.H, 0f, movementPair.V);
                     Movement = Movement.normalized * 2 * Time.deltaTime;
-                    players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * 3000f);
+                    players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * PlayerSpeed);
                     //RotatePlayers[i].transform.position = players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.position;
                 }
 
@@ -909,17 +920,20 @@ public class PlayerManager : MonoBehaviour {
                 {
                     //A (jumping)
                     GamePadStates[i] = GamePad.GetState(PlayerIndexes[i]);
-                    if ((GamePadStates[i].Buttons.A == ButtonState.Pressed) && (Dashes[i] > 0))
+                    if ((GamePadStates[i].Buttons.A == ButtonState.Pressed) && !PauseMenu.enabled && !AwasPressed[i])
                     {
                         Animators[i].Play("JumpHold");
                         AwasPressed[i] = true;
                         Debug.Log("A Button was pressed!");
                     }
-                    else if (GamePadStates[i].Buttons.A == ButtonState.Released && AwasPressed[i])
+                    
+                    
+                    else if (GamePadStates[i].Buttons.A == ButtonState.Released && AwasPressed[i] && !PauseMenu.enabled && Dashes[i] > 0)
                     {
+                        print("Fuck you anyway");
                         AudioManager.transform.Find("Jump_AudioSource").GetComponent<AudioSource>().Play();
                         Vector3 boostDir = players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.up;
-                        players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(boostDir * dashForce);
+                        players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(boostDir * jumpForce);
                         Dashes[i] -= 1;
                         if (Dashes[i] < 0)
                         {
@@ -953,7 +967,21 @@ public class PlayerManager : MonoBehaviour {
                         else if (ParameterCanvas.enabled)
                         {
                             ParameterCanvas.enabled = false;
+                            PauseMenu.enabled = true;
+                            PauseMenu.transform.Find("Resume_Button").GetComponent<Button>().Select();
                             PauseMenu.GetComponent<CanvasGroup>().interactable = true;
+                        }
+                        else
+                        {
+                            if (GameIsPaused)
+                            {
+                                StartwasPressed[i] = true;
+                                PauseMenu.enabled = false;
+                                GameIsPaused = false;
+                                PauseMenu.GetComponent<CanvasGroup>().interactable = false;
+                                Time.timeScale = 1f;
+                                BwasPressed[i] = true;
+                            }
                         }
                         //else if (PauseMenu.enabled)
                         //{
@@ -965,17 +993,17 @@ public class PlayerManager : MonoBehaviour {
                         BwasPressed[i] = false;
                     }
 
-                    /*//Y (respawning)
-                    if (GamePadStates[i].Buttons.Y == ButtonState.Pressed && !YwasPressed[i])
+                    //Back (respawning)
+                    if (GamePadStates[i].Buttons.Back == ButtonState.Pressed && !BackwasPressed[i])
                     {
-                        YwasPressed[i] = true;
-                        Debug.Log("Y Button was pressed!");
+                        BackwasPressed[i] = true;
+                        Debug.Log("Back Button was pressed!");
                         respawn(i);
                     }
-                    else if (GamePadStates[i].Buttons.Y == ButtonState.Released && YwasPressed[i])
+                    else if (GamePadStates[i].Buttons.Back == ButtonState.Released && BackwasPressed[i])
                     {
-                        YwasPressed[i] = false;
-                    }*/
+                        BackwasPressed[i] = false;
+                    }
 
                     //Y (ragdolling)
                     if (GamePadStates[i].Buttons.Y == ButtonState.Pressed && !YwasPressed[i] && !YisRagdolling[i])
@@ -1006,7 +1034,7 @@ public class PlayerManager : MonoBehaviour {
                     if (GamePadStates[i].Buttons.X == ButtonState.Pressed && !XwasPressed[i])
                     {
                         XwasPressed[i] = true;
-                        Debug.Log("X Button was pressed!");
+                        Debug.Log("X Button was pressed! " + i);
                         UpdateGrabInfo(i);
                         GrabDecide();
                     }
@@ -1121,6 +1149,7 @@ public class PlayerManager : MonoBehaviour {
                     }
 
                     //Start (pausing)
+                    //if not paused then pause
                     if (GamePadStates[i].Buttons.Start == ButtonState.Pressed && !StartwasPressed[i] && !PauseMenu.enabled)
                     {
                         StartwasPressed[i] = true;
@@ -1130,8 +1159,14 @@ public class PlayerManager : MonoBehaviour {
                         PauseMenu.transform.Find("Resume_Button").GetComponent<Button>().Select();
                         Time.timeScale = 0f;
                     }
+                    //otherwise if paused then unpause
                     else if (GamePadStates[i].Buttons.Start == ButtonState.Pressed && !StartwasPressed[i] && PauseMenu.enabled)
                     {
+                        if (ParameterCanvas.enabled == true)
+                        {
+                            ParameterCanvas.enabled = false;
+                            
+                        }
                         StartwasPressed[i] = true;
                         PauseMenu.enabled = false;
                         GameIsPaused = false;
@@ -1228,6 +1263,19 @@ public class PlayerManager : MonoBehaviour {
                 print("Start4");
             }
         }
+    }
+    //Variables for sliders
+    public void ChangePlayerSpeed(float speed)
+    {
+        PlayerSpeed = speed;
+    }
+    public void ChangePlayerJumpForce(float speed)
+    {
+        jumpForce = speed; //My name is barry allen and I am the fastest man alive (except for all the other speedsters who are faster than me"
+    }
+    public void ChangePlayerThrowSpeed(float speed)
+    {
+        throwSpeed = speed;
     }
 }
 //}
