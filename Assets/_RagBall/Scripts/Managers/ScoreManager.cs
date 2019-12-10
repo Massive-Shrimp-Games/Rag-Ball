@@ -21,6 +21,9 @@ public class ScoreManager : MonoBehaviour
     public string RedScoreText;
     public Canvas RedWinScreen;
     public Canvas BlueWinScreen;
+    public ParticleSystem BluePipeConfetti;
+    public ParticleSystem RedPipeConfetti;
+    public ParticleSystem ExitPipeConfetti;
 
 
     // Start is called before the first frame update
@@ -55,6 +58,12 @@ public class ScoreManager : MonoBehaviour
         if (RedScore >= WinScore)
         {
             RedWinScreen.enabled = true;
+            RedPipeConfetti.loop = true;
+            BluePipeConfetti.loop = true;
+            ExitPipeConfetti.loop = true;
+            RedPipeConfetti.Play();
+            BluePipeConfetti.Play();
+            ExitPipeConfetti.Play();
             Debug.Log("RED WINS");
         }
     }
@@ -64,6 +73,12 @@ public class ScoreManager : MonoBehaviour
         if (BlueScore >= WinScore)
         {
             BlueWinScreen.enabled = true;
+            RedPipeConfetti.loop = true;
+            BluePipeConfetti.loop = true;
+            ExitPipeConfetti.loop = true;
+            RedPipeConfetti.Play();
+            BluePipeConfetti.Play();
+            ExitPipeConfetti.Play();
             Debug.Log("BLUE WINS");
         }
     }
