@@ -758,6 +758,7 @@ public class PlayerManager : MonoBehaviour {
 
             // STAGGER RECOVERY
             // Update Time
+            Debug.Log("Player 1 Staminas: " + Staminas[0]);
             StaminaTimes[i] -= Time.deltaTime;
             // Update Count (Time)r
             if (StaminaTimes[i] <= 0 && Staminas[i] < 10)
@@ -927,7 +928,7 @@ public class PlayerManager : MonoBehaviour {
                     Movement = Movement.normalized * 2 * Time.deltaTime;
                     PlayerHips[2].GetComponent<Rigidbody>().AddForce(Movement * movementForce[i]);
                 }
-                if(motionEnabled[i])
+                if(motionEnabled[i] && !Staggered[i])
                 {
                     Movement.Set(movementPair.H, 0f, movementPair.V);
                     Movement = Movement.normalized * 2 * Time.deltaTime;
@@ -966,7 +967,7 @@ public class PlayerManager : MonoBehaviour {
                         AwasPressed[i] = true;
                         Debug.Log("A Button was pressed!");
                     }
-                    else if (GamePadStates[i].Buttons.A == ButtonState.Released && AwasPressed[i] && !PauseMenu.enabled && Dashes[i] > 0)
+                    else if (GamePadStates[i].Buttons.A == ButtonState.Released && AwasPressed[i] && !PauseMenu.enabled && Dashes[i] > 0 && !Staggered[i])
                     {
                         print("Fuck you anyway");
                         AudioManager.transform.Find("Jump_AudioSource").GetComponent<AudioSource>().Play();
@@ -982,7 +983,7 @@ public class PlayerManager : MonoBehaviour {
 
 
                     //B (dashing)
-                    if (GamePadStates[i].Buttons.B == ButtonState.Pressed && !BwasPressed[i] && !GameIsPaused && Dashes[i] > 0)
+                    if (GamePadStates[i].Buttons.B == ButtonState.Pressed && !BwasPressed[i] && !GameIsPaused && Dashes[i] > 0 && !Staggered[i])
                     {
                         BwasPressed[i] = true;
                         Debug.Log("B Button was pressed!");
@@ -1154,7 +1155,7 @@ public class PlayerManager : MonoBehaviour {
                     }
                     */
 
-                    //RT (throwing)
+                    //RB (throwing)
                     if (GamePadStates[i].Buttons.RightShoulder == ButtonState.Pressed && !RightwasPressed[i])
                     {
                         // Alert
@@ -1170,7 +1171,7 @@ public class PlayerManager : MonoBehaviour {
                         RightwasPressed[i] = false;
                     }
 
-                    //LT (throwing)
+                    //LB (arc throwing)
                     if (GamePadStates[i].Buttons.LeftShoulder == ButtonState.Pressed && !LeftwasPressed[i])
                     {
                         // Alert
@@ -1222,7 +1223,7 @@ public class PlayerManager : MonoBehaviour {
                     if (Staggered[i])
                     {
                         //RotatePlayers[i].transform.Find("metarig/hips/spine/chest/neck/head/StaggerStars").GetComponent<MeshRenderer>().enabled = true;
-                        PlayerHips[i].transform.Find("chest/neck/head/StaggerStars").GetComponent<MeshRenderer>().enabled = true;
+                        PlayerHips[i].transform.Find("spine/chest/neck/head/StaggerStars").GetComponent<MeshRenderer>().enabled = true;
                     }
                     else
                     {
