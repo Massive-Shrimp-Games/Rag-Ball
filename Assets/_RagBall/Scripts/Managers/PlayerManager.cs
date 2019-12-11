@@ -146,12 +146,12 @@ public class PlayerManager : MonoBehaviour {
     //public Transform pivot3;
 
     // GrabbingStuffVariables
-    GameObject theGrabbler; //what is this
-    GameObject maHips; //what is thsi
-    Grabbable maGrabbable; //what is this
-    GameObject theirHips; //what is this
-    Grabbable theirGrabbable; //what is this
-    Transform yerMommy; //what is this
+    GameObject theGrabbler;         // Who is Grabbling
+    GameObject maHips;              // The Player's Hips
+    Grabbable maGrabbable;          // The Player's Grabbable Component
+    GameObject theirHips;           // The Enemy's Hips
+    Grabbable theirGrabbable;       // The Enemy's Grabbable Component
+    Transform yerMommy;             // The Player's Empty
 
     private float[] movementForce;
 
@@ -540,26 +540,39 @@ public class PlayerManager : MonoBehaviour {
         // GameObject theirHips - How we reference who is being grabbed
         // Grabbable theirGrabbable - How we enable/disable the victim
 
-        // Alert
-        Debug.Log("THROW IT!!!!!");
+        // Can we throw?
+        if (maGrabbable.grabMode == "grabbing")
+        {
 
-        // Unkinemasicize thad guy
-        theirHips.transform.parent = yerMommy;
-        theirHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        theirHips.GetComponent<Rigidbody>().isKinematic = false;
+            // Alert
+            Debug.Log("THROW IT!!!!!");
 
-        // Applicaticize this here force on thad thar fella's pelvis
-        theirHips.GetComponent<Rigidbody>().AddForce(maHips.transform.forward * throwSpeed);
+            // Unkinemasicize thad guy
+            theirHips.transform.parent = yerMommy;
+            theirHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            theirHips.GetComponent<Rigidbody>().isKinematic = false;
 
-        // Reset thar grabblerability
-        theirGrabbable.iCanGrab = true;
+            // Applicaticize this here force on thad thar fella's pelvis
+            theirHips.GetComponent<Rigidbody>().AddForce(maHips.transform.forward * throwSpeed);
 
-        // Fix the mode!
-        maGrabbable.grabMode = "free";
-        maGrabbable.oldHips = null;
+            // Reset thar grabblerability
+            theirGrabbable.iCanGrab = true;
 
-        // Play audio
-        AudioManager.transform.Find("Throw_AudioSource").GetComponent<AudioSource>().Play();
+            // Fix the mode!
+            maGrabbable.grabMode = "free";
+            maGrabbable.oldHips = null;
+
+            // Play audio
+            AudioManager.transform.Find("Throw_AudioSource").GetComponent<AudioSource>().Play();
+
+            //Reset tha stuffs
+            theGrabbler = null;
+            maHips = null;
+            maGrabbable = null;
+            theirHips = null;
+            theirGrabbable = null;
+        }
+
     }
 
     public void ThrowArc()
@@ -570,26 +583,38 @@ public class PlayerManager : MonoBehaviour {
         // GameObject theirHips - How we reference who is being grabbed
         // Grabbable theirGrabbable - How we enable/disable the victim
 
-        // Alert
-        Debug.Log("THROW IT!!!!!");
+        if (maGrabbable.grabMode == "grabbing")
+        {
 
-        // Unkinemasicize thad guy
-        theirHips.transform.parent = yerMommy;
-        theirHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        theirHips.GetComponent<Rigidbody>().isKinematic = false;
+            // Alert
+            Debug.Log("THROW IT!!!!!");
 
-        // Applicaticize this here force on thad thar fella's pelvis
-        theirHips.GetComponent<Rigidbody>().AddForce((maHips.transform.forward + maHips.transform.up) * (throwSpeed/2));
+            // Unkinemasicize thad guy
+            theirHips.transform.parent = yerMommy;
+            theirHips.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            theirHips.GetComponent<Rigidbody>().isKinematic = false;
 
-        // Reset thar grabblerability
-        theirGrabbable.iCanGrab = true;
+            // Applicaticize this here force on thad thar fella's pelvis
+            theirHips.GetComponent<Rigidbody>().AddForce((maHips.transform.forward + maHips.transform.up) * (throwSpeed / 2));
 
-        // Fix the mode!
-        maGrabbable.grabMode = "free";
-        maGrabbable.oldHips = null;
+            // Reset thar grabblerability
+            theirGrabbable.iCanGrab = true;
 
-        // Play audio
-        AudioManager.transform.Find("Throw_AudioSource").GetComponent<AudioSource>().Play();
+            // Fix the mode!
+            maGrabbable.grabMode = "free";
+            maGrabbable.oldHips = null;
+
+            // Play audio
+            AudioManager.transform.Find("Throw_AudioSource").GetComponent<AudioSource>().Play();
+
+            //Reset tha stuffs
+            theGrabbler = null;
+            maHips = null;
+            maGrabbable = null;
+            theirHips = null;
+            theirGrabbable = null;
+        }
+
     }
 
 
@@ -673,8 +698,11 @@ public class PlayerManager : MonoBehaviour {
     {
         Debug.Log("Trying to get sum stats!");
 
+        //grabbler = player that is grabbing
         theGrabbler = players[Grabbler];
+        //maHips = the grabbing player's hips
         maHips = theGrabbler.transform.Find("Player/metarig/hips/").gameObject;
+        //maGrabbable = Grabbable script attached to grabbing player's hips
         maGrabbable = maHips.GetComponent<Grabbable>();
         try
         {
