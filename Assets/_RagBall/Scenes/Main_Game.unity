@@ -13477,13 +13477,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2067293877}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61a13c3720e643146941505b2ff34a89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   TimerText: {fileID: 1766675971}
-  mainTimer: 30
+  mainTimer: 60
   RedScore: 0
   BlueScore: 0
   WinScore: 5
