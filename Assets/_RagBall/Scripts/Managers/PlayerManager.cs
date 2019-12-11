@@ -541,7 +541,7 @@ public class PlayerManager : MonoBehaviour {
         // Grabbable theirGrabbable - How we enable/disable the victim
 
         // Can we throw?
-        if (maGrabbable.grabMode == "grabbing")
+        if (maGrabbable.grabMode.Equals("grabbing"))
         {
 
             // Alert
@@ -654,6 +654,7 @@ public class PlayerManager : MonoBehaviour {
         {
             Debug.Log("Imma try grabbin!");
             Grab();
+            //Debug.Log("EEEERRRRRRAAAAAARRRRGGRGRGRGRGRG!GG!G!G!G!GG!G!G!!\n\n\n\n\n!!!!!!!!");
         }
         else if (maGrabbable.grabMode == "grabbing")
         {
@@ -856,8 +857,9 @@ public class PlayerManager : MonoBehaviour {
     }
 
 
-
     MovementPair movementPair = new MovementPair();
+
+
     // Update is called once per frame
     void Update() {
 
@@ -903,7 +905,11 @@ public class PlayerManager : MonoBehaviour {
             // ControllerMotionTranslator
             for (int i = 0; i < 4; i++)
             {
-                
+                Debug.Log("RUNNING: PlayerHips" + "\n" +
+                            "Player 1: " + PlayerHips[0] + "\n" +
+                            "Player 2: " + PlayerHips[1] + "\n" +
+                            "Player 3: " + PlayerHips[2] + "\n" +
+                            "Player 4: " + PlayerHips[3]);
 
                 if (motionEnabled[i])
                 { 
@@ -912,25 +918,31 @@ public class PlayerManager : MonoBehaviour {
                 }
                 //movement
                 Vector3 Movement = new Vector3();
+
+
                 if (KeysEnabled)
                 { 
                     movementPair = KeyboardControls(movementPair);
                     Movement.Set(movementPair.H, 0f, movementPair.V);
                     Movement = Movement.normalized * 2 * Time.deltaTime;
-                    players[2].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * movementForce[i]);
+                    PlayerHips[2].GetComponent<Rigidbody>().AddForce(Movement * movementForce[i]);
                 }
                 if(motionEnabled[i])
                 {
                     Movement.Set(movementPair.H, 0f, movementPair.V);
                     Movement = Movement.normalized * 2 * Time.deltaTime;
-                    players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * PlayerSpeed);
+                    //players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(Movement * PlayerSpeed);
+                    PlayerHips[i].GetComponent<Rigidbody>().AddForce(Movement * PlayerSpeed);
                     //RotatePlayers[i].transform.position = players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.position;
                 }
+
+
+
 
                 //turning (also causes model to lean back a bit)
                 if (Movement != Vector3.zero)
                 {
-                    players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.forward = Movement;
+                    PlayerHips[i].transform.forward = Movement;
                 }
 
                 //animations
@@ -954,14 +966,12 @@ public class PlayerManager : MonoBehaviour {
                         AwasPressed[i] = true;
                         Debug.Log("A Button was pressed!");
                     }
-                    
-                    
                     else if (GamePadStates[i].Buttons.A == ButtonState.Released && AwasPressed[i] && !PauseMenu.enabled && Dashes[i] > 0)
                     {
                         print("Fuck you anyway");
                         AudioManager.transform.Find("Jump_AudioSource").GetComponent<AudioSource>().Play();
-                        Vector3 boostDir = players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.up;
-                        players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(boostDir * jumpForce);
+                        Vector3 boostDir = PlayerHips[i].transform.up;
+                        PlayerHips[i].GetComponent<Rigidbody>().AddForce(boostDir * jumpForce);
                         Dashes[i] -= 1;
                         if (Dashes[i] < 0)
                         {
@@ -976,8 +986,8 @@ public class PlayerManager : MonoBehaviour {
                     {
                         BwasPressed[i] = true;
                         Debug.Log("B Button was pressed!");
-                        Vector3 boostDir = players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").transform.forward;
-                        players[i].transform.Find("Player").transform.Find("metarig").transform.Find("hips").GetComponent<Rigidbody>().AddForce(boostDir * dashForce);
+                        Vector3 boostDir = PlayerHips[i].transform.forward;
+                        PlayerHips[i].GetComponent<Rigidbody>().AddForce(boostDir * dashForce);
                         Dashes[i] -= 1;
                         if (Dashes[i] < 0)
                         {
@@ -1207,14 +1217,17 @@ public class PlayerManager : MonoBehaviour {
                     }
 
                     //Show stagger stars
-                    RotatePlayers[i].transform.Find("metarig/hips/spine/chest/neck/head/StaggerStars").transform.Rotate(0, 5, 0);
+                    //RotatePlayers[i].transform.Find("metarig/hips/spine/chest/neck/head/StaggerStars").transform.Rotate(0, 5, 0);
+                    PlayerHips[i].transform.Find("spine/chest/neck/head/StaggerStars").transform.Rotate(0, 5, 0);
                     if (Staggered[i])
                     {
-                        RotatePlayers[i].transform.Find("metarig/hips/spine/chest/neck/head/StaggerStars").GetComponent<MeshRenderer>().enabled = true;
+                        //RotatePlayers[i].transform.Find("metarig/hips/spine/chest/neck/head/StaggerStars").GetComponent<MeshRenderer>().enabled = true;
+                        PlayerHips[i].transform.Find("chest/neck/head/StaggerStars").GetComponent<MeshRenderer>().enabled = true;
                     }
                     else
                     {
-                        RotatePlayers[i].transform.Find("metarig/hips/spine/chest/neck/head/StaggerStars").GetComponent<MeshRenderer>().enabled = false;
+                        //RotatePlayers[i].transform.Find("metarig/hips/spine/chest/neck/head/StaggerStars").GetComponent<MeshRenderer>().enabled = false;
+                        PlayerHips[i].transform.Find("spine/chest/neck/head/StaggerStars").GetComponent<MeshRenderer>().enabled = false;
                     }
                 }
             }
