@@ -92,7 +92,7 @@ public class Staggerable : MonoBehaviour
 
 
         // ANGLES ARE OK!
-        if (difference > angleThreshold)
+        if (difference < angleThreshold)
         {
             title = "!!! BIG !!!";
 

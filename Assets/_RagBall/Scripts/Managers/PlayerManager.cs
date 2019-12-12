@@ -115,6 +115,8 @@ public class PlayerManager : MonoBehaviour {
     public float[] DashTimes;       // Time until next recovered dash (3 seconds)
     public int[] Staminas;          // How much stamina player has (0 - 100)
     public float[] StaminaTimes;    // Time until next recovered stamina point (0.3 seconds)
+    public bool[] LeftFoot;         // is the leftfoot good to go? - jumping
+    public bool[] RightFoot;        // Is the rightfoot good to go? - jumping
 
     // ButtonArrayVariables
     private bool[] AwasPressed;
@@ -159,7 +161,6 @@ public class PlayerManager : MonoBehaviour {
     Transform yerMommy;             // The Player's Empty
     Staggerable theirStaggerable;
     bool theyAreGrabbable = false;
-
     private float[] movementForce;
 
     // XInputVariables
@@ -228,6 +229,22 @@ public class PlayerManager : MonoBehaviour {
                 players[2].transform.Find("Player/metarig/hips/spine/chest/shoulder.R/upper_arm.R/forearm.R").gameObject},
             { players[3].transform.Find("Player/metarig/hips/spine/chest/shoulder.L/upper_arm.L/forearm.L").gameObject,
                 players[3].transform.Find("Player/metarig/hips/spine/chest/shoulder.R/upper_arm.R/forearm.R").gameObject},
+        };
+
+        LeftFoot = new bool[]
+        {
+            false,
+            false,
+            false,
+            false
+        };
+
+        RightFoot = new bool[]
+        {
+            false,
+            false,
+            false,
+            false
         };
 
         movementForce = new float[]
@@ -471,9 +488,11 @@ public class PlayerManager : MonoBehaviour {
         //Debug.Log("Player's Hips are: " + theHips.GetComponent<Grabbable>().myPlayer.ToString());
         DynamicCamera.targets.Add(newPlayer.transform.Find("Player/Pivot"));
 
-        // Refresh Stamina
+        // Refresh Movement
         Dashes[pNumber] = 5;
         DashTimes[pNumber] = 3;
+        LeftFoot[pNumber] = false;
+        RightFoot[pNumber] = false;
 
         // Refresh Stagger
         Staggered[pNumber] = false;
@@ -992,8 +1011,13 @@ public class PlayerManager : MonoBehaviour {
                     //A (jumping)
                     if ((GamePadStates[i].Buttons.A == ButtonState.Pressed) && !PauseMenu.enabled && !AwasPressed[i] && !Staggered[i] && (Dashes[i] > 0))
                     {
-                        Animators[i].Play("JumpHold");
-                        AwasPressed[i] = true;
+                        LeftFoot[i] = PlayerHips[i].transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
+                        RightFoot[i] = PlayerHips[i].transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
+                        if (LeftFoot[i] && RightFoot[i])
+                        { 
+                            Animators[i].Play("JumpHold");
+                            AwasPressed[i] = true;
+                        }
                         Debug.Log("A Button was pressed!");
                     }
                     else if (GamePadStates[i].Buttons.A == ButtonState.Released && AwasPressed[i] && !PauseMenu.enabled && Dashes[i] > 0 && !Staggered[i] && (Dashes[i] > 0))
