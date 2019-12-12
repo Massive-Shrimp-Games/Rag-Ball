@@ -3738,6 +3738,7 @@ MonoBehaviour:
   WallsActive: 0
   GoalsActive: 0
   TimerActive: 0
+  GoalsMax: 0
 --- !u!4 &1818415128
 Transform:
   m_ObjectHideFlags: 0
@@ -3937,6 +3938,12 @@ MonoBehaviour:
   GoalsOff: {fileID: 1512384780}
   TimerOn: {fileID: 0}
   TimerOff: {fileID: 0}
+  GoalsTMP: {fileID: 1059134216}
+  TimerTMP: {fileID: 0}
+  GoalsCountText: 
+  TimerCountText: 
+  GoalsCount: 0
+  TimerCount: 0
 --- !u!1 &1993459219
 GameObject:
   m_ObjectHideFlags: 0

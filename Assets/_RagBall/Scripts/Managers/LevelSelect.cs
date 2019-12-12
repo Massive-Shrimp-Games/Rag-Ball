@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class LevelSelect : MonoBehaviour
 {
@@ -17,6 +18,12 @@ public class LevelSelect : MonoBehaviour
     public RawImage GoalsOff;
     public RawImage TimerOn;
     public RawImage TimerOff;
+    public GameObject GoalsTMP;
+    public GameObject TimerTMP;
+    public string GoalsCountText;
+    public string TimerCountText;
+    public int GoalsCount = 0;
+    public int TimerCount = 0;
 
 
     void Awake()
@@ -53,6 +60,11 @@ public class LevelSelect : MonoBehaviour
             Levels[i].enabled = false;
         }
         Levels[LevelsIndex].enabled = true;
+
+        CustomizationManager.CM.GoalsMax = GoalsCount;
+
+        GoalsCountText = "" + GoalsCount;
+        GoalsTMP.GetComponent<TMP_Text>().text = GoalsCountText;
 
     }
 
@@ -138,12 +150,22 @@ public class LevelSelect : MonoBehaviour
 
     public void addScore()
     {
-
+        GoalsCount += 1;
+        
+        if (GoalsCount >= 25)
+        {
+            GoalsCount = 25;
+        }
     }
 
     public void subScore()
     {
-
+        GoalsCount -= 1;
+        
+        if (GoalsCount <= 0)
+        {
+            GoalsCount = 0;
+        }
     }
 
     public void PipeMovementActive()
