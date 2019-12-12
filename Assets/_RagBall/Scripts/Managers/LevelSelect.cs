@@ -42,6 +42,7 @@ public class LevelSelect : MonoBehaviour
         CustomizationManager.CM.Slippy = true;
         CustomizationManager.CM.GoalsActive = true;
         CustomizationManager.CM.TimerActive = true;
+        
     }
 
     void Update()
