@@ -34,7 +34,7 @@ public class Staggerable : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("STAGGER: READY");
+        //Debug.Log("STAGGER: READY");
         //hipsRBC = this.gameObject.GetComponent<Rigidbody>().constraints;
         maHips = this.gameObject.GetComponent<Rigidbody>();
         myPlayer = this.gameObject.GetComponent<Grabbable>().myPlayer;
@@ -64,7 +64,7 @@ public class Staggerable : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log("Force Direction: " + collision.contacts[o].normal);
+        //Debug.Log("Force Direction: " + collision.contacts[0].normal);
 
         // Is the collision normal or above surface?
 
@@ -73,7 +73,7 @@ public class Staggerable : MonoBehaviour
         float daSpeed = collision.relativeVelocity.magnitude;
         if (daSpeed > 2)
             maSpeed = Convert.ToInt32(daSpeed);
-            Debug.Log("\nI HIT SOMETHING OUCH! " + maSpeed + "\n");
+            Debug.Log("\nI HIT SOMETHING OUCH! " + maSpeed + "\n" + "Direction: " + collision.contacts[0].normal);
         if (maSpeed > 5)
         {
             ourSavior.DoStagger(myPlayer, maSpeed);

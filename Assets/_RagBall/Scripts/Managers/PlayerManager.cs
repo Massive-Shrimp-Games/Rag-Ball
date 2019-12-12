@@ -399,7 +399,7 @@ public class PlayerManager : MonoBehaviour {
                         break;
                 }
 
-                Debug.Log(string.Format("GamePad found {0}", controllerID));
+                //Debug.Log(string.Format("GamePad found {0}", controllerID));
             }
         }
     }
@@ -461,7 +461,7 @@ public class PlayerManager : MonoBehaviour {
         newPlayer.name = "Player" + (pNumber + 1).ToString();
         newPlayer.transform.Find("Player/metarig/hips/").gameObject.GetComponent<Grabbable>().myPlayer = pNumber;
         GameObject theHips = newPlayer.transform.Find("Player/metarig/hips/").gameObject;
-        Debug.Log("Player's Hips are: " + theHips.GetComponent<Grabbable>().myPlayer.ToString());
+        //Debug.Log("Player's Hips are: " + theHips.GetComponent<Grabbable>().myPlayer.ToString());
         DynamicCamera.targets.Add(newPlayer.transform.Find("Player/Pivot"));
 
         // Refresh Stamina
@@ -724,7 +724,7 @@ public class PlayerManager : MonoBehaviour {
 
     public void DoStagger(int aPlayerNum, int daSpeed)
     {
-        Debug.Log("daSpeed: " + daSpeed);
+        //Debug.Log("daSpeed: " + daSpeed);
         Staminas[aPlayerNum] -= daSpeed;
     }
 
@@ -792,7 +792,7 @@ public class PlayerManager : MonoBehaviour {
             {
                 Staminas[i] = 0;
             }
-            Debug.Log("Player 1 Staminas: " + Staminas[0]);
+            //Debug.Log("Player 1 Staminas: " + Staminas[0]);
         }
     }
 
@@ -909,11 +909,13 @@ public class PlayerManager : MonoBehaviour {
             // ControllerMotionTranslator
             for (int i = 0; i < 4; i++)
             {
+                /*
                 Debug.Log("RUNNING: PlayerHips" + "\n" +
                             "Player 1: " + PlayerHips[0] + "\n" +
                             "Player 2: " + PlayerHips[1] + "\n" +
                             "Player 3: " + PlayerHips[2] + "\n" +
                             "Player 4: " + PlayerHips[3]);
+                */
 
                 if (motionEnabled[i])
                 { 

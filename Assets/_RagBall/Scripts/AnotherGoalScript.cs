@@ -19,7 +19,7 @@ public class AnotherGoalScript : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("THE GOAL HAS LOADED");
+        //Debug.Log("THE GOAL HAS LOADED");
     }
 
 

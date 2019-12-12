@@ -11,7 +11,7 @@ public class PlayerModel : MonoBehaviour
 
     public void Start()
     {
-        Debug.Log("Johnny five is alive!\n And I am: " + PlayerColor);
+        //Debug.Log("Johnny five is alive!\n And I am: " + PlayerColor);
     }
 
     private void OnTriggerEnter(Collider other)
