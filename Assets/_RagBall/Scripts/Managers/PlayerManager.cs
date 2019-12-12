@@ -122,12 +122,12 @@ public class PlayerManager : MonoBehaviour {
     public float[] DashTimes;       // Time until next recovered dash (3 seconds)
     public int[] Staminas;          // How much stamina player has (0 - 100)
     public float[] StaminaTimes;    // Time until next recovered stamina point (0.3 seconds)
-    public float StaminaTime = 1f;  // How long to wait to recover stamina
+    public float StaminaTime = 0.3f;  // How long to wait to recover stamina
     public bool[] LeftFoot;         // is the leftfoot good to go? - jumping
     public bool[] RightFoot;        // Is the rightfoot good to go? - jumping
     private float[] movementForce;  // How much force you move with
     public int MaxStamina = 50;
-    public int MinStamina = 20;
+    public int MinStamina = 10;
 
     // ButtonArrayVariables
     private bool[] AwasPressed;
@@ -316,10 +316,10 @@ public class PlayerManager : MonoBehaviour {
 
         Staminas = new int[] 
         {
-            10,
-            10,
-            10,
-            10,
+            MaxStamina,
+            MaxStamina,
+            MaxStamina,
+            MaxStamina,
         };
 
         Staggers = new Staggerable[]
@@ -340,10 +340,10 @@ public class PlayerManager : MonoBehaviour {
 
         StaminaTimes = new float[]
         {
-            100f,
-            100f,
-            100f,
-            100f,
+            StaminaTime,
+            StaminaTime,
+            StaminaTime,
+            StaminaTime,
         };
 
         AwasPressed = new bool[]
