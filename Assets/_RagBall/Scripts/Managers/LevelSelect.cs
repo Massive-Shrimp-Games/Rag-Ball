@@ -6,9 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelect : MonoBehaviour
 {
-    
-    public Canvas CourtLevel;
-    public Canvas LedgeLevel;
     public RawImage[] GameModes;
     private int GameModeIndex;
     public RawImage[] Levels;
@@ -16,15 +13,22 @@ public class LevelSelect : MonoBehaviour
     public RawImage PipeMovementCross;
     public RawImage SlippyCross;
     public RawImage NoWallsCross;
-    
+    public RawImage GoalsOn;
+    public RawImage GoalsOff;
+    public RawImage TimerOn;
+    public RawImage TimerOff;
 
-    void Start()
+
+    void Awake()
     {
         GameModeIndex = 0;
         LevelsIndex = 0;
         PipeMovementCross.enabled = false;
         SlippyCross.enabled = false;
         NoWallsCross.enabled = false;
+
+        GoalsOn.enabled = false;
+        //TimerOn.enabled = false;
 
         CustomizationManager.CM.PipeMovement = true;
         CustomizationManager.CM.WallsActive = true;
@@ -88,14 +92,38 @@ public class LevelSelect : MonoBehaviour
         }
     }
 
-    public void Time()
+    public void TimeActive()
     {
+        if (TimerOn.enabled == false)
+        {
+            TimerOff.enabled = true;
+            TimerOn.enabled = false;
+            CustomizationManager.CM.TimerActive = false;
+        }
 
+        else if (TimerOn.enabled == true)
+        {
+            TimerOff.enabled = false;
+            TimerOn.enabled = true;
+            CustomizationManager.CM.TimerActive = true;
+        }
     }
 
-    public void Score()
+    public void GoalsActive()
     {
+        if (GoalsOn.enabled == false)
+        {
+            GoalsOff.enabled = false;
+            GoalsOn.enabled = true;
+            CustomizationManager.CM.GoalsActive = false;
+        }
 
+        else if (GoalsOn.enabled == true)
+        {
+            GoalsOff.enabled = true;
+            GoalsOn.enabled = false;
+            CustomizationManager.CM.GoalsActive = true;
+        }
     }
 
     public void addTime()

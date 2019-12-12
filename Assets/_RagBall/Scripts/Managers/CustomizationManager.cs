@@ -6,9 +6,11 @@ public class CustomizationManager : MonoBehaviour
 {
     public static CustomizationManager CM;
 
-    public bool PipeMovement = false;
-    public bool Slippy = false;
-    public bool WallsActive = false;
+    public bool PipeMovement = true;
+    public bool Slippy = true;
+    public bool WallsActive = true;
+    public bool GoalsActive = false;
+    public bool TimerActive = false;
 
     void Awake()
     {
@@ -28,5 +30,8 @@ public class CustomizationManager : MonoBehaviour
         }
     }
 
+
+
+    //https://answers.unity.com/questions/1072572/accessing-variables-on-a-script-on-a-dontdestroyon.html
 
 }
