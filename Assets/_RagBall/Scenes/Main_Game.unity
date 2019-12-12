@@ -885,7 +885,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 107993853}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -9.876, y: 3.92, z: -6.04}
+  m_LocalPosition: {x: -9.5911, y: 3.92, z: -6.04}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children:
   - {fileID: 734233699}
@@ -4965,6 +4965,7 @@ MonoBehaviour:
   DashTimes: []
   Staminas: 
   StaminaTimes: []
+  StaminaTime: 1
   LeftFoot: 
   RightFoot: 
   RedPlayer: {fileID: 1834364083044155609, guid: 665d0a053fe76474da04a640e094a0ca,
@@ -6990,7 +6991,7 @@ PrefabInstance:
     - target: {fileID: 6021172993527018954, guid: ad560bb143957144e999ab3b12ec0694,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6021172993527018954, guid: ad560bb143957144e999ab3b12ec0694,
         type: 3}
