@@ -25,6 +25,10 @@ public class LevelSelect : MonoBehaviour
         PipeMovementCross.enabled = false;
         SlippyCross.enabled = false;
         NoWallsCross.enabled = false;
+
+        myCustomizationManager.PipeMovement = true;
+        myCustomizationManager.WallsActive = true;
+        myCustomizationManager.Slippy = true;
     }
 
     void Update()
@@ -116,17 +120,47 @@ public class LevelSelect : MonoBehaviour
 
     public void PipeMovementActive()
     {
+        if (PipeMovementCross.enabled == false)
+        {
+            PipeMovementCross.enabled = true;
+            myCustomizationManager.PipeMovement = false;
+        }
 
+        else if (PipeMovementCross.enabled == true)
+        {
+            PipeMovementCross.enabled = false;
+            myCustomizationManager.PipeMovement = true;
+        }
     }
 
     public void SlipperyFloorActive()
     {
+        if (SlippyCross.enabled == false)
+        {
+            SlippyCross.enabled = true;
+            myCustomizationManager.Slippy = false;
+        }
 
+        else if (SlippyCross.enabled == true)
+        {
+            SlippyCross.enabled = false;
+            myCustomizationManager.Slippy = true;
+        }
     }
 
     public void NoWallsActive()
     {
+        if (NoWallsCross.enabled == false)
+        {
+            NoWallsCross.enabled = true;
+            myCustomizationManager.WallsActive = false;
+        }
 
+        else if (NoWallsCross.enabled == true)
+        {
+            NoWallsCross.enabled = false;
+            myCustomizationManager.WallsActive = true;
+        }
     }
 
     public void PlayButton()
