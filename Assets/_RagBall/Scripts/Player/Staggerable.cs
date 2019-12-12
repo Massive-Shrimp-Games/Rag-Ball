@@ -64,6 +64,9 @@ public class Staggerable : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        // Is the collision normal?
+
+        // Yes, damage the player
         float daSpeed = collision.relativeVelocity.magnitude;
         if (daSpeed > 2)
             maSpeed = Convert.ToInt32(daSpeed);
@@ -73,6 +76,8 @@ public class Staggerable : MonoBehaviour
             ourSavior.DoStagger(myPlayer, maSpeed);
             ourSavior.AudioManager.transform.Find("collision_AudioSource").GetComponent<AudioSource>().Play();
         }
+
+        // else, ignore it, player is jumping
     }
 
     // NOTES
@@ -87,4 +92,6 @@ public class Staggerable : MonoBehaviour
     // https://docs.unity3d.com/ScriptReference/Transform.GetChild.html
     // Constraints
     // https://docs.unity3d.com/ScriptReference/Rigidbody-constraints.html
+    // Surface Normals
+    // https://docs.unity3d.com/ScriptReference/ContactPoint-normal.html
 }

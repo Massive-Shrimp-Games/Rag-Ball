@@ -463,8 +463,6 @@ public class PlayerManager : MonoBehaviour {
         GameObject theHips = newPlayer.transform.Find("Player/metarig/hips/").gameObject;
         Debug.Log("Player's Hips are: " + theHips.GetComponent<Grabbable>().myPlayer.ToString());
         DynamicCamera.targets.Add(newPlayer.transform.Find("Player/Pivot"));
-        Staggers[pNumber] = PlayerHips[pNumber].GetComponent<Staggerable>();
-        Staggers[pNumber].ourSavior = this;
 
         // Refresh Stamina
         Dashes[pNumber] = 5;
@@ -474,6 +472,11 @@ public class PlayerManager : MonoBehaviour {
         Staggered[pNumber] = false;
         Staminas[pNumber] = 10;
         StaminaTimes[pNumber] = 0.3f;
+
+        // Refresh their staggerable
+        Staggers[pNumber] = PlayerHips[pNumber].GetComponent<Staggerable>();
+        Staggers[pNumber].ourSavior = this;
+        Staggers[pNumber].myPlayer = pNumber;
     }
 
     public void Grab()
@@ -758,7 +761,6 @@ public class PlayerManager : MonoBehaviour {
 
             // STAGGER RECOVERY
             // Update Time
-            Debug.Log("Player 1 Staminas: " + Staminas[0]);
             StaminaTimes[i] -= Time.deltaTime;
             // Update Count (Time)r
             if (StaminaTimes[i] <= 0 && Staminas[i] < 10)
@@ -776,20 +778,21 @@ public class PlayerManager : MonoBehaviour {
             // https://docs.unity3d.com/ScriptReference/Collision-relativeVelocity.html
 
             // Update Is Staggered
-            if ((Staminas[i] < 5) && (!Staggered[i]))
+            if ((Staminas[i] < 3) && (!Staggered[i]))
             {
                 Staggers[i].Stagger();
                 Staggered[i] = true;
             }
-            else if ((Staminas[i] >= 5) && (Staggered[i]))
+            else if ((Staminas[i] >= 3) && (Staggered[i]))
             {
                 Staggers[i].UnStagger();
                 Staggered[i] = false;
             }
-            else if (Staminas[i] < 0)
+            if (Staminas[i] < 0)
             {
                 Staminas[i] = 0;
             }
+            Debug.Log("Player 1 Staminas: " + Staminas[0]);
         }
     }
 

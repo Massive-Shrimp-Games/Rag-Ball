@@ -15,7 +15,7 @@ public class ParameterManager : MonoBehaviour
 
     public void PipeScaleChanged(float s)
     {
-        Debug.Log("SCALING: " + s);
+        //Debug.Log("SCALING: " + s);
         PipeScale = s;
         RedPipeParent.transform.localScale = new Vector3(PipeScale, PipeScale, PipeScale);
         BluePipeParent.transform.localScale = new Vector3(PipeScale, PipeScale, PipeScale);
