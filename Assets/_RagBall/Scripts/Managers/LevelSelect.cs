@@ -16,7 +16,7 @@ public class LevelSelect : MonoBehaviour
     public RawImage PipeMovementCross;
     public RawImage SlippyCross;
     public RawImage NoWallsCross;
-    public CustomizationManager myCustomizationManager;
+    
 
     void Start()
     {
@@ -26,9 +26,9 @@ public class LevelSelect : MonoBehaviour
         SlippyCross.enabled = false;
         NoWallsCross.enabled = false;
 
-        myCustomizationManager.PipeMovement = true;
-        myCustomizationManager.WallsActive = true;
-        myCustomizationManager.Slippy = true;
+        CustomizationManager.CM.PipeMovement = true;
+        CustomizationManager.CM.WallsActive = true;
+        CustomizationManager.CM.Slippy = true;
     }
 
     void Update()
@@ -123,13 +123,13 @@ public class LevelSelect : MonoBehaviour
         if (PipeMovementCross.enabled == false)
         {
             PipeMovementCross.enabled = true;
-            myCustomizationManager.PipeMovement = false;
+            CustomizationManager.CM.PipeMovement = false;
         }
 
         else if (PipeMovementCross.enabled == true)
         {
             PipeMovementCross.enabled = false;
-            myCustomizationManager.PipeMovement = true;
+            CustomizationManager.CM.PipeMovement = true;
         }
     }
 
@@ -138,13 +138,13 @@ public class LevelSelect : MonoBehaviour
         if (SlippyCross.enabled == false)
         {
             SlippyCross.enabled = true;
-            myCustomizationManager.Slippy = false;
+            CustomizationManager.CM.Slippy = false;
         }
 
         else if (SlippyCross.enabled == true)
         {
             SlippyCross.enabled = false;
-            myCustomizationManager.Slippy = true;
+            CustomizationManager.CM.Slippy = true;
         }
     }
 
@@ -153,13 +153,13 @@ public class LevelSelect : MonoBehaviour
         if (NoWallsCross.enabled == false)
         {
             NoWallsCross.enabled = true;
-            myCustomizationManager.WallsActive = false;
+            CustomizationManager.CM.WallsActive = false;
         }
 
         else if (NoWallsCross.enabled == true)
         {
             NoWallsCross.enabled = false;
-            myCustomizationManager.WallsActive = true;
+            CustomizationManager.CM.WallsActive = true;
         }
     }
 
