@@ -637,7 +637,7 @@ MonoBehaviour:
   BluePipeConfetti: {fileID: 1505585315}
   RedPipeConfetti: {fileID: 870855735}
   ExitPipeConfetti: {fileID: 492265037}
-  Timerboard: {fileID: 0}
+  Timerboard: {fileID: 1858565220}
   Seconds: 0
   Minutes: 5
   doOnce: 0
@@ -13400,6 +13400,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 64b5ee8c35d734c4392684572452641b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d92475a653298645948407579d37181, type: 3}
+--- !u!1 &1858565220 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 9d92475a653298645948407579d37181,
+    type: 3}
+  m_PrefabInstance: {fileID: 1858565219}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1862587513
 PrefabInstance:
   m_ObjectHideFlags: 0
