@@ -108,15 +108,17 @@ public class PlayerManager : MonoBehaviour {
     // Stagger Variables
     public Staggerable[] Staggers;              // Who is being staggered?
     public bool[] Staggered;                    // Can the player do anything?
-    public float StaggerThreshold = 10f;       // How strictly do we measure stagger cases? - this is in degrees of difference
+    public float StaggerThreshold = 10f;        // How strictly do we measure stagger cases? - this is in degrees of difference
 
     // Movement Variables
     public int[] Dashes;            // How many dashes player has (0 - 5) - Shared with Jump
     public float[] DashTimes;       // Time until next recovered dash (3 seconds)
     public int[] Staminas;          // How much stamina player has (0 - 100)
     public float[] StaminaTimes;    // Time until next recovered stamina point (0.3 seconds)
+    public float StaminaTime = 1f;  // How long to wait to recover stamina
     public bool[] LeftFoot;         // is the leftfoot good to go? - jumping
     public bool[] RightFoot;        // Is the rightfoot good to go? - jumping
+    private float[] movementForce;  // How much force you move with
 
     // ButtonArrayVariables
     private bool[] AwasPressed;
@@ -160,9 +162,8 @@ public class PlayerManager : MonoBehaviour {
     GameObject theirHips;           // The Enemy's Hips
     Grabbable theirGrabbable;       // The Enemy's Grabbable Component
     Transform yerMommy;             // The Player's Empty
-    Staggerable theirStaggerable;
-    bool theyAreGrabbable = false;
-    private float[] movementForce;
+    Staggerable theirStaggerable;   // Enemy staggerable
+    bool theyAreGrabbable = false;  // Enemy grabbability boolean
 
     // XInputVariables
     public bool use_X_Input = true;
@@ -468,8 +469,12 @@ public class PlayerManager : MonoBehaviour {
             newPlayer = Instantiate(RedPlayer, RespawnPoint.transform.position, Quaternion.identity);
             newPlayer.GetComponent<PlayerModel>().PlayerColor = "red";
         }
+
+        //Destroy old stuff
         DynamicCamera.targets.Remove(players[pNumber].transform.Find("Player/Pivot"));
         Destroy(players[pNumber]);
+
+        // Assign new stuff
         newPlayer.transform.Find("MediumStaticAnimator").transform.position = AnimatorRespawnPoint.transform.position;
         //newPlayer.transform.position = RespawnPoint.transform.position;
         players[pNumber] = newPlayer;
@@ -487,6 +492,8 @@ public class PlayerManager : MonoBehaviour {
         newPlayer.transform.Find("Player/metarig/hips/").gameObject.GetComponent<Grabbable>().myPlayer = pNumber;
         GameObject theHips = newPlayer.transform.Find("Player/metarig/hips/").gameObject;
         //Debug.Log("Player's Hips are: " + theHips.GetComponent<Grabbable>().myPlayer.ToString());
+
+        // Update Camera
         DynamicCamera.targets.Add(newPlayer.transform.Find("Player/Pivot"));
 
         // Refresh Movement
@@ -800,17 +807,19 @@ public class PlayerManager : MonoBehaviour {
 
 
             // STAGGER RECOVERY
+            // Stamina is recovered every two seconds
+            // You need 5 stamina to stand up
             // Update Time
             StaminaTimes[i] -= Time.deltaTime;
             // Update Count (Time)r
             if (StaminaTimes[i] <= 0 && Staminas[i] < 10)
             {
                 Staminas[i] += 1;
-                StaminaTimes[i] = 2f;
+                StaminaTimes[i] = StaminaTime;
             }
             else if (Staminas[i] >= 10)
             {
-                StaminaTimes[i] = 2f;
+                StaminaTimes[i] = StaminaTime;
             }
             // Debug
             //Debug.Log("Stamina: " + Staminas[i]);
@@ -956,6 +965,12 @@ public class PlayerManager : MonoBehaviour {
                             "Player 3: " + PlayerHips[2] + "\n" +
                             "Player 4: " + PlayerHips[3]);
                 */
+
+                // Update settings per player
+                Staggers[i].angleThreshold = StaggerThreshold;
+
+
+
 
                 if (motionEnabled[i])
                 { 

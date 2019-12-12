@@ -89,20 +89,20 @@ public class ScoreManager : MonoBehaviour
                 {
                     Minutes = 0;
                     Seconds = 0;
-                    TimerText.text = Minutes.ToString("f0") + Seconds.ToString("f0");
+                    TimerText.text = "0" + Minutes.ToString("f0") + " " + Seconds.ToString("f0");
                 }
             }
             else
             {
                 Seconds -= Time.deltaTime;
             }
-            if (Mathf.Round(Seconds) <= 0)
+            if (Mathf.Round(Seconds) < 10)
             {
-                TimerText.text = Minutes.ToString("f0") + ":0" + Seconds.ToString("f0");
+                TimerText.text = "0" + Minutes.ToString("f0") + " 0" + Seconds.ToString("f0");
             }
             else
             {
-                TimerText.text = Minutes.ToString("f0") + ":" + Seconds.ToString("f0");
+                TimerText.text = "0" + Minutes.ToString("f0") + " " + Seconds.ToString("f0");
             }
             if (Seconds <= 0.0f && !doOnce && Minutes <= 0.0f)
             {
