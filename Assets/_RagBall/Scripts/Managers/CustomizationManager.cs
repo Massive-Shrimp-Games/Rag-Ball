@@ -7,6 +7,8 @@ public class CustomizationManager : MonoBehaviour
     public static CustomizationManager singleton = null;
 
     public bool PipeMovement = false;
+    public bool Slippy = false;
+    public bool WallsActive = false;
 
     void Awake()
     {
