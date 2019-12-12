@@ -109,6 +109,8 @@ public class PlayerManager : MonoBehaviour {
     public Staggerable[] Staggers;              // Who is being staggered?
     public bool[] Staggered;                    // Can the player do anything?
     public float StaggerThreshold = 10f;        // How strictly do we measure stagger cases? - this is in degrees of difference
+    private bool SomeoneIsStaggered;
+    private bool SomeoneWasStaggered;
 
     // Movement Variables
     public int[] Dashes;            // How many dashes player has (0 - 5) - Shared with Jump
@@ -392,7 +394,9 @@ public class PlayerManager : MonoBehaviour {
             false,
             false,
         };
-        //jumpForce = 5000f;
+
+        SomeoneIsStaggered = false;
+        SomeoneWasStaggered = false;
     }
 
     void Assign_X_Input_Controllers()
@@ -953,6 +957,31 @@ public class PlayerManager : MonoBehaviour {
                     print("Controller with ID 3 pressed start");
                 }
             }
+
+            //check if anyone is staggered and update booleans
+            //bool play = false;
+            for (int i = 0; i < 4; i++)
+            {
+                if (Staggered[i])
+                {
+                    //play = true;
+                    SomeoneIsStaggered = true;
+                }
+            }
+
+            //SomeoneIsStaggered = play;
+
+            //update staggered sounds according to booleans
+            if (SomeoneIsStaggered && !SomeoneWasStaggered)
+            {
+                AudioManager.transform.Find("Stagger_AudioSource").GetComponent<AudioSource>().Play();
+            }
+            else if (SomeoneWasStaggered && !SomeoneIsStaggered)
+            {
+                AudioManager.transform.Find("Stagger_AudioSource").GetComponent<AudioSource>().Stop();
+            }
+
+
 
             //vvv
             // ControllerMotionTranslator
