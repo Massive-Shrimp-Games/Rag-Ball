@@ -11,5 +11,9 @@ public class StartScreen: MonoBehaviour
         {
             SceneManager.LoadScene(1);
         }
+        else if (Input.GetKeyDown(KeyCode.Return))
+        {
+            SceneManager.LoadScene(1);
+        }
     }
 }

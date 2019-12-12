@@ -634,6 +634,7 @@ public class PlayerManager : MonoBehaviour {
 
             // Play audio
             AudioManager.transform.Find("Throw_AudioSource").GetComponent<AudioSource>().Play();
+            AudioManager.transform.Find("Dash_AudioSource").GetComponent<AudioSource>().Play();
 
             //Reset tha stuffs
             theGrabbler = null;
@@ -676,6 +677,7 @@ public class PlayerManager : MonoBehaviour {
 
             // Play audio
             AudioManager.transform.Find("Throw_AudioSource").GetComponent<AudioSource>().Play();
+            AudioManager.transform.Find("Dash_AudioSource").GetComponent<AudioSource>().Play();
 
             //Reset tha stuffs
             theGrabbler = null;

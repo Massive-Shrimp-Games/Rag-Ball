@@ -28,5 +28,10 @@ public class CS_Screen : MonoBehaviour
         {
             LetsGo.enabled = true;
         }
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            SceneManager.LoadScene(2);
+        }
     }
 }

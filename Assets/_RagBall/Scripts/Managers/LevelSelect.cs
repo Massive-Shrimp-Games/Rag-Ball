@@ -34,14 +34,14 @@ public class LevelSelect : MonoBehaviour
         SlippyCross.enabled = false;
         NoWallsCross.enabled = false;
 
-        GoalsOn.enabled = true;
-        TimerOn.enabled = true;
+        GoalsOn.enabled = false;
+        TimerOn.enabled = false;
 
         CustomizationManager.CM.PipeMovement = true;
         CustomizationManager.CM.WallsActive = true;
         CustomizationManager.CM.Slippy = true;
-        CustomizationManager.CM.GoalsActive = true;
-        CustomizationManager.CM.TimerActive = true;
+        CustomizationManager.CM.GoalsActive = false;
+        CustomizationManager.CM.TimerActive = false;
         
     }
 
@@ -72,6 +72,11 @@ public class LevelSelect : MonoBehaviour
 
         TimerCountText = "" + TimerCount;
         TimerTMP.GetComponent<TMP_Text>().text = TimerCountText;
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            SceneManager.LoadScene(3);
+        }
 
     }
 
