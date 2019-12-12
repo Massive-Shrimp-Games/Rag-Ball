@@ -128,6 +128,7 @@ public class PlayerManager : MonoBehaviour {
     private float[] movementForce;  // How much force you move with
     public int MaxStamina = 50;
     public int MinStamina = 10;
+    public int RangeStamina = 5;
 
     // ButtonArrayVariables
     private bool[] AwasPressed;
