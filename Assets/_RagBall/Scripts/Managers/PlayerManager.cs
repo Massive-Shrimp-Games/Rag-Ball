@@ -151,6 +151,7 @@ public class PlayerManager : MonoBehaviour {
     //public Animator animator3;
     //public Transform rotatePlayer3;
     //public Transform pivot3;
+    public GameObject StaminaUI;
 
     // GrabbingStuffVariables
     GameObject theGrabbler;         // Who is Grabbling
@@ -1269,6 +1270,53 @@ public class PlayerManager : MonoBehaviour {
                     {
                         StartwasPressed[i] = false;
                     }
+
+                    //toggle stamina ui
+                    if (GamePadStates[i].DPad.Up == ButtonState.Pressed)
+                    {
+                        StaminaUI.GetComponent<Canvas>().enabled = true;
+                        for (int j = 0; j < 4; j++)
+                        {
+                            SpriteRenderer reference;
+                            try
+                            {
+                                reference = players[j].transform.Find("Player/Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>();
+                            }
+                            catch
+                            {
+                                reference = players[j].transform.Find("Player/Pivot/Character_DirectionalCircle_Blue_01_0").GetComponent<SpriteRenderer>();
+                            }
+                            reference.enabled = true;
+                        }      
+                    }
+
+                    if (GamePadStates[i].DPad.Down == ButtonState.Pressed)
+                    {
+                        StaminaUI.GetComponent<Canvas>().enabled = false;
+                        for (int j = 0; j < 4; j++)
+                        {
+                            SpriteRenderer reference;
+                            try
+                            {
+                                reference = players[j].transform.Find("Player/Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>();
+                            }
+                            catch
+                            {
+                                reference = players[j].transform.Find("Player/Pivot/Character_DirectionalCircle_Blue_01_0").GetComponent<SpriteRenderer>();
+                            }
+                            reference.enabled = false;
+                        }
+
+                        /*
+                        StartwasPressed[i] = true;
+                        PauseMenu.enabled = true;
+                        GameIsPaused = true;
+                        PauseMenu.GetComponent<CanvasGroup>().interactable = true;
+                        PauseMenu.transform.Find("Resume_Button").GetComponent<Button>().Select();
+                        Time.timeScale = 0f;
+                        */
+                    }
+
 
                     //Show stagger stars
                     //RotatePlayers[i].transform.Find("metarig/hips/spine/chest/neck/head/StaggerStars").transform.Rotate(0, 5, 0);
