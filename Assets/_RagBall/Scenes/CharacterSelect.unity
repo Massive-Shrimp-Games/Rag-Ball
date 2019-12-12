@@ -417,7 +417,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c2e79688e229164eb5a3c348a35244c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PipeMovement: 0
+  PipeMovement: 1
+  Slippy: 1
+  WallsActive: 1
+  GoalsActive: 0
+  TimerActive: 0
 --- !u!1 &1790403280
 GameObject:
   m_ObjectHideFlags: 0
