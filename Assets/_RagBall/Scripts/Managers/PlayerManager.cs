@@ -157,6 +157,8 @@ public class PlayerManager : MonoBehaviour {
     GameObject theirHips;           // The Enemy's Hips
     Grabbable theirGrabbable;       // The Enemy's Grabbable Component
     Transform yerMommy;             // The Player's Empty
+    Staggerable theirStaggerable;
+    bool theyAreGrabbable = false;
 
     private float[] movementForce;
 
@@ -507,7 +509,7 @@ public class PlayerManager : MonoBehaviour {
         //Debug.Log("We really tryin grab here!");
 
         //Check if he can grab
-        if ((maHips.GetComponent<Grabbable>().iCanGrab == true) && (theirHips != null))
+        if ((maHips.GetComponent<Grabbable>().iCanGrab == true) && (theirHips != null) && theyAreGrabbable)
         {
             // DEBUG
             Debug.Log("And here we go");
@@ -721,6 +723,8 @@ public class PlayerManager : MonoBehaviour {
         {
             theirHips = maGrabbable.tharHips;
             theirGrabbable = theirHips.GetComponent<Grabbable>();
+            theirStaggerable = theirHips.GetComponent<Staggerable>();
+            theyAreGrabbable = theirStaggerable.staggered;
         }
         catch
         {

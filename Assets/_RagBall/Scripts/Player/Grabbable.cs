@@ -15,8 +15,9 @@ public class Grabbable : MonoBehaviour
     public GameObject oldHips;
     public bool iCanGrab = true;
     public string grabMode = "free";
-    public float forgetTime = 1f;       // How long until we forget their hips
-    public float forgetTimer;  // What actually tracks the time
+    public float forgetTime = 1f;           // How long until we forget their hips
+    public float forgetTimer;               // What actually tracks the time
+    public bool theyAreGrabbable = false;   //can we grab the opponent?
 
     /*
         public void OnTriggerEnter(Collider theTriggerer)
@@ -64,17 +65,19 @@ public class Grabbable : MonoBehaviour
             //Debug.Log("An' its got sum HIPS BOI!");
             tharHips = theTriggerer.gameObject;
             oldHips = tharHips;
+            theyAreGrabbable = tharHips.GetComponent<Staggerable>().staggered;
         }
     }
 
     public void OnTriggerExit(Collider theTriggerer)
     {
         tharHips = null;
+        theyAreGrabbable = false;
     }
 
     public void Update()
     {
-        // Update Timer
+        // Update Memory Timer
         if (tharHips != null)
         {
             forgetTimer -= Time.deltaTime;
@@ -82,6 +85,7 @@ public class Grabbable : MonoBehaviour
         else if (forgetTimer <= 0f)
         {
             tharHips = null;
+            oldHips = null;
         }
         else
         {

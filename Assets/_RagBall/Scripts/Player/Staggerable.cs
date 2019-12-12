@@ -33,6 +33,7 @@ public class Staggerable : MonoBehaviour
     public Animator maAnimator;
     public float angleThreshold = 90f;             // How strictly we want to compare force normals - ANGLES
     public float forceThreshold = 5f;             // How strictly we want to compare force normals - FORCES
+    public bool staggered = false;                  // Are we staggered?
 
     String title = "";                          // Fore more useful debug messages
 
@@ -54,6 +55,7 @@ public class Staggerable : MonoBehaviour
         grabMode = "stunned";
         maAnimator.enabled = false;
         //Debug.Log(hipsRBC);
+        staggered = true;
     }
 
     public void UnStagger()
@@ -65,6 +67,7 @@ public class Staggerable : MonoBehaviour
         maAnimator.enabled = true;
         grabMode = "free";
         //Debug.Log(hipsRBC);
+        staggered = false;
     }
 
     void OnCollisionEnter(Collision collision)
