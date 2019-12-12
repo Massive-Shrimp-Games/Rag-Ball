@@ -4960,7 +4960,7 @@ MonoBehaviour:
   PlayerHips: []
   Staggers: []
   Staggered: 
-  StaggerThreshold: 10
+  StaggerThreshold: 20
   Dashes: 
   DashTimes: []
   Staminas: 
@@ -4977,7 +4977,7 @@ MonoBehaviour:
   scoremanager: {fileID: 82294041}
   DynamicCamera: {fileID: 963194229}
   GameIsPaused: 0
-  StaminaUI: {fileID: 776961864}
+  StaminaUI: {fileID: 0}
   use_X_Input: 1
   connectedControllers: 0
   KeysEnabled: 0

@@ -108,7 +108,7 @@ public class PlayerManager : MonoBehaviour {
     // Stagger Variables
     public Staggerable[] Staggers;              // Who is being staggered?
     public bool[] Staggered;                    // Can the player do anything?
-    public float StaggerThreshold = 10f;        // How strictly do we measure stagger cases? - this is in degrees of difference
+    public float StaggerThreshold = 20f;        // How strictly do we measure stagger cases? - this is in degrees of difference
 
     // Movement Variables
     public int[] Dashes;            // How many dashes player has (0 - 5) - Shared with Jump
