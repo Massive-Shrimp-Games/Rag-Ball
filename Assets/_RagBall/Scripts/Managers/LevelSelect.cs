@@ -35,7 +35,7 @@ public class LevelSelect : MonoBehaviour
         NoWallsCross.enabled = false;
 
         GoalsOn.enabled = false;
-        //TimerOn.enabled = false;
+        TimerOn.enabled = false;
 
         CustomizationManager.CM.PipeMovement = true;
         CustomizationManager.CM.WallsActive = true;
@@ -62,9 +62,13 @@ public class LevelSelect : MonoBehaviour
         Levels[LevelsIndex].enabled = true;
 
         CustomizationManager.CM.GoalsMax = GoalsCount;
+        CustomizationManager.CM.TimerMax = TimerCount;
 
         GoalsCountText = "" + GoalsCount;
         GoalsTMP.GetComponent<TMP_Text>().text = GoalsCountText;
+
+        TimerCountText = "" + TimerCount;
+        TimerTMP.GetComponent<TMP_Text>().text = TimerCountText;
 
     }
 
@@ -108,16 +112,16 @@ public class LevelSelect : MonoBehaviour
     {
         if (TimerOn.enabled == false)
         {
-            TimerOff.enabled = true;
-            TimerOn.enabled = false;
-            CustomizationManager.CM.TimerActive = false;
+            TimerOff.enabled = false;
+            TimerOn.enabled = true;
+            CustomizationManager.CM.TimerActive = true;
         }
 
         else if (TimerOn.enabled == true)
         {
-            TimerOff.enabled = false;
-            TimerOn.enabled = true;
-            CustomizationManager.CM.TimerActive = true;
+            TimerOff.enabled = true;
+            TimerOn.enabled = false;
+            CustomizationManager.CM.TimerActive = false;
         }
     }
 
@@ -127,25 +131,35 @@ public class LevelSelect : MonoBehaviour
         {
             GoalsOff.enabled = false;
             GoalsOn.enabled = true;
-            CustomizationManager.CM.GoalsActive = false;
+            CustomizationManager.CM.GoalsActive = true;
         }
 
         else if (GoalsOn.enabled == true)
         {
             GoalsOff.enabled = true;
             GoalsOn.enabled = false;
-            CustomizationManager.CM.GoalsActive = true;
+            CustomizationManager.CM.GoalsActive = false;
         }
     }
 
     public void addTime()
     {
+        TimerCount += 1;
 
+        if (TimerCount >= 10)
+        {
+            TimerCount = 10;
+        }
     }
 
     public void subTime()
     {
+        TimerCount -= 1;
 
+        if (TimerCount <= 0)
+        {
+            TimerCount = 0;
+        }
     }
 
     public void addScore()

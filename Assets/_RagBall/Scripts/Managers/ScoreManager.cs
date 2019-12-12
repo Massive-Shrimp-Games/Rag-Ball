@@ -12,7 +12,7 @@ public class ScoreManager : MonoBehaviour
     //public GameObject BlueGoal;
     public int RedScore;
     public int BlueScore;
-    public int WinScore = 5;
+    public int WinScore = 1;
     public GameObject redscoreboard;
     public GameObject bluescoreboard;
     public GameObject Pause_redscoreboard;
@@ -31,6 +31,7 @@ public class ScoreManager : MonoBehaviour
     {
         RedScore = 00;
         BlueScore = 00;
+        WinScore = CustomizationManager.CM.GoalsMax;
     }
 
     // Update is called once per frame
