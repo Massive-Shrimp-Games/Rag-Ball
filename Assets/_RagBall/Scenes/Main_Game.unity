@@ -721,8 +721,6 @@ MonoBehaviour:
   WinScore: 5
   redscoreboard: {fileID: 798441382}
   bluescoreboard: {fileID: 1913087588}
-  Pause_redscoreboard: {fileID: 0}
-  Pause_bluescoreboard: {fileID: 0}
   BlueScoreText: 
   RedScoreText: 
   RedWinScreen: {fileID: 1388682449}
@@ -731,6 +729,7 @@ MonoBehaviour:
   BluePipeConfetti: {fileID: 1505585315}
   RedPipeConfetti: {fileID: 870855735}
   ExitPipeConfetti: {fileID: 492265037}
+  Timerboard: {fileID: 1858565220}
   Seconds: 0
   Minutes: 5
   doOnce: 0
@@ -14229,6 +14228,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 9d92475a653298645948407579d37181,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 9d92475a653298645948407579d37181,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14306,6 +14310,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 64b5ee8c35d734c4392684572452641b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d92475a653298645948407579d37181, type: 3}
+--- !u!1 &1858565220 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 9d92475a653298645948407579d37181,
+    type: 3}
+  m_PrefabInstance: {fileID: 1858565219}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1862587513
 PrefabInstance:
   m_ObjectHideFlags: 0

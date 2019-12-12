@@ -9,8 +9,8 @@ public class CustomizationManager : MonoBehaviour
     public bool PipeMovement = true;
     public bool Slippy = true;
     public bool WallsActive = true;
-    public bool GoalsActive = false;
-    public bool TimerActive = false;
+    public bool GoalsActive = true;
+    public bool TimerActive = true;
     public int GoalsMax = 0;
     public int TimerMax = 0;
 

@@ -19,8 +19,6 @@ public class ScoreManager : MonoBehaviour
     public int WinScore = 5;
     public GameObject redscoreboard;
     public GameObject bluescoreboard;
-    public GameObject Pause_redscoreboard;
-    public GameObject Pause_bluescoreboard;
     public string BlueScoreText;
     public string RedScoreText;
     public Canvas RedWinScreen;
@@ -29,6 +27,8 @@ public class ScoreManager : MonoBehaviour
     public ParticleSystem BluePipeConfetti;
     public ParticleSystem RedPipeConfetti;
     public ParticleSystem ExitPipeConfetti;
+
+    public GameObject Timerboard;
 
     public float Seconds = 0;
     public float Minutes = 5;
@@ -70,36 +70,45 @@ public class ScoreManager : MonoBehaviour
             CanAddScore = false;
         }
 
-        if (Seconds <= 0)
+        if (CustomizationManager.CM.TimerActive == false)
         {
-            Seconds = 59;
-            if (Minutes >= 1)
+            TimerText.text = ("");
+            Timerboard.SetActive(false);
+        }
+
+        if (CustomizationManager.CM.TimerActive == true)
+        {
+            if (Seconds <= 0)
             {
-                Minutes--;
+                Seconds = 59;
+                if (Minutes >= 1)
+                {
+                    Minutes--;
+                }
+                else
+                {
+                    Minutes = 0;
+                    Seconds = 0;
+                    TimerText.text = Minutes.ToString("f0") + Seconds.ToString("f0");
+                }
             }
             else
             {
-                Minutes = 0;
-                Seconds = 0;
-                TimerText.text = Minutes.ToString("f0") + Seconds.ToString("f0");
+                Seconds -= Time.deltaTime;
             }
-        }
-        else
-        {
-            Seconds -= Time.deltaTime;
-        }
-        if(Mathf.Round(Seconds) <= 0)
-        {
-            TimerText.text = Minutes.ToString("f0") + ":0" + Seconds.ToString("f0");
-        }
-        else
-        {
-            TimerText.text = Minutes.ToString("f0") + ":" + Seconds.ToString("f0");
-        }
-        if (Seconds <= 0.0f && !doOnce && Minutes <= 0.0f)
-        {
-            doOnce = true;        
-            GameOver();
+            if (Mathf.Round(Seconds) <= 0)
+            {
+                TimerText.text = Minutes.ToString("f0") + ":0" + Seconds.ToString("f0");
+            }
+            else
+            {
+                TimerText.text = Minutes.ToString("f0") + ":" + Seconds.ToString("f0");
+            }
+            if (Seconds <= 0.0f && !doOnce && Minutes <= 0.0f)
+            {
+                doOnce = true;
+                GameOver();
+            }
         }
     }
 
@@ -110,7 +119,7 @@ public class ScoreManager : MonoBehaviour
             RedScore += 1;
         }
     
-        if (RedScore >= WinScore)
+        if (RedScore >= WinScore && CustomizationManager.CM.GoalsActive == true)
         {
             RedWinScreen.enabled = true;
             RedPipeConfetti.loop = true;
@@ -129,7 +138,7 @@ public class ScoreManager : MonoBehaviour
             BlueScore += 1;
         }
 
-        if (BlueScore >= WinScore)
+        if (BlueScore >= WinScore && CustomizationManager.CM.GoalsActive == true)
         {
             BlueWinScreen.enabled = true;
             RedPipeConfetti.loop = true;
