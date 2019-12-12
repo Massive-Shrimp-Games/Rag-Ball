@@ -30,9 +30,9 @@ public class ScoreManager : MonoBehaviour
     public ParticleSystem RedPipeConfetti;
     public ParticleSystem ExitPipeConfetti;
 
-    private float timer;
-    private bool canCount = true;
-    private bool doOnce = false;
+    public float Seconds = 0;
+    public float Minutes = 5;
+    public bool doOnce = false;
 
     private bool CanAddScore = true;
 
@@ -43,7 +43,8 @@ public class ScoreManager : MonoBehaviour
         RedScore = 00;
         BlueScore = 00;
         WinScore = CustomizationManager.CM.GoalsMax;
-        timer = mainTimer;
+        Minutes = CustomizationManager.CM.TimerMax;
+        
     }
 
     // Update is called once per frame
@@ -69,18 +70,35 @@ public class ScoreManager : MonoBehaviour
             CanAddScore = false;
         }
 
-        if (timer >= 0.0f && canCount)
+        if (Seconds <= 0)
         {
-            timer -= Time.deltaTime;
-            TimerText.text = timer.ToString("F");
+            Seconds = 59;
+            if (Minutes >= 1)
+            {
+                Minutes--;
+            }
+            else
+            {
+                Minutes = 0;
+                Seconds = 0;
+                TimerText.text = Minutes.ToString("f0") + Seconds.ToString("f0");
+            }
         }
-
-        else if (timer <= 0.0f && !doOnce)
+        else
         {
-            canCount = false;
-            doOnce = true;
-            TimerText.text = "0.00";
-            timer = 0.0f;
+            Seconds -= Time.deltaTime;
+        }
+        if(Mathf.Round(Seconds) <= 0)
+        {
+            TimerText.text = Minutes.ToString("f0") + ":0" + Seconds.ToString("f0");
+        }
+        else
+        {
+            TimerText.text = Minutes.ToString("f0") + ":" + Seconds.ToString("f0");
+        }
+        if (Seconds <= 0.0f && !doOnce && Minutes <= 0.0f)
+        {
+            doOnce = true;        
             GameOver();
         }
     }

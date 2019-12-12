@@ -34,12 +34,14 @@ public class LevelSelect : MonoBehaviour
         SlippyCross.enabled = false;
         NoWallsCross.enabled = false;
 
-        GoalsOn.enabled = false;
-        TimerOn.enabled = false;
+        GoalsOn.enabled = true;
+        TimerOn.enabled = true;
 
         CustomizationManager.CM.PipeMovement = true;
         CustomizationManager.CM.WallsActive = true;
         CustomizationManager.CM.Slippy = true;
+        CustomizationManager.CM.GoalsActive = true;
+        CustomizationManager.CM.TimerActive = true;
     }
 
     void Update()

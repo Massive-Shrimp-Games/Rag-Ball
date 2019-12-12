@@ -715,7 +715,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TimerText: {fileID: 1766675971}
-  mainTimer: 10
+  mainTimer: 5000
   RedScore: 0
   BlueScore: 0
   WinScore: 5
@@ -731,6 +731,9 @@ MonoBehaviour:
   BluePipeConfetti: {fileID: 1505585315}
   RedPipeConfetti: {fileID: 870855735}
   ExitPipeConfetti: {fileID: 492265037}
+  Seconds: 0
+  Minutes: 5
+  doOnce: 0
 --- !u!1 &97165645
 GameObject:
   m_ObjectHideFlags: 0

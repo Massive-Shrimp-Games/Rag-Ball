@@ -420,8 +420,10 @@ MonoBehaviour:
   PipeMovement: 1
   Slippy: 1
   WallsActive: 1
-  GoalsActive: 0
-  TimerActive: 0
+  GoalsActive: 1
+  TimerActive: 1
+  GoalsMax: 0
+  TimerMax: 0
 --- !u!1 &1790403280
 GameObject:
   m_ObjectHideFlags: 0
