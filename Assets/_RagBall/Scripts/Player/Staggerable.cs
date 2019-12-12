@@ -86,25 +86,13 @@ public class Staggerable : MonoBehaviour
         Vector3 surface = contact.point;
         float difference = Vector3.Angle(velocities, surface);
 
-        // DEBUG
-        if (difference < angleThreshold)
-        {
-            title = "!!! BIG !!!";
-        }
-        else
-        {
-            title = "... small ...";
-        }
-
-        Debug.Log(  title + "\n" + 
-                    "Veolcity Vector: " + velocities + "\n" +
-                    "Surface Vector: " + surface + "\n" +
-                    "Difference: " + difference);
 
 
         // ANGLES ARE OK!
-        if (difference < angleThreshold)
-        { 
+        if (difference > angleThreshold)
+        {
+            title = "!!! BIG !!!";
+
             // REPORT!
             if (daSpeed > 2)
                 maSpeed = Convert.ToInt32(daSpeed);
@@ -116,10 +104,18 @@ public class Staggerable : MonoBehaviour
                 ourSavior.DoStagger(myPlayer, maSpeed);
                 ourSavior.AudioManager.transform.Find("collision_AudioSource").GetComponent<AudioSource>().Play();
             }
-
+        }
+        else
+        {
             // else, ignore it, not significant enough
+            title = "... small ...";
         }
 
+        // DEBUG
+        Debug.Log(  title + "\n" +
+                    "Veolcity Vector: " + velocities + "\n" +
+                    "Surface Vector: " + surface + "\n" +
+                    "Difference: " + difference);
 
 
     }

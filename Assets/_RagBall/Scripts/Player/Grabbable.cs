@@ -15,6 +15,8 @@ public class Grabbable : MonoBehaviour
     public GameObject oldHips;
     public bool iCanGrab = true;
     public string grabMode = "free";
+    public float forgetTime = 1f;       // How long until we forget their hips
+    public float forgetTimer;  // What actually tracks the time
 
     /*
         public void OnTriggerEnter(Collider theTriggerer)
@@ -29,6 +31,11 @@ public class Grabbable : MonoBehaviour
             }
         }
     */
+
+    public void Awake()
+    {
+        forgetTimer = forgetTime;
+    }
 
     public void OnTriggerEnter(Collider theTriggerer)
     {
@@ -63,6 +70,24 @@ public class Grabbable : MonoBehaviour
     public void OnTriggerExit(Collider theTriggerer)
     {
         tharHips = null;
+    }
+
+    public void Update()
+    {
+        // Update Timer
+        if (tharHips != null)
+        {
+            forgetTimer -= Time.deltaTime;
+        }
+        else if (forgetTimer <= 0f)
+        {
+            tharHips = null;
+        }
+        else
+        {
+            forgetTimer = forgetTime;
+        }
+
     }
 
 }

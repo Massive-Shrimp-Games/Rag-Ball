@@ -504,24 +504,19 @@ public class PlayerManager : MonoBehaviour {
         // The other cause could be:
         // https://docs.unity3d.com/ScriptReference/Rigidbody-isKinematic.html
 
-        Debug.Log("We really tryin grab here!");
-
-        // TEST
-        if (theirHips != null)
-        {
-            Debug.Log("And here we go");
-        }
-        else
-        {
-            Debug.Log("OHHHHHHHHHHH NOOOOOOOOOOOOOOOOO!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        }
+        //Debug.Log("We really tryin grab here!");
 
         //Check if he can grab
-        if (maHips.GetComponent<Grabbable>().iCanGrab == true)
+        if ((maHips.GetComponent<Grabbable>().iCanGrab == true) && (theirHips != null))
         {
+            // DEBUG
+            Debug.Log("And here we go");
+
             // Move 'im up
             theirHips.transform.position = maHips.transform.position;
-            theirHips.transform.Translate(0f, 1.5f, 0f);
+            Transform newTransform = maHips.transform;
+            //theirHips.transform.Translate(0f, 1.5f, 0f);
+            theirHips.transform.position = maHips.transform.position + maHips.transform.TransformDirection(0f,1.5f,0f);
 
             //Find da parent
             yerMommy = theirHips.transform.parent;
@@ -536,8 +531,16 @@ public class PlayerManager : MonoBehaviour {
 
             //Fix the mode!
             maGrabbable.grabMode = "grabbing";
-
         }
+        else
+        {
+            Debug.Log("OHHHHHHHHHHH NOOOOOOOOOOOOOOOOO!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        }
+
+        // NOTES
+        // Move object relative to another
+        // https://answers.unity.com/questions/1125044/how-do-i-move-an-object-relative-to-another-object.html
+
     }
 
 
@@ -659,13 +662,13 @@ public class PlayerManager : MonoBehaviour {
 
 
         // Pick a poison
-        if (maGrabbable.grabMode == "free")
+        if (maGrabbable.grabMode.Equals("free"))
         {
             Debug.Log("Imma try grabbin!");
             Grab();
             //Debug.Log("EEEERRRRRRAAAAAARRRRGGRGRGRGRGRG!GG!G!G!G!GG!G!G!!\n\n\n\n\n!!!!!!!!");
         }
-        else if (maGrabbable.grabMode == "grabbing")
+        else if (maGrabbable.grabMode.Equals("grabbing"))
         {
             Debug.Log("Imma let go now!");
             Drop();
@@ -721,8 +724,15 @@ public class PlayerManager : MonoBehaviour {
         }
         catch
         {
+            try
+            { 
             theirHips = maGrabbable.oldHips;
             theirGrabbable = theirHips.GetComponent<Grabbable>();
+            }
+            catch
+            {
+                Debug.Log("Sorry charlie, youre just outa luck!");
+            }
         }
         Debug.Log("And I sur' hope I can see this!");
     }
