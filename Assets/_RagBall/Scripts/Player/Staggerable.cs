@@ -31,6 +31,9 @@ public class Staggerable : MonoBehaviour
     private int maSpeed;
     public string grabMode;
     public Animator maAnimator;
+    public float angleThreshold = 90f;             // How strictly we want to compare force normals - ANGLES
+    public float forceThreshold = 5f;             // How strictly we want to compare force normals - FORCES
+
 
     private void Awake()
     {
@@ -66,21 +69,42 @@ public class Staggerable : MonoBehaviour
     {
         //Debug.Log("Force Direction: " + collision.contacts[0].normal);
 
-        // Is the collision normal or above surface?
+        // Get total velocities of player
+        // find overall direction (vector)
+        // compare that vector with the collision vector
+        // if the difference is less than the threshold
+        // do damage
+       
 
-
-        // Yes, damage the player
+        // GET STUFF!
         float daSpeed = collision.relativeVelocity.magnitude;
-        if (daSpeed > 2)
-            maSpeed = Convert.ToInt32(daSpeed);
-            Debug.Log("\nI HIT SOMETHING OUCH! " + maSpeed + "\n" + "Direction: " + collision.contacts[0].normal);
-        if (maSpeed > 5)
-        {
-            ourSavior.DoStagger(myPlayer, maSpeed);
-            ourSavior.AudioManager.transform.Find("collision_AudioSource").GetComponent<AudioSource>().Play();
+        Vector3 velocities = collision.relativeVelocity;
+        ContactPoint contact = collision.contacts[0];
+        //Debug.Log("DID THIS WORK?!???: " + contact.point + " X: " + contact.point.x + " Y: " + contact.point.y + " Z: " + contact.point.z);
+        Vector3 surface = contact.point;
+        float difference = Vector3.Angle(velocities, surface);
+
+
+        // ANGLES ARE OK!
+        if (difference < angleThreshold)
+        { 
+            // REPORT!
+            if (daSpeed > 2)
+                maSpeed = Convert.ToInt32(daSpeed);
+                Debug.Log("\nI HIT SOMETHING OUCH! " + maSpeed + "\n" + "Direction: " + collision.contacts[0].normal);
+
+            // DAMAGE!
+            if (maSpeed > forceThreshold)
+            {
+                ourSavior.DoStagger(myPlayer, maSpeed);
+                ourSavior.AudioManager.transform.Find("collision_AudioSource").GetComponent<AudioSource>().Play();
+            }
+
+            // else, ignore it, not significant enough
         }
 
-        // else, ignore it, player is jumping
+
+
     }
 
     // NOTES
@@ -97,4 +121,14 @@ public class Staggerable : MonoBehaviour
     // https://docs.unity3d.com/ScriptReference/Rigidbody-constraints.html
     // Surface Normals
     // https://docs.unity3d.com/ScriptReference/ContactPoint-normal.html
+    // https://docs.unity3d.com/ScriptReference/Vector3.html
+    // https://docs.unity3d.com/ScriptReference/RaycastHit-normal.html
+    // Forces
+    // https://answers.unity.com/questions/486771/get-force-applied-on-a-gameobject.html
+    // Comparing Angles
+    // https://docs.unity3d.com/ScriptReference/Mathf.DeltaAngle.html
+    // https://answers.unity.com/questions/1193206/calculate-difference-between-two-3d-angles.html
+    // https://docs.unity3d.com/ScriptReference/Vector3.Angle.html
+    // Velocities
+    // 
 }

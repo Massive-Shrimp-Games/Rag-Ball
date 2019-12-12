@@ -104,8 +104,13 @@ public class PlayerManager : MonoBehaviour {
     private PlayerIndex[] PlayerIndexes;
     public GameObject[,] PlayerHands;
     public GameObject[] PlayerHips;
-    public Staggerable[] Staggers;
-    public bool[] Staggered;
+
+    // Stagger Variables
+    public Staggerable[] Staggers;              // Who is being staggered?
+    public bool[] Staggered;                    // Can the player do anything?
+    public float StaggerThreshold = 10f;       // How strictly do we measure stagger cases? - this is in degrees of difference
+
+    // Dash Variables
     public int[] Dashes;            // How many dashes player has (0 - 5)
     public float[] DashTimes;       // Time until next recovered dash (3 seconds)
     public int[] Staminas;          // How much stamina player has (0 - 100)
@@ -477,6 +482,7 @@ public class PlayerManager : MonoBehaviour {
         Staggers[pNumber] = PlayerHips[pNumber].GetComponent<Staggerable>();
         Staggers[pNumber].ourSavior = this;
         Staggers[pNumber].myPlayer = pNumber;
+        Staggers[pNumber].angleThreshold = StaggerThreshold;
     }
 
     public void Grab()
