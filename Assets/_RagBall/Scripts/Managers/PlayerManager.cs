@@ -126,6 +126,8 @@ public class PlayerManager : MonoBehaviour {
     public bool[] LeftFoot;         // is the leftfoot good to go? - jumping
     public bool[] RightFoot;        // Is the rightfoot good to go? - jumping
     private float[] movementForce;  // How much force you move with
+    public int MaxStamina = 50;
+    public int MinStamina = 20;
 
     // ButtonArrayVariables
     private bool[] AwasPressed;
@@ -529,8 +531,8 @@ public class PlayerManager : MonoBehaviour {
 
         // Refresh Stagger
         Staggered[pNumber] = false;
-        Staminas[pNumber] = 10;
-        StaminaTimes[pNumber] = 0.3f;
+        Staminas[pNumber] = MaxStamina;
+        StaminaTimes[pNumber] = StaminaTime;
 
         // Refresh their staggerable
         Staggers[pNumber] = PlayerHips[pNumber].GetComponent<Staggerable>();
@@ -565,8 +567,9 @@ public class PlayerManager : MonoBehaviour {
         //Debug.Log("We really tryin grab here!");
 
         //Check if he can grab
-        if ((maHips.GetComponent<Grabbable>().iCanGrab == true) && (theirHips != null) && theyAreGrabbable)
-        {
+        //if ((maHips.GetComponent<Grabbable>().iCanGrab == true) && (theirHips != null) && theyAreGrabbable)
+        if ((maHips.GetComponent<Grabbable>().iCanGrab == true) && (theirHips != null))
+            {
             // DEBUG
             Debug.Log("And here we go");
 
@@ -853,12 +856,12 @@ public class PlayerManager : MonoBehaviour {
             // Update Time
             StaminaTimes[i] -= Time.deltaTime;
             // Update Count (Time)r
-            if (StaminaTimes[i] <= 0 && Staminas[i] < 10)
+            if ((StaminaTimes[i] <= 0) && (Staminas[i] < MaxStamina))
             {
                 Staminas[i] += 1;
                 StaminaTimes[i] = StaminaTime;
             }
-            else if (Staminas[i] >= 10)
+            else if (Staminas[i] >= MaxStamina)
             {
                 StaminaTimes[i] = StaminaTime;
             }
@@ -868,19 +871,19 @@ public class PlayerManager : MonoBehaviour {
             // https://docs.unity3d.com/ScriptReference/Collision-relativeVelocity.html
 
             // Update Is Staggered
-            if ((Staminas[i] < 3) && (!Staggered[i]))
+            if ((Staminas[i] < MinStamina + 1) && (!Staggered[i]))
             {
                 Staggers[i].Stagger();
                 Staggered[i] = true;
             }
-            else if ((Staminas[i] >= 3) && (Staggered[i]))
+            else if ((Staminas[i] >= MinStamina) && (Staggered[i]))
             {
                 Staggers[i].UnStagger();
                 Staggered[i] = false;
             }
-            if (Staminas[i] < 0)
+            if (Staminas[i] < (MinStamina - 2))
             {
-                Staminas[i] = 0;
+                Staminas[i] = MinStamina;
             }
             //Debug.Log("Player 1 Staminas: " + Staminas[0]);
         }
