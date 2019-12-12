@@ -1613,7 +1613,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.004
+  m_Radius: 0.007
   m_Height: 0.02
   m_Direction: 1
   m_Center: {x: 0, y: 0.002, z: 0}
@@ -1656,6 +1656,7 @@ MonoBehaviour:
   angleThreshold: 90
   forceThreshold: 5
   staggered: 0
+  DashDamage: 0
 --- !u!1 &6970539895656409426
 GameObject:
   m_ObjectHideFlags: 0

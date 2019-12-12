@@ -994,27 +994,27 @@ public class PlayerManager : MonoBehaviour {
             }
 
             //check if anyone is staggered and update booleans
-            //bool play = false;
+            SomeoneIsStaggered = false;
             for (int i = 0; i < 4; i++)
             {
                 if (Staggered[i])
                 {
-                    //play = true;
                     SomeoneIsStaggered = true;
+                    break;
                 }
             }
 
-            //SomeoneIsStaggered = play;
 
             //update staggered sounds according to booleans
             if (SomeoneIsStaggered && !SomeoneWasStaggered)
             {
-                AudioManager.transform.Find("Stagger_AudioSource").GetComponent<AudioSource>().Play();
+                AudioManager.transform.Find("Staggered_AudioSource").GetComponent<AudioSource>().Play();
             }
             else if (SomeoneWasStaggered && !SomeoneIsStaggered)
             {
-                AudioManager.transform.Find("Stagger_AudioSource").GetComponent<AudioSource>().Stop();
+                AudioManager.transform.Find("Staggered_AudioSource").GetComponent<AudioSource>().Stop();
             }
+            SomeoneWasStaggered = SomeoneIsStaggered;
 
 
 
