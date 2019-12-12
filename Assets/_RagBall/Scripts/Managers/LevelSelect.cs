@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class LevelSelect : MonoBehaviour
@@ -8,12 +9,22 @@ public class LevelSelect : MonoBehaviour
     
     public Canvas CourtLevel;
     public Canvas LedgeLevel;
+    public RawImage[] GameModes;
+    private int GameModeIndex;
+    public RawImage[] Levels;
+    private int LevelsIndex;
+    public RawImage PipeMovementCross;
+    public RawImage SlippyCross;
+    public RawImage NoWallsCross;
     public CustomizationManager myCustomizationManager;
 
     void Start()
     {
-        CourtLevel.enabled = true;
-        LedgeLevel.enabled = false;
+        GameModeIndex = 0;
+        LevelsIndex = 0;
+        PipeMovementCross.enabled = true;
+        SlippyCross.enabled = true;
+        NoWallsCross.enabled = true;
     }
 
     void Update()
@@ -33,37 +44,54 @@ public class LevelSelect : MonoBehaviour
             SceneManager.LoadScene(4);
         }
 
-        if (CourtLevel.enabled && (Input.GetButtonDown("Right Bumper1") || Input.GetButtonDown("Right Bumper2") || Input.GetButtonDown("Right Bumper3") || Input.GetButtonDown("Right Bumper4")))
+        for (int i = 0; i < GameModes.Length; i++)
         {
-            CourtLevel.enabled = false;
-            LedgeLevel.enabled = true;
+            GameModes[i].enabled = false;
         }
+        GameModes[GameModeIndex].enabled = true;
 
-        if (LedgeLevel.enabled && (Input.GetButtonDown("Left Bumper1") || Input.GetButtonDown("Left Bumper2") || Input.GetButtonDown("Left Bumper3") || Input.GetButtonDown("Left Bumper4")))
+        for (int i = 0; i < Levels.Length; i++)
         {
-            CourtLevel.enabled = true;
-            LedgeLevel.enabled = false;
+            Levels[i].enabled = false;
+        }
+        Levels[LevelsIndex].enabled = true;
+
+    }
+
+    public void switchLevelLeft()
+    {
+        LevelsIndex -= 1;
+        if (LevelsIndex < 0)
+        {
+            LevelsIndex = Levels.Length - 1;
         }
     }
 
-    public void switchLevel()
+    public void switchLevelRight()
     {
-        if (CourtLevel.enabled && (Input.GetButtonDown("A1") || Input.GetButtonDown("A2") || Input.GetButtonDown("A3") || Input.GetButtonDown("A4")))
+        LevelsIndex += 1;
+        if (LevelsIndex > Levels.Length - 1)
         {
-            CourtLevel.enabled = false;
-            LedgeLevel.enabled = true;
-        }
-
-        if (LedgeLevel.enabled && (Input.GetButtonDown("A1") || Input.GetButtonDown("A2") || Input.GetButtonDown("A3") || Input.GetButtonDown("A4")))
-        {
-            CourtLevel.enabled = true;
-            LedgeLevel.enabled = false;
+            LevelsIndex = 0;
         }
     }
 
-    public void switchGameMode()
+    public void switchGameModeUp()
     {
+        GameModeIndex += 1;
+        if (GameModeIndex > GameModes.Length -1)
+        {
+            GameModeIndex = 0;
+        }
+    }
 
+    public void switchGameModeDown()
+    {
+        GameModeIndex -= 1;
+        if (GameModeIndex < 0)
+        {
+            GameModeIndex = GameModes.Length - 1;
+        }
     }
 
     public void Time()
