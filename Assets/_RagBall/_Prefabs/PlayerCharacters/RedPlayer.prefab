@@ -238,6 +238,9 @@ MonoBehaviour:
   oldHips: {fileID: 0}
   iCanGrab: 1
   grabMode: free
+  forgetTime: 1
+  forgetTimer: 0
+  theyAreGrabbable: 0
 --- !u!114 &1212438594740289022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,6 +257,9 @@ MonoBehaviour:
   myPlayer: -666
   grabMode: 
   maAnimator: {fileID: 0}
+  angleThreshold: 90
+  forceThreshold: 5
+  staggered: 0
 --- !u!1 &1121847901622460818
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,6 +378,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 190232892650722853}
+  - component: {fileID: 6805969378395942744}
+  - component: {fileID: 7638606658516851854}
   m_Layer: 0
   m_Name: foot.R
   m_TagString: Untagged
@@ -393,6 +401,32 @@ Transform:
   m_Father: {fileID: 2923678485219773220}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &6805969378395942744
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122283298802572688}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.002
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7638606658516851854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122283298802572688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bdb3427a90a1284baaf269606348b6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touching: 0
 --- !u!1 &1225262649125518879
 GameObject:
   m_ObjectHideFlags: 0
@@ -2437,6 +2471,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8316316060451006150}
+  - component: {fileID: 4942707716073111684}
+  - component: {fileID: 4749171989017413960}
   m_Layer: 0
   m_Name: foot.L
   m_TagString: Untagged
@@ -2458,6 +2494,32 @@ Transform:
   m_Father: {fileID: 761534735529146082}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4942707716073111684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5887052464292155448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bdb3427a90a1284baaf269606348b6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touching: 0
+--- !u!135 &4749171989017413960
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5887052464292155448}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.002
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5941544835323652923
 GameObject:
   m_ObjectHideFlags: 0

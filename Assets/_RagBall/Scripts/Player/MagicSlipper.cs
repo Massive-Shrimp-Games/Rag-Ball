@@ -21,12 +21,13 @@ public class MagicSlipper : MonoBehaviour
 
     public bool touching = false;       // Is this foot touching something?
 
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnTriggerEnter(Collider other)
     {
         touching = true;
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
         touching = false;
     }

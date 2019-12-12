@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2756458684825811334}
+  - component: {fileID: 4466497588355633308}
+  - component: {fileID: 1290276185939961411}
   m_Layer: 0
   m_Name: foot.L
   m_TagString: Untagged
@@ -30,6 +32,32 @@ Transform:
   m_Father: {fileID: 6897287268878133666}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4466497588355633308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331743491243839352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bdb3427a90a1284baaf269606348b6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touching: 0
+--- !u!135 &1290276185939961411
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331743491243839352}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.002
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &530596242520945787
 GameObject:
   m_ObjectHideFlags: 0
@@ -1459,6 +1487,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6307927045818108261}
+  - component: {fileID: 7249269288970662573}
+  - component: {fileID: 4326130531532186302}
   m_Layer: 0
   m_Name: foot.R
   m_TagString: Untagged
@@ -1480,6 +1510,32 @@ Transform:
   m_Father: {fileID: 9059953699847263332}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &7249269288970662573
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6537734906043220688}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.002
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4326130531532186302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6537734906043220688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bdb3427a90a1284baaf269606348b6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touching: 0
 --- !u!1 &6739288261858623535
 GameObject:
   m_ObjectHideFlags: 0
@@ -1578,6 +1634,9 @@ MonoBehaviour:
   oldHips: {fileID: 0}
   iCanGrab: 1
   grabMode: free
+  forgetTime: 1
+  forgetTimer: 0
+  theyAreGrabbable: 0
 --- !u!114 &179677935269666926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1594,6 +1653,9 @@ MonoBehaviour:
   myPlayer: -666
   grabMode: 
   maAnimator: {fileID: 0}
+  angleThreshold: 90
+  forceThreshold: 5
+  staggered: 0
 --- !u!1 &6970539895656409426
 GameObject:
   m_ObjectHideFlags: 0
