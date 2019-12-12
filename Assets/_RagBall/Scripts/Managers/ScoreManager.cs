@@ -7,12 +7,16 @@ using TMPro;
 public class ScoreManager : MonoBehaviour
 {
 
+    [SerializeField] private TextMeshPro TimerText;
+    [SerializeField] private float mainTimer;
+
     // Variables
     //public GameObject RedGoal;
     //public GameObject BlueGoal;
+
     public int RedScore;
     public int BlueScore;
-    public int WinScore = 1;
+    public int WinScore = 5;
     public GameObject redscoreboard;
     public GameObject bluescoreboard;
     public GameObject Pause_redscoreboard;
@@ -21,9 +25,16 @@ public class ScoreManager : MonoBehaviour
     public string RedScoreText;
     public Canvas RedWinScreen;
     public Canvas BlueWinScreen;
+    public Canvas TieWinScreen;
     public ParticleSystem BluePipeConfetti;
     public ParticleSystem RedPipeConfetti;
     public ParticleSystem ExitPipeConfetti;
+
+    private float timer;
+    private bool canCount = true;
+    private bool doOnce = false;
+
+    private bool CanAddScore = true;
 
 
     // Start is called before the first frame update
@@ -32,6 +43,7 @@ public class ScoreManager : MonoBehaviour
         RedScore = 00;
         BlueScore = 00;
         WinScore = CustomizationManager.CM.GoalsMax;
+        timer = mainTimer;
     }
 
     // Update is called once per frame
@@ -51,11 +63,35 @@ public class ScoreManager : MonoBehaviour
         if (BlueScore < 10) BlueScoreText = "0" + BlueScoreText;
         bluescoreboard.GetComponent<TextMeshPro>().text = BlueScoreText;
         //Pause_bluescoreboard.GetComponent<TextMeshPro>().text = BlueScoreText;
+
+        if (BlueWinScreen.enabled || RedWinScreen.enabled || TieWinScreen.enabled)
+        {
+            CanAddScore = false;
+        }
+
+        if (timer >= 0.0f && canCount)
+        {
+            timer -= Time.deltaTime;
+            TimerText.text = timer.ToString("F");
+        }
+
+        else if (timer <= 0.0f && !doOnce)
+        {
+            canCount = false;
+            doOnce = true;
+            TimerText.text = "0.00";
+            timer = 0.0f;
+            GameOver();
+        }
     }
 
     public void AddRedScore()
     {
-        RedScore += 1;
+        if (CanAddScore)
+        {
+            RedScore += 1;
+        }
+    
         if (RedScore >= WinScore)
         {
             RedWinScreen.enabled = true;
@@ -70,7 +106,11 @@ public class ScoreManager : MonoBehaviour
     }
     public void AddBlueScore()
     {
-        BlueScore += 1;
+        if (CanAddScore)
+        {
+            BlueScore += 1;
+        }
+
         if (BlueScore >= WinScore)
         {
             BlueWinScreen.enabled = true;
@@ -81,6 +121,28 @@ public class ScoreManager : MonoBehaviour
             BluePipeConfetti.Play();
             ExitPipeConfetti.Play();
             Debug.Log("BLUE WINS");
+        }
+    }
+
+    void GameOver()
+    {
+        RedPipeConfetti.loop = true;
+        BluePipeConfetti.loop = true;
+        ExitPipeConfetti.loop = true;
+        RedPipeConfetti.Play();
+        BluePipeConfetti.Play();
+        ExitPipeConfetti.Play();
+        if (RedScore > BlueScore)
+        {
+            RedWinScreen.enabled = true;
+        }
+        if (BlueScore > RedScore)
+        {
+            BlueWinScreen.enabled = true;
+        }
+        if (RedScore == BlueScore)
+        {
+            TieWinScreen.enabled = true;
         }
     }
 }

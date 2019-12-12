@@ -11,7 +11,6 @@ public class Timer : MonoBehaviour
 
     public int RedScore;
     public int BlueScore;
-    public int WinScore = 5;
     public Canvas RedWinScreen;
     public Canvas BlueWinScreen;
     public ParticleSystem BluePipeConfetti;
@@ -31,6 +30,7 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (timer >= 0.0f && canCount)
         {
             timer -= Time.deltaTime;
@@ -59,7 +59,7 @@ public class Timer : MonoBehaviour
         {
             RedWinScreen.enabled = true;
         }
-        if (BlueScore >= WinScore)
+        if (BlueScore >= RedScore)
         {
             BlueWinScreen.enabled = true;
         }
