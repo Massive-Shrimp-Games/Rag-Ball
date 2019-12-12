@@ -217,7 +217,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.01
+  m_Radius: 0.004
   m_Height: 0.02
   m_Direction: 1
   m_Center: {x: 0, y: 0.002, z: 0}
@@ -3050,11 +3050,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5179400429931907268}
     m_Modifications:
-    - target: {fileID: 7802610896327792555, guid: af2f3ccc16447c84881aa4c5a85d4c2f,
-        type: 3}
-      propertyPath: m_Name
-      value: StaggerStars
-      objectReference: {fileID: 0}
     - target: {fileID: 6490576146028242360, guid: af2f3ccc16447c84881aa4c5a85d4c2f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3124,6 +3119,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.015
+      objectReference: {fileID: 0}
+    - target: {fileID: 7802610896327792555, guid: af2f3ccc16447c84881aa4c5a85d4c2f,
+        type: 3}
+      propertyPath: m_Name
+      value: StaggerStars
       objectReference: {fileID: 0}
     - target: {fileID: 8391515940250444663, guid: af2f3ccc16447c84881aa4c5a85d4c2f,
         type: 3}
