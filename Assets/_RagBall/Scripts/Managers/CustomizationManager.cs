@@ -12,6 +12,7 @@ public class CustomizationManager : MonoBehaviour
     public bool GoalsActive = false;
     public bool TimerActive = false;
     public int GoalsMax = 0;
+    public int TimerMax = 0;
 
     void Awake()
     {
