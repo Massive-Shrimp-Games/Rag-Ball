@@ -1358,6 +1358,7 @@ public class PlayerManager : MonoBehaviour {
                         StartwasPressed[i] = false;
                     }
 
+                    /*
                     //toggle stamina ui
                     if (GamePadStates[i].DPad.Up == ButtonState.Pressed)
                     {
@@ -1393,16 +1394,8 @@ public class PlayerManager : MonoBehaviour {
                             }
                             reference.enabled = false;
                         }
-
-                        /*
-                        StartwasPressed[i] = true;
-                        PauseMenu.enabled = true;
-                        GameIsPaused = true;
-                        PauseMenu.GetComponent<CanvasGroup>().interactable = true;
-                        PauseMenu.transform.Find("Resume_Button").GetComponent<Button>().Select();
-                        Time.timeScale = 0f;
-                        */
                     }
+                    */
 
 
                     //Show stagger stars
