@@ -22,9 +22,9 @@ public class LevelSelect : MonoBehaviour
     {
         GameModeIndex = 0;
         LevelsIndex = 0;
-        PipeMovementCross.enabled = true;
-        SlippyCross.enabled = true;
-        NoWallsCross.enabled = true;
+        PipeMovementCross.enabled = false;
+        SlippyCross.enabled = false;
+        NoWallsCross.enabled = false;
     }
 
     void Update()
