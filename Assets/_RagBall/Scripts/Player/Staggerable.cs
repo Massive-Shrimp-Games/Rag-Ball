@@ -64,7 +64,10 @@ public class Staggerable : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        // Is the collision normal?
+        //Debug.Log("Force Direction: " + collision.contacts[o].normal);
+
+        // Is the collision normal or above surface?
+
 
         // Yes, damage the player
         float daSpeed = collision.relativeVelocity.magnitude;
