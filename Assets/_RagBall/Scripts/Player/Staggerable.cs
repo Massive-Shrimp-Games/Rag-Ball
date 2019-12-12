@@ -28,13 +28,14 @@ public class Staggerable : MonoBehaviour
     private Rigidbody maHips;
     public PlayerManager ourSavior;
     public int myPlayer = -666;
-    private int maSpeed;
+    private int maSpeed;                        // Pretty Math/Print
     public string grabMode;
     public Animator maAnimator;
     public float angleThreshold = 90f;             // How strictly we want to compare force normals - ANGLES
     public float forceThreshold = 5f;             // How strictly we want to compare force normals - FORCES
     public bool staggered = false;                  // Are we staggered?
-
+    private float daSpeed;                      // Raw Math/Print
+    public bool DashDamage = false;             // Do we tell other Staggerable to die?
     String title = "";                          // Fore more useful debug messages
 
 
@@ -82,7 +83,7 @@ public class Staggerable : MonoBehaviour
        
 
         // GET STUFF!
-        float daSpeed = collision.relativeVelocity.magnitude;
+        daSpeed = collision.relativeVelocity.magnitude;
         Vector3 velocities = collision.relativeVelocity;
         ContactPoint contact = collision.contacts[0];
         //Debug.Log("DID THIS WORK?!???: " + contact.point + " X: " + contact.point.x + " Y: " + contact.point.y + " Z: " + contact.point.z);
@@ -120,6 +121,31 @@ public class Staggerable : MonoBehaviour
                     "Surface Vector: " + surface + "\n" +
                     "Difference: " + difference);
 
+        // Special case, its another player
+        if (collision.gameObject.layer == 15)
+        {
+            /*
+            // SEND DASH DAMAGE
+            if (DashDamage)
+            {
+
+            }
+
+            // GET DASH DAMAGE
+            */
+
+            // REPORT!
+            if (daSpeed > 2)
+                maSpeed = Convert.ToInt32(daSpeed);
+            Debug.Log("\nI HIT SOMETHING OUCH! " + maSpeed + "\n" + "Direction: " + collision.contacts[0].normal);
+
+            // DAMAGE!
+            if (maSpeed > forceThreshold)
+            {
+                ourSavior.DoStagger(myPlayer, maSpeed);
+                ourSavior.AudioManager.transform.Find("collision_AudioSource").GetComponent<AudioSource>().Play();
+            }
+        }
 
     }
 

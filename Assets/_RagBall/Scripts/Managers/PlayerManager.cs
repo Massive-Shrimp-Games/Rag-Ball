@@ -109,6 +109,10 @@ public class PlayerManager : MonoBehaviour {
     public Staggerable[] Staggers;              // Who is being staggered?
     public bool[] Staggered;                    // Can the player do anything?
     public float StaggerThreshold = 20f;        // How strictly do we measure stagger cases? - this is in degrees of difference
+    public float SuperDashTime = 0.5f;          // Time interal a player deals megadamage to another player - TARGET
+    public float[] SuperDashTimer;              // Time interal a player deals megadamage to another player - TIMER
+    public bool[] SuperDash;                    // Who is currently doing this
+    public int SuperDashDamage = 100;           // How much to scale speed by on dash attack
 
     // Movement Variables
     public int[] Dashes;            // How many dashes player has (0 - 5) - Shared with Jump
@@ -241,6 +245,14 @@ public class PlayerManager : MonoBehaviour {
             false
         };
 
+        SuperDash = new bool[]
+        {
+            false,
+            false,
+            false,
+            false
+        };
+
         RightFoot = new bool[]
         {
             false,
@@ -248,6 +260,14 @@ public class PlayerManager : MonoBehaviour {
             false,
             false
         };
+
+        SuperDashTimer = new float[]
+{
+            0.5f,
+            0.5f,
+            0.5f,
+            0.5f,
+};
 
         movementForce = new float[]
         {
@@ -512,6 +532,10 @@ public class PlayerManager : MonoBehaviour {
         Staggers[pNumber].ourSavior = this;
         Staggers[pNumber].myPlayer = pNumber;
         Staggers[pNumber].angleThreshold = StaggerThreshold;
+
+        // Refresh their SuperDash
+        SuperDash[pNumber] = false;
+        SuperDashTimer[pNumber] = 0.5f;
     }
 
     public void Grab()
@@ -805,6 +829,16 @@ public class PlayerManager : MonoBehaviour {
             Stamina_Heads[i].sprite = StaminaPics[Dashes[i]];
 
 
+            // SUPERDASHDAMAGE
+            SuperDashTimer[i] -= Time.deltaTime;
+            if (SuperDashTimer[i] <= 0f)
+            {
+                SuperDash[i] = false;       // Notify PlayerManager
+                SuperDashTimer[i] = 0f;     // Reset the Timer
+                PlayerHips[i].GetComponent<Staggerable>().DashDamage = false;       // Notify Staggerable component
+            }
+
+
 
             // STAGGER RECOVERY
             // Stamina is recovered every two seconds
@@ -1054,6 +1088,9 @@ public class PlayerManager : MonoBehaviour {
                     //B (dashing)
                     if (GamePadStates[i].Buttons.B == ButtonState.Pressed && !BwasPressed[i] && !GameIsPaused && (Dashes[i] > 0) && !Staggered[i])
                     {
+                        SuperDash[i] = true;                                                // Notify playermanager
+                        SuperDashTimer[i] = SuperDashTime;                                  //Reset the timer
+                        PlayerHips[i].GetComponent<Staggerable>().DashDamage = true;        // Notify Staggerable component
                         BwasPressed[i] = true;
                         Debug.Log("B Button was pressed!");
                         Vector3 boostDir = PlayerHips[i].transform.forward;
