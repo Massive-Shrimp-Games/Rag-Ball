@@ -110,8 +110,8 @@ public class PlayerManager : MonoBehaviour {
     public bool[] Staggered;                    // Can the player do anything?
     public float StaggerThreshold = 10f;       // How strictly do we measure stagger cases? - this is in degrees of difference
 
-    // Dash Variables
-    public int[] Dashes;            // How many dashes player has (0 - 5)
+    // Movement Variables
+    public int[] Dashes;            // How many dashes player has (0 - 5) - Shared with Jump
     public float[] DashTimes;       // Time until next recovered dash (3 seconds)
     public int[] Staminas;          // How much stamina player has (0 - 100)
     public float[] StaminaTimes;    // Time until next recovered stamina point (0.3 seconds)
@@ -970,15 +970,19 @@ public class PlayerManager : MonoBehaviour {
                 //buttons
                 if (GamePadStates[i].IsConnected)
                 {
-                    //A (jumping)
+
+                    // Load States
                     GamePadStates[i] = GamePad.GetState(PlayerIndexes[i]);
-                    if ((GamePadStates[i].Buttons.A == ButtonState.Pressed) && !PauseMenu.enabled && !AwasPressed[i])
+
+
+                    //A (jumping)
+                    if ((GamePadStates[i].Buttons.A == ButtonState.Pressed) && !PauseMenu.enabled && !AwasPressed[i] && !Staggered[i] && (Dashes[i] > 0))
                     {
                         Animators[i].Play("JumpHold");
                         AwasPressed[i] = true;
                         Debug.Log("A Button was pressed!");
                     }
-                    else if (GamePadStates[i].Buttons.A == ButtonState.Released && AwasPressed[i] && !PauseMenu.enabled && Dashes[i] > 0 && !Staggered[i])
+                    else if (GamePadStates[i].Buttons.A == ButtonState.Released && AwasPressed[i] && !PauseMenu.enabled && Dashes[i] > 0 && !Staggered[i] && (Dashes[i] > 0))
                     {
                         print("Fuck you anyway");
                         AudioManager.transform.Find("Jump_AudioSource").GetComponent<AudioSource>().Play();
@@ -994,7 +998,7 @@ public class PlayerManager : MonoBehaviour {
 
 
                     //B (dashing)
-                    if (GamePadStates[i].Buttons.B == ButtonState.Pressed && !BwasPressed[i] && !GameIsPaused && Dashes[i] > 0 && !Staggered[i])
+                    if (GamePadStates[i].Buttons.B == ButtonState.Pressed && !BwasPressed[i] && !GameIsPaused && (Dashes[i] > 0) && !Staggered[i])
                     {
                         BwasPressed[i] = true;
                         Debug.Log("B Button was pressed!");

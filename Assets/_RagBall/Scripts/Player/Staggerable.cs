@@ -34,6 +34,8 @@ public class Staggerable : MonoBehaviour
     public float angleThreshold = 90f;             // How strictly we want to compare force normals - ANGLES
     public float forceThreshold = 5f;             // How strictly we want to compare force normals - FORCES
 
+    String title = "";                          // Fore more useful debug messages
+
 
     private void Awake()
     {
@@ -83,6 +85,21 @@ public class Staggerable : MonoBehaviour
         //Debug.Log("DID THIS WORK?!???: " + contact.point + " X: " + contact.point.x + " Y: " + contact.point.y + " Z: " + contact.point.z);
         Vector3 surface = contact.point;
         float difference = Vector3.Angle(velocities, surface);
+
+        // DEBUG
+        if (difference < angleThreshold)
+        {
+            title = "!!! BIG !!!";
+        }
+        else
+        {
+            title = "... small ...";
+        }
+
+        Debug.Log(  title + "\n" + 
+                    "Veolcity Vector: " + velocities + "\n" +
+                    "Surface Vector: " + surface + "\n" +
+                    "Difference: " + difference);
 
 
         // ANGLES ARE OK!
