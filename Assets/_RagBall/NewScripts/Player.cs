@@ -26,8 +26,14 @@ public class Player : MonoBehaviour
     {
         gamePadState = GamePad.GetState((PlayerIndex)playerNumber);
         Move();
-        if (gamePadState.Buttons.B == ButtonState.Pressed){
+        if (gamePadState.Buttons.B == ButtonState.Pressed)
+        {
             Dash(); 
+        }
+        if (gamePadState.Buttons.A == ButtonState.Pressed)
+        {
+            print("A was pressed");
+            Jump();
         }
     }
 
@@ -63,6 +69,12 @@ public class Player : MonoBehaviour
     }
 
     void Jump(){
-        
+        bool LeftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
+        bool RightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
+        if(LeftFoot && RightFoot)
+        {
+            Vector3 boostDir = hips.transform.up;
+            hips.GetComponent<Rigidbody>().AddForce(boostDir * 2000f);
+        }
     }
 }
