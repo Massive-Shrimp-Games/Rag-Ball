@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Invisible
+  - Ground
+  - Grabbable
   layers:
   - Default
   - TransparentFX
@@ -13,14 +16,14 @@ TagManager:
   - UI
   - 
   - 
-  - RedTeam
-  - BlueTeam
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - invisible
+  - Player 1 (DEPRECATED)
+  - Player 2 (DEPRECATED)
+  - Player 3 (DEPRECATED)
+  - Player 4 (DEPRECATED)
+  - room
+  - Floor
+  - Player
   - 
   - 
   - 
