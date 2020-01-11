@@ -26,6 +26,9 @@ public class Player : MonoBehaviour
     {
         gamePadState = GamePad.GetState((PlayerIndex)playerNumber);
         Move();
+        if (gamePadState.Buttons.B == ButtonState.Pressed){
+            Dash(); 
+        }
     }
 
     void Move()
@@ -51,7 +54,8 @@ public class Player : MonoBehaviour
     }
 
     void Dash(){
-        
+        Vector3 boostDir = hips.transform.forward;
+        hips.GetComponent<Rigidbody>().AddForce(boostDir * 2000f);
     }
 
     void Grab(){
