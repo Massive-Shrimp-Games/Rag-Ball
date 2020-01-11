@@ -49,4 +49,16 @@ public class Player : MonoBehaviour
             animator.Play("Idle");
         }
     }
+
+    void Dash(){
+        
+    }
+
+    void Grab(){
+
+    }
+
+    void Jump(){
+        
+    }
 }
