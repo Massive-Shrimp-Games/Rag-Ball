@@ -120,6 +120,42 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &29727801
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 29727802}
+  m_Layer: 0
+  m_Name: GrabPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &29727802
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29727801}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.5, y: 3.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 48132080}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &48132080 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3400114032936743626, guid: 665d0a053fe76474da04a640e094a0ca,
+    type: 3}
+  m_PrefabInstance: {fileID: 305051164}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &305051164
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -217,7 +253,7 @@ GameObject:
   - component: {fileID: 915664183}
   - component: {fileID: 915664182}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -398,6 +434,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNumber: 0
   playerSpeed: 3000
+  grabPos: {fileID: 29727802}
 --- !u!1 &1158372606
 GameObject:
   m_ObjectHideFlags: 0

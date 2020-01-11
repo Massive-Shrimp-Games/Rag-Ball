@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     private GameObject hips;
     private Animator animator;
 
+    [SerializeField] private Transform grabPos; // Set in editor
+
     // Start is called before the first frame update
     void Start()
     {
