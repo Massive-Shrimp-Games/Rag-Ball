@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     private GameObject hips;
     private Animator animator;
 
+    private Rigidbody hipsRigidBody; 
+
     [SerializeField] private Transform grabPos; // Set in editor
 
     // Start is called before the first frame update
@@ -20,6 +22,7 @@ public class Player : MonoBehaviour
         gamePadState = GamePad.GetState((PlayerIndex)playerNumber);
 
         hips = transform.GetChild(0).GetChild(0).gameObject; //set reference to player's hips
+        hipsRigidBody = hips.gameObject.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
         animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
     }
 
@@ -79,4 +82,32 @@ public class Player : MonoBehaviour
             hips.GetComponent<Rigidbody>().AddForce(boostDir * 2000f);
         }
     }
+
+    void Stagger(int time){
+        hipsRigidBody.constraints = RigidbodyConstraints.None;
+        animator.enabled = false;
+        Debug.Log("Stagger time");
+        waitingForUnstaggerCoroutine(5); 
+    }
+
+    void Unstagger(){
+        hipsRigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+        animator.enabled = true;
+        
+    }
+
+    private void OnCollisionEnter(Collision other) {
+        /*if (other.gameObject.tag == "Stagger"){
+            //Debug.Log("Hit a box");
+            Stagger(5); 
+        }*/
+    }
+
+    private IEnumerator waitingForUnstaggerCoroutine(int time){
+
+        yield return new WaitForSeconds (time); 
+
+        Unstagger(); 
+    }
 }
+
