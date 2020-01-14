@@ -9,6 +9,14 @@ public class Player : MonoBehaviour
     public int playerNumber;
     public float playerSpeed;
 
+    public int staggerCharges;
+
+    public int staggerMaxCharge;  
+
+    public int staggerDashCharge; 
+
+    public int staggerJumpCharge; 
+
     private GameObject hips;
     private Animator animator;
 
@@ -20,7 +28,10 @@ public class Player : MonoBehaviour
     void Start()
     {
         gamePadState = GamePad.GetState((PlayerIndex)playerNumber);
-
+        staggerMaxCharge = 10;
+        staggerCharges = staggerMaxCharge;  
+        staggerDashCharge = 2;
+        staggerJumpCharge = 1; 
         hips = transform.GetChild(0).GetChild(0).gameObject; //set reference to player's hips
         hipsRigidBody = hips.gameObject.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
         animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
@@ -40,6 +51,7 @@ public class Player : MonoBehaviour
             print("A was pressed");
             Jump();
         }
+        Debug.Log(staggerCharges); 
     }
 
     void Move()
@@ -65,8 +77,11 @@ public class Player : MonoBehaviour
     }
 
     void Dash(){
-        Vector3 boostDir = hips.transform.forward;
-        hips.GetComponent<Rigidbody>().AddForce(boostDir * 2000f);
+        if (staggerCharges >= staggerDashCharge){
+            Vector3 boostDir = hips.transform.forward;
+            hips.GetComponent<Rigidbody>().AddForce(boostDir * 2000f);
+            staggerCharges = staggerCharges - staggerDashCharge; 
+        }
     }
 
     void Grab(){
@@ -76,10 +91,11 @@ public class Player : MonoBehaviour
     void Jump(){
         bool LeftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
         bool RightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
-        if(LeftFoot && RightFoot)
+        if(LeftFoot && RightFoot && staggerCharges >= staggerJumpCharge)
         {
             Vector3 boostDir = hips.transform.up;
             hips.GetComponent<Rigidbody>().AddForce(boostDir * 2000f);
+            staggerCharges = staggerCharges - staggerJumpCharge; 
         }
     }
 
@@ -93,7 +109,12 @@ public class Player : MonoBehaviour
     void Unstagger(){
         hipsRigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         animator.enabled = true;
-        
+    }
+
+    void recharger(){
+        if (staggerCharges < staggerMaxCharge){
+            staggerCharges++; 
+        }
     }
 
     private void OnCollisionEnter(Collision other) {
@@ -103,6 +124,11 @@ public class Player : MonoBehaviour
         }*/
     }
 
+    private IEnumerator rechargeStamina(){
+        yield return new WaitForSeconds (3);
+
+        recharger(); 
+    }
     private IEnumerator waitingForUnstaggerCoroutine(int time){
 
         yield return new WaitForSeconds (time); 
