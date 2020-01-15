@@ -59,6 +59,14 @@ public class Player : MonoBehaviour
     public void Move(Vector2 movement)
     {
         hips.GetComponent<Rigidbody>().AddForce(movement * playerSpeed * Time.deltaTime);
+        if (movement.magnitude >= 0.03)
+        {
+            animator.Play("Walk");
+        }
+        else
+        {
+            animator.Play("Idle");
+        }
     }
 
     public void Rotate(Vector2 rotate)
@@ -74,7 +82,6 @@ public class Player : MonoBehaviour
             Vector3 boostDir = hips.transform.forward;
             hips.GetComponent<Rigidbody>().AddForce(boostDir * dashForce);
             staggerCharges = staggerCharges - staggerDashCharge;
-
         }
     }
 
