@@ -37,8 +37,6 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Transform grabPos; // Set in editor
 
-    // Start is called before the first frame update
-
     void Awake(){
         
     }
@@ -87,7 +85,10 @@ public class Player : MonoBehaviour
 
     public void Grab()
     {
-
+        // Check if at least one player is in your collider
+        
+        // If so, grab the closest one
+        // else do nothing
     }
 
     public void Jump()
