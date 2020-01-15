@@ -15,11 +15,11 @@ public class PlayerOld : MonoBehaviour
 
     private const int StaminaDashCharge = 2; 
 
-    private const int StaminaJumpCharge = 1; 
+    private const int StaminaJumpCharge = 2; 
 
-    private int StaggerTime = 5;
+    private const int StaggerTime = 5;
 
-    private int StaminaRechargeTime = 3;  
+    private const int StaminaRechargeTime = 3;  
 
     private Collider hipsCollider; 
 
@@ -43,7 +43,10 @@ public class PlayerOld : MonoBehaviour
         hips = transform.GetChild(0).GetChild(0).gameObject; //set reference to player's hips
         hipsRigidBody = hips.gameObject.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
         animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
-        hipsCollider = hips.gameObject.GetComponent<Collider>(); 
+        hipsCollider = hips.gameObject.GetComponent<Collider>();
+        
+        StartCoroutine(rechargeStamina());
+        //+=rechargeStamina(); 
     }
 
     // Update is called once per frame
@@ -64,7 +67,8 @@ public class PlayerOld : MonoBehaviour
         {
             Ragdoll(); 
         }
-        //Debug.Log(staminaCharges); 
+        Debug.Log(staminaCharges); 
+        
     }
 
     void Move()
@@ -92,20 +96,15 @@ public class PlayerOld : MonoBehaviour
     void Ragdoll(){
 
         Debug.Log("Y Button was pressed!");
-        Stagger(5);
+        Stagger();
     }
     void Dash(){
-        Vector3 boostDir = hips.transform.forward;
-        hips.GetComponent<Rigidbody>().AddForce(boostDir * 2000f);
-        staminaCharges = staminaCharges - StaminaDashCharge;
-        /*
-        Will rework stamina during next meeting
         if (staminaCharges >= StaminaDashCharge){
             Vector3 boostDir = hips.transform.forward;
             hips.GetComponent<Rigidbody>().AddForce(boostDir * 2000f);
             staminaCharges = staminaCharges - StaminaDashCharge; 
         }
-        */
+        StartCoroutine(rechargeStamina());
     }
 
     void Grab(){
@@ -115,23 +114,17 @@ public class PlayerOld : MonoBehaviour
     void Jump(){
         bool LeftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
         bool RightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
-        if(LeftFoot && RightFoot)
-        {
-            Vector3 boostDir = hips.transform.up;
-            hips.GetComponent<Rigidbody>().AddForce(boostDir * 2000f);
-            staminaCharges = staminaCharges - StaminaJumpCharge; 
-        }
-        /*
         if(LeftFoot && RightFoot && staminaCharges >= StaminaJumpCharge)
         {
             Vector3 boostDir = hips.transform.up;
             hips.GetComponent<Rigidbody>().AddForce(boostDir * 2000f);
             staminaCharges = staminaCharges - StaminaJumpCharge; 
         }
-        */
+        StartCoroutine(rechargeStamina());
+        Debug.Log("jumped");
     }
 
-    void Stagger(int time){
+    void Stagger(){
         Debug.Log("Stagger time");
         if(yPressed == false){
             hipsRigidBody.constraints = RigidbodyConstraints.None;
@@ -141,23 +134,31 @@ public class PlayerOld : MonoBehaviour
             hipsRigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
             animator.enabled = true;
         }
-
-        //Need to debug
-        //Debug.Log("Stagger time");
-        //waitingForUnstaggerCoroutine(StaggerTime); 
+        Debug.Log("Stagger time");
+        StartCoroutine(waitingForUnstaggerCoroutine());
     }
 
     void Unstagger(){
+        //Restand the model properly. 
         hipsRigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         animator.enabled = true;
         Debug.Log("Unstagger time");
+        StopCoroutine(waitingForUnstaggerCoroutine()); 
     }
 
     void recharger(){
         if (staminaCharges < StaminaMaxCharge){
             //Changing until scene works better.
-            staminaCharges = StaminaMaxCharge; 
+            staminaCharges++; 
         }
+        
+        if (staminaCharges == StaminaMaxCharge){
+            StopCoroutine(rechargeStamina());
+        }
+        else{
+            StartCoroutine(rechargeStamina()); 
+        }
+        
     }
 
     private void OnCollisionEnter(Collision other) {
@@ -172,9 +173,9 @@ public class PlayerOld : MonoBehaviour
 
         recharger(); 
     }
-    private IEnumerator waitingForUnstaggerCoroutine(int time){
+    private IEnumerator waitingForUnstaggerCoroutine(){
 
-        yield return new WaitForSeconds (time); 
+        yield return new WaitForSeconds (StaggerTime); 
         Debug.Log("HI, Im waiting");
         Unstagger(); 
     }

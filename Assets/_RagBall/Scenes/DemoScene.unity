@@ -5649,7 +5649,9 @@ PrefabInstance:
       propertyPath: m_TranslationOffset.y
       value: -0.79233027
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2358803829257435057, guid: ab9e6f09f22e4d14da629319b54613db, type: 3}
+    - {fileID: 8880111778801295097, guid: ab9e6f09f22e4d14da629319b54613db, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ab9e6f09f22e4d14da629319b54613db, type: 3}
 --- !u!1 &776961864
 GameObject:
