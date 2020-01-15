@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using XInputDotNetPure;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -37,11 +38,23 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Transform grabPos; // Set in editor
 
+    private Controller controller;
+
     // Start is called before the first frame update
 
-    void Awake(){
+    void Awake()
+    {
+        controller = ControllerManager.Instance.GetController(0);
+        controller.Player.Move.performed += ctx => Move(ctx.ReadValue<Vector2>());
+        controller.Player.Jump.performed += ctx => Debug.Log("Juuuump");
+        //controller.Player.Jump.
+    }
+
+    private void OnEnable()
+    {
         
     }
+
     void Start()
     {
         staggerMaxCharge = 10;
@@ -58,6 +71,7 @@ public class Player : MonoBehaviour
 
     public void Move(Vector2 movement)
     {
+        Debug.LogFormat("Movement is {0}", movement);
         hips.GetComponent<Rigidbody>().AddForce(movement * playerSpeed * Time.deltaTime);
         if (movement.magnitude >= 0.03)
         {
