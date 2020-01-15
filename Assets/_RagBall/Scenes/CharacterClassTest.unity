@@ -384,7 +384,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 305051164}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1057000874
+--- !u!114 &1057000873
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -393,13 +393,110 @@ MonoBehaviour:
   m_GameObject: {fileID: 1057000872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7244afe8b44632e429c943a0959ae2e2, type: 3}
+  m_Script: {fileID: 11500000, guid: e9ab87fa0ca31e34fb23e370249b436f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNumber: 0
+  dashForce: 5000
+  jumpForce: 5000
   playerSpeed: 3000
-  hips: {fileID: 0}
-  animator: {fileID: 0}
+  staggerCharges: 0
+  staggerMaxCharge: 0
+  staggerDashCharge: 0
+  staggerJumpCharge: 0
+  grabPos: {fileID: 0}
+--- !u!114 &1057000875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1057000872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32db7ff64b12eb94fae1e94f8663cdc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveInput:
+    m_Name: Move Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: d68dfc54-88a8-4088-999c-e50046be6f0b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: dcb2a48a-c1b7-4d11-b2aa-9aba3731aa24
+      m_Path: <Gamepad>/leftStick
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move Input
+      m_Flags: 0
+  dashInput:
+    m_Name: Dash Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4beba986-2510-41d5-ac18-35e6eed3e525
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 07b566af-e2fc-4526-acde-c8fbd51ed275
+      m_Path: <Gamepad>/buttonEast
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Dash Input
+      m_Flags: 0
+  jumpInput:
+    m_Name: Jump Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: d13f3abd-c09d-48b9-9284-27d9b9c0e43b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: ca07ef29-3827-4d33-9cbe-dfe001044844
+      m_Path: <Gamepad>/buttonSouth
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Jump Input
+      m_Flags: 0
+  grabInput:
+    m_Name: Grab Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 0cdd1196-e7fa-4250-8a32-e3cb41eb0fd1
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 0b194f74-02f8-466f-b014-03f967fd6848
+      m_Path: <Gamepad>/buttonWest
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Grab Input
+      m_Flags: 0
+  rotateInput:
+    m_Name: Rotate Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: c700f1b4-7910-41a7-8d57-3fafef0268a0
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 0909367e-47a8-4903-8c1e-413b562791a0
+      m_Path: <Gamepad>/rightStick
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Rotate Input
+      m_Flags: 0
+  player: {fileID: 1057000873}
 --- !u!1 &1158372606
 GameObject:
   m_ObjectHideFlags: 0
