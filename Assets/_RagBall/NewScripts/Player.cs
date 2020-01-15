@@ -9,32 +9,43 @@ public class Player : MonoBehaviour
     public int playerNumber;
     public float playerSpeed;
 
-    public int staggerCharges;
+    private int staminaCharges;
 
-    public int staggerMaxCharge;  
+    private const int StaminaMaxCharge = 10;  
 
-    public int staggerDashCharge; 
+    private const int StaminaDashCharge = 2; 
 
-    public int staggerJumpCharge; 
+    private const int StaminaJumpCharge = 1; 
+
+    private int StaggerTime = 5;
+
+    private int StaminaRechargeTime = 3;  
+
+    private Collider hipsCollider; 
 
     private GameObject hips;
     private Animator animator;
+    //animator.State.name
 
     private Rigidbody hipsRigidBody; 
+
+    public StaggerCheck staggerCheck; 
 
     [SerializeField] private Transform grabPos; // Set in editor
 
     // Start is called before the first frame update
+
+    void Awake(){
+        
+    }
     void Start()
     {
         gamePadState = GamePad.GetState((PlayerIndex)playerNumber);
-        staggerMaxCharge = 10;
-        staggerCharges = staggerMaxCharge;  
-        staggerDashCharge = 2;
-        staggerJumpCharge = 1; 
+        staminaCharges = StaminaMaxCharge;  
         hips = transform.GetChild(0).GetChild(0).gameObject; //set reference to player's hips
         hipsRigidBody = hips.gameObject.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
         animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
+        hipsCollider = hips.gameObject.GetComponent<Collider>(); 
     }
 
     // Update is called once per frame
@@ -51,7 +62,7 @@ public class Player : MonoBehaviour
             print("A was pressed");
             Jump();
         }
-        Debug.Log(staggerCharges); 
+        //Debug.Log(staminaCharges); 
     }
 
     void Move()
@@ -77,10 +88,10 @@ public class Player : MonoBehaviour
     }
 
     void Dash(){
-        if (staggerCharges >= staggerDashCharge){
+        if (staminaCharges >= StaminaDashCharge){
             Vector3 boostDir = hips.transform.forward;
             hips.GetComponent<Rigidbody>().AddForce(boostDir * 2000f);
-            staggerCharges = staggerCharges - staggerDashCharge; 
+            staminaCharges = staminaCharges - StaminaDashCharge; 
         }
     }
 
@@ -91,11 +102,11 @@ public class Player : MonoBehaviour
     void Jump(){
         bool LeftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
         bool RightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
-        if(LeftFoot && RightFoot && staggerCharges >= staggerJumpCharge)
+        if(LeftFoot && RightFoot && staminaCharges >= StaminaJumpCharge)
         {
             Vector3 boostDir = hips.transform.up;
             hips.GetComponent<Rigidbody>().AddForce(boostDir * 2000f);
-            staggerCharges = staggerCharges - staggerJumpCharge; 
+            staminaCharges = staminaCharges - StaminaJumpCharge; 
         }
     }
 
@@ -103,7 +114,7 @@ public class Player : MonoBehaviour
         hipsRigidBody.constraints = RigidbodyConstraints.None;
         animator.enabled = false;
         Debug.Log("Stagger time");
-        waitingForUnstaggerCoroutine(5); 
+        waitingForUnstaggerCoroutine(StaggerTime); 
     }
 
     void Unstagger(){
@@ -112,8 +123,8 @@ public class Player : MonoBehaviour
     }
 
     void recharger(){
-        if (staggerCharges < staggerMaxCharge){
-            staggerCharges++; 
+        if (staminaCharges < StaminaMaxCharge){
+            staminaCharges++; 
         }
     }
 
@@ -125,7 +136,7 @@ public class Player : MonoBehaviour
     }
 
     private IEnumerator rechargeStamina(){
-        yield return new WaitForSeconds (3);
+        yield return new WaitForSeconds (StaminaRechargeTime);
 
         recharger(); 
     }
