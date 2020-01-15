@@ -43,7 +43,13 @@ public class PlayerOld : MonoBehaviour
         hips = transform.GetChild(0).GetChild(0).gameObject; //set reference to player's hips
         hipsRigidBody = hips.gameObject.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
         animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
-        hipsCollider = hips.gameObject.GetComponent<Collider>(); 
+        hipsCollider = hips.gameObject.GetComponent<Collider>();
+
+        TimeTicker.OnTick += delegate (object sender, TimeTicker.OnTickEventArgs e)
+        {
+            recharger();
+        };
+
     }
 
     // Update is called once per frame
@@ -154,6 +160,7 @@ public class PlayerOld : MonoBehaviour
     }
 
     void recharger(){
+        print("Recharger callled");
         if (staminaCharges < StaminaMaxCharge){
             //Changing until scene works better.
             staminaCharges = StaminaMaxCharge; 
