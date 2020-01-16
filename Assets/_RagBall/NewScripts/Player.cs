@@ -44,12 +44,7 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
-        //controller = ControllerManager.Instance.GetController(0);
-        //controller.Player.Move.performed += ctx => Move(ctx.ReadValue<Vector2>());
-        //controller.Player.Jump.performed += ctx => Debug.Log("Juuuump");
-        //controller.Player.Jump.
-
-        gameObject.GetComponent<PlayerInput>().
+        
     }
 
     private void OnEnable()
@@ -59,6 +54,10 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        ControllerEventForwarder controller = ControllerManager.Instance.GetController(0);
+        controller._OnMove += OnMove;
+        controller._OnJump += OnJump;
+
         staggerMaxCharge = 10;
         staggerCharges = staggerMaxCharge;
         staggerDashCharge = 2;
@@ -73,12 +72,7 @@ public class Player : MonoBehaviour
 
     public void OnMove(InputValue inputValue)
     {
-        if (inputValue == null)
-        {
-            Debug.Log("I was null");
-        }
         Vector2 movement = inputValue.Get<Vector2>();
-        Debug.LogFormat("Movement is {0}", movement);
         hips.GetComponent<Rigidbody>().AddForce(movement * playerSpeed * Time.deltaTime);
         if (movement.magnitude >= 0.03)
         {
