@@ -38,16 +38,18 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Transform grabPos; // Set in editor
 
-    private Controller controller;
+    //private Controller controller;
 
     // Start is called before the first frame update
 
     void Awake()
     {
-        controller = ControllerManager.Instance.GetController(0);
-        controller.Player.Move.performed += ctx => Move(ctx.ReadValue<Vector2>());
-        controller.Player.Jump.performed += ctx => Debug.Log("Juuuump");
+        //controller = ControllerManager.Instance.GetController(0);
+        //controller.Player.Move.performed += ctx => Move(ctx.ReadValue<Vector2>());
+        //controller.Player.Jump.performed += ctx => Debug.Log("Juuuump");
         //controller.Player.Jump.
+
+        gameObject.GetComponent<PlayerInput>().
     }
 
     private void OnEnable()
@@ -69,8 +71,13 @@ public class Player : MonoBehaviour
         hipsCollider = hips.gameObject.GetComponent<Collider>(); 
     }
 
-    public void Move(Vector2 movement)
+    public void OnMove(InputValue inputValue)
     {
+        if (inputValue == null)
+        {
+            Debug.Log("I was null");
+        }
+        Vector2 movement = inputValue.Get<Vector2>();
         Debug.LogFormat("Movement is {0}", movement);
         hips.GetComponent<Rigidbody>().AddForce(movement * playerSpeed * Time.deltaTime);
         if (movement.magnitude >= 0.03)
@@ -80,6 +87,18 @@ public class Player : MonoBehaviour
         else
         {
             animator.Play("Idle");
+        }
+    }
+
+    public void OnJump(InputValue inputValue)
+    {
+        bool LeftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
+        bool RightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
+        if (LeftFoot && RightFoot && staminaCharges >= StaminaJumpCharge)
+        {
+            Vector3 boostDir = hips.transform.up;
+            hips.GetComponent<Rigidbody>().AddForce(boostDir * jumpForce);
+            staggerCharges = staggerCharges - staggerJumpCharge;
         }
     }
 
@@ -102,18 +121,6 @@ public class Player : MonoBehaviour
     public void Grab()
     {
 
-    }
-
-    public void Jump()
-    {
-        bool LeftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
-        bool RightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
-        if(LeftFoot && RightFoot && staminaCharges >= StaminaJumpCharge)
-        {
-            Vector3 boostDir = hips.transform.up;
-            hips.GetComponent<Rigidbody>().AddForce(boostDir * jumpForce);
-            staggerCharges = staggerCharges - staggerJumpCharge; 
-        }
     }
 
     void Stagger(int time)

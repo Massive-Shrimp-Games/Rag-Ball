@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ControllerManager : MonoBehaviour
 {
     public static ControllerManager Instance { get; private set; }
-    private Controller[] controllers;
+    public GameObject empty;
 
     private void Awake()
     {
@@ -19,34 +20,26 @@ public class ControllerManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        controllers = new Controller[4];
-        controllers[0] = new Controller();
-    }
-
-    private void OnEnable()
-    {
-        foreach (Controller controller in controllers)
+        int playerIndex = 0;
+        foreach (Gamepad gamepad in Gamepad.all)
         {
-            if (controller != null)
-            {
-                controller.Enable();
-            }
+            InputDevice inputDevice = gamepad.device;
+            Debug.LogFormat("Device {0}", inputDevice);
+            PlayerInput playerInput = PlayerInput.Instantiate(empty, playerIndex: playerIndex, splitScreenIndex: -1,
+                controlScheme: "Gamepad", pairWithDevice: inputDevice);
+            playerInput.transform.SetParent(this.gameObject.transform);
+            playerInput.transform.name = string.Format("Controller #{0}", playerIndex);
+            playerIndex++;
         }
+
+        //foreach (InputDevice inputDevice in InputDevice.all)
+        //{
+        //    Debug.LogFormat("Input Device {0}", inputDevice);
+        //}
     }
 
-    private void OnDisable()
+    private void Update()
     {
-        foreach (Controller controller in controllers)
-        {
-            if (controller != null)
-            {
-                controller.Disable();
-            }
-        }
-    }
 
-    public Controller GetController(int index)
-    {
-        return controllers[index];
     }
 }
