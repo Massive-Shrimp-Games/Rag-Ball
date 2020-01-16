@@ -34,7 +34,9 @@ public class Player : MonoBehaviour
 
     private Rigidbody hipsRigidBody;
 
-    public StaggerCheck staggerCheck; 
+    public StaggerCheck staggerCheck;
+
+    public int playerNumber;
 
     [SerializeField] private Transform grabPos; // Set in editor
 
@@ -54,7 +56,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        ControllerEventForwarder controller = ControllerManager.Instance.GetController(0);
+        ControllerEventForwarder controller = ControllerManager.Instance.GetController(playerNumber);
         controller._OnMove += OnMove;
         controller._OnJump += OnJump;
 

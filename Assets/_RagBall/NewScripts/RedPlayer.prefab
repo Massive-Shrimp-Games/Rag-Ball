@@ -1155,7 +1155,6 @@ GameObject:
   - component: {fileID: 2828387495483448872}
   - component: {fileID: 2828387495483448879}
   - component: {fileID: 1233414086529801027}
-  - component: {fileID: 1233414086529801030}
   m_Layer: 15
   m_Name: Player
   m_TagString: Untagged
@@ -1219,39 +1218,8 @@ MonoBehaviour:
   staggerDashCharge: 0
   staggerJumpCharge: 0
   staggerCheck: {fileID: 0}
+  playerNumber: 0
   grabPos: {fileID: 0}
---- !u!114 &1233414086529801030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2828387495483448873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: a31048c60db84314fa85c5199e360ffb,
-    type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.InputSystem.PlayerInput+DeviceLostEvent, Unity.InputSystem,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.InputSystem.PlayerInput+DeviceRegainedEvent, Unity.InputSystem,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Gamepad
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1 &2828387495641548653
 GameObject:
   m_ObjectHideFlags: 0
