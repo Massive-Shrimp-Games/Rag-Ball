@@ -95,6 +95,9 @@ public class Player : MonoBehaviour
     {
         bool LeftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
         bool RightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
+        
+        print(LeftFoot + ":" + RightFoot);
+
         if(LeftFoot && RightFoot && staminaCharges >= StaminaJumpCharge)
         {
             Vector3 boostDir = hips.transform.up;
