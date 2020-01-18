@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float dashForce; // Set in editor
     [SerializeField] private float jumpForce; // Set in editor
+    [SerializeField] private float straightThrowForce; // Set in editor
+    [SerializeField] private float arcThrowForce; // Set in editor
 
     public float playerSpeed;
     public int staggerCharges;
@@ -117,6 +119,18 @@ public class Player : MonoBehaviour
             hips.GetComponent<Rigidbody>().AddForce(boostDir * jumpForce);
             staggerCharges = staggerCharges - staggerJumpCharge; 
         }
+    }
+
+    public void StraightThrow()
+    {
+        if (grabbing == null) { return; }
+
+        GrabDrop();
+    }
+
+    public void ArcThrow() {
+        if (grabbing == null) { return; }
+
     }
 
     void Stagger(int time)

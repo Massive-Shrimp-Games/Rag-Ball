@@ -9,7 +9,8 @@ public class InputController : MonoBehaviour
     [SerializeField] private InputAction dashInput;
     [SerializeField] private InputAction jumpInput;
     [SerializeField] private InputAction grabInput;
-    [SerializeField] private InputAction rotateInput;
+    [SerializeField] private InputAction straightThrowInput;
+    [SerializeField] private InputAction arcThrowInput;
 
     [SerializeField] private Player player;
 
@@ -18,17 +19,18 @@ public class InputController : MonoBehaviour
         moveInput.performed += context => MoveInputOcurred(context.ReadValue<Vector2>());
         moveInput.canceled += context => MoveInputCanceled();
 
-        rotateInput.performed += context => RotateInputOcurred(context.ReadValue<Vector2>());
-        rotateInput.canceled += context => RotateInputCanceled();
-
         dashInput.performed += context => DashInputOcurred();
-        dashInput.canceled += context => DashInputCanceled();
 
         jumpInput.performed += context => JumpInputOcurred();
         jumpInput.canceled += context => JumpInputCanceled();
 
         grabInput.performed += context => GrabInputOcurred();
-        grabInput.canceled += context => GrabInputCanceled();
+
+        straightThrowInput.performed += context => StraightThrowOcurred();
+        straightThrowInput.performed += context => StraightThrowCanceled();
+
+        arcThrowInput.performed += context => ArcThrowOcurred();
+        arcThrowInput.performed += context => ArcThrowCanceled();
     }
 
     private void MoveInputOcurred(Vector2 move)
@@ -41,26 +43,11 @@ public class InputController : MonoBehaviour
         player.Move(Vector2.zero);
     }
 
-    private void RotateInputOcurred(Vector2 rotate)
-    {
-        print("rotate");
-        player.Rotate(rotate);
-    }
-
-    private void RotateInputCanceled()
-    {
-        // Do nothing, perhaps this function doesn't need to be called at all
-    }
-
     private void DashInputOcurred()
     {
         player.Dash();
     }
 
-    private void DashInputCanceled()
-    {
-
-    }
 
     private void JumpInputOcurred()
     {
@@ -76,12 +63,7 @@ public class InputController : MonoBehaviour
     {
         player.GrabDrop();
     }
-
-    private void GrabInputCanceled()
-    {
-        // Do nothing, perhaps this function doesn't need to be called at all
-    }
-
+    
     private void OnEnable()
     {
         moveInput.Enable();
@@ -89,6 +71,8 @@ public class InputController : MonoBehaviour
         dashInput.Enable();
         jumpInput.Enable();
         grabInput.Enable();
+        straightThrowInput.Enable();
+        arcThrowInput.Enable();
     }
 
     private void OnDisable()
@@ -98,5 +82,7 @@ public class InputController : MonoBehaviour
         dashInput.Disable();
         jumpInput.Disable();
         grabInput.Disable();
+        straightThrowInput.Disable();
+        arcThrowInput.Disable();
     }
 }
