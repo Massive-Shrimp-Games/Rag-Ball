@@ -48,8 +48,6 @@ public class Controllers : MonoBehaviour
             Debug.LogFormat("Device {0}", inputDevice);
             PlayerInput playerInput = PlayerInput.Instantiate(controllerPrefab,
                                                               playerIndex: playerIndex,
-                                                              splitScreenIndex: -1,
-                                                              controlScheme: "Gamepad",
                                                               pairWithDevice: inputDevice
                                                              );
             playerInput.transform.SetParent(this.gameObject.transform);

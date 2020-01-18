@@ -115,7 +115,12 @@ public class Player : MonoBehaviour
 
     private void OnDash(InputValue inputValue)
     {
-
+        if (staggerCharges >= staggerDashCharge)
+        {
+            Vector3 boostDir = hips.transform.forward;
+            hips.GetComponent<Rigidbody>().AddForce(boostDir * dashForce);
+            staggerCharges = staggerCharges - staggerDashCharge;
+        }
     }
 
     private void OnGrabDrop(InputValue inputValue)
@@ -139,21 +144,6 @@ public class Player : MonoBehaviour
     }
 
     private void OnGoLimp(InputValue inputValue)
-    {
-
-    }
-
-    public void Dash()
-    {
-        if (staggerCharges >= staggerDashCharge)
-        {
-            Vector3 boostDir = hips.transform.forward;
-            hips.GetComponent<Rigidbody>().AddForce(boostDir * dashForce);
-            staggerCharges = staggerCharges - staggerDashCharge;
-        }
-    }
-
-    public void Grab()
     {
 
     }
