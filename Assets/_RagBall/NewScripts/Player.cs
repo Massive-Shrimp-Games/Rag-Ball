@@ -151,8 +151,20 @@ public class Player : MonoBehaviour
 
     private void OnGrabDrop(InputValue inputValue)
     {
-        if (grabbing == null) { grabbing = grabCheckCollider.FindClosest(); }
-        else { grabbing = null; }
+        if (grabbing == null) {
+            grabbing = grabCheckCollider.FindClosest();
+            if (grabbing != null)
+            {
+                grabbing.tag = "Grabbed";
+                hips.tag = "Grabbing";
+            }
+            
+        }
+        else {
+            grabbing.tag = "Grabbable";
+            grabbing = null;
+            hips.tag = "Grabbable";
+        }
     }
 
     private void UpdateHeld()
