@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        ControllerEventForwarder controller = ControllerManager.Instance.GetController(playerNumber);
+        Controller controller = Controllers.Instance.GetController(playerNumber);
         controller._OnMove += OnMove;
         controller._OnJump += OnJump;
 

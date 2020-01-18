@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ControllerManager : MonoBehaviour
+public class Controllers : MonoBehaviour
 {
-    public static ControllerManager Instance { get; private set; }
+    public static Controllers Instance { get; private set; }
     public GameObject controllerPrefab;
 
-    private List<ControllerEventForwarder> controllers;
+    private List<Controller> controllers;
 
-    public ControllerEventForwarder GetController(int index)
+    public Controller GetController(int index)
     {
         if (index < 0 || index >= controllers.Count)
         {
@@ -65,11 +65,11 @@ public class ControllerManager : MonoBehaviour
 
     private void GetChildren()
     {
-        controllers = new List<ControllerEventForwarder>();
+        controllers = new List<Controller>();
 
         foreach (Transform child in transform)
         {
-            ControllerEventForwarder cef = child.GetComponent<ControllerEventForwarder>();
+            Controller cef = child.GetComponent<Controller>();
             controllers.Add(cef);
         }
     }
