@@ -22,7 +22,7 @@ using XInputDotNetPure; // Required in C#
 G:::::G              O:::::O     O:::::O  D:::::D     D:::::D                                                    
 G:::::G              O:::::O     O:::::O  D:::::D     D:::::D                                                    
 G:::::G    GGGGGGGGGGO:::::O     O:::::O  D:::::D     D:::::D                                                    
-G:::::G    G::::::::GO:::::O     O:::::O  D:::::D     D:::::D                                                    
+------------------------------------------------------------------ god is dead                                              
 G:::::G    GGGGG::::GO:::::O     O:::::O  D:::::D     D:::::D                                                    
 G:::::G        G::::GO:::::O     O:::::O  D:::::D     D:::::D                                                    
  G:::::G       G::::GO::::::O   O::::::O  D:::::D    D:::::D                                                     

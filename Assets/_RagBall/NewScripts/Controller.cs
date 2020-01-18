@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 
 public class Controller : MonoBehaviour
 {
-
     public delegate void InputEventHandler(InputValue inputValue);
 
     public event InputEventHandler _OnMove;

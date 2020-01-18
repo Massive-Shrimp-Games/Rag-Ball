@@ -40,18 +40,18 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Transform grabPos; // Set in editor
 
-    //private Controller controller;
+    //private Vector2 movement;
 
     // Start is called before the first frame update
 
     void Awake()
     {
-        
+        //movement = Vector2.zero;
     }
 
-    private void OnEnable()
+    private void Update()
     {
-        
+        //movement = Vector2.zero;
     }
 
     void Start()
@@ -74,16 +74,11 @@ public class Player : MonoBehaviour
 
     public void OnMove(InputValue inputValue)
     {
-        Vector2 movement = inputValue.Get<Vector2>();
-        hips.GetComponent<Rigidbody>().AddForce(movement * playerSpeed * Time.deltaTime);
-        if (movement.magnitude >= 0.03)
-        {
-            animator.Play("Walk");
-        }
-        else
-        {
-            animator.Play("Idle");
-        }
+        Vector2 stickDirection = inputValue.Get<Vector2>();
+        Vector3 force = new Vector3(stickDirection.x, 0, stickDirection.y) * playerSpeed * Time.deltaTime;
+        hips.GetComponent<Rigidbody>().AddForce(force);
+        hips.transform.forward = new Vector3(stickDirection.x, 0, stickDirection.y);
+        animator.Play(force.magnitude >= 0.03 ? "Walk" : "Idle");
     }
 
     public void OnJump(InputValue inputValue)
@@ -96,12 +91,6 @@ public class Player : MonoBehaviour
             hips.GetComponent<Rigidbody>().AddForce(boostDir * jumpForce);
             staggerCharges = staggerCharges - staggerJumpCharge;
         }
-    }
-
-    public void Rotate(Vector2 rotate)
-    {
-        Vector3 newRotation = new Vector3(rotate.y, 0, rotate.x);
-        transform.forward = newRotation;
     }
 
     public void Dash()
