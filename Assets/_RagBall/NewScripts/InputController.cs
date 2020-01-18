@@ -74,7 +74,7 @@ public class InputController : MonoBehaviour
 
     private void GrabInputOcurred()
     {
-        player.Grab();
+        player.GrabDrop();
     }
 
     private void GrabInputCanceled()

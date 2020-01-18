@@ -25,7 +25,11 @@ public class Player : MonoBehaviour
 
     private int StaminaRechargeTime = 3;  
 
-    private Collider hipsCollider; 
+    private Collider hipsCollider;
+
+    [SerializeField] private CheckGrab grabCheckCollider;   // Set in editor
+    [SerializeField] private Transform grabPos; // Set in editor
+    private GameObject grabbing;
 
     private GameObject hips;
     private Animator animator;
@@ -33,13 +37,13 @@ public class Player : MonoBehaviour
 
     private Rigidbody hipsRigidBody;
 
-    public StaggerCheck staggerCheck; 
+    public StaggerCheck staggerCheck;
 
-    [SerializeField] private Transform grabPos; // Set in editor
-
-    void Awake(){
-        
+    private void Update()
+    {
+        UpdateHeld();
     }
+
     void Start()
     {
         staggerMaxCharge = 10;
@@ -51,7 +55,9 @@ public class Player : MonoBehaviour
         hips = transform.GetChild(0).GetChild(0).gameObject; //set reference to player's hips
         hipsRigidBody = hips.gameObject.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
         animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
-        hipsCollider = hips.gameObject.GetComponent<Collider>(); 
+        hipsCollider = hips.gameObject.GetComponent<Collider>();
+
+        grabbing = null;
     }
 
     public void Move(Vector2 movement)
@@ -83,12 +89,19 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Grab()
+    // Dropping is just the absence of holding /PikachuFace/
+    public void GrabDrop()
     {
-        // Check if at least one player is in your collider
-        
-        // If so, grab the closest one
-        // else do nothing
+        if (grabbing == null) { grabbing = grabCheckCollider.FindClosest(); }
+        else { grabbing = null; }
+    }
+
+    private void UpdateHeld()
+    {
+        if (grabbing != null)
+        {
+            grabbing.transform.position = grabPos.position;
+        }
     }
 
     public void Jump()
