@@ -748,7 +748,6 @@ GameObject:
   - component: {fileID: 1851718939934769048}
   - component: {fileID: 6244319669679937406}
   - component: {fileID: 6507381371030565952}
-  - component: {fileID: 130188678819192072}
   m_Layer: 15
   m_Name: hips
   m_TagString: Untagged
@@ -836,26 +835,6 @@ MonoBehaviour:
   forgetTime: 1
   forgetTimer: 0
   theyAreGrabbable: 0
---- !u!114 &130188678819192072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1851718939934769049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 258b205201bb56b44adc0734f61d5cf9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ourSavior: {fileID: 0}
-  myPlayer: -666
-  grabMode: 
-  maAnimator: {fileID: 0}
-  angleThreshold: 90
-  forceThreshold: 5
-  staggered: 0
-  DashDamage: 0
 --- !u!1 &2201254347206361444
 GameObject:
   m_ObjectHideFlags: 0
@@ -1217,9 +1196,10 @@ MonoBehaviour:
   staggerMaxCharge: 0
   staggerDashCharge: 0
   staggerJumpCharge: 0
+  grabCheckCollider: {fileID: 0}
+  grabPos: {fileID: 0}
   staggerCheck: {fileID: 0}
   playerNumber: 0
-  grabPos: {fileID: 0}
 --- !u!1 &2828387495641548653
 GameObject:
   m_ObjectHideFlags: 0

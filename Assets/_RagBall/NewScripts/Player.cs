@@ -42,7 +42,6 @@ public class Player : MonoBehaviour
 
     public int playerNumber;
 
-    [SerializeField] private Transform grabPos; // Set in editor
 
     private Controller controller;
 
