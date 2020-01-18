@@ -80,6 +80,7 @@ public class Player : MonoBehaviour
     private void MapControls()
     {
         controller = Controllers.Instance.GetController(playerNumber);
+        controller.GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
         if (controller != null)
         {
             controller._OnMove += OnMove;
