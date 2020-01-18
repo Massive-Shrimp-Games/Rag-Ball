@@ -46,7 +46,6 @@ public class CheckGrab : MonoBehaviour
             }
         }
 
-        print(nearest.gameObject.name);
         return nearest;
     }
 }
