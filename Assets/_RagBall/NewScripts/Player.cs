@@ -97,7 +97,11 @@ public class Player : MonoBehaviour
         Vector2 stickDirection = inputValue.Get<Vector2>();
         Vector3 force = new Vector3(stickDirection.x, 0, stickDirection.y) * playerSpeed * Time.deltaTime;
         hips.GetComponent<Rigidbody>().AddForce(force);
-        hips.transform.forward = new Vector3(stickDirection.x, 0, stickDirection.y);
+        Debug.LogFormat("stickDir is {0}", stickDirection);
+        if (Mathf.Abs(stickDirection.x) >= 0.1 || Mathf.Abs(stickDirection.y) >= 0.1)
+        {
+            hips.transform.forward = new Vector3(stickDirection.x, 0, stickDirection.y);
+        }
         animator.Play(force.magnitude >= 0.03 ? "Walk" : "Idle");
     }
 
