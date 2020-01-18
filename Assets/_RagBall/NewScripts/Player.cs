@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using XInputDotNetPure;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -39,13 +40,38 @@ public class Player : MonoBehaviour
 
     public StaggerCheck staggerCheck;
 
+    public int playerNumber;
+
+    [SerializeField] private Transform grabPos; // Set in editor
+
+    private Controller controller;
+
+    //private Vector2 movement;
+
+    // Start is called before the first frame update
+
+    void Awake()
+    {
+        //movement = Vector2.zero;
+    }
+
     private void Update()
     {
-        UpdateHeld();
+        //movement = Vector2.zero;
     }
 
     void Start()
     {
+        controller = Controllers.Instance.GetController(playerNumber);
+        controller._OnMove += OnMove;
+        controller._OnJump += OnJump;
+        controller._OnDash += OnDash;
+        controller._OnGrabDrop += OnGrabDrop;
+        controller._OnPause += OnPause;
+        controller._OnArcThrow += OnArcThrow;
+        controller._OnDirectThrow += OnDirectThrow;
+        controller._OnGoLimp += OnGoLimp;
+
         staggerMaxCharge = 10;
         staggerCharges = staggerMaxCharge;
         staggerDashCharge = 2;
@@ -60,26 +86,44 @@ public class Player : MonoBehaviour
         grabbing = null;
     }
 
-    public void Move(Vector2 movement)
+    private void OnDestroy()
     {
-        hips.GetComponent<Rigidbody>().AddForce(movement * playerSpeed * Time.deltaTime);
-        if (movement.magnitude >= 0.03)
+        controller._OnMove -= OnMove;
+        controller._OnJump -= OnJump;
+        controller._OnDash -= OnDash;
+        controller._OnGrabDrop -= OnGrabDrop;
+        controller._OnPause -= OnPause;
+        controller._OnArcThrow -= OnArcThrow;
+        controller._OnDirectThrow -= OnDirectThrow;
+        controller._OnGoLimp -= OnGoLimp;
+    }
+
+    private void OnMove(InputValue inputValue)
+    {
+        Vector2 stickDirection = inputValue.Get<Vector2>();
+        Vector3 force = new Vector3(stickDirection.x, 0, stickDirection.y) * playerSpeed * Time.deltaTime;
+        hips.GetComponent<Rigidbody>().AddForce(force);
+        Debug.LogFormat("stickDir is {0}", stickDirection);
+        if (Mathf.Abs(stickDirection.x) >= 0.1 || Mathf.Abs(stickDirection.y) >= 0.1)
         {
-            animator.Play("Walk");
+            hips.transform.forward = new Vector3(stickDirection.x, 0, stickDirection.y);
         }
-        else
+        animator.Play(force.magnitude >= 0.03 ? "Walk" : "Idle");
+    }
+
+    private void OnJump(InputValue inputValue)
+    {
+        bool LeftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
+        bool RightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
+        if (LeftFoot && RightFoot && staminaCharges >= StaminaJumpCharge)
         {
-            animator.Play("Idle");
+            Vector3 boostDir = hips.transform.up;
+            hips.GetComponent<Rigidbody>().AddForce(boostDir * jumpForce);
+            staggerCharges = staggerCharges - staggerJumpCharge;
         }
     }
 
-    public void Rotate(Vector2 rotate)
-    {
-        Vector3 newRotation = new Vector3(rotate.y, 0, rotate.x);
-        transform.forward = newRotation;
-    }
-
-    public void Dash()
+    private void OnDash(InputValue inputValue)
     {
         if (staggerCharges >= staggerDashCharge)
         {
@@ -89,8 +133,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    // Dropping is just the absence of holding /PikachuFace/
-    public void GrabDrop()
+    private void OnGrabDrop(InputValue inputValue)
     {
         if (grabbing == null) { grabbing = grabCheckCollider.FindClosest(); }
         else { grabbing = null; }
@@ -104,19 +147,24 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Jump()
+    private void OnPause(InputValue inputValue)
     {
-        bool LeftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
-        bool RightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
-        
-        print(LeftFoot + ":" + RightFoot);
 
-        if(LeftFoot && RightFoot && staminaCharges >= StaminaJumpCharge)
-        {
-            Vector3 boostDir = hips.transform.up;
-            hips.GetComponent<Rigidbody>().AddForce(boostDir * jumpForce);
-            staggerCharges = staggerCharges - staggerJumpCharge; 
-        }
+    }
+
+    private void OnArcThrow(InputValue inputValue)
+    {
+
+    }
+
+    private void OnDirectThrow(InputValue inputValue)
+    {
+
+    }
+
+    private void OnGoLimp(InputValue inputValue)
+    {
+
     }
 
     void Stagger(int time)
