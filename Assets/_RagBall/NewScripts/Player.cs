@@ -58,15 +58,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        controller = Controllers.Instance.GetController(playerNumber);
-        controller._OnMove += OnMove;
-        controller._OnJump += OnJump;
-        controller._OnDash += OnDash;
-        controller._OnGrabDrop += OnGrabDrop;
-        controller._OnPause += OnPause;
-        controller._OnArcThrow += OnArcThrow;
-        controller._OnDirectThrow += OnDirectThrow;
-        controller._OnGoLimp += OnGoLimp;
+        MapControls();
 
         staggerMaxCharge = 10;
         staggerCharges = staggerMaxCharge;
@@ -82,14 +74,38 @@ public class Player : MonoBehaviour
 
     private void OnDestroy()
     {
-        controller._OnMove -= OnMove;
-        controller._OnJump -= OnJump;
-        controller._OnDash -= OnDash;
-        controller._OnGrabDrop -= OnGrabDrop;
-        controller._OnPause -= OnPause;
-        controller._OnArcThrow -= OnArcThrow;
-        controller._OnDirectThrow -= OnDirectThrow;
-        controller._OnGoLimp -= OnGoLimp;
+        UnMapControls();
+    }
+
+    private void MapControls()
+    {
+        controller = Controllers.Instance.GetController(playerNumber);
+        if (controller != null)
+        {
+            controller._OnMove += OnMove;
+            controller._OnJump += OnJump;
+            controller._OnDash += OnDash;
+            controller._OnGrabDrop += OnGrabDrop;
+            controller._OnPause += OnPause;
+            controller._OnArcThrow += OnArcThrow;
+            controller._OnDirectThrow += OnDirectThrow;
+            controller._OnGoLimp += OnGoLimp;
+        }
+    }
+
+    private void UnMapControls()
+    {
+        if (controller != null)
+        {
+            controller._OnMove -= OnMove;
+            controller._OnJump -= OnJump;
+            controller._OnDash -= OnDash;
+            controller._OnGrabDrop -= OnGrabDrop;
+            controller._OnPause -= OnPause;
+            controller._OnArcThrow -= OnArcThrow;
+            controller._OnDirectThrow -= OnDirectThrow;
+            controller._OnGoLimp -= OnGoLimp;
+        }
     }
 
     private void OnMove(InputValue inputValue)
