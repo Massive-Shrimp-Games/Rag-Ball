@@ -305,6 +305,33 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Menu"",
+            ""id"": ""437e6225-7b80-4abb-84ec-fc67e4a01281"",
+            ""actions"": [
+                {
+                    ""name"": ""StartMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""735515bc-6ff9-4bbb-ab8a-bf264dd4ca44"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""f92fd0e8-273e-42d2-83af-92d924908a2f"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""StartMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -342,6 +369,9 @@ public class @ActionMap : IInputActionCollection, IDisposable
         m_Player_GrabDrop = m_Player.FindAction("GrabDrop", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        // Menu
+        m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
+        m_Menu_StartMenu = m_Menu.FindAction("StartMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -476,6 +506,39 @@ public class @ActionMap : IInputActionCollection, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Menu
+    private readonly InputActionMap m_Menu;
+    private IMenuActions m_MenuActionsCallbackInterface;
+    private readonly InputAction m_Menu_StartMenu;
+    public struct MenuActions
+    {
+        private @ActionMap m_Wrapper;
+        public MenuActions(@ActionMap wrapper) { m_Wrapper = wrapper; }
+        public InputAction @StartMenu => m_Wrapper.m_Menu_StartMenu;
+        public InputActionMap Get() { return m_Wrapper.m_Menu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
+        public void SetCallbacks(IMenuActions instance)
+        {
+            if (m_Wrapper.m_MenuActionsCallbackInterface != null)
+            {
+                @StartMenu.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnStartMenu;
+                @StartMenu.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnStartMenu;
+                @StartMenu.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnStartMenu;
+            }
+            m_Wrapper.m_MenuActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @StartMenu.started += instance.OnStartMenu;
+                @StartMenu.performed += instance.OnStartMenu;
+                @StartMenu.canceled += instance.OnStartMenu;
+            }
+        }
+    }
+    public MenuActions @Menu => new MenuActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -504,5 +567,9 @@ public class @ActionMap : IInputActionCollection, IDisposable
         void OnGrabDrop(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+    }
+    public interface IMenuActions
+    {
+        void OnStartMenu(InputAction.CallbackContext context);
     }
 }
