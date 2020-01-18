@@ -27,6 +27,54 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""GoLimp"",
+                    ""type"": ""Button"",
+                    ""id"": ""7de93337-6830-4ab5-bcba-015945d03adf"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""DirectThrow"",
+                    ""type"": ""Button"",
+                    ""id"": ""56b3ddeb-1f44-4fde-ba0e-76888ac6a700"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ArcThrow"",
+                    ""type"": ""Button"",
+                    ""id"": ""c49213a7-10cd-4f25-8b7e-b51bd46b7832"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""4b0ad7cd-2823-4da7-989c-51b35b4f8808"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""GrabDrop"",
+                    ""type"": ""Button"",
+                    ""id"": ""6fb4f9e2-1da2-4afa-a6c9-df5159aed00d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""fa5b2664-523e-4af4-bed7-39c4931163a7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""05ae667a-5afb-4436-b426-bc8c7ccf59ca"",
@@ -123,6 +171,138 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""27c5cc95-50f6-48f3-92e0-ccdcfd0988a8"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""369d4959-dc79-42d0-806f-ffce21516be0"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b6efba1f-7b74-4a55-b144-778d82b7b674"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrabDrop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""23987a5d-3d42-46e8-9091-736435caef23"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrabDrop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6dbdb19c-05a1-46ec-95c4-625ffd25f9e2"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""35239f74-5d6f-4679-a0a6-f8cd0dda6dd1"",
+                    ""path"": ""<Keyboard>/backspace"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ffad2369-72f3-4997-b1f1-6c354de94aac"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ArcThrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b8bc45bb-8b58-4b70-8b30-167d6d4e0df3"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ArcThrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""754b425d-8cb3-41f4-be92-9606a0779dce"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DirectThrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5223d4b0-06f6-4f64-9d33-f9d9f46fad17"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DirectThrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6360a38c-8def-4664-a7e6-82b37bd8b038"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GoLimp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""96026412-ab38-4744-9f42-7ec97cd1ad8b"",
+                    ""path"": ""<Keyboard>/rightShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GoLimp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -155,6 +335,12 @@ public class @ActionMap : IInputActionCollection, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Player_GoLimp = m_Player.FindAction("GoLimp", throwIfNotFound: true);
+        m_Player_DirectThrow = m_Player.FindAction("DirectThrow", throwIfNotFound: true);
+        m_Player_ArcThrow = m_Player.FindAction("ArcThrow", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_GrabDrop = m_Player.FindAction("GrabDrop", throwIfNotFound: true);
+        m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
     }
 
@@ -206,12 +392,24 @@ public class @ActionMap : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Move;
+    private readonly InputAction m_Player_GoLimp;
+    private readonly InputAction m_Player_DirectThrow;
+    private readonly InputAction m_Player_ArcThrow;
+    private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_GrabDrop;
+    private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Jump;
     public struct PlayerActions
     {
         private @ActionMap m_Wrapper;
         public PlayerActions(@ActionMap wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction @GoLimp => m_Wrapper.m_Player_GoLimp;
+        public InputAction @DirectThrow => m_Wrapper.m_Player_DirectThrow;
+        public InputAction @ArcThrow => m_Wrapper.m_Player_ArcThrow;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @GrabDrop => m_Wrapper.m_Player_GrabDrop;
+        public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -225,6 +423,24 @@ public class @ActionMap : IInputActionCollection, IDisposable
                 @Move.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
+                @GoLimp.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGoLimp;
+                @GoLimp.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGoLimp;
+                @GoLimp.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGoLimp;
+                @DirectThrow.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDirectThrow;
+                @DirectThrow.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDirectThrow;
+                @DirectThrow.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDirectThrow;
+                @ArcThrow.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnArcThrow;
+                @ArcThrow.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnArcThrow;
+                @ArcThrow.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnArcThrow;
+                @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @GrabDrop.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrabDrop;
+                @GrabDrop.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrabDrop;
+                @GrabDrop.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrabDrop;
+                @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
@@ -235,6 +451,24 @@ public class @ActionMap : IInputActionCollection, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @GoLimp.started += instance.OnGoLimp;
+                @GoLimp.performed += instance.OnGoLimp;
+                @GoLimp.canceled += instance.OnGoLimp;
+                @DirectThrow.started += instance.OnDirectThrow;
+                @DirectThrow.performed += instance.OnDirectThrow;
+                @DirectThrow.canceled += instance.OnDirectThrow;
+                @ArcThrow.started += instance.OnArcThrow;
+                @ArcThrow.performed += instance.OnArcThrow;
+                @ArcThrow.canceled += instance.OnArcThrow;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
+                @GrabDrop.started += instance.OnGrabDrop;
+                @GrabDrop.performed += instance.OnGrabDrop;
+                @GrabDrop.canceled += instance.OnGrabDrop;
+                @Dash.started += instance.OnDash;
+                @Dash.performed += instance.OnDash;
+                @Dash.canceled += instance.OnDash;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
@@ -263,6 +497,12 @@ public class @ActionMap : IInputActionCollection, IDisposable
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnGoLimp(InputAction.CallbackContext context);
+        void OnDirectThrow(InputAction.CallbackContext context);
+        void OnArcThrow(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
+        void OnGrabDrop(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
     }
 }

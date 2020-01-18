@@ -40,6 +40,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Transform grabPos; // Set in editor
 
+    private Controller controller;
+
     //private Vector2 movement;
 
     // Start is called before the first frame update
@@ -56,9 +58,15 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        Controller controller = Controllers.Instance.GetController(playerNumber);
+        controller = Controllers.Instance.GetController(playerNumber);
         controller._OnMove += OnMove;
         controller._OnJump += OnJump;
+        controller._OnDash += OnDash;
+        controller._OnGrabDrop += OnGrabDrop;
+        controller._OnPause += OnPause;
+        controller._OnArcThrow += OnArcThrow;
+        controller._OnDirectThrow += OnDirectThrow;
+        controller._OnGoLimp += OnGoLimp;
 
         staggerMaxCharge = 10;
         staggerCharges = staggerMaxCharge;
@@ -72,7 +80,19 @@ public class Player : MonoBehaviour
         hipsCollider = hips.gameObject.GetComponent<Collider>(); 
     }
 
-    public void OnMove(InputValue inputValue)
+    private void OnDestroy()
+    {
+        controller._OnMove -= OnMove;
+        controller._OnJump -= OnJump;
+        controller._OnDash -= OnDash;
+        controller._OnGrabDrop -= OnGrabDrop;
+        controller._OnPause -= OnPause;
+        controller._OnArcThrow -= OnArcThrow;
+        controller._OnDirectThrow -= OnDirectThrow;
+        controller._OnGoLimp -= OnGoLimp;
+    }
+
+    private void OnMove(InputValue inputValue)
     {
         Vector2 stickDirection = inputValue.Get<Vector2>();
         Vector3 force = new Vector3(stickDirection.x, 0, stickDirection.y) * playerSpeed * Time.deltaTime;
@@ -81,7 +101,7 @@ public class Player : MonoBehaviour
         animator.Play(force.magnitude >= 0.03 ? "Walk" : "Idle");
     }
 
-    public void OnJump(InputValue inputValue)
+    private void OnJump(InputValue inputValue)
     {
         bool LeftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
         bool RightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
@@ -91,6 +111,36 @@ public class Player : MonoBehaviour
             hips.GetComponent<Rigidbody>().AddForce(boostDir * jumpForce);
             staggerCharges = staggerCharges - staggerJumpCharge;
         }
+    }
+
+    private void OnDash(InputValue inputValue)
+    {
+
+    }
+
+    private void OnGrabDrop(InputValue inputValue)
+    {
+
+    }
+
+    private void OnPause(InputValue inputValue)
+    {
+
+    }
+
+    private void OnArcThrow(InputValue inputValue)
+    {
+
+    }
+
+    private void OnDirectThrow(InputValue inputValue)
+    {
+
+    }
+
+    private void OnGoLimp(InputValue inputValue)
+    {
+
     }
 
     public void Dash()
