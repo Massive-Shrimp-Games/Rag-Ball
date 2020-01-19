@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] private CheckGrab grabCheckCollider;   // Set in editor
     [SerializeField] private Transform grabPos; // Set in editor
+    [SerializeField] private Transform directThrowDirection;
+    [SerializeField] private Transform arcThrowDirection;
     private GameObject grabbing;
 
     private GameObject hips;
@@ -52,8 +54,6 @@ public class Player : MonoBehaviour
 
     //private Vector2 movement;
 
-    // Start is called before the first frame update
-
     void Awake()
     {
     }
@@ -62,6 +62,7 @@ public class Player : MonoBehaviour
     {
         UpdateHeld();
         Debug.DrawLine(hips.transform.position, directThrowForceVel);
+        Debug.DrawLine(hips.transform.position, arcThrowForceVel);
     }
 
     void Start()
@@ -80,9 +81,6 @@ public class Player : MonoBehaviour
         hipsCollider = hips.gameObject.GetComponent<Collider>();
 
         grabbing = null;
-
-        directThrowForceVel = directThrowForce * hips.transform.forward;
-        arcThrowForceVel = arcThrowForce * hips.transform.forward;
     }
 
     private void OnDestroy()
@@ -183,10 +181,13 @@ public class Player : MonoBehaviour
         if (grabbing == null) { return; }
         print("arcThrow");
 
+        // Get reference to what we are holding before we release it
         GameObject objectToThrow = grabbing;
         OnGrabDrop(null);
 
+        arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
         objectToThrow.GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
+        print(objectToThrow.gameObject.name);
     }
 
     private void OnDirectThrow(InputValue inputValue)
@@ -198,7 +199,9 @@ public class Player : MonoBehaviour
         GameObject objectToThrow = grabbing;
         OnGrabDrop(null);
 
-        print(directThrowForceVel);
+        //hipsRigidBody.velocity = Vector3.zero;
+
+        directThrowForceVel = directThrowForce * directThrowDirection.forward;
         objectToThrow.GetComponent<Rigidbody>().AddForce(directThrowForceVel);
     }
 
