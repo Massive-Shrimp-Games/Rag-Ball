@@ -333,6 +333,14 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""BackToPreviousMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""fc41c4be-b800-4496-bb7f-cbe7034aeccb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -366,6 +374,17 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""RegressInMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""19e18e56-9060-4ada-a303-481ab1cfe903"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BackToPreviousMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -412,6 +431,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
         m_Menu_StartMenu = m_Menu.FindAction("StartMenu", throwIfNotFound: true);
         m_Menu_ProgressInMenu = m_Menu.FindAction("ProgressInMenu", throwIfNotFound: true);
         m_Menu_RegressInMenu = m_Menu.FindAction("RegressInMenu", throwIfNotFound: true);
+        m_Menu_BackToPreviousMenu = m_Menu.FindAction("BackToPreviousMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -553,6 +573,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
     private readonly InputAction m_Menu_StartMenu;
     private readonly InputAction m_Menu_ProgressInMenu;
     private readonly InputAction m_Menu_RegressInMenu;
+    private readonly InputAction m_Menu_BackToPreviousMenu;
     public struct MenuActions
     {
         private @ActionMap m_Wrapper;
@@ -560,6 +581,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
         public InputAction @StartMenu => m_Wrapper.m_Menu_StartMenu;
         public InputAction @ProgressInMenu => m_Wrapper.m_Menu_ProgressInMenu;
         public InputAction @RegressInMenu => m_Wrapper.m_Menu_RegressInMenu;
+        public InputAction @BackToPreviousMenu => m_Wrapper.m_Menu_BackToPreviousMenu;
         public InputActionMap Get() { return m_Wrapper.m_Menu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -578,6 +600,9 @@ public class @ActionMap : IInputActionCollection, IDisposable
                 @RegressInMenu.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnRegressInMenu;
                 @RegressInMenu.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnRegressInMenu;
                 @RegressInMenu.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnRegressInMenu;
+                @BackToPreviousMenu.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnBackToPreviousMenu;
+                @BackToPreviousMenu.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnBackToPreviousMenu;
+                @BackToPreviousMenu.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnBackToPreviousMenu;
             }
             m_Wrapper.m_MenuActionsCallbackInterface = instance;
             if (instance != null)
@@ -591,6 +616,9 @@ public class @ActionMap : IInputActionCollection, IDisposable
                 @RegressInMenu.started += instance.OnRegressInMenu;
                 @RegressInMenu.performed += instance.OnRegressInMenu;
                 @RegressInMenu.canceled += instance.OnRegressInMenu;
+                @BackToPreviousMenu.started += instance.OnBackToPreviousMenu;
+                @BackToPreviousMenu.performed += instance.OnBackToPreviousMenu;
+                @BackToPreviousMenu.canceled += instance.OnBackToPreviousMenu;
             }
         }
     }
@@ -629,5 +657,6 @@ public class @ActionMap : IInputActionCollection, IDisposable
         void OnStartMenu(InputAction.CallbackContext context);
         void OnProgressInMenu(InputAction.CallbackContext context);
         void OnRegressInMenu(InputAction.CallbackContext context);
+        void OnBackToPreviousMenu(InputAction.CallbackContext context);
     }
 }

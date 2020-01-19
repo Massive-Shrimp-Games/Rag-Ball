@@ -15,6 +15,8 @@ public class LevelSelectMenu : MonoBehaviour
 
     private int buttonCounter; 
 
+    public Image cursor; 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,12 +54,22 @@ public class LevelSelectMenu : MonoBehaviour
     }
 
     void ProgressInMenu(InputValue inputValue){
-        selectableObjects[buttonCounter].Select();
+        Debug.Log("Pro"); 
         buttonCounter++; 
-        selectableObjects[buttonCounter].Select();
+        if (buttonCounter > selectableObjects.Count - 1){
+            buttonCounter = 0; 
+        }
+        //Move image cursor to next button position
+        //cursor.rectTransform = selectableObjects[buttonCounter].GetComponent<RectTransform>(); 
+        //selectableObjects[buttonCounter]; 
     }
 
     void RegressInMenu(InputValue inputValue){
-        
+        Debug.Log("Reg"); 
+        buttonCounter--; 
+        if (buttonCounter < 0){
+            buttonCounter = selectableObjects.Count - 1; 
+        }
+        selectableObjects[buttonCounter].Select();
     }
 }

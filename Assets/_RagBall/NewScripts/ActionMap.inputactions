@@ -320,6 +320,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "BackToPreviousMenu",
+                    "type": "Button",
+                    "id": "fc41c4be-b800-4496-bb7f-cbe7034aeccb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -353,6 +361,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "RegressInMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "19e18e56-9060-4ada-a303-481ab1cfe903",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BackToPreviousMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
