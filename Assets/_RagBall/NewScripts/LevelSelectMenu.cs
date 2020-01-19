@@ -59,6 +59,8 @@ public class LevelSelectMenu : MonoBehaviour
         if (buttonCounter > selectableObjects.Count - 1){
             buttonCounter = 0; 
         }
+        cursor.rectTransform.position = selectableObjects[buttonCounter].GetComponent<RectTransform>().position; 
+        Debug.Log(selectableObjects[buttonCounter].GetComponent<RectTransform>().position);
         //Move image cursor to next button position
         //cursor.rectTransform = selectableObjects[buttonCounter].GetComponent<RectTransform>(); 
         //selectableObjects[buttonCounter]; 
@@ -70,6 +72,7 @@ public class LevelSelectMenu : MonoBehaviour
         if (buttonCounter < 0){
             buttonCounter = selectableObjects.Count - 1; 
         }
-        selectableObjects[buttonCounter].Select();
+        cursor.rectTransform.position = selectableObjects[buttonCounter].GetComponent<RectTransform>().position;
+        //selectableObjects[buttonCounter].Select();
     }
 }
