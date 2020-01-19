@@ -317,6 +317,22 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ProgressInMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""519ec513-175b-4310-8852-7bc581c90e0e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""RegressInMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""619758bb-0266-4b6b-b766-3e3c2e5de41a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -328,6 +344,28 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""StartMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1a8ee43b-a1ba-40c4-b0c3-b9cb3798f677"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ProgressInMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ad3afe1a-682b-4c1d-a896-48b9ab1daf55"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RegressInMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -372,6 +410,8 @@ public class @ActionMap : IInputActionCollection, IDisposable
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_StartMenu = m_Menu.FindAction("StartMenu", throwIfNotFound: true);
+        m_Menu_ProgressInMenu = m_Menu.FindAction("ProgressInMenu", throwIfNotFound: true);
+        m_Menu_RegressInMenu = m_Menu.FindAction("RegressInMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -511,11 +551,15 @@ public class @ActionMap : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Menu;
     private IMenuActions m_MenuActionsCallbackInterface;
     private readonly InputAction m_Menu_StartMenu;
+    private readonly InputAction m_Menu_ProgressInMenu;
+    private readonly InputAction m_Menu_RegressInMenu;
     public struct MenuActions
     {
         private @ActionMap m_Wrapper;
         public MenuActions(@ActionMap wrapper) { m_Wrapper = wrapper; }
         public InputAction @StartMenu => m_Wrapper.m_Menu_StartMenu;
+        public InputAction @ProgressInMenu => m_Wrapper.m_Menu_ProgressInMenu;
+        public InputAction @RegressInMenu => m_Wrapper.m_Menu_RegressInMenu;
         public InputActionMap Get() { return m_Wrapper.m_Menu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -528,6 +572,12 @@ public class @ActionMap : IInputActionCollection, IDisposable
                 @StartMenu.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnStartMenu;
                 @StartMenu.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnStartMenu;
                 @StartMenu.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnStartMenu;
+                @ProgressInMenu.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnProgressInMenu;
+                @ProgressInMenu.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnProgressInMenu;
+                @ProgressInMenu.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnProgressInMenu;
+                @RegressInMenu.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnRegressInMenu;
+                @RegressInMenu.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnRegressInMenu;
+                @RegressInMenu.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnRegressInMenu;
             }
             m_Wrapper.m_MenuActionsCallbackInterface = instance;
             if (instance != null)
@@ -535,6 +585,12 @@ public class @ActionMap : IInputActionCollection, IDisposable
                 @StartMenu.started += instance.OnStartMenu;
                 @StartMenu.performed += instance.OnStartMenu;
                 @StartMenu.canceled += instance.OnStartMenu;
+                @ProgressInMenu.started += instance.OnProgressInMenu;
+                @ProgressInMenu.performed += instance.OnProgressInMenu;
+                @ProgressInMenu.canceled += instance.OnProgressInMenu;
+                @RegressInMenu.started += instance.OnRegressInMenu;
+                @RegressInMenu.performed += instance.OnRegressInMenu;
+                @RegressInMenu.canceled += instance.OnRegressInMenu;
             }
         }
     }
@@ -571,5 +627,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
     public interface IMenuActions
     {
         void OnStartMenu(InputAction.CallbackContext context);
+        void OnProgressInMenu(InputAction.CallbackContext context);
+        void OnRegressInMenu(InputAction.CallbackContext context);
     }
 }

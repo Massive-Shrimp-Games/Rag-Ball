@@ -304,6 +304,22 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "ProgressInMenu",
+                    "type": "Button",
+                    "id": "519ec513-175b-4310-8852-7bc581c90e0e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "RegressInMenu",
+                    "type": "Button",
+                    "id": "619758bb-0266-4b6b-b766-3e3c2e5de41a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -315,6 +331,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "StartMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1a8ee43b-a1ba-40c4-b0c3-b9cb3798f677",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ProgressInMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ad3afe1a-682b-4c1d-a896-48b9ab1daf55",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "RegressInMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
