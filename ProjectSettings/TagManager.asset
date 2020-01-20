@@ -8,6 +8,8 @@ TagManager:
   - Ground
   - Grabbable
   - StaggerBox
+  - Grabbed
+  - Grabbing
   layers:
   - Default
   - TransparentFX
