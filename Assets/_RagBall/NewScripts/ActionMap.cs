@@ -341,14 +341,6 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
-                },
-                {
-                    ""name"": ""MoveAroundInMenu"",
-                    ""type"": ""Button"",
-                    ""id"": ""a6873978-f57c-4015-86a6-b19ec712caeb"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -367,6 +359,17 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""5c5a796a-d086-4930-bfd1-9b4617cf83f6"",
                     ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ProgressInMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aa30acb6-492b-4341-a4a5-8cbdda4a6402"",
+                    ""path"": ""<Gamepad>/dpad"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -393,17 +396,6 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""BackToPreviousMenu"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ebb97de6-88f7-47ef-a37d-658cf1796a56"",
-                    ""path"": ""<Gamepad>/dpad"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveAroundInMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -451,7 +443,6 @@ public class @ActionMap : IInputActionCollection, IDisposable
         m_Menu_ProgressInMenu = m_Menu.FindAction("ProgressInMenu", throwIfNotFound: true);
         m_Menu_RegressInMenu = m_Menu.FindAction("RegressInMenu", throwIfNotFound: true);
         m_Menu_BackToPreviousMenu = m_Menu.FindAction("BackToPreviousMenu", throwIfNotFound: true);
-        m_Menu_MoveAroundInMenu = m_Menu.FindAction("MoveAroundInMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -594,7 +585,6 @@ public class @ActionMap : IInputActionCollection, IDisposable
     private readonly InputAction m_Menu_ProgressInMenu;
     private readonly InputAction m_Menu_RegressInMenu;
     private readonly InputAction m_Menu_BackToPreviousMenu;
-    private readonly InputAction m_Menu_MoveAroundInMenu;
     public struct MenuActions
     {
         private @ActionMap m_Wrapper;
@@ -603,7 +593,6 @@ public class @ActionMap : IInputActionCollection, IDisposable
         public InputAction @ProgressInMenu => m_Wrapper.m_Menu_ProgressInMenu;
         public InputAction @RegressInMenu => m_Wrapper.m_Menu_RegressInMenu;
         public InputAction @BackToPreviousMenu => m_Wrapper.m_Menu_BackToPreviousMenu;
-        public InputAction @MoveAroundInMenu => m_Wrapper.m_Menu_MoveAroundInMenu;
         public InputActionMap Get() { return m_Wrapper.m_Menu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -625,9 +614,6 @@ public class @ActionMap : IInputActionCollection, IDisposable
                 @BackToPreviousMenu.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnBackToPreviousMenu;
                 @BackToPreviousMenu.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnBackToPreviousMenu;
                 @BackToPreviousMenu.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnBackToPreviousMenu;
-                @MoveAroundInMenu.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnMoveAroundInMenu;
-                @MoveAroundInMenu.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnMoveAroundInMenu;
-                @MoveAroundInMenu.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnMoveAroundInMenu;
             }
             m_Wrapper.m_MenuActionsCallbackInterface = instance;
             if (instance != null)
@@ -644,9 +630,6 @@ public class @ActionMap : IInputActionCollection, IDisposable
                 @BackToPreviousMenu.started += instance.OnBackToPreviousMenu;
                 @BackToPreviousMenu.performed += instance.OnBackToPreviousMenu;
                 @BackToPreviousMenu.canceled += instance.OnBackToPreviousMenu;
-                @MoveAroundInMenu.started += instance.OnMoveAroundInMenu;
-                @MoveAroundInMenu.performed += instance.OnMoveAroundInMenu;
-                @MoveAroundInMenu.canceled += instance.OnMoveAroundInMenu;
             }
         }
     }
@@ -686,6 +669,5 @@ public class @ActionMap : IInputActionCollection, IDisposable
         void OnProgressInMenu(InputAction.CallbackContext context);
         void OnRegressInMenu(InputAction.CallbackContext context);
         void OnBackToPreviousMenu(InputAction.CallbackContext context);
-        void OnMoveAroundInMenu(InputAction.CallbackContext context);
     }
 }

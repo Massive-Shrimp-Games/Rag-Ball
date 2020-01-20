@@ -19,6 +19,7 @@ public class Controller : MonoBehaviour
     public event InputEventHandler _OnStartMenu;
     public event InputEventHandler _OnProgressInMenu;
     public event InputEventHandler _OnRegressInMenu; 
+    public event InputEventHandler _OnBackToPreviousMenu; 
 
     private void OnMove(InputValue inputValue)
     {
@@ -70,5 +71,9 @@ public class Controller : MonoBehaviour
 
     private void OnRegressInMenu(InputValue inputValue){
         _OnRegressInMenu(inputValue); 
+    }
+
+    private void OnBackToPreviousMenu(InputValue inputValue){
+        _OnBackToPreviousMenu(inputValue); 
     }
 }
