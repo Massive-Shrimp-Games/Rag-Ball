@@ -328,6 +328,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "MoveAroundInMenu",
+                    "type": "Button",
+                    "id": "a6873978-f57c-4015-86a6-b19ec712caeb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -344,11 +352,11 @@
                 },
                 {
                     "name": "",
-                    "id": "1a8ee43b-a1ba-40c4-b0c3-b9cb3798f677",
-                    "path": "<Gamepad>/buttonSouth",
+                    "id": "5c5a796a-d086-4930-bfd1-9b4617cf83f6",
+                    "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad",
+                    "groups": "",
                     "action": "ProgressInMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -372,6 +380,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "BackToPreviousMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ebb97de6-88f7-47ef-a37d-658cf1796a56",
+                    "path": "<Gamepad>/dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveAroundInMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

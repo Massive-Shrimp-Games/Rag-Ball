@@ -55,6 +55,23 @@ public class LevelSelectMenu : MonoBehaviour
 
     void ProgressInMenu(InputValue inputValue){
         Debug.Log("Pro"); 
+        Vector2 move = inputValue.Get<Vector2>(); 
+        if(move.x > .5f){
+            //Right
+            Debug.Log("Right"); 
+        }
+        else if(move.x < -.5f){
+            //Left
+            Debug.Log("Left"); 
+        }
+        else if(move.y > .5f){
+            //Up
+            Debug.Log("Up"); 
+        }
+        else if(move.y < -.5f){
+            //Down
+            Debug.Log("Down"); 
+        }
         buttonCounter++; 
         if (buttonCounter > selectableObjects.Count - 1){
             buttonCounter = 0; 
