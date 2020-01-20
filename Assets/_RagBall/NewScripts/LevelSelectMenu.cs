@@ -61,6 +61,7 @@ public class LevelSelectMenu : MonoBehaviour
         }
         cursor.rectTransform.position = selectableObjects[buttonCounter].GetComponent<RectTransform>().position; 
         Debug.Log(selectableObjects[buttonCounter].GetComponent<RectTransform>().position);
+        Debug.Log(selectableObjects[buttonCounter].gameObject.name);
         //Move image cursor to next button position
         //cursor.rectTransform = selectableObjects[buttonCounter].GetComponent<RectTransform>(); 
         //selectableObjects[buttonCounter]; 

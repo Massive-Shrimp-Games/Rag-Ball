@@ -380,7 +380,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""19e18e56-9060-4ada-a303-481ab1cfe903"",
-                    ""path"": """",
+                    ""path"": ""<Gamepad>/select"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
