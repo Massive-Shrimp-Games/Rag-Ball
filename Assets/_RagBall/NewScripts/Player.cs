@@ -61,8 +61,6 @@ public class Player : MonoBehaviour
     private void Update()
     {
         UpdateHeld();
-        Debug.DrawLine(hips.transform.position, directThrowForceVel);
-        Debug.DrawLine(hips.transform.position, arcThrowForceVel);
     }
 
     void Start()
@@ -169,27 +167,20 @@ public class Player : MonoBehaviour
     {
         if (grabbing == null) {
             grabbing = grabCheckCollider.FindClosest();
-            grabbing.GetComponent<Rigidbody>().isKinematic = true;
+            
             if (grabbing != null)
             {
+                grabbing.GetComponent<Rigidbody>().isKinematic = true;
                 grabbing.tag = "Grabbed";
                 hips.tag = "Grabbing";
             }
-            
         }
         else {
-            grabbing.GetComponent<Rigidbody>().isKinematic = false;
             grabbing.tag = "Grabbable";
-            grabbing = null;
             hips.tag = "Grabbable";
-        }
-    }
 
-    private void UpdateHeld()
-    {
-        if (grabbing != null)
-        {
-            grabbing.transform.position = grabPos.position;
+            grabbing.GetComponent<Rigidbody>().isKinematic = false;
+            grabbing = null;
         }
     }
 
@@ -201,12 +192,10 @@ public class Player : MonoBehaviour
     private void OnArcThrow(InputValue inputValue)
     {
         if (grabbing == null) { return; }
-        print("arcThrow");
 
         // Get reference to what we are holding before we release it
         GameObject objectToThrow = grabbing;
         OnGrabDrop(null);
-        print(grabbing);
 
         arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
         objectToThrow.GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
@@ -215,14 +204,12 @@ public class Player : MonoBehaviour
     private void OnDirectThrow(InputValue inputValue)
     {
         if (grabbing == null) { return; }
-        print("directThrow");
-
+        
         // Get reference to what we are holding before we release it
         GameObject objectToThrow = grabbing;
         grabbing.GetComponent<Rigidbody>().AddForce(directThrowForce * directThrowDirection.forward);
         OnGrabDrop(null);
-        print(grabbing);
-
+        
         directThrowForceVel = directThrowForce * directThrowDirection.forward;
         objectToThrow.GetComponent<Rigidbody>().AddForce(directThrowForceVel);
     }
