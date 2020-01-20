@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class Game : Singleton<Game>
 {
-    public Scene scene;
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);

@@ -21,8 +21,11 @@ public static class DefaultSceneLoader
         if (state == PlayModeStateChange.EnteredPlayMode)
         {
             int currentSceneBuildIndex = EditorSceneManager.GetActiveScene().buildIndex;
-            EditorSceneManager.LoadScene(0);
-            EditorSceneManager.LoadScene(currentSceneBuildIndex);
+            if (currentSceneBuildIndex != 0)
+            {
+                EditorSceneManager.LoadScene(0);
+                EditorSceneManager.LoadScene(currentSceneBuildIndex);
+            }
         }
     }
 }
