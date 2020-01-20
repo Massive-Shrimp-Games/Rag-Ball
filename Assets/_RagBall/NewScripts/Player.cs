@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform grabPos; // Set in editor
     [SerializeField] private Transform directThrowDirection;
     [SerializeField] private Transform arcThrowDirection;
-    private GameObject grabbing;
+    [SerializeField] private GameObject grabbing;
 
     private GameObject hips;
     private Animator animator;
@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
     {
         if (grabbing != null)
         {
-            grabbing.transform.position = grabPos.position;
+            grabbing.GetComponent<Rigidbody>().position = grabPos.position;
         }
     }
 
@@ -167,8 +167,14 @@ public class Player : MonoBehaviour
 
     private void OnGrabDrop(InputValue inputValue)
     {
-        if (grabbing == null) { grabbing = grabCheckCollider.FindClosest(); }
-        else { grabbing = null; }
+        if (grabbing == null) {
+            grabbing = grabCheckCollider.FindClosest();
+            grabbing.GetComponent<Rigidbody>().isKinematic = true;
+        }
+        else {
+            grabbing.GetComponent<Rigidbody>().isKinematic = false;
+            grabbing = null;
+        }
     }
 
     private void OnPause(InputValue inputValue)
@@ -184,22 +190,22 @@ public class Player : MonoBehaviour
         // Get reference to what we are holding before we release it
         GameObject objectToThrow = grabbing;
         OnGrabDrop(null);
+        print(grabbing);
 
         arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
         objectToThrow.GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
-        print(objectToThrow.gameObject.name);
     }
 
     private void OnDirectThrow(InputValue inputValue)
-    {   
+    {
         if (grabbing == null) { return; }
         print("directThrow");
 
         // Get reference to what we are holding before we release it
         GameObject objectToThrow = grabbing;
+        grabbing.GetComponent<Rigidbody>().AddForce(directThrowForce * directThrowDirection.forward);
         OnGrabDrop(null);
-
-        //hipsRigidBody.velocity = Vector3.zero;
+        print(grabbing);
 
         directThrowForceVel = directThrowForce * directThrowDirection.forward;
         objectToThrow.GetComponent<Rigidbody>().AddForce(directThrowForceVel);
