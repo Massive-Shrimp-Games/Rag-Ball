@@ -8,6 +8,11 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float dashForce; // Set in editor
     [SerializeField] private float jumpForce; // Set in editor
+    [SerializeField] private float directThrowForce; // Set in editor
+    [SerializeField] private float arcThrowForce; // Set in editor
+    
+    private Vector3 directThrowForceVel;
+    private Vector3 arcThrowForceVel;
 
     public float playerSpeed;
     public int staggerCharges;
@@ -30,7 +35,9 @@ public class Player : MonoBehaviour
 
     [SerializeField] private CheckGrab grabCheckCollider;   // Set in editor
     [SerializeField] private Transform grabPos; // Set in editor
-    private GameObject grabbing;
+    [SerializeField] private Transform directThrowDirection;
+    [SerializeField] private Transform arcThrowDirection;
+    [SerializeField] private GameObject grabbing;
 
     private GameObject hips;
     private Animator animator;
@@ -47,17 +54,15 @@ public class Player : MonoBehaviour
 
     //private Vector2 movement;
 
-    // Start is called before the first frame update
-
     void Awake()
     {
-        //movement = Vector2.zero;
     }
 
     private void Update()
     {
-        //movement = Vector2.zero;
         UpdateHeld();
+        Debug.DrawLine(hips.transform.position, directThrowForceVel);
+        Debug.DrawLine(hips.transform.position, arcThrowForceVel);
     }
 
     void Start()
@@ -82,7 +87,16 @@ public class Player : MonoBehaviour
     {
         UnMapControls();
     }
+    
+    private void UpdateHeld()
+    {
+        if (grabbing != null)
+        {
+            grabbing.GetComponent<Rigidbody>().position = grabPos.position;
+        }
+    }
 
+    #region Input Mapping
     private void MapControls()
     {
         controller = Controllers.Instance.GetController(playerNumber);
@@ -113,12 +127,14 @@ public class Player : MonoBehaviour
             controller._OnGoLimp -= OnGoLimp;
         }
     }
+    #endregion
 
+    #region Player Abilities
     private void OnMove(InputValue inputValue)
     {
         Vector2 stickDirection = inputValue.Get<Vector2>();
         Vector3 force = new Vector3(stickDirection.x, 0, stickDirection.y) * playerSpeed * Time.deltaTime;
-        hips.GetComponent<Rigidbody>().AddForce(force);
+        hipsRigidBody.AddForce(force);
         //Debug.LogFormat("stickDir is {0}", stickDirection);
         if (Mathf.Abs(stickDirection.x) >= 0.1 || Mathf.Abs(stickDirection.y) >= 0.1)
         {
@@ -134,7 +150,7 @@ public class Player : MonoBehaviour
         if (LeftFoot && RightFoot && staminaCharges >= StaminaJumpCharge)
         {
             Vector3 boostDir = hips.transform.up;
-            hips.GetComponent<Rigidbody>().AddForce(boostDir * jumpForce);
+            hipsRigidBody.AddForce(boostDir * jumpForce);
             staggerCharges = staggerCharges - staggerJumpCharge;
         }
     }
@@ -144,7 +160,7 @@ public class Player : MonoBehaviour
         if (staggerCharges >= staggerDashCharge)
         {
             Vector3 boostDir = hips.transform.forward;
-            hips.GetComponent<Rigidbody>().AddForce(boostDir * dashForce);
+            hipsRigidBody.AddForce(boostDir * dashForce);
             staggerCharges = staggerCharges - staggerDashCharge;
         }
     }
@@ -153,6 +169,7 @@ public class Player : MonoBehaviour
     {
         if (grabbing == null) {
             grabbing = grabCheckCollider.FindClosest();
+            grabbing.GetComponent<Rigidbody>().isKinematic = true;
             if (grabbing != null)
             {
                 grabbing.tag = "Grabbed";
@@ -161,6 +178,7 @@ public class Player : MonoBehaviour
             
         }
         else {
+            grabbing.GetComponent<Rigidbody>().isKinematic = false;
             grabbing.tag = "Grabbable";
             grabbing = null;
             hips.tag = "Grabbable";
@@ -182,18 +200,38 @@ public class Player : MonoBehaviour
 
     private void OnArcThrow(InputValue inputValue)
     {
+        if (grabbing == null) { return; }
+        print("arcThrow");
 
+        // Get reference to what we are holding before we release it
+        GameObject objectToThrow = grabbing;
+        OnGrabDrop(null);
+        print(grabbing);
+
+        arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
+        objectToThrow.GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
     }
 
     private void OnDirectThrow(InputValue inputValue)
     {
+        if (grabbing == null) { return; }
+        print("directThrow");
 
+        // Get reference to what we are holding before we release it
+        GameObject objectToThrow = grabbing;
+        grabbing.GetComponent<Rigidbody>().AddForce(directThrowForce * directThrowDirection.forward);
+        OnGrabDrop(null);
+        print(grabbing);
+
+        directThrowForceVel = directThrowForce * directThrowDirection.forward;
+        objectToThrow.GetComponent<Rigidbody>().AddForce(directThrowForceVel);
     }
 
     private void OnGoLimp(InputValue inputValue)
     {
 
     }
+    #endregion
 
     void Stagger(int time)
     {
