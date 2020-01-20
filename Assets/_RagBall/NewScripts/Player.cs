@@ -65,6 +65,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        if (Game.Instance == null) return; // if the preload scene hasn't been loaded
         MapControls();
 
         staggerMaxCharge = 10;
@@ -97,7 +98,7 @@ public class Player : MonoBehaviour
     #region Input Mapping
     private void MapControls()
     {
-        controller = Controllers.Instance.GetController(playerNumber);
+        controller = Game.Instance.Controllers.GetController(playerNumber);
         if (controller != null)
         {
             controller._OnMove += OnMove;
