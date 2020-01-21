@@ -62,7 +62,7 @@ public abstract class Menu : MonoBehaviour
         
     }
 
-    protected void StartMenu(InputValue inputValue){
+    virtual protected void StartMenu(InputValue inputValue){
         Debug.Log("Hi"); 
         SceneManager.LoadScene("CharacterSelect");
     }
@@ -103,9 +103,9 @@ public abstract class Menu : MonoBehaviour
         Debug.Log("Reg"); 
     }
 
-    protected void BackToPreviousMenu(InputValue inputValue){
+    virtual protected void BackToPreviousMenu(InputValue inputValue){
         SceneManager.LoadScene("StartScreen");
     }
 
-    protected abstract void createGraph();
+    //protected abstract void createGraph();
 }

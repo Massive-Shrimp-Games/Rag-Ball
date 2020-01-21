@@ -13,7 +13,7 @@ public class LevelSelectMenu : Menu
     void Start()
     { 
         base.MapControls();
-        createGraph(); 
+        //createGraph(); 
     }
 
     private void OnDestroy()
@@ -26,8 +26,8 @@ public class LevelSelectMenu : Menu
     {
         
     }
-
-    protected override void createGraph(){
+    
+    //protected override void createGraph(){
         /*
         //Button 0
         selectables[0].GetComponent<Selectable>().right = selectables[1].GetComponent<Selectable>(); 
@@ -87,6 +87,6 @@ public class LevelSelectMenu : Menu
         selectables[12].GetComponent<Selectable>().left = selectables[11].GetComponent<Selectable>();
         //selectables[12].GetComponent<Selectable>().down = selectables[10].GetComponent<Selectable>();
         */
-    }
+    //}
 
 }
