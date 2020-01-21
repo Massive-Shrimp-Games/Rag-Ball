@@ -16,10 +16,33 @@ public class PlayerCursor : MonoBehaviour
 		MapControls();
 	}
 
+    public void setSelectable(Selectable s){
+        currentSelectable = s; 
+    }
+
+    public void setPlayerNumber(int newNum){
+        playerNumber = newNum; 
+        UnmapControls(); 
+        controller = Game.Instance.Controllers.GetController(playerNumber);
+		controller.GetComponent<PlayerInput>().SwitchCurrentActionMap("Menu");
+        MapControls(); 
+    }
+
 	private void MapControls(){
 		if (controller != null)
         {
             controller._OnProgressInMenu += ProgressInMenu;
+        }
+	}
+
+    private void OnDestroy() {
+        UnmapControls(); 
+    }
+
+    private void UnmapControls(){
+		if (controller != null)
+        {
+            controller._OnProgressInMenu -= ProgressInMenu;
         }
 	}
 

@@ -6,12 +6,18 @@ using UnityEngine.SceneManagement;
 
 public class CharacterSelectMenu : Menu
 {
-    public GameObject cursorPrefab;
+    public List<GameObject> cursorPrefabs;
     private List<PlayerCursor> playerCursors;
 
     public void Start(){
-    	for (int i = 0; i < Game.Instance.Controllers.Count(); i++){
-    		playerCursors.Add(new PlayerCursor(i));
+        if (Game.Instance == null) return; 
+        int s = Game.Instance.Controllers.Count();
+        Debug.Log(s); 
+    	for (int i = 0; i < s; i++){
+            GameObject newCursor = Instantiate(cursorPrefabs[i], new Vector3(0,0,0), Quaternion.identity); 
+            newCursor.transform.parent = transform; 
+            playerCursors.Add(newCursor.GetComponent<PlayerCursor>()); 
+            playerCursors[i].setSelectable(currentSelectable); 
     	}
     }
 
