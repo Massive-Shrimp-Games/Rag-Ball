@@ -27,7 +27,7 @@ public abstract class Menu : MonoBehaviour
     }
 
     protected void MapControls(){
-        controller = Controllers.Instance.GetController(playerNumber);
+        controller = Game.Instance.Controllers.GetController(playerNumber);
         controller.GetComponent<PlayerInput>().SwitchCurrentActionMap("Menu");
         Debug.Log(controller.GetComponent<PlayerInput>().currentActionMap);  
         if (controller != null)
