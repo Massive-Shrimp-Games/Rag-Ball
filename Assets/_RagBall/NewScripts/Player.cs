@@ -8,6 +8,11 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float dashForce; // Set in editor
     [SerializeField] private float jumpForce; // Set in editor
+    [SerializeField] private float directThrowForce; // Set in editor
+    [SerializeField] private float arcThrowForce; // Set in editor
+    
+    private Vector3 directThrowForceVel;
+    private Vector3 arcThrowForceVel;
 
     public float playerSpeed;
     public int staggerCharges;
@@ -26,7 +31,13 @@ public class Player : MonoBehaviour
 
     private int StaminaRechargeTime = 3;  
 
-    private Collider hipsCollider; 
+    private Collider hipsCollider;
+
+    [SerializeField] private CheckGrab grabCheckCollider;   // Set in editor
+    [SerializeField] private Transform grabPos; // Set in editor
+    [SerializeField] private Transform directThrowDirection;
+    [SerializeField] private Transform arcThrowDirection;
+    [SerializeField] private GameObject grabbing;
 
     private GameObject hips;
     private Animator animator;
@@ -38,26 +49,23 @@ public class Player : MonoBehaviour
 
     public int playerNumber;
 
-    [SerializeField] private Transform grabPos; // Set in editor
 
     private Controller controller;
 
     //private Vector2 movement;
 
-    // Start is called before the first frame update
-
     void Awake()
     {
-        //movement = Vector2.zero;
     }
 
     private void Update()
     {
-        //movement = Vector2.zero;
+        UpdateHeld();
     }
 
     void Start()
     {
+        if (Game.Instance == null) return; // if the preload scene hasn't been loaded
         MapControls();
 
         staggerMaxCharge = 10;
@@ -69,17 +77,28 @@ public class Player : MonoBehaviour
         hips = transform.GetChild(0).GetChild(0).gameObject; //set reference to player's hips
         hipsRigidBody = hips.gameObject.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
         animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
-        hipsCollider = hips.gameObject.GetComponent<Collider>(); 
+        hipsCollider = hips.gameObject.GetComponent<Collider>();
+
+        grabbing = null;
     }
 
     private void OnDestroy()
     {
         UnMapControls();
     }
+    
+    private void UpdateHeld()
+    {
+        if (grabbing != null)
+        {
+            grabbing.GetComponent<Rigidbody>().position = grabPos.position;
+        }
+    }
 
+    #region Input Mapping
     private void MapControls()
     {
-        controller = Controllers.Instance.GetController(playerNumber);
+        controller = Game.Instance.Controllers.GetController(playerNumber);
         controller.GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
         if (controller != null)
         {
@@ -108,13 +127,15 @@ public class Player : MonoBehaviour
             controller._OnGoLimp -= OnGoLimp;
         }
     }
+    #endregion
 
+    #region Player Abilities
     private void OnMove(InputValue inputValue)
     {
         Vector2 stickDirection = inputValue.Get<Vector2>();
         Vector3 force = new Vector3(stickDirection.x, 0, stickDirection.y) * playerSpeed * Time.deltaTime;
-        hips.GetComponent<Rigidbody>().AddForce(force);
-        Debug.LogFormat("stickDir is {0}", stickDirection);
+        hipsRigidBody.AddForce(force);
+        //Debug.LogFormat("stickDir is {0}", stickDirection);
         if (Mathf.Abs(stickDirection.x) >= 0.1 || Mathf.Abs(stickDirection.y) >= 0.1)
         {
             hips.transform.forward = new Vector3(stickDirection.x, 0, stickDirection.y);
@@ -129,7 +150,7 @@ public class Player : MonoBehaviour
         if (LeftFoot && RightFoot && staminaCharges >= StaminaJumpCharge)
         {
             Vector3 boostDir = hips.transform.up;
-            hips.GetComponent<Rigidbody>().AddForce(boostDir * jumpForce);
+            hipsRigidBody.AddForce(boostDir * jumpForce);
             staggerCharges = staggerCharges - staggerJumpCharge;
         }
     }
@@ -139,14 +160,30 @@ public class Player : MonoBehaviour
         if (staggerCharges >= staggerDashCharge)
         {
             Vector3 boostDir = hips.transform.forward;
-            hips.GetComponent<Rigidbody>().AddForce(boostDir * dashForce);
+            hipsRigidBody.AddForce(boostDir * dashForce);
             staggerCharges = staggerCharges - staggerDashCharge;
         }
     }
 
     private void OnGrabDrop(InputValue inputValue)
     {
+        if (grabbing == null) {
+            grabbing = grabCheckCollider.FindClosest();
+            
+            if (grabbing != null)
+            {
+                grabbing.GetComponent<Rigidbody>().isKinematic = true;
+                grabbing.tag = "Grabbed";
+                hips.tag = "Grabbing";
+            }
+        }
+        else {
+            grabbing.tag = "Grabbable";
+            hips.tag = "Grabbable";
 
+            grabbing.GetComponent<Rigidbody>().isKinematic = false;
+            grabbing = null;
+        }
     }
 
     private void OnPause(InputValue inputValue)
@@ -156,18 +193,34 @@ public class Player : MonoBehaviour
 
     private void OnArcThrow(InputValue inputValue)
     {
+        if (grabbing == null) { return; }
 
+        // Get reference to what we are holding before we release it
+        GameObject objectToThrow = grabbing;
+        OnGrabDrop(null);
+
+        arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
+        objectToThrow.GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
     }
 
     private void OnDirectThrow(InputValue inputValue)
     {
-
+        if (grabbing == null) { return; }
+        
+        // Get reference to what we are holding before we release it
+        GameObject objectToThrow = grabbing;
+        grabbing.GetComponent<Rigidbody>().AddForce(directThrowForce * directThrowDirection.forward);
+        OnGrabDrop(null);
+        
+        directThrowForceVel = directThrowForce * directThrowDirection.forward;
+        objectToThrow.GetComponent<Rigidbody>().AddForce(directThrowForceVel);
     }
 
     private void OnGoLimp(InputValue inputValue)
     {
 
     }
+    #endregion
 
     void Stagger(int time)
     {

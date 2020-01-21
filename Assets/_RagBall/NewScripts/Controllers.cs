@@ -5,14 +5,12 @@ using UnityEngine.InputSystem;
 
 public class Controllers : MonoBehaviour
 {
-    public static Controllers Instance { get; private set; }
     public GameObject controllerPrefab;
-
     private List<Controller> controllers;
 
     public Controller GetController(int index)
     {
-        if (index < 0 || index >= controllers.Count)
+        if (controllers == null || index < 0 || index >= controllers.Count)
         {
             return null;
         }
@@ -21,22 +19,8 @@ public class Controllers : MonoBehaviour
 
     private void Awake()
     {
-        CreateSingleton();
         CreateControllers();
         GetChildren();
-    }
-
-    private void CreateSingleton()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
 
     private void CreateControllers()
@@ -45,7 +29,7 @@ public class Controllers : MonoBehaviour
         foreach (Gamepad gamepad in Gamepad.all)
         {
             InputDevice inputDevice = gamepad.device;
-            Debug.LogFormat("Device {0}", inputDevice);
+            Debug.LogFormat("Controllers - Device #{0} {1}", playerIndex, inputDevice);
             PlayerInput playerInput = PlayerInput.Instantiate(controllerPrefab,
                                                               playerIndex: playerIndex,
                                                               pairWithDevice: inputDevice
@@ -54,11 +38,6 @@ public class Controllers : MonoBehaviour
             playerInput.transform.name = string.Format("Controller #{0}", playerIndex);
             playerIndex++;
         }
-
-        //foreach (InputDevice inputDevice in InputDevice.all)
-        //{
-        //    Debug.LogFormat("Input Device {0}", inputDevice);
-        //}
     }
 
     private void GetChildren()
