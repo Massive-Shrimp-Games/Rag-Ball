@@ -4,36 +4,39 @@ using UnityEngine;
 
 public class Pipe : MonoBehaviour
 {
-    RagballRuleset ruleset;
-    private ParticleSystem confetti;
-
     [SerializeField] private TeamColor color;
 
-    private Material redMaterial;
-    private Material blueMaterial;
+    private RagballRuleset ruleset;
+    private ParticleSystem confetti;
 
     void Start()
     {
-        redMaterial = Resources.Load<Material>("Materials/Pipe/RedPipe");
-        blueMaterial = Resources.Load<Material>("Materials/Pipe/BluePipe");
         ruleset = GameObject.Find("Ruleset")?.GetComponent<RagballRuleset>();
-        ruleset.OnRedScore += OnScore;
         transform.GetChild(1).GetComponent<CPS>()._OnTriggerEnter += TriggerEnter;
         confetti = transform.GetChild(2).GetComponent<ParticleSystem>();
         Debug.LogFormat("Pipe color is {0}", color);
         if (color == TeamColor.Red)
         {
-            transform.GetChild(0).GetComponent<Renderer>().material = redMaterial;
+            ruleset.OnRedScore += OnScore;
+            transform.GetChild(0).GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Pipe/RedPipe");
         }
         else if (color == TeamColor.Blue)
         {
-            transform.GetChild(0).GetComponent<Renderer>().material = blueMaterial;
+            ruleset.OnBlueScore += OnScore;
+            transform.GetChild(0).GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Pipe/BluePipe");
         }
     }
 
     private void OnDestroy()
     {
-        ruleset.OnRedScore -= OnScore;
+        if (color == TeamColor.Red)
+        {
+            ruleset.OnRedScore -= OnScore;
+        }
+        else if (color == TeamColor.Blue)
+        {
+            ruleset.OnBlueScore -= OnScore;
+        }
         transform.GetChild(1).GetComponent<CPS>()._OnTriggerEnter -= TriggerEnter;
     }
 
@@ -49,7 +52,14 @@ public class Pipe : MonoBehaviour
             GameObject player = collision.gameObject.transform.root.GetChild(0).gameObject;
             if (player.GetComponent<Player>().color == color)
             {
-                ruleset.RedScore(player);
+                if (color == TeamColor.Red)
+                {
+                    ruleset.RedScore(player);
+                }
+                else
+                {
+                    ruleset.BlueScore(player);
+                }
                 confetti.Play();
             }   
         }
