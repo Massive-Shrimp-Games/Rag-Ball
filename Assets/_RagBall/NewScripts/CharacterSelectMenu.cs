@@ -7,13 +7,12 @@ using UnityEngine.SceneManagement;
 public class CharacterSelectMenu : Menu
 {
     public GameObject cursorPrefab;
+    private List<PlayerCursor> playerCursors;
+
     public void Start(){
-        /*for (){
-            PlayerInput playerInput = PlayerInput.Instantiate(cursorPrefab,
-                playerIndex: playerIndex,
-                pairWithDevice: inputDevice
-                );
-        }*/
+    	for (int i = 0; i < Game.Instance.Controllers.Count(); i++){
+    		playerCursors.Add(new PlayerCursor(i));
+    	}
     }
 
     override protected void StartMenu(InputValue inputValue){
