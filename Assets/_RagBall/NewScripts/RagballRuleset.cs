@@ -12,6 +12,8 @@ public class RagballRuleset : MonoBehaviour
     private int redScore = 0;
     private int blueScore = 0;
 
+    public Transform respawnPoint;
+
     private void Start()
     {
         OnRedScore += AddRedScore;
@@ -36,11 +38,13 @@ public class RagballRuleset : MonoBehaviour
     private void AddRedScore(GameObject player)
     {
         redScore++;
+        player.transform.position = respawnPoint.position;
     }
 
     private void AddBlueScore(GameObject player)
     {
         blueScore++;
+        player.transform.position = respawnPoint.position;
     }
 
     public int GetRedScore()
