@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float directThrowForce; // Set in editor
     [SerializeField] private float arcThrowForce; // Set in editor
 
-    public string color;
+    public TeamColor color;
     
     private Vector3 directThrowForceVel;
     private Vector3 arcThrowForceVel;
