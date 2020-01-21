@@ -5,12 +5,15 @@ using UnityEngine.InputSystem;
 
 public class PlayerCursor : MonoBehaviour
 {
-	private int playerNumber;
+	public int playerNumber = 0;
 	private Controller controller;
-	private Selectable currentSelectable;
+	public Selectable currentSelectable;
 
-	public PlayerCursor(int PlayerNumber){
-		playerNumber = PlayerNumber;
+	private void Start(){
+        if (Game.Instance == null)
+        {
+            return;
+        }
 		controller = Game.Instance.Controllers.GetController(playerNumber);
 		controller.GetComponent<PlayerInput>().SwitchCurrentActionMap("Menu");
 		MapControls();
