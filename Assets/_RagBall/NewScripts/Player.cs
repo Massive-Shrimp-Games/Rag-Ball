@@ -190,7 +190,11 @@ public class Player : MonoBehaviour
 
     private void OnPause(InputValue inputValue)
     {
-
+        UnityEngine.SceneManagement.SceneManager.LoadScene(
+            UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Main_Game"
+            ? "Main_Game2"
+            : "Main_Game"
+        );
     }
 
     private void OnArcThrow(InputValue inputValue)
