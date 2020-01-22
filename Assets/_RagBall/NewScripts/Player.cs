@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float directThrowForce; // Set in editor
     [SerializeField] private float arcThrowForce; // Set in editor
 
+
     public TeamColor color;
     
     private Vector3 directThrowForceVel;
@@ -58,8 +59,19 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        AssignMaterial();
     }
-
+    private void AssignMaterial()
+    {
+        if(color == TeamColor.Red)
+        {
+            transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Medium");
+        }
+        else if (color == TeamColor.Blue)
+        {
+            transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Medium_Blue");
+        }
+    }
     private void Update()
     {
         UpdateHeld();

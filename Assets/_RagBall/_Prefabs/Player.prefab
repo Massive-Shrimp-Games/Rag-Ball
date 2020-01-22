@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 4481739280208597564}
   - component: {fileID: 3356899317419972391}
   m_Layer: 15
-  m_Name: RedPlayer
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1180,7 +1180,7 @@ Transform:
   m_Children:
   - {fileID: 1494065317941848964}
   m_Father: {fileID: 2828387495483448872}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2632414996049319652
 GameObject:
@@ -1301,8 +1301,8 @@ Transform:
   m_LocalPosition: {x: 0.000115156174, y: 0.22555518, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8033911690673944544}
   - {fileID: 3736948438517072475}
+  - {fileID: 8033911690673944544}
   - {fileID: 2828387496987289185}
   m_Father: {fileID: 4481739280208597564}
   m_RootOrder: 0
@@ -1342,7 +1342,7 @@ MonoBehaviour:
   jumpForce: 5000
   directThrowForce: 20000
   arcThrowForce: 20000
-  color: 
+  color: 0
   playerSpeed: 3000
   staggerCharges: 0
   staggerMaxCharge: 0
@@ -2945,7 +2945,7 @@ Transform:
   m_LocalScale: {x: 1.3070343, y: 1.3070333, z: 1.3070343}
   m_Children: []
   m_Father: {fileID: 2828387495483448872}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &8368930078847970437
 SkinnedMeshRenderer:
@@ -2964,7 +2964,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ea544229d07fcbe4d863dd5e5c78f161, type: 2}
+  - {fileID: 2100000, guid: b56761a63e37f0f48a50b3fcd2e0a294, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
