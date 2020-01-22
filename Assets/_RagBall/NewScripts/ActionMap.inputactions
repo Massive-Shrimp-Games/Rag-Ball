@@ -292,6 +292,101 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Menu",
+            "id": "437e6225-7b80-4abb-84ec-fc67e4a01281",
+            "actions": [
+                {
+                    "name": "StartMenu",
+                    "type": "Button",
+                    "id": "735515bc-6ff9-4bbb-ab8a-bf264dd4ca44",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ProgressInMenu",
+                    "type": "Value",
+                    "id": "519ec513-175b-4310-8852-7bc581c90e0e",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "RegressInMenu",
+                    "type": "Button",
+                    "id": "619758bb-0266-4b6b-b766-3e3c2e5de41a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "BackToPreviousMenu",
+                    "type": "Button",
+                    "id": "fc41c4be-b800-4496-bb7f-cbe7034aeccb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f92fd0e8-273e-42d2-83af-92d924908a2f",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "StartMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5c5a796a-d086-4930-bfd1-9b4617cf83f6",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ProgressInMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aa30acb6-492b-4341-a4a5-8cbdda4a6402",
+                    "path": "<Gamepad>/dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ProgressInMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ad3afe1a-682b-4c1d-a896-48b9ab1daf55",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "RegressInMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "19e18e56-9060-4ada-a303-481ab1cfe903",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BackToPreviousMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

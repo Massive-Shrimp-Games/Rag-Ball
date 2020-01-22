@@ -50,4 +50,8 @@ public class Controllers : MonoBehaviour
             controllers.Add(cef);
         }
     }
+
+    public int Count(){
+        return controllers.Count;
+    }
 }
