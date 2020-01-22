@@ -10,22 +10,7 @@ public class LevelSelectMenu : Menu
 
     // Start is called before the first frame update
 
-    void Start()
-    { 
-        base.MapControls();
-        //createGraph(); 
-    }
-
-    private void OnDestroy()
-    {
-        base.UnmapControls();
-    }
-
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
     
     //protected override void createGraph(){
         /*

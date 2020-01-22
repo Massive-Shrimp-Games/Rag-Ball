@@ -34,6 +34,7 @@ public class PlayerCursor : MonoBehaviour
 	private void MapControls(){
 		if (controller != null)
         {
+            controller._OnStartMenu += StartMenu; 
             controller._OnProgressInMenu += ProgressInMenu;
         }
 	}
@@ -45,9 +46,14 @@ public class PlayerCursor : MonoBehaviour
     private void UnmapControls(){
 		if (controller != null)
         {
+            controller._OnStartMenu -= StartMenu; 
             controller._OnProgressInMenu -= ProgressInMenu;
         }
 	}
+
+    private void StartMenu(InputValue inputValue) {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Main_Game");
+    }
 
 	protected void ProgressInMenu(InputValue inputValue){
         Vector2 move = inputValue.Get<Vector2>(); 

@@ -23,13 +23,20 @@ public abstract class Menu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (Game.Instance == null) return;
         MapControls(); 
+        BindInputs();
     }
 
-    protected void MapControls(){
+    virtual protected void MapControls() {
         controller = Game.Instance.Controllers.GetController(playerNumber);
         controller.GetComponent<PlayerInput>().SwitchCurrentActionMap("Menu");
         Debug.Log(controller.GetComponent<PlayerInput>().currentActionMap);  
+        currentSelectable = selectables[0]; 
+        cursor.rectTransform.position = currentSelectable.image.GetComponent<RectTransform>().position;
+    }
+
+    private void BindInputs() {
         if (controller != null)
         {
             controller._OnStartMenu += StartMenu; 
@@ -37,8 +44,6 @@ public abstract class Menu : MonoBehaviour
             controller._OnRegressInMenu += RegressInMenu;
             controller._OnBackToPreviousMenu += BackToPreviousMenu;
         }
-        currentSelectable = selectables[0]; 
-        cursor.rectTransform.position = currentSelectable.image.GetComponent<RectTransform>().position;
     }
 
     private void OnDestroy()
@@ -54,12 +59,6 @@ public abstract class Menu : MonoBehaviour
             controller._OnRegressInMenu -= RegressInMenu; 
             controller._OnBackToPreviousMenu -= BackToPreviousMenu; 
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     virtual protected void StartMenu(InputValue inputValue){

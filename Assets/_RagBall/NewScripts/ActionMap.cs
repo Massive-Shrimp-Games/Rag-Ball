@@ -314,15 +314,15 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""name"": ""StartMenu"",
                     ""type"": ""Button"",
                     ""id"": ""735515bc-6ff9-4bbb-ab8a-bf264dd4ca44"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
                 {
                     ""name"": ""ProgressInMenu"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""519ec513-175b-4310-8852-7bc581c90e0e"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
@@ -330,7 +330,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""name"": ""RegressInMenu"",
                     ""type"": ""Button"",
                     ""id"": ""619758bb-0266-4b6b-b766-3e3c2e5de41a"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
@@ -338,7 +338,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""name"": ""BackToPreviousMenu"",
                     ""type"": ""Button"",
                     ""id"": ""fc41c4be-b800-4496-bb7f-cbe7034aeccb"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 }

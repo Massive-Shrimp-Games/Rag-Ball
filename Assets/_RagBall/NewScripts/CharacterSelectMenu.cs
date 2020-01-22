@@ -9,14 +9,13 @@ public class CharacterSelectMenu : Menu
     public List<GameObject> cursorPrefabs;
     private List<PlayerCursor> playerCursors;
 
-    public void Start(){
-        if (Game.Instance == null) return;
+    override protected void MapControls() {
         currentSelectable = currentSelectableObject.GetComponent<Selectable>();
-
         int s = Game.Instance.Controllers.Count();
     	for (int i = 0; i < s; i++){
             GameObject newCursor = Instantiate(cursorPrefabs[i], new Vector3(0,0,0), Quaternion.identity);
             newCursor.transform.parent = transform;
+            newCursor.GetComponent<PlayerCursor>().playerNumber = i;
             newCursor.GetComponent<PlayerCursor>().setSelectable(currentSelectable);
             newCursor.transform.position = currentSelectable.transform.position;
     	}
