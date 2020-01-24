@@ -54,11 +54,11 @@ public class Pipe : MonoBehaviour
             {
                 if (color == TeamColor.Red)
                 {
-                    ruleset.RedScore(player);
+                    ruleset.BlueScore(player);
                 }
                 else
                 {
-                    ruleset.BlueScore(player);
+                    ruleset.RedScore(player);
                 }
                 confetti.Play();
             }   
