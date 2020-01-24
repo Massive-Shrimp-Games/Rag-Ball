@@ -40,7 +40,7 @@ public class Pipe : MonoBehaviour
         transform.GetChild(1).GetComponent<CPS>()._OnTriggerEnter -= TriggerEnter;
     }
 
-    private void OnScore(GameObject player)
+    private void OnScore(GameObject player, int score)
     {
         Game.Instance.SFX.PlayAudio("goal");
     }
@@ -54,11 +54,11 @@ public class Pipe : MonoBehaviour
             {
                 if (color == TeamColor.Red)
                 {
-                    ruleset.BlueScore(player);
+                    ruleset.BlueScore(player.transform.GetChild(1).GetChild(0).gameObject);
                 }
                 else
                 {
-                    ruleset.RedScore(player);
+                    ruleset.RedScore(player.transform.GetChild(1).GetChild(0).gameObject);
                 }
                 confetti.Play();
             }   

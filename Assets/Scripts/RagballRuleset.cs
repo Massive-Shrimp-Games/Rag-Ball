@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RagballRuleset : MonoBehaviour
 {
-    public delegate void Score(GameObject player);
+    public delegate void Score(GameObject player,int score);
 
     public event Score OnRedScore;
     public event Score OnBlueScore;
@@ -28,33 +28,21 @@ public class RagballRuleset : MonoBehaviour
     public void RedScore(GameObject player)
     {
         //Debug.Log("Red goal score");
-        OnRedScore(player);
+        OnRedScore(player, ++redScore);
     }
     public void BlueScore(GameObject player)
     {
-        
-        OnBlueScore(player);
+        OnBlueScore(player, ++blueScore);
     }
-    private void AddRedScore(GameObject player)
+    private void AddRedScore(GameObject player, int score)
     {
-        redScore++;
-        player.transform.position = respawnPoint.position;
+        //redScore++;
+        player.transform.position = respawnPoint.transform.position;
     }
 
-    private void AddBlueScore(GameObject player)
+    private void AddBlueScore(GameObject player, int score)
     {
-        blueScore++;
-        player.transform.position = respawnPoint.position;
+        //blueScore++;
+        player.transform.position = respawnPoint.transform.position;
     }
-
-    public int GetRedScore()
-    {
-        return redScore;
-    }
-
-    public int GetBlueScore()
-    {
-        return blueScore;
-    }
-
 }

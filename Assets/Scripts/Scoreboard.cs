@@ -36,25 +36,17 @@ public class Scoreboard : MonoBehaviour
         }
     }
 
-    private void OnScore(GameObject player)
+    private void OnScore(GameObject player, int score)
     {
-        Debug.Log("OnScore");
-        if (color == TeamColor.Red)
+        Debug.Log("Player Color: " + player.transform.root.GetChild(0).GetComponent<Player>().color + " with score " + score.ToString());
+
+        if(player.transform.root.GetChild(0).GetComponent<Player>().color != color)
         {
-            string score = ruleset.GetRedScore().ToString();
-            if(ruleset.GetRedScore() < 10)
-                score = "0" + score;
-            scoreMesh.text = score;
+            string scoreSTR = score.ToString();
+            if (score < 10)
+                scoreSTR = "0" + scoreSTR;
+            scoreMesh.text = scoreSTR;
         }
-        else if (color == TeamColor.Blue)
-        {
-            //Debug.LogFormat("Score is {0}", ruleset.GetBlueScore().ToString());
-            string score = ruleset.GetBlueScore().ToString();
-            if(ruleset.GetBlueScore() < 10)
-                score = "0" + score;
-            scoreMesh.text = score;
-            
-            //scoreMesh.SetText(ruleset.GetBlueScore().ToString());
-        }
+        
     }
 }
