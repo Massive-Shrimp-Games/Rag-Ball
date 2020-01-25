@@ -5,6 +5,11 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+
+    public delegate void Exert(int player,int stamina);
+
+    public event Exert OnPlayerExertion;
+    
     [SerializeField] private float dashForce; // Set in editor
     [SerializeField] private float jumpForce; // Set in editor
     [SerializeField] private float directThrowForce; // Set in editor
@@ -21,11 +26,11 @@ public class Player : MonoBehaviour
     public int staggerMaxCharge;
     public int staggerDashCharge;
     public int staggerJumpCharge;
-    private int staminaCharges;
+    //private int staminaCharges;
 
-    private const int StaminaMaxCharge = 10;  
+    private const int StaminaMaxCharge = 5;  
 
-    private const int StaminaDashCharge = 2; 
+    private const int StaminaDashCharge = 1; 
 
     private const int StaminaJumpCharge = 1; 
 
@@ -81,11 +86,13 @@ public class Player : MonoBehaviour
         if (Game.Instance == null) return; // if the preload scene hasn't been loaded
         MapControls();
 
-        staggerMaxCharge = 10;
+        staggerMaxCharge = 5;
         staggerCharges = staggerMaxCharge;
-        staggerDashCharge = 2;
+        staggerDashCharge = 1;
         staggerJumpCharge = 1;
-        staminaCharges = StaminaMaxCharge;
+        //staminaCharges = StaminaMaxCharge;
+
+        StartCoroutine(rechargeStamina());
 
         hips = transform.GetChild(1).GetChild(0).gameObject; //set reference to player's hips
         hipsRigidBody = hips.gameObject.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
@@ -160,11 +167,12 @@ public class Player : MonoBehaviour
     {
         bool LeftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
         bool RightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
-        if (LeftFoot && RightFoot && staminaCharges >= StaminaJumpCharge)
+        if (LeftFoot && RightFoot && staggerCharges >= 0)
         {
             Vector3 boostDir = hips.transform.up;
             hipsRigidBody.AddForce(boostDir * jumpForce);
             staggerCharges = staggerCharges - staggerJumpCharge;
+            OnPlayerExertion(playerNumber,staggerCharges);
         }
     }
 
@@ -175,6 +183,7 @@ public class Player : MonoBehaviour
             Vector3 boostDir = hips.transform.forward;
             hipsRigidBody.AddForce(boostDir * dashForce);
             staggerCharges = staggerCharges - staggerDashCharge;
+            OnPlayerExertion(playerNumber,staggerCharges);
         }
     }
 
@@ -260,6 +269,7 @@ public class Player : MonoBehaviour
         if (staggerCharges < staggerMaxCharge)
         {
             staggerCharges++;
+            OnPlayerExertion(playerNumber,staggerCharges);
         }
     }
 
@@ -273,7 +283,8 @@ public class Player : MonoBehaviour
     
     private IEnumerator rechargeStamina(){
         yield return new WaitForSeconds (StaminaRechargeTime);
-
+        
+        //Debug.Log("Stamina is recharing");
         recharger();
     }
 
