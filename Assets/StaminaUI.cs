@@ -35,7 +35,7 @@ public class StaminaUI : MonoBehaviour
                 UIS[index].gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = BLUEPLAYER;
             }
             //sets stamina sprite
-            UIS[index].transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = staminas[p.staggerCharges];
+            UIS[index].transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = staminas[5];
             //Subscribes OnExert to every player
             p.OnPlayerExertion += OnExert;
         }
