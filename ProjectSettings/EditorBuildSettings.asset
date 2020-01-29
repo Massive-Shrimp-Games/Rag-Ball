@@ -6,33 +6,33 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_RagBall/Scenes/_preload.unity
+    path: Assets/Scenes/_preload.unity
     guid: a850a9f80c691ed4cae2951e31011302
   - enabled: 1
-    path: Assets/_RagBall/Scenes/StartScreen.unity
+    path: Assets/Scenes/StartScreen.unity
     guid: 1d9dc72c3724ae44abefea7c5921f63f
   - enabled: 1
-    path: Assets/_RagBall/Scenes/CharacterSelect.unity
+    path: Assets/Scenes/CharacterSelect.unity
     guid: 38f9dec168738d6418536bc7dec46fde
   - enabled: 1
-    path: Assets/_RagBall/Scenes/LevelSelect.unity
+    path: Assets/Scenes/LevelSelect.unity
     guid: 6e5caf87e0e491642b2d47f24627965c
   - enabled: 1
-    path: Assets/_RagBall/Scenes/Main_Game.unity
+    path: Assets/Scenes/Main_Game.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/_RagBall/Scenes/CourtLevel.unity
     guid: fde3282a7c1a61f478c486fde6bfb3a0
-  - enabled: 1
+  - enabled: 0
     path: Assets/_RagBall/Scenes/CharacterClassTestCopy.unity
     guid: 7b280349b6a577e43b6ebb038f8f1542
-  - enabled: 1
+  - enabled: 0
     path: Assets/_RagBall/Scenes/DemoScene.unity
     guid: 72fc6d1ebb3f0be4582d8cb2030a09d3
-  - enabled: 1
+  - enabled: 0
     path: Assets/_RagBall/Scenes/CharacterClassTest.unity
     guid: 315a58c869da26142bc2112a5fbedb30
   - enabled: 1
-    path: Assets/_RagBall/Scenes/Main_Game2.unity
+    path: Assets/Scenes/Main_Game2.unity
     guid: 8bac8115aca361b4eb45e8e3f8dc10bf
   m_configObjects: {}
