@@ -9,11 +9,12 @@ public class AttractionFunnel : MonoBehaviour
     void OnTriggerStay(Collider col)
     {
         Rigidbody colRigidbody = col.GetComponent<Rigidbody>();
-        Vector3 directionDraw = FunnelPoint.transform.position - colRigidbody.position;
-        Vector3 drawForce = directionDraw.normalized * magnitude;
+       
 
         if (colRigidbody != null)
         {
+            Vector3 directionDraw = FunnelPoint.transform.position - colRigidbody.position;
+            Vector3 drawForce = directionDraw.normalized * magnitude;
             colRigidbody.AddForce(drawForce);
         }
     }
