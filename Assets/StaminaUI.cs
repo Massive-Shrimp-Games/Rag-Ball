@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StaminaUI : MonoBehaviour
 {
@@ -29,13 +30,13 @@ public class StaminaUI : MonoBehaviour
 
             if(p.color == TeamColor.Red)
             {
-                UIS[index].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = REDPLAYER;
+                UIS[index].transform.GetChild(0).GetComponent<Image>().sprite = REDPLAYER;
             } else if (p.color == TeamColor.Blue)
             {
-                UIS[index].gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = BLUEPLAYER;
+                UIS[index].gameObject.transform.GetChild(0).GetComponent<Image>().sprite = BLUEPLAYER;
             }
             //sets stamina sprite
-            UIS[index].transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = staminas[5];
+            UIS[index].transform.GetChild(1).GetComponent<Image>().sprite = staminas[5];
             //Subscribes OnExert to every player
             p.OnPlayerExertion += OnExert;
         }
