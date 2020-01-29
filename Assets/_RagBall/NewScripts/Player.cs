@@ -88,7 +88,7 @@ public class Player : MonoBehaviour
         staggerJumpCharge = 1;
         staminaCharges = StaminaMaxCharge;
 
-        hips = transform.GetChild(1).GetChild(0).gameObject; //set reference to player's hips
+        hips = transform.GetChild(0).GetChild(0).gameObject; //set reference to player's hips
         hipsRigidBody = hips.gameObject.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
         animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
         hipsCollider = hips.gameObject.GetComponent<Collider>();
