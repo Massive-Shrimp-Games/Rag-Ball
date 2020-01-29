@@ -52,7 +52,7 @@ public class StaminaUI : MonoBehaviour
     private void OnExert(int player, int stamina)
     {
         Debug.Log("Player: " + player + " Stamina: " + stamina);
-        UIS[player].transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = staminas[stamina];
+        UIS[player].transform.GetChild(1).GetComponent<Image>().sprite = staminas[stamina];
     }
 
     // Update is called once per frame
