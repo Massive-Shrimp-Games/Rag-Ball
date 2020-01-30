@@ -40,6 +40,10 @@ public class Player : MonoBehaviour
 
     private Collider hipsCollider;
 
+    private bool isRecharging;
+
+    private bool hasStartedRecharging;  
+
     [SerializeField] private CheckGrab grabCheckCollider;   // Set in editor
     [SerializeField] private Transform grabPos; // Set in editor
     [SerializeField] private Transform directThrowDirection;
@@ -79,6 +83,9 @@ public class Player : MonoBehaviour
     private void Update()
     {
         UpdateHeld();
+        if (isRecharging == false && hasStartedRecharging == true){
+            StartCoroutine(rechargeStamina());
+        }
     }
 
     void Start()
@@ -92,7 +99,6 @@ public class Player : MonoBehaviour
         staggerJumpCharge = 1;
         //staminaCharges = StaminaMaxCharge;
 
-        StartCoroutine(rechargeStamina());
 
         hips = transform.GetChild(1).GetChild(0).gameObject; //set reference to player's hips
         hipsRigidBody = hips.gameObject.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
@@ -100,6 +106,8 @@ public class Player : MonoBehaviour
         hipsCollider = hips.gameObject.GetComponent<Collider>();
 
         grabbing = null;
+        isRecharging = false; 
+        hasStartedRecharging = false; 
     }
 
     private void OnDestroy()
@@ -174,6 +182,7 @@ public class Player : MonoBehaviour
             staggerCharges = staggerCharges - staggerJumpCharge;
             OnPlayerExertion(playerNumber,staggerCharges);
         }
+        hasStartedRecharging = true; 
     }
 
     private void OnDash(InputValue inputValue)
@@ -185,6 +194,7 @@ public class Player : MonoBehaviour
             staggerCharges = staggerCharges - staggerDashCharge;
             OnPlayerExertion(playerNumber,staggerCharges);
         }
+        hasStartedRecharging = true; 
     }
 
     private void OnGrabDrop(InputValue inputValue)
@@ -227,6 +237,9 @@ public class Player : MonoBehaviour
 
         arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
         objectToThrow.GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
+        staggerCharges = staggerCharges - staggerDashCharge;
+        OnPlayerExertion(playerNumber,staggerCharges);
+        hasStartedRecharging = true; 
     }
 
     private void OnDirectThrow(InputValue inputValue)
@@ -240,6 +253,9 @@ public class Player : MonoBehaviour
         
         directThrowForceVel = directThrowForce * directThrowDirection.forward;
         objectToThrow.GetComponent<Rigidbody>().AddForce(directThrowForceVel);
+        staggerCharges = staggerCharges - staggerDashCharge;
+        OnPlayerExertion(playerNumber,staggerCharges);
+        hasStartedRecharging = true; 
     }
 
     private void OnGoLimp(InputValue inputValue)
@@ -263,15 +279,6 @@ public class Player : MonoBehaviour
         hipsRigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         animator.enabled = true;
     }
-    
-    void recharger()
-    {
-        if (staggerCharges < staggerMaxCharge)
-        {
-            staggerCharges++;
-            OnPlayerExertion(playerNumber,staggerCharges);
-        }
-    }
 
     private void OnCollisionEnter(Collision other)
     {
@@ -280,14 +287,28 @@ public class Player : MonoBehaviour
             Stagger(5); 
         }*/
     }
-    
+
     private IEnumerator rechargeStamina(){
         yield return new WaitForSeconds (StaminaRechargeTime);
-        
-        //Debug.Log("Stamina is recharing");
+        hasStartedRecharging = true; 
         recharger();
     }
 
+    void recharger()
+    {
+        if (staggerCharges < staggerMaxCharge)
+        {
+            staggerCharges++;
+            OnPlayerExertion(playerNumber,staggerCharges);
+        }
+        if (staggerCharges == staggerMaxCharge){
+            isRecharging = false; 
+            hasStartedRecharging = false; 
+        }
+        if (isRecharging == true){
+            StartCoroutine(rechargeStamina());
+        }
+    }
     private IEnumerator waitingForUnstaggerCoroutine(int time)
     {
 
