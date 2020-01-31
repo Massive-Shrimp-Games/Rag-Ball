@@ -1,18 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
-public class CharacterSelectButton : Button
+public abstract class Button : MenuItem
 {
-    public TeamColor color;
-    public RagdollType type;
-
-    public override void Select(Cursor cursor)
+    public override MenuItem Navigate(InputValue inputValue)
     {
-        CharacterInfoWrapper ciw = new CharacterInfoWrapper();
-        ciw.color = color;
-        ciw.type = type;
-        CharacterSelect.playerSelections[cursor.playerNumber] = ciw;
-        Debug.LogFormat("CHARACTER SELECTED: Player {0} chose {1}, {2}", cursor.playerNumber, ciw.color, ciw.type);
+        Vector2 move = inputValue.Get<Vector2>();
+        if (move.y > .5f)
+        {
+            return Up;
+        }
+        else if (move.y < -.5f)
+        {
+            return Down;
+        }
+        else if (move.x < -.5f)
+        {
+            return Left;
+        }
+        else if (move.x > .5f)
+        {
+            return Right;
+        }
+        else
+        {
+            return this;
+        }
     }
 }
