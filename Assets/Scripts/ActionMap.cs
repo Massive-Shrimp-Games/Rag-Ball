@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/_RagBall/NewScripts/ActionMap.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/ActionMap.inputactions'
 
 using System;
 using System.Collections;
