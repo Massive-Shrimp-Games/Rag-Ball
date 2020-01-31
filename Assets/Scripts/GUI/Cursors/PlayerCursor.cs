@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Cursor : MonoBehaviour
+public class PlayerCursor : MonoBehaviour
 {
     public int playerNumber;
     public MenuItem currentMenuItem;

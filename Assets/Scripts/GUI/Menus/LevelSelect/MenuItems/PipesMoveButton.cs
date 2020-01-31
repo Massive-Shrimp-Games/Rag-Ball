@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PipesMoveButton : Button
 {
-    public override void Select(Cursor cursor)
+    public override void Select(PlayerCursor cursor)
     {
         LevelSelect.pipesMove = !LevelSelect.pipesMove;
     }

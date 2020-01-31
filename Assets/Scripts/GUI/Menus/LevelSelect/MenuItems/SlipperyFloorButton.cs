@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SlipperyFloorButton : Button
 {
-    public override void Select(Cursor cursor)
+    public override void Select(PlayerCursor cursor)
     {
         LevelSelect.slipperyFloor = !LevelSelect.slipperyFloor;
     }

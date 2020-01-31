@@ -16,10 +16,10 @@ public class Controller : MonoBehaviour
     public event InputEventHandler _OnArcThrow;
     public event InputEventHandler _OnDirectThrow;
     public event InputEventHandler _OnGoLimp;
-    public event InputEventHandler _OnStartMenu;
-    public event InputEventHandler _OnProgressInMenu;
-    public event InputEventHandler _OnRegressInMenu; 
-    public event InputEventHandler _OnBackToPreviousMenu; 
+    public event InputEventHandler _OnStart;
+    public event InputEventHandler _OnNavigate;
+    public event InputEventHandler _OnConfirm;
+    public event InputEventHandler _OnReturn;
 
     private void OnMove(InputValue inputValue)
     {
@@ -61,19 +61,23 @@ public class Controller : MonoBehaviour
         _OnGoLimp(inputValue);
     }
 
-    private void OnStartMenu(InputValue inputValue){
-        _OnStartMenu(inputValue); 
+    private void OnStart(InputValue inputValue)
+    {
+        _OnStart(inputValue);
     }
 
-    private void OnProgressInMenu(InputValue inputValue){
-        _OnProgressInMenu(inputValue); 
+    private void OnNavigate(InputValue inputValue)
+    {
+        _OnNavigate(inputValue);
     }
 
-    private void OnRegressInMenu(InputValue inputValue){
-        _OnRegressInMenu(inputValue); 
+    private void OnConfirm(InputValue inputValue)
+    {
+        _OnConfirm(inputValue);
     }
 
-    private void OnBackToPreviousMenu(InputValue inputValue){
-        _OnBackToPreviousMenu(inputValue); 
+    private void OnReturn(InputValue inputValue)
+    {
+        _OnReturn(inputValue);
     }
 }

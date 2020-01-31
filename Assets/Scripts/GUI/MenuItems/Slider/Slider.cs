@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public abstract class Slider : MenuItem
 {
-    public override void Select(Cursor cursor) { }
+    public override void Select(PlayerCursor cursor) { }
     protected abstract void Increment(InputValue inputValue);
     protected abstract void Decrement(InputValue inputValue);
 }

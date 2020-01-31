@@ -42,5 +42,5 @@ public abstract class MenuItem : MonoBehaviour
     }
 
     abstract public MenuItem Navigate(InputValue inputValue);
-    abstract public void Select(Cursor cursor);
+    abstract public void Select(PlayerCursor cursor);
 }

@@ -298,7 +298,7 @@
             "id": "437e6225-7b80-4abb-84ec-fc67e4a01281",
             "actions": [
                 {
-                    "name": "StartMenu",
+                    "name": "Start",
                     "type": "Button",
                     "id": "735515bc-6ff9-4bbb-ab8a-bf264dd4ca44",
                     "expectedControlType": "Button",
@@ -306,7 +306,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "ProgressInMenu",
+                    "name": "Navigate",
                     "type": "Value",
                     "id": "519ec513-175b-4310-8852-7bc581c90e0e",
                     "expectedControlType": "Vector2",
@@ -314,18 +314,18 @@
                     "interactions": ""
                 },
                 {
-                    "name": "RegressInMenu",
+                    "name": "Confirm",
                     "type": "Button",
-                    "id": "619758bb-0266-4b6b-b766-3e3c2e5de41a",
-                    "expectedControlType": "Button",
+                    "id": "894cba38-81fc-4b67-b7d0-b1661de607a2",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
                 },
                 {
-                    "name": "BackToPreviousMenu",
+                    "name": "Return",
                     "type": "Button",
-                    "id": "fc41c4be-b800-4496-bb7f-cbe7034aeccb",
-                    "expectedControlType": "Button",
+                    "id": "97555bfe-db8c-4d6b-9c7d-a8204cebc4fd",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
                 }
@@ -338,7 +338,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "StartMenu",
+                    "action": "Start",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -348,8 +348,8 @@
                     "path": "<Gamepad>/leftStick",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "",
-                    "action": "ProgressInMenu",
+                    "groups": "Gamepad",
+                    "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -359,30 +359,30 @@
                     "path": "<Gamepad>/dpad",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "ProgressInMenu",
+                    "groups": "Gamepad",
+                    "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "ad3afe1a-682b-4c1d-a896-48b9ab1daf55",
+                    "id": "3bf31dcc-8f8a-4ff9-ab16-d113e742b07a",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Confirm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3346ba5e-c634-4992-b389-6d8b3fca82fc",
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "RegressInMenu",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "19e18e56-9060-4ada-a303-481ab1cfe903",
-                    "path": "<Gamepad>/select",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "BackToPreviousMenu",
+                    "action": "Return",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

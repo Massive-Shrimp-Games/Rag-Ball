@@ -14,10 +14,10 @@ public class CursorCreator : MonoBehaviour
         for (int i = 0; i < Game.Instance.Controllers.Count(); i++)
         {
             GameObject c = Instantiate(cursorPrefabs[i]);
-            c.GetComponent<Cursor>().currentMenuItem = defaultItem;
-            c.GetComponent<Cursor>().BindController(i);
+            c.GetComponent<PlayerCursor>().currentMenuItem = defaultItem;
+            c.GetComponent<PlayerCursor>().BindController(i);
             c.transform.parent = parentCanvas.transform;
-            c.GetComponent<Cursor>().currentMenuItem = defaultItem;
+            c.GetComponent<PlayerCursor>().currentMenuItem = defaultItem;
         }
     }
 }
