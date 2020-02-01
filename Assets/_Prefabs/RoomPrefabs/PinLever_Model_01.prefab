@@ -87,7 +87,7 @@ MeshCollider:
   m_GameObject: {fileID: 1304687561080989371}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
@@ -323,8 +323,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggerSpeed: 10
+  targetObjects: []
   enabledMat: {fileID: 2100000, guid: adb236ca6a5aa4f4d89e36754e8aa857, type: 2}
   disabledMat: {fileID: 2100000, guid: faa5587c75cab024bb7fa3e288415d5c, type: 2}
+  materials:
+  - {fileID: 2100000, guid: adb236ca6a5aa4f4d89e36754e8aa857, type: 2}
+  - {fileID: 2100000, guid: faa5587c75cab024bb7fa3e288415d5c, type: 2}
+  leverState: 0
+  leverRenderer: {fileID: 0}
+  leverTransform: {fileID: 0}
 --- !u!65 &530560941356516099
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -336,8 +343,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 20.94709, y: 65.642365, z: 23.812262}
-  m_Center: {x: -14.361211, y: 32.321205, z: 0.30242765}
+  m_Size: {x: 44.7, y: 93.5, z: 43.20111}
+  m_Center: {x: -25.2, y: 38.614532, z: 0.301109}
 --- !u!1 &7099308503011680711
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,7 +464,7 @@ MeshCollider:
   m_GameObject: {fileID: 7923013167664032351}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14

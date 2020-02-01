@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8980321379027883438}
+  - component: {fileID: 955081416845158965}
   m_Layer: 0
   m_Name: WindFunnelHolder
   m_TagString: Untagged
@@ -33,6 +34,21 @@ Transform:
   m_Father: {fileID: 9140610119780382029}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &955081416845158965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3082285046352375766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b41c5fc9de2ea34db9f9eb949c7b6ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WindFunnelToggle: 0
+  speed: 10
+  WindFunnelHolder: {fileID: 0}
 --- !u!1 &9140610119648840550
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,7 +180,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9140610119780382029}
-  - component: {fileID: 472090501546838990}
   m_Layer: 0
   m_Name: WindFunnel
   m_TagString: Windzone
@@ -190,21 +205,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &472090501546838990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9140610119780382002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b41c5fc9de2ea34db9f9eb949c7b6ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WindFunnelToggle: 0
-  speed: 10
-  WindFunnelHolder: {fileID: 3082285046352375766}
 --- !u!1 &9140610120488832454
 GameObject:
   m_ObjectHideFlags: 0
@@ -506,6 +506,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FloorFan_Model_01
       objectReference: {fileID: 0}
+    - target: {fileID: -7140177192086271986, guid: 138f585ac49290f4d9660b8e4a618381,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 488f01838408b094a85cf92b1df2f7dc, type: 2}
     - target: {fileID: -4216859302048453862, guid: 138f585ac49290f4d9660b8e4a618381,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -581,11 +586,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: adb236ca6a5aa4f4d89e36754e8aa857, type: 2}
-    - target: {fileID: -7140177192086271986, guid: 138f585ac49290f4d9660b8e4a618381,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 488f01838408b094a85cf92b1df2f7dc, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 138f585ac49290f4d9660b8e4a618381, type: 3}
 --- !u!4 &2084095272066019374 stripped
