@@ -1,4 +1,4 @@
-﻿public enum RagdollType
+﻿public enum RagdollSize
 {
     Small,
     Medium,

@@ -1,4 +1,10 @@
 ﻿public static class CharacterSelect
 {
-    public static CharacterInfoWrapper[] playerSelections = new CharacterInfoWrapper[4];
+    public static CharacterSelection[] playerSelections = new CharacterSelection[4]
+    {
+        new CharacterSelection(),
+        new CharacterSelection(),
+        new CharacterSelection(),
+        new CharacterSelection()
+    };
 }
