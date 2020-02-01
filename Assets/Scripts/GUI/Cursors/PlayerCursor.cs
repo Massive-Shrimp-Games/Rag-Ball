@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerCursor : MonoBehaviour
+public abstract class PlayerCursor : MonoBehaviour
 {
     public int playerNumber;
     public MenuItem currentMenuItem;
@@ -13,10 +13,7 @@ public class PlayerCursor : MonoBehaviour
 
     private void Start()
     {
-        if (Game.Instance == null)
-        {
-            return;
-        }
+        if (Game.Instance == null) return;
         BindController(playerNumber);
     }
 
@@ -57,11 +54,6 @@ public class PlayerCursor : MonoBehaviour
         }
     }
 
-    private void OnStart(InputValue inputValue)
-    {
-
-    }
-
     private void OnNavigate(InputValue inputValue)
     {
         if (active)
@@ -76,8 +68,6 @@ public class PlayerCursor : MonoBehaviour
         currentMenuItem.Select(this);
     }
 
-    private void OnReturn(InputValue inputValue)
-    {
-
-    }
+    protected abstract void OnStart(InputValue inputValue);
+    protected abstract void OnReturn(InputValue inputValue);
 }
