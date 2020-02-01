@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class GameModeSlider : HorizontalSlider
 {
@@ -22,5 +20,17 @@ public class GameModeSlider : HorizontalSlider
         {
             GameModeSelect.gameMode = (GameMode.Mode)GameMode.Count - 1;
         }
+    }
+
+    private void Update()
+    {
+        if (GameModeSelect.gameMode == GameMode.Mode.RagBall)
+            transform.GetChild(1).GetComponent<Text>().text = "RagBall";
+        else if (GameModeSelect.gameMode == GameMode.Mode.RagOfTheHill)
+            transform.GetChild(1).GetComponent<Text>().text = "Rag of the Hill";
+        else if (GameModeSelect.gameMode == GameMode.Mode.LazerRag)
+            transform.GetChild(1).GetComponent<Text>().text = "Lazer Rag";
+        else
+            transform.GetChild(1).GetComponent<Text>().text = "Unknown";
     }
 }
