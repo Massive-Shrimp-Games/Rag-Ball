@@ -1,5 +1,13 @@
-﻿public enum Level
+﻿public static class GameLevel
 {
-    Court1,
-    Court2
+    public enum Level
+    {
+        Court1,
+        Court2
+    }
+
+    public static int Count
+    {
+        get { return EnumHelper.GetCount<Level>(); }
+    }
 }
