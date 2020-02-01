@@ -16,6 +16,6 @@ public class CharacterSelectCursor : PlayerCursor
 
     protected override void OnStart(InputValue inputValue)
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 }
