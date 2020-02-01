@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class RagballRuleset : MonoBehaviour
 {
@@ -14,16 +15,22 @@ public class RagballRuleset : MonoBehaviour
 
     public Transform respawnPoint;
 
+    public bool paused = false;
+    public GameObject pauseMenu;
+    private Controller pauseController;
+
     private void Start()
     {
         OnRedScore += AddRedScore;
         OnBlueScore += AddBlueScore;
+        MapControls();
     }
 
     private void OnDestroy()
     {
         OnRedScore -= AddRedScore;
         OnBlueScore -= AddBlueScore;
+        UnMapControls();
     }
     public void RedScore(GameObject player)
     {
@@ -44,5 +51,54 @@ public class RagballRuleset : MonoBehaviour
     {
         //blueScore++;
         player.transform.position = respawnPoint.transform.position;
+    }
+
+    public void Pause(Controller controller)
+    {
+        pauseController = controller;
+        pauseController.GetComponent<PlayerInput>().SwitchCurrentActionMap("Menu");
+    }
+
+    //RENAME ALL EVENTS AFTER MERGE
+    private void StartMenu(InputValue inputValue)
+    {
+
+    }
+
+    private void ProgressInMenu(InputValue inputValue)
+    {
+
+    }
+
+    private void RegressInMenu(InputValue inputValue)
+    {
+
+    }
+
+    private void BackToPreviousMenu(InputValue inputValue)
+    {
+
+    }
+
+    private void MapControls()
+    {
+        if (pauseController != null)
+        {
+            pauseController._OnStartMenu += StartMenu;
+            pauseController._OnProgressInMenu += ProgressInMenu;
+            pauseController._OnRegressInMenu += RegressInMenu;
+            pauseController._OnBackToPreviousMenu += BackToPreviousMenu;
+        }
+    }
+
+    private void UnMapControls()
+    {
+        if (pauseController != null)
+        {
+            pauseController._OnStartMenu -= StartMenu;
+            pauseController._OnProgressInMenu -= ProgressInMenu;
+            pauseController._OnRegressInMenu -= RegressInMenu;
+            pauseController._OnBackToPreviousMenu -= BackToPreviousMenu;
+        }
     }
 }

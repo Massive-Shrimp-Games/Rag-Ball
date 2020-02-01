@@ -220,11 +220,21 @@ public class Player : MonoBehaviour
 
     private void OnPause(InputValue inputValue)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(
-            UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Main_Game"
-            ? "Main_Game2"
-            : "Main_Game"
-        );
+        bool paused = Game.Instance.GetComponent<RagballRuleset>().paused;
+        if (!paused)
+        {
+            Time.timeScale = 0f;
+            Game.Instance.GetComponent<RagballRuleset>().Pause(controller);
+            //instantiate pause menu and pass it controller
+            //switch control mappings to menu
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            //delete instantiation of menu
+            //switch control map to player
+        }
+        Game.Instance.GetComponent<RagballRuleset>().paused = !Game.Instance.GetComponent<RagballRuleset>().paused;
     }
 
     private void OnArcThrow(InputValue inputValue)
