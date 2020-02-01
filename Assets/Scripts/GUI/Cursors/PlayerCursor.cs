@@ -7,6 +7,7 @@ public class PlayerCursor : MonoBehaviour
 {
     public int playerNumber;
     public MenuItem currentMenuItem;
+    public bool active = true;
 
     private Controller controller;
 
@@ -63,9 +64,11 @@ public class PlayerCursor : MonoBehaviour
 
     private void OnNavigate(InputValue inputValue)
     {
-        currentMenuItem = currentMenuItem.Navigate(inputValue);
-        gameObject.transform.position = currentMenuItem.Position;
-        Debug.LogFormat("Cursor position is {0}", gameObject.transform.position);
+        if (active)
+        {
+            currentMenuItem = currentMenuItem.Navigate(inputValue);
+            gameObject.transform.position = currentMenuItem.Position;
+        }
     }
 
     private void OnConfirm(InputValue inputValue)

@@ -7,5 +7,6 @@
     {
         CharacterSelect.playerSelections[cursor.playerNumber].color = color;
         CharacterSelect.playerSelections[cursor.playerNumber].size = size;
+        cursor.active = false;
     }
 }
