@@ -23,14 +23,14 @@ public class RagballRuleset : MonoBehaviour
     {
         OnRedScore += AddRedScore;
         OnBlueScore += AddBlueScore;
-        MapControls();
+        //MapControls();
     }
 
     private void OnDestroy()
     {
         OnRedScore -= AddRedScore;
         OnBlueScore -= AddBlueScore;
-        UnMapControls();
+        //UnMapControls();
     }
     public void RedScore(GameObject player)
     {
@@ -79,7 +79,7 @@ public class RagballRuleset : MonoBehaviour
     {
 
     }
-
+    /*
     private void MapControls()
     {
         if (pauseController != null)
@@ -101,4 +101,5 @@ public class RagballRuleset : MonoBehaviour
             pauseController._OnBackToPreviousMenu -= BackToPreviousMenu;
         }
     }
+    */
 }
