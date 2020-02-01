@@ -301,9 +301,9 @@
                     "name": "Start",
                     "type": "Value",
                     "id": "735515bc-6ff9-4bbb-ab8a-bf264dd4ca44",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Digital",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Tap"
                 },
                 {
                     "name": "Navigate",
@@ -317,17 +317,17 @@
                     "name": "Confirm",
                     "type": "Value",
                     "id": "894cba38-81fc-4b67-b7d0-b1661de607a2",
-                    "expectedControlType": "",
+                    "expectedControlType": "Digital",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Tap"
                 },
                 {
                     "name": "Return",
                     "type": "Value",
                     "id": "97555bfe-db8c-4d6b-9c7d-a8204cebc4fd",
-                    "expectedControlType": "",
+                    "expectedControlType": "Digital",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Tap"
                 }
             ],
             "bindings": [
