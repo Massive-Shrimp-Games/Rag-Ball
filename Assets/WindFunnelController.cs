@@ -5,29 +5,31 @@ using UnityEngine;
 public class WindFunnelController : MonoBehaviour
 {
 
-    [SerializeField] private bool WindFunnelToggle = false;
-    public float speed = 10f;                               // How fast we rotate
-    private GameObject fanModel;                             // What we rotate
+    public float runSpeed = 700f;           // How fast we rotate when activated
+    public float stopSpeed = 0f;            // How fast we rotate when deactivated
+
+    public GameObject fanModel;             // What we rotate
+    private FanSpin fanSpin;                // What we tell to rotate
 
 
-    private void Start()
+    private void Awake()
     {
-        fanModel = gameObject.transform.parent.GetChild(3).gameObject;
+        fanSpin = fanModel.GetComponent<FanSpin>();
+    }
+
+
+    private void OnEnable()
+    {
+        Debug.Log("WindFunnelController: RUNNING");
+        fanSpin.speed = runSpeed;
     }
 
 
     private void OnDisable()
     {
-        // Stops the Fan
-        fanModel.transform.Rotate(Vector3.up * 0);
-        gameObject.SetActive(false);
+        Debug.Log("WindFunnelController: stopping");
+        fanSpin.speed = stopSpeed;
     }
 
-    private void Awake()
-    {
-        // Rotates the Fan
-        fanModel.transform.Rotate(Vector3.up * speed * Time.deltaTime);
-        gameObject.SetActive(true);
-    }
 
 }

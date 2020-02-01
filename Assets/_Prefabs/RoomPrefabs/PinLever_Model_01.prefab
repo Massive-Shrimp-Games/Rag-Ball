@@ -322,16 +322,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46bed4286bfaf3e498a0269874ea5e92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerSpeed: 10
+  triggerSpeedThreshold: 5
   targetObjects: []
-  enabledMat: {fileID: 2100000, guid: adb236ca6a5aa4f4d89e36754e8aa857, type: 2}
-  disabledMat: {fileID: 2100000, guid: faa5587c75cab024bb7fa3e288415d5c, type: 2}
   materials:
   - {fileID: 2100000, guid: adb236ca6a5aa4f4d89e36754e8aa857, type: 2}
   - {fileID: 2100000, guid: faa5587c75cab024bb7fa3e288415d5c, type: 2}
   leverState: 0
   leverRenderer: {fileID: 0}
   leverTransform: {fileID: 0}
+  cooldown: 3
 --- !u!65 &530560941356516099
 BoxCollider:
   m_ObjectHideFlags: 0
