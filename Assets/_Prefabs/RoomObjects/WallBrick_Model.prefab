@@ -111,11 +111,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 489172319589608529}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: 9beb52c7863f8e54691dbdec1ebc264c,
-        type: 3}
-      propertyPath: m_Name
-      value: Ragball_wallBrick_model_06
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 9beb52c7863f8e54691dbdec1ebc264c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -186,11 +181,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.9971334
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 9beb52c7863f8e54691dbdec1ebc264c,
+        type: 3}
+      propertyPath: m_Name
+      value: Ragball_wallBrick_model_06
+      objectReference: {fileID: 0}
     - target: {fileID: -1504981713932161579, guid: 9beb52c7863f8e54691dbdec1ebc264c,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: d458a248a2cb31f4bb354c3eee3b522f, type: 2}
+      objectReference: {fileID: 2100000, guid: 164d6bec5fb262045a2d554768668c96, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9beb52c7863f8e54691dbdec1ebc264c, type: 3}
 --- !u!1 &2345681468958543830 stripped
