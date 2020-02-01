@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class CharacterButton : Button
+﻿public class CharacterButton : Button
 {
+    public TeamColor color;
+    public RagdollSize size;
+
     public override void Select(PlayerCursor cursor)
     {
-        throw new System.NotImplementedException();
+        CharacterSelect.playerSelections[cursor.playerNumber].color = color;
+        CharacterSelect.playerSelections[cursor.playerNumber].size = size;
     }
 }

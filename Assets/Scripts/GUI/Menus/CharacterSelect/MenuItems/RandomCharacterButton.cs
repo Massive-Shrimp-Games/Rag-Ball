@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class RandomCharacterButton : Button
 {
+    public List<Button> buttons;
     public override void Select(PlayerCursor cursor)
     {
-        throw new System.NotImplementedException();
+        int randomButton = Random.Range(0, buttons.Count - 1);
+        buttons[randomButton].Select(cursor);
     }
 }
