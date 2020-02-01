@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class TimeLimitSlider : HorizontalSlider
 {
@@ -16,5 +14,10 @@ public class TimeLimitSlider : HorizontalSlider
     {
         if (--GameModeSelect.timeLimit < 0)
             GameModeSelect.timeLimit = maxTimeLimit;
+    }
+
+    private void Update()
+    {
+        transform.GetChild(1).GetComponent<Text>().text = GameModeSelect.timeLimit.ToString();
     }
 }

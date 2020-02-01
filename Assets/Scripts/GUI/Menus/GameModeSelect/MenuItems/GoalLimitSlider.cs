@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class GoalLimitSlider : HorizontalSlider
 {
-    [SerializeField] private int maxGoals = 99;
+    public int maxGoals = 99;
 
     protected override void Increment(InputValue inputValue)
     {
@@ -17,5 +15,10 @@ public class GoalLimitSlider : HorizontalSlider
     {
         if (--GameModeSelect.goalLimit < 0)
             GameModeSelect.goalLimit = maxGoals;
+    }
+
+    private void Update()
+    {
+        transform.GetChild(1).GetComponent<Text>().text = GameModeSelect.goalLimit.ToString();
     }
 }
