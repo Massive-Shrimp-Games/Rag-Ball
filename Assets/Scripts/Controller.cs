@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Controller : MonoBehaviour
@@ -16,64 +13,68 @@ public class Controller : MonoBehaviour
     public event InputEventHandler _OnArcThrow;
     public event InputEventHandler _OnDirectThrow;
     public event InputEventHandler _OnGoLimp;
-    public event InputEventHandler _OnStartMenu;
-    public event InputEventHandler _OnProgressInMenu;
-    public event InputEventHandler _OnRegressInMenu; 
-    public event InputEventHandler _OnBackToPreviousMenu; 
+    public event InputEventHandler _OnStart;
+    public event InputEventHandler _OnNavigate;
+    public event InputEventHandler _OnConfirm;
+    public event InputEventHandler _OnReturn;
 
     private void OnMove(InputValue inputValue)
     {
-        _OnMove(inputValue);
+        _OnMove?.Invoke(inputValue);
     }
 
     private void OnJump(InputValue inputValue)
     {
-        _OnJump(inputValue);
+        _OnJump?.Invoke(inputValue);
     }
 
     private void OnDash(InputValue inputValue)
     {
-        _OnDash(inputValue);
+        _OnDash?.Invoke(inputValue);
     }
 
     private void OnGrabDrop(InputValue inputValue)
     {
-        _OnGrabDrop(inputValue);
+        _OnGrabDrop?.Invoke(inputValue);
     }
 
     private void OnPause(InputValue inputValue)
     {
-        _OnPause(inputValue);
+        _OnPause?.Invoke(inputValue);
     }
 
     private void OnArcThrow(InputValue inputValue)
     {
-        _OnArcThrow(inputValue);
+        _OnArcThrow?.Invoke(inputValue);
     }
 
     private void OnDirectThrow(InputValue inputValue)
     {
-        _OnDirectThrow(inputValue);
+        _OnDirectThrow?.Invoke(inputValue);
     }
 
     private void OnGoLimp(InputValue inputValue)
     {
-        _OnGoLimp(inputValue);
+        _OnGoLimp?.Invoke(inputValue);
     }
 
-    private void OnStartMenu(InputValue inputValue){
-        _OnStartMenu(inputValue); 
+    private void OnStart(InputValue inputValue)
+    {
+        _OnStart?.Invoke(inputValue);
     }
 
-    private void OnProgressInMenu(InputValue inputValue){
-        _OnProgressInMenu(inputValue); 
+    private void OnNavigate(InputValue inputValue)
+    {
+        _OnNavigate?.Invoke(inputValue);
     }
 
-    private void OnRegressInMenu(InputValue inputValue){
-        _OnRegressInMenu(inputValue); 
+    private void OnConfirm(InputValue inputValue)
+    {
+        _OnConfirm?.Invoke(inputValue);
     }
 
-    private void OnBackToPreviousMenu(InputValue inputValue){
-        _OnBackToPreviousMenu(inputValue); 
+    private void OnReturn(InputValue inputValue)
+    {
+        _OnReturn?.Invoke(inputValue);
     }
 }
