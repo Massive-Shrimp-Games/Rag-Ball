@@ -3403,6 +3403,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RagdollTrail
       objectReference: {fileID: 0}
+    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46cda7ba68426ef49b2bbd958eeec03a, type: 3}
 --- !u!1 &535904923049735862 stripped

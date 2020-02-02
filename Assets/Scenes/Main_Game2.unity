@@ -14057,7 +14057,12 @@ PrefabInstance:
     - target: {fileID: 535904923049735863, guid: 93d9f76b6e3cdf4419fb4502eee039d8,
         type: 3}
       propertyPath: m_Time
-      value: 5
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 535904923049735862, guid: 93d9f76b6e3cdf4419fb4502eee039d8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3356899317419972391, guid: 93d9f76b6e3cdf4419fb4502eee039d8, type: 3}
@@ -15493,20 +15498,6 @@ PrefabInstance:
       propertyPath: m_RotationOffset.x
       value: 75.48702
       objectReference: {fileID: 0}
-    - target: {fileID: 1851718939934769055, guid: 93d9f76b6e3cdf4419fb4502eee039d8,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6244319669679937406, guid: 93d9f76b6e3cdf4419fb4502eee039d8,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8152263332880110, guid: 93d9f76b6e3cdf4419fb4502eee039d8, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 535904923049735863, guid: 93d9f76b6e3cdf4419fb4502eee039d8,
         type: 3}
       propertyPath: m_Time
@@ -15520,6 +15511,20 @@ PrefabInstance:
     - target: {fileID: 535904923049735863, guid: 93d9f76b6e3cdf4419fb4502eee039d8,
         type: 3}
       propertyPath: m_MotionVectors
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1851718939934769055, guid: 93d9f76b6e3cdf4419fb4502eee039d8,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6244319669679937406, guid: 93d9f76b6e3cdf4419fb4502eee039d8,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8152263332880110, guid: 93d9f76b6e3cdf4419fb4502eee039d8, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6784674223356045774, guid: 93d9f76b6e3cdf4419fb4502eee039d8,
