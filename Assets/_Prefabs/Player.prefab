@@ -1323,9 +1323,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dashForce: 5000
-  jumpForce: 5000
-  directThrowForce: 20000
-  arcThrowForce: 20000
+  jumpForce: 7500
+  directThrowForce: 10000
+  arcThrowForce: 10000
   color: 0
   playerSpeed: 3000
   staggerCharges: 0
@@ -3327,11 +3327,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4481739280208597564}
     m_Modifications:
-    - target: {fileID: 7802610896327792555, guid: af2f3ccc16447c84881aa4c5a85d4c2f,
-        type: 3}
-      propertyPath: m_Name
-      value: StaggerStars
-      objectReference: {fileID: 0}
     - target: {fileID: 6490576146028242360, guid: af2f3ccc16447c84881aa4c5a85d4c2f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3386,6 +3381,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7802610896327792555, guid: af2f3ccc16447c84881aa4c5a85d4c2f,
+        type: 3}
+      propertyPath: m_Name
+      value: StaggerStars
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af2f3ccc16447c84881aa4c5a85d4c2f, type: 3}
