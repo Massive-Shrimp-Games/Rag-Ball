@@ -19,5 +19,9 @@ public class TimeLimitSlider : HorizontalSlider
     private void Update()
     {
         transform.GetChild(1).GetComponent<Text>().text = GameModeSelect.timeLimit.ToString();
+        if (GameModeSelect.timeLimit == 0)
+        {
+            transform.GetChild(1).GetComponent<Text>().text = "No Limit";
+        }
     }
 }
