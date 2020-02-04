@@ -38,13 +38,12 @@ public class RagballRuleset : MonoBehaviour
     {
         //redScore++;
         player.transform.position = respawnPoint.transform.position;
-        player.GetComponent<Player>().ResetVelocity();
     }
 
     private void AddBlueScore(GameObject player, int score)
     {
         //blueScore++;
         player.transform.position = respawnPoint.transform.position;
-        player.GetComponent<Player>().ResetVelocity();
+        //player.transform.GetComponent<Player>().ResetVelocity();
     }
 }

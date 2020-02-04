@@ -49,11 +49,14 @@ public class Pipe : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            //Debug.Log("Player entered a goal");
             GameObject player = collision.gameObject.transform.root.GetChild(0).gameObject;
             if (player.GetComponent<Player>().color == color)
             {
+               
                 if (color == TeamColor.Red)
                 {
+                    Debug.Log("player has same color");
                     ruleset.BlueScore(player.transform.GetChild(1).GetChild(0).gameObject);
                 }
                 else
