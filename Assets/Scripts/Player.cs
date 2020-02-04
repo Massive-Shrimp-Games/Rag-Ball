@@ -107,9 +107,9 @@ public class Player : MonoBehaviour
 
 
         hips = transform.GetChild(1).GetChild(0).gameObject; //set reference to player's hips
-        hipsRigidBody = hips.gameObject.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
+        hipsRigidBody = hips.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
         animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
-        hipsCollider = hips.gameObject.GetComponent<Collider>();
+        hipsCollider = hips.GetComponent<Collider>();
 
         trailRenderer = transform.GetChild(1).GetChild(0).GetComponent<TrailRenderer>();
 
