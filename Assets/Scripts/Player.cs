@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
     public int staggerJumpCharge;
     //private int staminaCharges;
 
+    private bool canJump;
+
     private const int StaminaMaxCharge = 5;  
 
     private const int StaminaDashCharge = 1; 
@@ -93,11 +95,17 @@ public class Player : MonoBehaviour
             StartCoroutine(rechargeStamina());
         }
 
+        bool leftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
+        bool rightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
+        canJump = leftFoot || rightFoot;
+
         staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
     }
 
     void Start()
     {
+        canJump = false;
+
         if (Game.Instance == null) return; // if the preload scene hasn't been loaded
         MapControls();
 
@@ -192,9 +200,7 @@ public class Player : MonoBehaviour
 
     private void OnJump(InputValue inputValue)
     {
-        bool LeftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
-        bool RightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
-        if (LeftFoot && RightFoot && staggerCharges >= 0)
+        if (canJump && staggerCharges >= 0)
         {
             Vector3 boostDir = hips.transform.up;
             hipsRigidBody.AddForce(boostDir * jumpForce);

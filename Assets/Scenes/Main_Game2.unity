@@ -3280,7 +3280,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 32823
+    m_Bits: 49207
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -5238,17 +5238,22 @@ PrefabInstance:
     - target: {fileID: 3429036124967327112, guid: 3c432cfa21f013c46abbe10cde162495,
         type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 2.0000172
+      value: 9.275545e-39
       objectReference: {fileID: 0}
     - target: {fileID: 3429036124967327112, guid: 3c432cfa21f013c46abbe10cde162495,
         type: 3}
       propertyPath: m_BoundingSphereOverride.z
-      value: 1.01e-43
+      value: 1.0193893e-38
       objectReference: {fileID: 0}
     - target: {fileID: 3429036124967327112, guid: 3c432cfa21f013c46abbe10cde162495,
         type: 3}
       propertyPath: m_BoundingSphereOverride.w
-      value: 0
+      value: 9.27555e-39
+      objectReference: {fileID: 0}
+    - target: {fileID: 3429036124967327112, guid: 3c432cfa21f013c46abbe10cde162495,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.x
+      value: 2.938898e-39
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c432cfa21f013c46abbe10cde162495, type: 3}
@@ -6197,11 +6202,6 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 6629135755121611222, guid: 93d9f76b6e3cdf4419fb4502eee039d8,
-        type: 3}
-      propertyPath: m_Time
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8899463336058489143, guid: 93d9f76b6e3cdf4419fb4502eee039d8,
         type: 3}
       propertyPath: m_RotationOffset.x
@@ -6368,6 +6368,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: -0.000018884428
+      objectReference: {fileID: 0}
+    - target: {fileID: 6629135755121611222, guid: 93d9f76b6e3cdf4419fb4502eee039d8,
+        type: 3}
+      propertyPath: m_Time
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3356899317419972391, guid: 93d9f76b6e3cdf4419fb4502eee039d8, type: 3}
