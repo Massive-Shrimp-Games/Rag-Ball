@@ -20,5 +20,9 @@ public class GoalLimitSlider : HorizontalSlider
     private void Update()
     {
         transform.GetChild(1).GetComponent<Text>().text = GameModeSelect.goalLimit.ToString();
+        if (GameModeSelect.goalLimit == 0)
+        {
+            transform.GetChild(1).GetComponent<Text>().text = "No Limit";
+        }
     }
 }

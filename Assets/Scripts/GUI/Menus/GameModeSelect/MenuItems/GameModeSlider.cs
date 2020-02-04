@@ -28,8 +28,8 @@ public class GameModeSlider : HorizontalSlider
             transform.GetChild(1).GetComponent<Text>().text = "RagBall";
         else if (GameModeSelect.gameMode == GameMode.Mode.RagOfTheHill)
             transform.GetChild(1).GetComponent<Text>().text = "Rag of the Hill";
-        else if (GameModeSelect.gameMode == GameMode.Mode.LazerRag)
-            transform.GetChild(1).GetComponent<Text>().text = "Lazer Rag";
+        else if (GameModeSelect.gameMode == GameMode.Mode.CaptureTheRag)
+            transform.GetChild(1).GetComponent<Text>().text = "Capture the Rag";
         else
             transform.GetChild(1).GetComponent<Text>().text = "Unknown";
     }

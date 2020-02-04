@@ -16,6 +16,9 @@ public class CharacterSelectCursor : PlayerCursor
 
     protected override void OnStart(InputValue inputValue)
     {
-        //throw new System.NotImplementedException();
+        if (transform.parent.GetComponent<CursorCreator>().ready)
+        {
+            SceneManager.LoadScene("Main_Game2");
+        }
     }
 }
