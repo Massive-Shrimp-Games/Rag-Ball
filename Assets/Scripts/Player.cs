@@ -53,6 +53,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject staggerStars;
     TrailRenderer trailRenderer;
 
+    public float trailSpeed = 6f;
+
     private GameObject hips;
     private Animator animator;
     //animator.State.name
@@ -130,7 +132,7 @@ public class Player : MonoBehaviour
             grabbing.GetComponent<Rigidbody>().position = grabPos.position;
         }
 
-        if (hipsRigidBody.velocity.magnitude > 6f)
+        if (hipsRigidBody.velocity.magnitude > trailSpeed)
         {
             trailRenderer.enabled = true;
         }
