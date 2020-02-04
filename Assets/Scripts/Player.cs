@@ -15,7 +15,6 @@ public class Player : MonoBehaviour
     [SerializeField] private float directThrowForce; // Set in editor
     [SerializeField] private float arcThrowForce; // Set in editor
 
-
     public TeamColor color;
     
     private Vector3 directThrowForceVel;
@@ -49,6 +48,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform directThrowDirection;
     [SerializeField] private Transform arcThrowDirection;
     [SerializeField] private GameObject grabbing;
+    
+    // Instead of this, have a particle handler
+    [SerializeField] private GameObject staggerStars;
 
     private GameObject hips;
     private Animator animator;
@@ -86,6 +88,8 @@ public class Player : MonoBehaviour
         if (isRecharging == false && hasStartedRecharging == true){
             StartCoroutine(rechargeStamina());
         }
+
+        staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
     }
 
     void Start()
@@ -137,7 +141,7 @@ public class Player : MonoBehaviour
             controller._OnPause += OnPause;
             controller._OnArcThrow += OnArcThrow;
             controller._OnDirectThrow += OnDirectThrow;
-            controller._OnGoLimp += OnGoLimp;
+            controller._OnStaggerSelf += OnStaggerSelf;
         }
     }
 
@@ -152,7 +156,7 @@ public class Player : MonoBehaviour
             controller._OnPause -= OnPause;
             controller._OnArcThrow -= OnArcThrow;
             controller._OnDirectThrow -= OnDirectThrow;
-            controller._OnGoLimp -= OnGoLimp;
+            controller._OnStaggerSelf -= OnStaggerSelf;
         }
     }
     #endregion
@@ -258,13 +262,24 @@ public class Player : MonoBehaviour
         hasStartedRecharging = true; 
     }
 
-    private void OnGoLimp(InputValue inputValue)
+    private void OnStaggerSelf(InputValue inputValue)
     {
-
+        staggerStars.SetActive(true);
+        StartCoroutine("StaggerSelf");
+        if (grabbing != null)
+        {
+            OnGrabDrop(null);
+        }
     }
     #endregion
 
-    void Stagger(int time)
+    private IEnumerator StaggerSelf()
+    {
+        yield return new WaitForSeconds(4);
+        staggerStars.SetActive(false);
+    }
+
+    void Stagger()
     {
         hipsRigidBody.constraints = RigidbodyConstraints.None;
         animator.enabled = false;
@@ -278,6 +293,7 @@ public class Player : MonoBehaviour
     {
         hipsRigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         animator.enabled = true;
+        staggerStars.SetActive(false);
     }
 
     private void OnCollisionEnter(Collision other)
