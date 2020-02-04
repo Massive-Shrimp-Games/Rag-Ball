@@ -18,12 +18,12 @@ public class Pipe : MonoBehaviour
         if (color == TeamColor.Red)
         {
             ruleset.OnRedScore += OnScore;
-            transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Pipe/RedPipe");
+            transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Court_Objects/RedPipe");
         }
         else if (color == TeamColor.Blue)
         {
             ruleset.OnBlueScore += OnScore;
-            transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Pipe/BluePipe");
+            transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Court_Objects/BluePipe");
         }
     }
 
