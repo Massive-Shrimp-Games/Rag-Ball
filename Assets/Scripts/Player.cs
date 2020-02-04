@@ -51,6 +51,7 @@ public class Player : MonoBehaviour
     
     // Instead of this, have a particle handler
     [SerializeField] private GameObject staggerStars;
+    TrailRenderer trailRenderer;
 
     private GameObject hips;
     private Animator animator;
@@ -71,6 +72,7 @@ public class Player : MonoBehaviour
     {
         AssignMaterial();
     }
+
     private void AssignMaterial()
     {
         if(color == TeamColor.Red)
@@ -109,6 +111,8 @@ public class Player : MonoBehaviour
         animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
         hipsCollider = hips.gameObject.GetComponent<Collider>();
 
+        trailRenderer = transform.GetChild(1).GetChild(0).GetComponent<TrailRenderer>();
+
         grabbing = null;
         isRecharging = false; 
         hasStartedRecharging = false; 
@@ -124,6 +128,15 @@ public class Player : MonoBehaviour
         if (grabbing != null)
         {
             grabbing.GetComponent<Rigidbody>().position = grabPos.position;
+        }
+
+        if (hipsRigidBody.velocity.magnitude > 6f)
+        {
+            trailRenderer.enabled = true;
+        }
+        else
+        {
+            trailRenderer.enabled = false;
         }
     }
 
@@ -196,7 +209,7 @@ public class Player : MonoBehaviour
             Vector3 boostDir = hips.transform.forward;
             hipsRigidBody.AddForce(boostDir * dashForce);
             staggerCharges = staggerCharges - staggerDashCharge;
-            OnPlayerExertion(playerNumber,staggerCharges);
+            OnPlayerExertion(playerNumber, staggerCharges);
         }
         hasStartedRecharging = true; 
     }
