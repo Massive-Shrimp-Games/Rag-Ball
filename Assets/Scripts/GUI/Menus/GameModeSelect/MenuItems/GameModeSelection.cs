@@ -11,8 +11,8 @@ public class GameModeSelection : MonoBehaviour
             GetComponent<Text>().text = "RagBall";
         else if (GameModeSelect.gameMode == GameMode.Mode.RagOfTheHill)
             GetComponent<Text>().text = "Rag of the Hill";
-        else if (GameModeSelect.gameMode == GameMode.Mode.LazerRag)
-            GetComponent<Text>().text = "Lazer Rag";
+        else if (GameModeSelect.gameMode == GameMode.Mode.CaptureTheRag)
+            GetComponent<Text>().text = "Capture the Rag";
         else
             GetComponent<Text>().text = "Unknown";
     }
