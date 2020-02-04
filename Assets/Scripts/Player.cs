@@ -332,5 +332,10 @@ public class Player : MonoBehaviour
 
         Unstagger();
     }
+
+    public void ResetVelocity()
+    {
+        hipsRigidBody.velocity = Vector3.zero;
+    }
 }
 
