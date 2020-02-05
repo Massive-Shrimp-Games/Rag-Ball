@@ -47,6 +47,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: 0
+--- !u!64 &4074883499605670970
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3194393453980779857}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -8151035844026319201, guid: 05037acf2c4ec7940bc7831a80433cad, type: 3}
+--- !u!64 &4740279483704769026
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4565103647126408213}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 5698422335904087892, guid: 05037acf2c4ec7940bc7831a80433cad, type: 3}
 --- !u!1 &9205579072196423285
 GameObject:
   m_ObjectHideFlags: 0
@@ -75,7 +103,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9205579072196423285}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: 0.479, y: 0.42, z: -0.01}
+  m_LocalPosition: {x: 1.068, y: 0.973, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 706245385187639140}
@@ -106,7 +134,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cfe529f99ae3be74fb409cf894025567, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -226,6 +254,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2468385540271029804}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4565103647126408213 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2097540559808754233, guid: a8d81a1ac93aa9347991bdb1f5e8af80,
+    type: 3}
+  m_PrefabInstance: {fileID: 2468385540271029804}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3194393453980779857 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1014915726479932285, guid: a8d81a1ac93aa9347991bdb1f5e8af80,
+    type: 3}
+  m_PrefabInstance: {fileID: 2468385540271029804}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7498700257244072526
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -233,55 +273,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 706245385187639140}
     m_Modifications:
-    - target: {fileID: 4691321754950502908, guid: c780a64ab41f913489dee56b000f3588,
-        type: 3}
-      propertyPath: m_Name
-      value: Confetti
-      objectReference: {fileID: 0}
-    - target: {fileID: 962620675072573145, guid: c780a64ab41f913489dee56b000f3588,
-        type: 3}
-      propertyPath: InitialModule.startSpeed.scalar
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 962620675072573145, guid: c780a64ab41f913489dee56b000f3588,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 962620675072573145, guid: c780a64ab41f913489dee56b000f3588,
-        type: 3}
-      propertyPath: ShapeModule.radius.value
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 962620675072573145, guid: c780a64ab41f913489dee56b000f3588,
-        type: 3}
-      propertyPath: EmissionModule.rateOverTime.scalar
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 962620675072573145, guid: c780a64ab41f913489dee56b000f3588,
-        type: 3}
-      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].time
-      value: 0.36709094
-      objectReference: {fileID: 0}
-    - target: {fileID: 962620675072573145, guid: c780a64ab41f913489dee56b000f3588,
-        type: 3}
-      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].value
-      value: 0.4864871
-      objectReference: {fileID: 0}
     - target: {fileID: 6616832251679556994, guid: c780a64ab41f913489dee56b000f3588,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.08
+      value: 0.71
       objectReference: {fileID: 0}
     - target: {fileID: 6616832251679556994, guid: c780a64ab41f913489dee56b000f3588,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.12
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 6616832251679556994, guid: c780a64ab41f913489dee56b000f3588,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.01
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6616832251679556994, guid: c780a64ab41f913489dee56b000f3588,
         type: 3}
@@ -322,6 +327,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -3.381989
+      objectReference: {fileID: 0}
+    - target: {fileID: 4691321754950502908, guid: c780a64ab41f913489dee56b000f3588,
+        type: 3}
+      propertyPath: m_Name
+      value: Confetti
+      objectReference: {fileID: 0}
+    - target: {fileID: 962620675072573145, guid: c780a64ab41f913489dee56b000f3588,
+        type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 962620675072573145, guid: c780a64ab41f913489dee56b000f3588,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 962620675072573145, guid: c780a64ab41f913489dee56b000f3588,
+        type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 962620675072573145, guid: c780a64ab41f913489dee56b000f3588,
+        type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 962620675072573145, guid: c780a64ab41f913489dee56b000f3588,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].time
+      value: 0.36709094
+      objectReference: {fileID: 0}
+    - target: {fileID: 962620675072573145, guid: c780a64ab41f913489dee56b000f3588,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].value
+      value: 0.4864871
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c780a64ab41f913489dee56b000f3588, type: 3}

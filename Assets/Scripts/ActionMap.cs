@@ -27,7 +27,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""GoLimp"",
+                    ""name"": ""StaggerSelf"",
                     ""type"": ""Button"",
                     ""id"": ""7de93337-6830-4ab5-bcba-015945d03adf"",
                     ""expectedControlType"": """",
@@ -289,7 +289,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""GoLimp"",
+                    ""action"": ""StaggerSelf"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -300,7 +300,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""GoLimp"",
+                    ""action"": ""StaggerSelf"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -430,7 +430,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-        m_Player_GoLimp = m_Player.FindAction("GoLimp", throwIfNotFound: true);
+        m_Player_StaggerSelf = m_Player.FindAction("StaggerSelf", throwIfNotFound: true);
         m_Player_DirectThrow = m_Player.FindAction("DirectThrow", throwIfNotFound: true);
         m_Player_ArcThrow = m_Player.FindAction("ArcThrow", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
@@ -493,7 +493,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Move;
-    private readonly InputAction m_Player_GoLimp;
+    private readonly InputAction m_Player_StaggerSelf;
     private readonly InputAction m_Player_DirectThrow;
     private readonly InputAction m_Player_ArcThrow;
     private readonly InputAction m_Player_Pause;
@@ -505,7 +505,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
         private @ActionMap m_Wrapper;
         public PlayerActions(@ActionMap wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
-        public InputAction @GoLimp => m_Wrapper.m_Player_GoLimp;
+        public InputAction @StaggerSelf => m_Wrapper.m_Player_StaggerSelf;
         public InputAction @DirectThrow => m_Wrapper.m_Player_DirectThrow;
         public InputAction @ArcThrow => m_Wrapper.m_Player_ArcThrow;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
@@ -524,9 +524,9 @@ public class @ActionMap : IInputActionCollection, IDisposable
                 @Move.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
-                @GoLimp.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGoLimp;
-                @GoLimp.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGoLimp;
-                @GoLimp.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGoLimp;
+                @StaggerSelf.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStaggerSelf;
+                @StaggerSelf.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStaggerSelf;
+                @StaggerSelf.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStaggerSelf;
                 @DirectThrow.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDirectThrow;
                 @DirectThrow.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDirectThrow;
                 @DirectThrow.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDirectThrow;
@@ -552,9 +552,9 @@ public class @ActionMap : IInputActionCollection, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
-                @GoLimp.started += instance.OnGoLimp;
-                @GoLimp.performed += instance.OnGoLimp;
-                @GoLimp.canceled += instance.OnGoLimp;
+                @StaggerSelf.started += instance.OnStaggerSelf;
+                @StaggerSelf.performed += instance.OnStaggerSelf;
+                @StaggerSelf.canceled += instance.OnStaggerSelf;
                 @DirectThrow.started += instance.OnDirectThrow;
                 @DirectThrow.performed += instance.OnDirectThrow;
                 @DirectThrow.canceled += instance.OnDirectThrow;
@@ -655,7 +655,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnGoLimp(InputAction.CallbackContext context);
+        void OnStaggerSelf(InputAction.CallbackContext context);
         void OnDirectThrow(InputAction.CallbackContext context);
         void OnArcThrow(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
