@@ -37,8 +37,7 @@ public class Player : MonoBehaviour
 
     private int StaggerTime = 5;
 
-    private int StaminaRechargeTime = 3;  
-
+    private float StaminaRechargeTime = 1.5f; 
     private Collider hipsCollider;
 
     private bool isRecharging;
@@ -91,10 +90,6 @@ public class Player : MonoBehaviour
     private void Update()
     {
         UpdateHeld();
-        if (isRecharging == false && hasStartedRecharging == true){
-            StartCoroutine(rechargeStamina());
-        }
-
         bool leftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
         bool rightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
         canJump = leftFoot || rightFoot;
@@ -206,8 +201,11 @@ public class Player : MonoBehaviour
             hipsRigidBody.AddForce(boostDir * jumpForce);
             staggerCharges = staggerCharges - staggerJumpCharge;
             OnPlayerExertion(playerNumber,staggerCharges);
+            if(!hasStartedRecharging)
+            {
+                StartCoroutine(rechargeStamina());
+            }
         }
-        hasStartedRecharging = true; 
     }
 
     private void OnDash(InputValue inputValue)
@@ -217,9 +215,12 @@ public class Player : MonoBehaviour
             Vector3 boostDir = hips.transform.forward;
             hipsRigidBody.AddForce(boostDir * dashForce);
             staggerCharges = staggerCharges - staggerDashCharge;
-            OnPlayerExertion(playerNumber, staggerCharges);
+            OnPlayerExertion(playerNumber,staggerCharges);
+            if(!hasStartedRecharging)
+            {
+                StartCoroutine(rechargeStamina());
+            }
         }
-        hasStartedRecharging = true; 
     }
 
     private void OnGrabDrop(InputValue inputValue)
@@ -264,7 +265,6 @@ public class Player : MonoBehaviour
         objectToThrow.GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
         staggerCharges = staggerCharges - staggerDashCharge;
         OnPlayerExertion(playerNumber,staggerCharges);
-        hasStartedRecharging = true; 
     }
 
     private void OnDirectThrow(InputValue inputValue)
@@ -280,7 +280,6 @@ public class Player : MonoBehaviour
         objectToThrow.GetComponent<Rigidbody>().AddForce(directThrowForceVel);
         staggerCharges = staggerCharges - staggerDashCharge;
         OnPlayerExertion(playerNumber,staggerCharges);
-        hasStartedRecharging = true; 
     }
 
     private void OnStaggerSelf(InputValue inputValue)
@@ -326,9 +325,17 @@ public class Player : MonoBehaviour
     }
 
     private IEnumerator rechargeStamina(){
+        hasStartedRecharging = true;
         yield return new WaitForSeconds (StaminaRechargeTime);
-        hasStartedRecharging = true; 
         recharger();
+        if(staggerCharges < staggerMaxCharge)
+        {
+            StartCoroutine(rechargeStamina());
+        }
+        else
+        {
+            hasStartedRecharging = false;
+        }
     }
 
     void recharger()
@@ -338,13 +345,7 @@ public class Player : MonoBehaviour
             staggerCharges++;
             OnPlayerExertion(playerNumber,staggerCharges);
         }
-        if (staggerCharges == staggerMaxCharge){
-            isRecharging = false; 
-            hasStartedRecharging = false; 
-        }
-        if (isRecharging == true){
-            StartCoroutine(rechargeStamina());
-        }
+        
     }
     private IEnumerator waitingForUnstaggerCoroutine(int time)
     {
