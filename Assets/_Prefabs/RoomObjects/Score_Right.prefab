@@ -27,16 +27,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1481770193416468328}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.00025073052}
   m_LocalScale: {x: 0.007498763, y: 0.007498763, z: 0.007498763}
   m_Children: []
   m_Father: {fileID: 434128862069013421}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.0201, y: -0.0178}
+  m_AnchoredPosition: {x: 0.0207, y: -0.0178}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0, y: 0}
 --- !u!23 &1481770193416468324
@@ -216,6 +216,7 @@ GameObject:
   - component: {fileID: 434128862069013421}
   - component: {fileID: 8889352883172082075}
   - component: {fileID: 2909846743486758242}
+  - component: {fileID: 7181532316149389338}
   m_Layer: 0
   m_Name: Score_Right
   m_TagString: Untagged
@@ -283,3 +284,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &7181532316149389338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3484955149460883902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4140471eb0d0b50458b6adbd679063b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0

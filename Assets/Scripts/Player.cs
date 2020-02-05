@@ -15,7 +15,6 @@ public class Player : MonoBehaviour
     [SerializeField] private float directThrowForce; // Set in editor
     [SerializeField] private float arcThrowForce; // Set in editor
 
-
     public TeamColor color;
     
     private Vector3 directThrowForceVel;
@@ -27,6 +26,8 @@ public class Player : MonoBehaviour
     public int staggerDashCharge;
     public int staggerJumpCharge;
     //private int staminaCharges;
+
+    private bool canJump;
 
     private const int StaminaMaxCharge = 5;  
 
@@ -49,6 +50,12 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform directThrowDirection;
     [SerializeField] private Transform arcThrowDirection;
     [SerializeField] private GameObject grabbing;
+    
+    // Instead of this, have a particle handler
+    [SerializeField] private GameObject staggerStars;
+    TrailRenderer trailRenderer;
+
+    public float trailSpeed = 6f;
 
     private GameObject hips;
     private Animator animator;
@@ -69,6 +76,7 @@ public class Player : MonoBehaviour
     {
         AssignMaterial();
     }
+
     private void AssignMaterial()
     {
         if(color == TeamColor.Red)
@@ -86,10 +94,18 @@ public class Player : MonoBehaviour
         if (isRecharging == false && hasStartedRecharging == true){
             StartCoroutine(rechargeStamina());
         }
+
+        bool leftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
+        bool rightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
+        canJump = leftFoot || rightFoot;
+
+        staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
     }
 
     void Start()
     {
+        canJump = false;
+
         if (Game.Instance == null) return; // if the preload scene hasn't been loaded
         MapControls();
 
@@ -101,9 +117,11 @@ public class Player : MonoBehaviour
 
 
         hips = transform.GetChild(1).GetChild(0).gameObject; //set reference to player's hips
-        hipsRigidBody = hips.gameObject.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
+        hipsRigidBody = hips.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
         animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
-        hipsCollider = hips.gameObject.GetComponent<Collider>();
+        hipsCollider = hips.GetComponent<Collider>();
+
+        trailRenderer = transform.GetChild(1).GetChild(0).GetComponent<TrailRenderer>();
 
         grabbing = null;
         isRecharging = false; 
@@ -121,6 +139,15 @@ public class Player : MonoBehaviour
         {
             grabbing.GetComponent<Rigidbody>().position = grabPos.position;
         }
+
+        if (hipsRigidBody.velocity.magnitude > trailSpeed)
+        {
+            trailRenderer.enabled = true;
+        }
+        else
+        {
+            trailRenderer.enabled = false;
+        }
     }
 
     #region Input Mapping
@@ -137,7 +164,7 @@ public class Player : MonoBehaviour
             controller._OnPause += OnPause;
             controller._OnArcThrow += OnArcThrow;
             controller._OnDirectThrow += OnDirectThrow;
-            controller._OnGoLimp += OnGoLimp;
+            controller._OnStaggerSelf += OnStaggerSelf;
         }
     }
 
@@ -152,7 +179,7 @@ public class Player : MonoBehaviour
             controller._OnPause -= OnPause;
             controller._OnArcThrow -= OnArcThrow;
             controller._OnDirectThrow -= OnDirectThrow;
-            controller._OnGoLimp -= OnGoLimp;
+            controller._OnStaggerSelf -= OnStaggerSelf;
         }
     }
     #endregion
@@ -173,9 +200,7 @@ public class Player : MonoBehaviour
 
     private void OnJump(InputValue inputValue)
     {
-        bool LeftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
-        bool RightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
-        if (LeftFoot && RightFoot && staggerCharges >= 0)
+        if (canJump && staggerCharges >= 0)
         {
             Vector3 boostDir = hips.transform.up;
             hipsRigidBody.AddForce(boostDir * jumpForce);
@@ -192,7 +217,7 @@ public class Player : MonoBehaviour
             Vector3 boostDir = hips.transform.forward;
             hipsRigidBody.AddForce(boostDir * dashForce);
             staggerCharges = staggerCharges - staggerDashCharge;
-            OnPlayerExertion(playerNumber,staggerCharges);
+            OnPlayerExertion(playerNumber, staggerCharges);
         }
         hasStartedRecharging = true; 
     }
@@ -258,13 +283,24 @@ public class Player : MonoBehaviour
         hasStartedRecharging = true; 
     }
 
-    private void OnGoLimp(InputValue inputValue)
+    private void OnStaggerSelf(InputValue inputValue)
     {
-
+        staggerStars.SetActive(true);
+        StartCoroutine("StaggerSelf");
+        if (grabbing != null)
+        {
+            OnGrabDrop(null);
+        }
     }
     #endregion
 
-    void Stagger(int time)
+    private IEnumerator StaggerSelf()
+    {
+        yield return new WaitForSeconds(4);
+        staggerStars.SetActive(false);
+    }
+
+    void Stagger()
     {
         hipsRigidBody.constraints = RigidbodyConstraints.None;
         animator.enabled = false;
@@ -278,6 +314,7 @@ public class Player : MonoBehaviour
     {
         hipsRigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         animator.enabled = true;
+        staggerStars.SetActive(false);
     }
 
     private void OnCollisionEnter(Collision other)
@@ -315,6 +352,11 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         Unstagger();
+    }
+
+    public void ResetVelocity()
+    {
+        hipsRigidBody.velocity = Vector3.zero;
     }
 }
 
