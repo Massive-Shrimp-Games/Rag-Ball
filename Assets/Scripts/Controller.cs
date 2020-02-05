@@ -12,7 +12,7 @@ public class Controller : MonoBehaviour
     public event InputEventHandler _OnPause;
     public event InputEventHandler _OnArcThrow;
     public event InputEventHandler _OnDirectThrow;
-    public event InputEventHandler _OnGoLimp;
+    public event InputEventHandler _OnStaggerSelf;  // Remove this
     public event InputEventHandler _OnStart;
     public event InputEventHandler _OnNavigate;
     public event InputEventHandler _OnConfirm;
@@ -53,9 +53,9 @@ public class Controller : MonoBehaviour
         _OnDirectThrow?.Invoke(inputValue);
     }
 
-    private void OnGoLimp(InputValue inputValue)
+    private void OnStaggerSelf(InputValue inputValue)
     {
-        _OnGoLimp?.Invoke(inputValue);
+        _OnStaggerSelf?.Invoke(inputValue);
     }
 
     private void OnStart(InputValue inputValue)

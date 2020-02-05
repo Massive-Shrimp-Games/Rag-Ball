@@ -24,17 +24,17 @@ public class MagicSlipper : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer != 15)
-        { 
-        touching = true;
+        if (other.gameObject.layer == 14)
+        {
+            touching = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer != 15)
-        { 
-        touching = false;
+        if (other.gameObject.layer == 14)
+        {
+            touching = false;
         }
     }
 

@@ -14,10 +14,18 @@ public class RagballRuleset : MonoBehaviour
 
     public Transform respawnPoint;
 
+    private bool winState = false;
+    public GameObject RedWin;
+    public GameObject BlueWin;
+    public GameObject TieWin;
+
     private void Start()
     {
         OnRedScore += AddRedScore;
         OnBlueScore += AddBlueScore;
+        RedWin.SetActive(false);
+        BlueWin.SetActive(false);
+        TieWin.SetActive(false);
     }
 
     private void OnDestroy()
@@ -44,5 +52,20 @@ public class RagballRuleset : MonoBehaviour
     {
         //blueScore++;
         player.transform.position = respawnPoint.transform.position;
+        //player.transform.GetComponent<Player>().ResetVelocity();
+    }
+
+    private void Update()
+    {
+        if (winState == false && redScore >= GameModeSelect.goalLimit && GameModeSelect.goalLimit != 0)
+        {
+            RedWin.SetActive(true);
+            winState = true;
+        }
+        if (winState == false && blueScore >= GameModeSelect.goalLimit && GameModeSelect.goalLimit != 0)
+        {
+            BlueWin.SetActive(true);
+            winState = true;
+        }
     }
 }
