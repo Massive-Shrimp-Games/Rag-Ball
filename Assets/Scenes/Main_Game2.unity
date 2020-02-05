@@ -8035,6 +8035,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WindFunnel
       objectReference: {fileID: 0}
+    - target: {fileID: 3082285046352375766, guid: 35182304c2b8d1741a3a97bde03ac18d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9140610119780382029, guid: 35182304c2b8d1741a3a97bde03ac18d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8088,11 +8093,6 @@ PrefabInstance:
     - target: {fileID: 9140610119780382029, guid: 35182304c2b8d1741a3a97bde03ac18d,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3082285046352375766, guid: 35182304c2b8d1741a3a97bde03ac18d,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -14788,6 +14788,44 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8064d293b637ce42830cbb2e021d756, type: 3}
+--- !u!114 &1208132562 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7210966285364793272, guid: f8064d293b637ce42830cbb2e021d756,
+    type: 3}
+  m_PrefabInstance: {fileID: 1208132561}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1208132563 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3014999395119776884, guid: f8064d293b637ce42830cbb2e021d756,
+    type: 3}
+  m_PrefabInstance: {fileID: 1208132561}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1208132564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208132563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61a13c3720e643146941505b2ff34a89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimerText: {fileID: 1208132562}
+  RedScore: 0
+  BlueScore: 0
+  RedWinScreen: {fileID: 0}
+  BlueWinScreen: {fileID: 0}
+  BluePipeConfetti: {fileID: 0}
+  RedPipeConfetti: {fileID: 0}
+  ExitPipeConfetti: {fileID: 0}
 --- !u!1 &1229751137
 GameObject:
   m_ObjectHideFlags: 0

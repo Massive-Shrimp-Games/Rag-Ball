@@ -7,7 +7,7 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
     [SerializeField] private TextMeshPro TimerText;
-    [SerializeField] private float mainTimer;
+    //[SerializeField] private float mainTimer;
 
     public int RedScore;
     public int BlueScore;
@@ -24,7 +24,8 @@ public class Timer : MonoBehaviour
 
     void Start()
     {
-        timer = mainTimer;
+        timer = GameModeSelect.timeLimit;
+        timer = (timer * 60);
     }
 
     // Update is called once per frame
@@ -34,34 +35,37 @@ public class Timer : MonoBehaviour
         if (timer >= 0.0f && canCount)
         {
             timer -= Time.deltaTime;
-            TimerText.text = timer.ToString("F");
+            int min = Mathf.FloorToInt(timer / 60);
+            int sec = Mathf.FloorToInt(timer % 60);
+            TimerText.text = min.ToString("00") + ":" + sec.ToString("00");
+            
         }
 
         else if (timer <= 0.0f && !doOnce)
         {
             canCount = false;
             doOnce = true;
-            TimerText.text = "0.00";
+            TimerText.text = ("00" + ":" + "00");
             timer = 0.0f;
-            GameOver();
+            //GameOver();
         }
     }
 
-    void GameOver()
-    {      
-        RedPipeConfetti.loop = true;
-        BluePipeConfetti.loop = true;
-        ExitPipeConfetti.loop = true;
-        RedPipeConfetti.Play();
-        BluePipeConfetti.Play();
-        ExitPipeConfetti.Play();
-        if (RedScore >= BlueScore)
-        {
-            RedWinScreen.enabled = true;
-        }
-        if (BlueScore >= RedScore)
-        {
-            BlueWinScreen.enabled = true;
-        }
-    }
+    //void GameOver()
+//    {      
+//        //RedPipeConfetti.loop = true;
+//        //BluePipeConfetti.loop = true;
+//        ExitPipeConfetti.loop = true;
+//        RedPipeConfetti.Play();
+//        BluePipeConfetti.Play();
+//        ExitPipeConfetti.Play();
+//        if (RedScore >= BlueScore)
+//        {
+//            RedWinScreen.enabled = true;
+//        }
+//        if (BlueScore >= RedScore)
+//        {
+//            BlueWinScreen.enabled = true;
+//        }
+//    }
 }
