@@ -7,6 +7,13 @@ public class PauseMenu : MonoBehaviour
 {
     public bool paused { get; private set; }
     private Controller controller;
+    private GameModeSelectCursor cursor;
+    public GameObject defaultItem;
+
+    private void Start()
+    {
+        cursor.currentMenuItem = defaultItem.GetComponent<ResumeButton>();
+    }
 
     public void Pause(Controller controller)
     {
