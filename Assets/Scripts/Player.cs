@@ -226,8 +226,9 @@ public class Player : MonoBehaviour
     private void OnGrabDrop(InputValue inputValue)
     {
         if (grabbing == null) {
-            grabbing = grabCheckCollider.FindClosest();
-            
+            if (hips.tag == "Grabbable"){
+                grabbing = grabCheckCollider.FindClosest();
+            }
             if (grabbing != null)
             {
                 grabbing.GetComponent<Rigidbody>().isKinematic = true;
