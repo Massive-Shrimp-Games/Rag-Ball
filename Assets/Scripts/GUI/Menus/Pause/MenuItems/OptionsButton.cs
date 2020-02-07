@@ -2,17 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OptionsButton : MonoBehaviour
+public class OptionsButton : Button
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Select(PlayerCursor cursor)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Debug.Log("Button Options");
     }
 }

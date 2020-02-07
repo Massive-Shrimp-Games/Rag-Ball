@@ -5,25 +5,33 @@ using UnityEngine.InputSystem;
 
 public class PauseMenu : MonoBehaviour
 {
+    public MenuItem defaultMenuItem;
     public bool paused { get; private set; }
-    private Controller controller;
-    private GameModeSelectCursor cursor;
+    public GameObject playerCursor;
 
-    public void Pause(Controller controller)
+    public PlayerCursorParameters parameters;
+
+    public void Pause(int playerNumber)
     {
-        this.controller = controller;
-        // controller.GetComponent<PlayerInput>().SwitchCurrentActionMap("Menu");
         Time.timeScale = 0f;
         gameObject.SetActive(true);
         paused = true;
+        // playerCursor = PlayerCursor.Create(playerNumber);
+        playerCursor = CreateCursor(playerNumber);
+        playerCursor.transform.parent = gameObject.transform;
     }
 
     public void UnPause()
     {
-        // controller.GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
-        this.controller = null;
+        Destroy(playerCursor);
         Time.timeScale = 1f;
         gameObject.SetActive(false);
         paused = false;
+    }
+
+    private GameObject CreateCursor(int playerNumber)
+    {
+        parameters.prefab.GetComponent<PlayerCursor>().currentMenuItem = defaultMenuItem;
+        return Instantiate(parameters.prefab);
     }
 }

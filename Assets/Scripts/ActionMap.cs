@@ -8,7 +8,7 @@ using UnityEngine.InputSystem.Utilities;
 
 public class @ActionMap : IInputActionCollection, IDisposable
 {
-    private InputActionAsset asset;
+    public InputActionAsset asset { get; }
     public @ActionMap()
     {
         asset = InputActionAsset.FromJson(@"{
@@ -56,7 +56,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""id"": ""4b0ad7cd-2823-4da7-989c-51b35b4f8808"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Tap""
                 },
                 {
                     ""name"": ""GrabDrop"",
@@ -400,6 +400,33 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""test"",
+            ""id"": ""11cb6523-d4a3-40b5-af7c-327f3e805b98"",
+            ""actions"": [
+                {
+                    ""name"": ""New action"",
+                    ""type"": ""Button"",
+                    ""id"": ""8e755523-228f-471d-93f5-6b3f949d509d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""43b1b118-9526-49c9-86bf-2ea5bd7649e4"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -443,6 +470,9 @@ public class @ActionMap : IInputActionCollection, IDisposable
         m_Menu_Navigate = m_Menu.FindAction("Navigate", throwIfNotFound: true);
         m_Menu_Confirm = m_Menu.FindAction("Confirm", throwIfNotFound: true);
         m_Menu_Return = m_Menu.FindAction("Return", throwIfNotFound: true);
+        // test
+        m_test = asset.FindActionMap("test", throwIfNotFound: true);
+        m_test_Newaction = m_test.FindAction("New action", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -634,6 +664,39 @@ public class @ActionMap : IInputActionCollection, IDisposable
         }
     }
     public MenuActions @Menu => new MenuActions(this);
+
+    // test
+    private readonly InputActionMap m_test;
+    private ITestActions m_TestActionsCallbackInterface;
+    private readonly InputAction m_test_Newaction;
+    public struct TestActions
+    {
+        private @ActionMap m_Wrapper;
+        public TestActions(@ActionMap wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Newaction => m_Wrapper.m_test_Newaction;
+        public InputActionMap Get() { return m_Wrapper.m_test; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TestActions set) { return set.Get(); }
+        public void SetCallbacks(ITestActions instance)
+        {
+            if (m_Wrapper.m_TestActionsCallbackInterface != null)
+            {
+                @Newaction.started -= m_Wrapper.m_TestActionsCallbackInterface.OnNewaction;
+                @Newaction.performed -= m_Wrapper.m_TestActionsCallbackInterface.OnNewaction;
+                @Newaction.canceled -= m_Wrapper.m_TestActionsCallbackInterface.OnNewaction;
+            }
+            m_Wrapper.m_TestActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Newaction.started += instance.OnNewaction;
+                @Newaction.performed += instance.OnNewaction;
+                @Newaction.canceled += instance.OnNewaction;
+            }
+        }
+    }
+    public TestActions @test => new TestActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -669,5 +732,9 @@ public class @ActionMap : IInputActionCollection, IDisposable
         void OnNavigate(InputAction.CallbackContext context);
         void OnConfirm(InputAction.CallbackContext context);
         void OnReturn(InputAction.CallbackContext context);
+    }
+    public interface ITestActions
+    {
+        void OnNewaction(InputAction.CallbackContext context);
     }
 }

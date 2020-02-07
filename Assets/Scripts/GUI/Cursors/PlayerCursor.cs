@@ -2,18 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Threading;
 
 public abstract class PlayerCursor : MonoBehaviour
 {
-    public int playerNumber;
+
+    // private static Mutex mutex = new Mutex();
+    // public static GameObject Create(int playerNumber)
+    // {
+    //     // mutex.WaitOne();
+    //     PlayerCursor.parameters = ScriptableObject.CreateInstance<PlayerCursorParameters>();
+    //     // PlayerCursor.parameters.playerNumber = playerNumber;
+    //     // mutex.ReleaseMutex();
+    //     return Instantiate(parameters.prefab);
+    // }
+    // private static PlayerCursorParameters parameters;
+
     public MenuItem currentMenuItem;
     public bool active = true;
 
+    public int playerNumber;
     private Controller controller;
 
     private void Start()
     {
-        if (Game.Instance == null) return;
         BindController(playerNumber);
     }
 
@@ -24,9 +36,9 @@ public abstract class PlayerCursor : MonoBehaviour
 
     public void BindController(int playerNumber)
     {
-        UnmapControls();
-        this.playerNumber = playerNumber;
+        if (Game.Instance == null) return;
         controller = Game.Instance.Controllers.GetController(playerNumber);
+        UnmapControls();
         controller.GetComponent<PlayerInput>().SwitchCurrentActionMap("Menu");
         gameObject.transform.position = currentMenuItem.Position;
         MapControls();
@@ -51,6 +63,7 @@ public abstract class PlayerCursor : MonoBehaviour
             controller._OnNavigate -= OnNavigate;
             controller._OnConfirm -= OnConfirm;
             controller._OnReturn -= OnReturn;
+            controller.GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
         }
     }
 
