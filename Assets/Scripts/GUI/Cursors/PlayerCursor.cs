@@ -6,18 +6,6 @@ using System.Threading;
 
 public abstract class PlayerCursor : MonoBehaviour
 {
-
-    // private static Mutex mutex = new Mutex();
-    // public static GameObject Create(int playerNumber)
-    // {
-    //     // mutex.WaitOne();
-    //     PlayerCursor.parameters = ScriptableObject.CreateInstance<PlayerCursorParameters>();
-    //     // PlayerCursor.parameters.playerNumber = playerNumber;
-    //     // mutex.ReleaseMutex();
-    //     return Instantiate(parameters.prefab);
-    // }
-    // private static PlayerCursorParameters parameters;
-
     public MenuItem currentMenuItem;
     public bool active = true;
 
@@ -27,6 +15,8 @@ public abstract class PlayerCursor : MonoBehaviour
     private void Start()
     {
         BindController(playerNumber);
+        MapControls();
+        MoveToCurrentMenuItem();
     }
 
     private void OnDestroy()
@@ -38,16 +28,13 @@ public abstract class PlayerCursor : MonoBehaviour
     {
         if (Game.Instance == null) return;
         controller = Game.Instance.Controllers.GetController(playerNumber);
-        UnmapControls();
-        controller.GetComponent<PlayerInput>().SwitchCurrentActionMap("Menu");
-        gameObject.transform.position = currentMenuItem.Position;
-        MapControls();
     }
 
     private void MapControls()
     {
         if (controller != null)
         {
+            controller.GetComponent<PlayerInput>().SwitchCurrentActionMap("Menu");
             controller._OnStart += OnStart;
             controller._OnNavigate += OnNavigate;
             controller._OnConfirm += OnConfirm;
@@ -72,7 +59,7 @@ public abstract class PlayerCursor : MonoBehaviour
         if (active)
         {
             currentMenuItem = currentMenuItem.Navigate(inputValue);
-            gameObject.transform.position = currentMenuItem.Position;
+            MoveToCurrentMenuItem();
         }
     }
 
@@ -83,4 +70,9 @@ public abstract class PlayerCursor : MonoBehaviour
 
     protected abstract void OnStart(InputValue inputValue);
     protected abstract void OnReturn(InputValue inputValue);
+
+    private void MoveToCurrentMenuItem()
+    {
+        gameObject.transform.position = currentMenuItem.Position;
+    }
 }

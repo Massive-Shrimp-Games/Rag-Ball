@@ -6,17 +6,15 @@ using UnityEngine.InputSystem;
 public class PauseMenu : MonoBehaviour
 {
     public MenuItem defaultMenuItem;
+    public Prefab prefab;
     public bool paused { get; private set; }
-    public GameObject playerCursor;
-
-    public PlayerCursorParameters parameters;
+    private GameObject playerCursor;
 
     public void Pause(int playerNumber)
     {
         Time.timeScale = 0f;
         gameObject.SetActive(true);
         paused = true;
-        // playerCursor = PlayerCursor.Create(playerNumber);
         playerCursor = CreateCursor(playerNumber);
         playerCursor.transform.parent = gameObject.transform;
     }
@@ -31,7 +29,7 @@ public class PauseMenu : MonoBehaviour
 
     private GameObject CreateCursor(int playerNumber)
     {
-        parameters.prefab.GetComponent<PlayerCursor>().currentMenuItem = defaultMenuItem;
-        return Instantiate(parameters.prefab);
+        prefab.prefab.GetComponent<PlayerCursor>().currentMenuItem = defaultMenuItem;
+        return Instantiate(prefab.prefab);
     }
 }

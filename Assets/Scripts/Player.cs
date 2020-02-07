@@ -127,7 +127,7 @@ public class Player : MonoBehaviour
     private void MapControls()
     {
         controller = Game.Instance.Controllers.GetController(playerNumber);
-        // controller.GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
+        controller.GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
         if (controller != null)
         {
             controller._OnMove += OnMove;
@@ -220,7 +220,6 @@ public class Player : MonoBehaviour
 
     private void OnPause(InputValue inputValue)
     {
-        this.controller.GetComponent<PlayerInput>().SwitchCurrentActionMap("Menu");
         Game.Instance.PauseMenu.Pause(playerNumber);
     }
 
