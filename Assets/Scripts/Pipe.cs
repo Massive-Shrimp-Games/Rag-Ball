@@ -51,20 +51,25 @@ public class Pipe : MonoBehaviour
         {
             //Debug.Log("Player entered a goal");
             GameObject player = collision.gameObject.transform.root.GetChild(0).gameObject;
-            if (player.GetComponent<Player>().color == color)
-            {
+            if (player.GetComponent<Player>().getHips().tag == "Grabbable"){
+                if (player.GetComponent<Player>().color == color)
+                {
                
-                if (color == TeamColor.Red)
-                {
-                    Debug.Log("player has same color");
-                    ruleset.BlueScore(player.transform.GetChild(1).GetChild(0).gameObject);
-                }
-                else
-                {
-                    ruleset.RedScore(player.transform.GetChild(1).GetChild(0).gameObject);
-                }
-                confetti.Play();
-            }   
+                    if (color == TeamColor.Red)
+                    {
+                        Debug.Log("player has same color");
+                        ruleset.BlueScore(player.transform.GetChild(1).GetChild(0).gameObject);
+                    }
+                    else
+                    {
+                        ruleset.RedScore(player.transform.GetChild(1).GetChild(0).gameObject);
+                    }
+                    confetti.Play();
+                } 
+            }
+            else{
+                Debug.Log("Hello, Im being grabbed"); 
+            }  
         }
     }
 }

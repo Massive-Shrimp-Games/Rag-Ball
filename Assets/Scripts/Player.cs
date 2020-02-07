@@ -359,5 +359,9 @@ public class Player : MonoBehaviour
     {
         hipsRigidBody.velocity = Vector3.zero;
     }
+
+    public GameObject getHips(){
+        return hips; 
+    }
 }
 
