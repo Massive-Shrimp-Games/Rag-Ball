@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
     private bool isRecharging;
 
     private bool hasStartedRecharging;  
+    private SpriteRenderer sp_cursor; 
 
     [SerializeField] private CheckGrab grabCheckCollider;   // Set in editor
     [SerializeField] private Transform grabPos; // Set in editor
@@ -81,10 +82,12 @@ public class Player : MonoBehaviour
         if(color == TeamColor.Red)
         {
             transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Medium");
+            transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Red_01"); 
         }
         else if (color == TeamColor.Blue)
         {
             transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Medium_Blue");
+            transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Blue_01");
         }
     }
     private void Update()
