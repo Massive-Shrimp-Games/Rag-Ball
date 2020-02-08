@@ -2,18 +2,15 @@
 
 public class CursorCreator : MonoBehaviour
 {
-    public MenuItem defaultItem;
-    public GameObject cursorPrefab;
+    public PlayerCursorFactory playerCursorFactory;
+    public MenuItem defaultMenuItem;
 
-    void Start()
+    private void Start()
     {
         if (Game.Instance == null) return;
         for (int i = 0; i < Game.Instance.Controllers.Count(); i++)
         {
-            PlayerCursor cursor = Instantiate(cursorPrefab).GetComponent<PlayerCursor>();
-            cursor.transform.parent = transform.parent;
-            cursor.currentMenuItem = defaultItem;
-            // cursor.BindController(i);
+            playerCursorFactory.CreateCursor(gameObject.transform.parent, i, defaultMenuItem);
         }
     }
 }
