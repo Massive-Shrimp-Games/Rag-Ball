@@ -13,7 +13,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         gameObject.SetActive(true);
         paused = true;
-        playerCursor = playerCursorFactory.CreateCursor(gameObject.transform, playerNumber, defaultMenuItem);
+        playerCursor = playerCursorFactory.CreateCursor(gameObject.transform.GetChild(0), playerNumber, defaultMenuItem);
     }
 
     public void UnPause()
