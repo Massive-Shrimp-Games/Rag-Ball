@@ -22,6 +22,7 @@ public class TitleScreen : MonoBehaviour
         controller = Game.Instance.Controllers.GetController(0);
         if (controller != null)
         {
+            controller.GetComponent<PlayerInput>().SwitchCurrentActionMap("Menu");
             controller._OnStart += OnStart;
             controller._OnNavigate += OnNavigate;
             controller._OnConfirm += OnConfirm;
