@@ -56,11 +56,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1522273130828011306}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0.15337862, z: 0}
+  m_LocalPosition: {x: 0, y: 0.15337862, z: 0}
   m_LocalScale: {x: 1.2048376, y: 1.2048376, z: 1.2048376}
   m_Children: []
   m_Father: {fileID: 5693011790805051544}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &7739412577415888730
 SkinnedMeshRenderer:
@@ -851,7 +851,7 @@ Transform:
   m_Children:
   - {fileID: 7180902267645389447}
   m_Father: {fileID: 5693011790805051544}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6885529291031437915
 GameObject:
@@ -1674,7 +1674,7 @@ GameObject:
   - component: {fileID: 5693011790805051544}
   - component: {fileID: 2417210129211393506}
   m_Layer: 0
-  m_Name: SmallRagdollonSpecialRig 1
+  m_Name: SmallRagdollonSpecialRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1691,8 +1691,8 @@ Transform:
   m_LocalPosition: {x: -0.28, y: -0.45, z: 4.522}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1757104177572558563}
   - {fileID: 5833047065749775249}
+  - {fileID: 1757104177572558563}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

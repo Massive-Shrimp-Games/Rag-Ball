@@ -4,7 +4,7 @@
     {
         RagBall,
         RagOfTheHill,
-        LazerRag
+        CaptureTheRag
     }
 
     public static int Count

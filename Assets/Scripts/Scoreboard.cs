@@ -12,7 +12,7 @@ public class Scoreboard : MonoBehaviour
     private void Start()
     {
         ruleset = GameObject.Find("Ruleset")?.GetComponent<RagballRuleset>();
-        scoreMesh = transform.GetChild(2)?.GetComponent<TextMeshPro>();
+        scoreMesh = transform.GetChild(0)?.GetComponent<TextMeshPro>();
         Debug.Log("Scoreboard start");
         if (color == TeamColor.Red)
         {
@@ -43,8 +43,8 @@ public class Scoreboard : MonoBehaviour
         if(player.transform.root.GetChild(0).GetComponent<Player>().color != color)
         {
             string scoreSTR = score.ToString();
-            if (score < 10)
-                scoreSTR = "0" + scoreSTR;
+            //if (score < 10)
+             //   scoreSTR = "0" + scoreSTR;
             scoreMesh.text = scoreSTR;
         }
         
