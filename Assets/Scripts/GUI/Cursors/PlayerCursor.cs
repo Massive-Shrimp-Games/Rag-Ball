@@ -9,14 +9,14 @@ public abstract class PlayerCursor : MonoBehaviour
 
     private Controller controller;
 
-    private void Start()
+    protected virtual void Start()
     {
         BindController();
         MapControls();
         MoveToCurrentMenuItem();
     }
 
-    private void OnDestroy()
+    protected virtual void OnDestroy()
     {
         UnmapControls();
     }
@@ -31,7 +31,6 @@ public abstract class PlayerCursor : MonoBehaviour
     {
         if (controller != null)
         {
-            controller.GetComponent<PlayerInput>().SwitchCurrentActionMap("Menu");
             controller._OnStart += OnStart;
             controller._OnNavigate += OnNavigate;
             controller._OnConfirm += OnConfirm;
@@ -47,7 +46,6 @@ public abstract class PlayerCursor : MonoBehaviour
             controller._OnNavigate -= OnNavigate;
             controller._OnConfirm -= OnConfirm;
             controller._OnReturn -= OnReturn;
-            controller.GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
         }
     }
 
