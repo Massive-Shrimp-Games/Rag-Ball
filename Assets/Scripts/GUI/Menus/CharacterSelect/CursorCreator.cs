@@ -13,7 +13,7 @@ public class CursorCreator : MonoBehaviour
             PlayerCursor cursor = Instantiate(cursorPrefab).GetComponent<PlayerCursor>();
             cursor.transform.parent = transform.parent;
             cursor.currentMenuItem = defaultItem;
-            cursor.BindController(i);
+            // cursor.BindController(i);
         }
     }
 }

@@ -1,20 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Threading;
 
 public abstract class PlayerCursor : MonoBehaviour
 {
     public MenuItem currentMenuItem;
+    public int playerNumber;
     public bool active = true;
 
-    public int playerNumber;
     private Controller controller;
 
     private void Start()
     {
-        BindController(playerNumber);
+        BindController();
         MapControls();
         MoveToCurrentMenuItem();
     }
@@ -24,7 +21,7 @@ public abstract class PlayerCursor : MonoBehaviour
         UnmapControls();
     }
 
-    public void BindController(int playerNumber)
+    private void BindController()
     {
         if (Game.Instance == null) return;
         controller = Game.Instance.Controllers.GetController(playerNumber);

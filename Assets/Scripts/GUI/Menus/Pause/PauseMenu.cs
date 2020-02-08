@@ -26,8 +26,8 @@ public class PauseMenu : MonoBehaviour
 
     private GameObject CreateCursor(int playerNumber)
     {
-        GameObject cursor = prefabber.prefab;
-        cursor.GetComponent<PlayerCursor>().currentMenuItem = defaultMenuItem;
-        return Instantiate(cursor);
+        prefabber.prefab.GetComponent<PlayerCursor>().currentMenuItem = defaultMenuItem;
+        prefabber.prefab.GetComponent<PlayerCursor>().playerNumber = playerNumber;
+        return Instantiate(prefabber.prefab);
     }
 }
