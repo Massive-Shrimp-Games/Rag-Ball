@@ -3335,7 +3335,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9020237550198072980}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.01999998, y: 0.06000018, z: 0.049999237}
+  m_LocalPosition: {x: -0.01999998, y: 0.36, z: 0.049999237}
   m_LocalScale: {x: 0.19805878, y: 0.198059, z: 0.19805898}
   m_Children: []
   m_Father: {fileID: 2828387496987289185}
@@ -3417,10 +3417,10 @@ PositionConstraint:
   m_GameObject: {fileID: 9020237550198072980}
   m_Enabled: 1
   m_Weight: 1
-  m_TranslationAtRest: {x: -0.01999998, y: 0.06000018, z: 0.049999237}
-  m_TranslationOffset: {x: -0.00999999, y: -0.79233, z: 0.09097439}
+  m_TranslationAtRest: {x: -0.01999998, y: 0.36, z: 0.049999237}
+  m_TranslationOffset: {x: -0.00999999, y: -0.4923302, z: 0.09097439}
   m_AffectTranslationX: 1
-  m_AffectTranslationY: 0
+  m_AffectTranslationY: 1
   m_AffectTranslationZ: 1
   m_IsContraintActive: 1
   m_IsLocked: 0
@@ -3434,6 +3434,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1494065317941848964}
     m_Modifications:
+    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
+        type: 3}
+      propertyPath: m_Name
+      value: RagdollTrail
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8130124753009482852, guid: 46cda7ba68426ef49b2bbd958eeec03a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3489,24 +3499,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
-        type: 3}
-      propertyPath: m_Name
-      value: RagdollTrail
-      objectReference: {fileID: 0}
-    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46cda7ba68426ef49b2bbd958eeec03a, type: 3}
---- !u!1 &535904923049735862 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
-    type: 3}
-  m_PrefabInstance: {fileID: 8627748802922457804}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &535904923049735848 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8130124753009482852, guid: 46cda7ba68426ef49b2bbd958eeec03a,
