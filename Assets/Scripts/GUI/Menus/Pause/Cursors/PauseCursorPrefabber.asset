@@ -10,7 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec23bdd5fc3f4304baab1dc6125a30aa, type: 3}
-  m_Name: PauseCursorParameters
+  m_Name: PauseCursorPrefabber
   m_EditorClassIdentifier: 
   prefab: {fileID: 8590543209871607258, guid: 2d5f1957b7b1f7f499a7c6ce2e889a89, type: 3}
-  playerNumber: 0

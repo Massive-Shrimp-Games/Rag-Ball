@@ -670,6 +670,12 @@ PrefabInstance:
       propertyPath: defaultMenuItem
       value: 
       objectReference: {fileID: 1233908767}
+    - target: {fileID: 8062177150788008824, guid: 6880b07a690a80d498f1c597d28bac5b,
+        type: 3}
+      propertyPath: prefabber
+      value: 
+      objectReference: {fileID: 11400000, guid: b026ff1bb407fa715918dda5efc77757,
+        type: 2}
     m_RemovedComponents:
     - {fileID: 7379663797889551637, guid: 6880b07a690a80d498f1c597d28bac5b, type: 3}
     - {fileID: 6314928229317114828, guid: 6880b07a690a80d498f1c597d28bac5b, type: 3}

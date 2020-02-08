@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
     public MenuItem defaultMenuItem;
-    public Prefab prefab;
+    public Prefabber prefabber;
     public bool paused { get; private set; }
     private GameObject playerCursor;
 
@@ -29,7 +26,8 @@ public class PauseMenu : MonoBehaviour
 
     private GameObject CreateCursor(int playerNumber)
     {
-        prefab.prefab.GetComponent<PlayerCursor>().currentMenuItem = defaultMenuItem;
-        return Instantiate(prefab.prefab);
+        GameObject cursor = prefabber.prefab;
+        cursor.GetComponent<PlayerCursor>().currentMenuItem = defaultMenuItem;
+        return Instantiate(cursor);
     }
 }
