@@ -1,8 +1,19 @@
-﻿using UnityEngine.InputSystem;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CharacterSelectCursor : PlayerCursor
 {
+    public List<Sprite> cursorSprites;
+
+    protected override void Start()
+    {
+        base.Start();
+        SetImage();
+    }
+
     protected override void OnReturn(InputValue inputValue)
     {
         if (active)
@@ -16,9 +27,11 @@ public class CharacterSelectCursor : PlayerCursor
 
     protected override void OnStart(InputValue inputValue)
     {
-        if (transform.parent.GetComponent<CursorCreator>().ready)
-        {
-            SceneManager.LoadScene("Main_Game2");
-        }
+        SceneManager.LoadScene("Main_Game2");
+    }
+
+    private void SetImage()
+    {
+        GetComponent<Image>().sprite = cursorSprites[playerNumber];
     }
 }

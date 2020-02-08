@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class RagballRuleset : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class RagballRuleset : MonoBehaviour
 
     private void Start()
     {
+        ActionMapEvent.InGameplay?.Invoke();
         OnRedScore += AddRedScore;
         OnBlueScore += AddBlueScore;
         RedWin.SetActive(false);

@@ -152,7 +152,6 @@ public class Player : MonoBehaviour
     private void MapControls()
     {
         controller = Game.Instance.Controllers.GetController(playerNumber);
-        controller.GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
         if (controller != null)
         {
             controller._OnMove += OnMove;
@@ -250,11 +249,7 @@ public class Player : MonoBehaviour
 
     private void OnPause(InputValue inputValue)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(
-            UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Main_Game"
-            ? "Main_Game2"
-            : "Main_Game"
-        );
+        Game.Instance.PauseMenu.Pause(playerNumber);
     }
 
     private void OnArcThrow(InputValue inputValue)

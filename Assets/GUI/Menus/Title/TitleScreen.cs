@@ -9,6 +9,7 @@ public class TitleScreen : MonoBehaviour
     private void Start()
     {
         if (Game.Instance == null) return;
+        ActionMapEvent.InMenu?.Invoke();
         MapControls();
     }
 

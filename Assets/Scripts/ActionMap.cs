@@ -8,7 +8,7 @@ using UnityEngine.InputSystem.Utilities;
 
 public class @ActionMap : IInputActionCollection, IDisposable
 {
-    private InputActionAsset asset;
+    public InputActionAsset asset { get; }
     public @ActionMap()
     {
         asset = InputActionAsset.FromJson(@"{
@@ -56,7 +56,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""id"": ""4b0ad7cd-2823-4da7-989c-51b35b4f8808"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Tap""
                 },
                 {
                     ""name"": ""GrabDrop"",

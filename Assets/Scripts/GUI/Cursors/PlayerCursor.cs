@@ -1,35 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public abstract class PlayerCursor : MonoBehaviour
 {
-    public int playerNumber;
     public MenuItem currentMenuItem;
+    public int playerNumber;
     public bool active = true;
 
     private Controller controller;
 
-    private void Start()
+    protected virtual void Start()
+    {
+        BindController();
+        MapControls();
+        MoveToCurrentMenuItem();
+    }
+
+    protected virtual void OnDestroy()
+    {
+        UnmapControls();
+    }
+
+    private void BindController()
     {
         if (Game.Instance == null) return;
-        BindController(playerNumber);
-    }
-
-    private void OnDestroy()
-    {
-        UnmapControls();
-    }
-
-    public void BindController(int playerNumber)
-    {
-        UnmapControls();
-        this.playerNumber = playerNumber;
         controller = Game.Instance.Controllers.GetController(playerNumber);
-        controller.GetComponent<PlayerInput>().SwitchCurrentActionMap("Menu");
-        gameObject.transform.position = currentMenuItem.Position;
-        MapControls();
     }
 
     private void MapControls()
@@ -59,7 +54,7 @@ public abstract class PlayerCursor : MonoBehaviour
         if (active)
         {
             currentMenuItem = currentMenuItem.Navigate(inputValue);
-            gameObject.transform.position = currentMenuItem.Position;
+            MoveToCurrentMenuItem();
         }
     }
 
@@ -70,4 +65,9 @@ public abstract class PlayerCursor : MonoBehaviour
 
     protected abstract void OnStart(InputValue inputValue);
     protected abstract void OnReturn(InputValue inputValue);
+
+    private void MoveToCurrentMenuItem()
+    {
+        gameObject.transform.position = currentMenuItem.Position;
+    }
 }
