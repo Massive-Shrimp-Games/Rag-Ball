@@ -37,7 +37,7 @@ public class Timer : MonoBehaviour
             timer -= Time.deltaTime;
             int min = Mathf.FloorToInt(timer / 60);
             int sec = Mathf.FloorToInt(timer % 60);
-            TimerText.text = min.ToString("00") + ":" + sec.ToString("00");
+            TimerText.text = min.ToString("00") + " : " + sec.ToString("00");
             
         }
 
@@ -45,7 +45,7 @@ public class Timer : MonoBehaviour
         {
             canCount = false;
             doOnce = true;
-            TimerText.text = ("00" + ":" + "00");
+            TimerText.text = ("00" + " : " + "00");
             timer = 0.0f;
             //GameOver();
         }
