@@ -14,8 +14,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpForce; // Set in editor
     [SerializeField] private float directThrowForce; // Set in editor
     [SerializeField] private float arcThrowForce; // Set in editor
+    [SerializeField] private int staggerTime; // Set in editor
 
-    public TeamColor color;
+    //public TeamColor color;
     
     private Vector3 directThrowForceVel;
     private Vector3 arcThrowForceVel;
@@ -28,6 +29,9 @@ public class Player : MonoBehaviour
     //private int staminaCharges;
 
     private bool canJump;
+    public bool dashing;    // Protect this with a Getter
+    [SerializeField] private float dashVelocityMinimum;
+    [SerializeField] private StaggerCheck staggerCheck;
 
     private const int StaminaMaxCharge = 5;  
 
@@ -35,9 +39,8 @@ public class Player : MonoBehaviour
 
     private const int StaminaJumpCharge = 1; 
 
-    private int StaggerTime = 5;
+    private int StaminaRechargeTime = 3;  
 
-    private float StaminaRechargeTime = 1.5f; 
     private Collider hipsCollider;
 
     private bool isRecharging;
@@ -49,45 +52,65 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform grabPos; // Set in editor
     [SerializeField] private Transform directThrowDirection;
     [SerializeField] private Transform arcThrowDirection;
-    [SerializeField] private GameObject grabbing;
-    
-    // Instead of this, have a particle handler
     [SerializeField] private GameObject staggerStars;
-    TrailRenderer trailRenderer;
+    private TrailRenderer trailRenderer;
 
-    public float trailSpeed = 6f;
+    private GameObject grabbing;
 
     private GameObject hips;
     private Animator animator;
-    //animator.State.name
-
     private Rigidbody hipsRigidBody;
 
-    public StaggerCheck staggerCheck;
-
     public int playerNumber;
-
-
     private Controller controller;
-
-    //private Vector2 movement;
 
     void Awake()
     {
+        hips = transform.GetChild(1).GetChild(0).gameObject; //set reference to player's hips
+        hipsRigidBody = hips.gameObject.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
+        animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
+        hipsCollider = hips.gameObject.GetComponent<Collider>();
+        trailRenderer = hips.GetComponent<TrailRenderer>();
+
         AssignMaterial();
+        staggerCheck.OnStaggerSelf += StaggerSelf;
     }
 
     private void AssignMaterial()
     {
-        if(color == TeamColor.Red)
+        PlayerSize player = transform.root.GetComponent<PlayerSize>();
+        if(player.color == TeamColor.Red)
         {
-            transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Medium");
-            transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Red_01"); 
+            if(player.size == Size.Small)
+            {
+                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Small");
+                transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Red_01");
+            } else if (player.size == Size.Medium)
+            {
+                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Medium");
+                transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Red_01");
+            } else if (player.size == Size.Large)
+            {
+                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Large");
+                transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Red_01");
+            }
+             
         }
-        else if (color == TeamColor.Blue)
+        else if (player.color == TeamColor.Blue)
         {
-            transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Medium_Blue");
-            transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Blue_01");
+            if(player.size == Size.Small)
+            {
+                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Small");
+                transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Blue_01");
+            } else if (player.size == Size.Medium)
+            {
+                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Medium");
+                transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Blue_01");
+            } else if (player.size == Size.Large)
+            {
+                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Large");
+                transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Blue_01");
+            }
         }
     }
     private void Update()
@@ -98,6 +121,21 @@ public class Player : MonoBehaviour
         canJump = leftFoot || rightFoot;
 
         staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
+        if (isRecharging == false && hasStartedRecharging == true){
+            StartCoroutine(rechargeStamina());
+        }
+
+        dashing = hipsRigidBody.velocity.magnitude > dashVelocityMinimum;
+        staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
+
+        if (hipsRigidBody.velocity.magnitude > 6f)
+        {
+            trailRenderer.enabled = true;
+        }
+        else
+        {
+            trailRenderer.enabled = false;
+        }
     }
 
     void Start()
@@ -121,9 +159,11 @@ public class Player : MonoBehaviour
 
         trailRenderer = transform.GetChild(1).GetChild(0).GetComponent<TrailRenderer>();
 
+        
+        dashing = false;
         grabbing = null;
         isRecharging = false; 
-        hasStartedRecharging = false; 
+        hasStartedRecharging = false;
     }
 
     private void OnDestroy()
@@ -138,13 +178,13 @@ public class Player : MonoBehaviour
             grabbing.GetComponent<Rigidbody>().position = grabPos.position;
         }
 
-        if (hipsRigidBody.velocity.magnitude > trailSpeed)
+        if (hipsRigidBody.velocity.magnitude > dashVelocityMinimum)
         {
-            trailRenderer.enabled = true;
+            //trailRenderer.enabled = true;
         }
         else
         {
-            trailRenderer.enabled = false;
+            //trailRenderer.enabled = false;
         }
     }
 
@@ -292,35 +332,24 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-    private IEnumerator StaggerSelf()
+    private void StaggerSelf(bool enemyDashing, TeamColor enemyColor)
     {
-        yield return new WaitForSeconds(4);
-        staggerStars.SetActive(false);
+        if (enemyDashing == true && enemyColor != gameObject.transform.root.GetComponent<PlayerSize>().color)
+        {
+            hipsRigidBody.isKinematic = true;
+            animator.enabled = false;
+            staggerStars.SetActive(true);
+            if (grabbing) { OnGrabDrop(null); }
+            StartCoroutine("UnStagger");
+        }
     }
 
-    void Stagger()
+    private IEnumerator UnStagger()
     {
-        hipsRigidBody.constraints = RigidbodyConstraints.None;
-        animator.enabled = false;
-        Debug.Log("Stagger time");
-
-        waitingForUnstaggerCoroutine(5);
-        waitingForUnstaggerCoroutine(StaggerTime); 
-    }
-
-    void Unstagger()
-    {
-        hipsRigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+        yield return new WaitForSeconds(staggerTime);
+        hipsRigidBody.isKinematic = false;
         animator.enabled = true;
         staggerStars.SetActive(false);
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        /*if (other.gameObject.tag == "Stagger"){
-            //Debug.Log("Hit a box");
-            Stagger(5); 
-        }*/
     }
 
     private IEnumerator rechargeStamina(){
@@ -351,7 +380,7 @@ public class Player : MonoBehaviour
 
         yield return new WaitForSeconds(time);
 
-        Unstagger();
+        UnStagger();
     }
 
     public void ResetVelocity()

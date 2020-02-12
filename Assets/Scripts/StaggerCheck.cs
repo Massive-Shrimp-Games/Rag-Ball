@@ -4,48 +4,38 @@ using UnityEngine;
 
 public class StaggerCheck : MonoBehaviour
 {
-    // Start is called before the first frame update
-    private GameObject hips;
-    //private Animator animator;
+    public delegate void StaggerSelf(bool enemyDashing, TeamColor enemyColor);
 
-    private Rigidbody hipsRigidBody; 
-    void Start()
+    public event StaggerSelf OnStaggerSelf;
+
+    // If the person that ran into us was dashing, stagger self.
+    // Check if we hit hips. Need a stronger system to check if we collide with Player
+    // Can't check player tag because self is hips, which collides with Player.
+    private void OnTriggerEnter(Collider other)
     {
-        hips = transform.gameObject; 
-        hipsRigidBody = hips.gameObject.GetComponent<Rigidbody>(); 
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void Stagger(int time){
-        hipsRigidBody.constraints = RigidbodyConstraints.None;
-        Debug.Log("Stagger time");
-        //animator.enabled = false;
-        waitingForUnstaggerCoroutine(5); 
-    }
-
-    void Unstagger(){
-        hipsRigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
-        //animator.enabled = true;
-        Debug.Log("Unstagger time");
-    }
-
-    private void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag == "StaggerBox"){
-            Debug.Log("Why");
-            Stagger(5); 
+        if(Game.Instance == null) return;
+        GameObject enemy;
+        if (other.gameObject.tag == "Grabbable")
+        {
+            enemy = other.transform.root.gameObject;
+            PlayerSize psize = enemy.transform.GetComponent<PlayerSize>();
+            Player pscript = null;
+            if(psize.size == Size.Small)
+            {
+                pscript = enemy.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Player>();
+            } else if(psize.size == Size.Medium)
+            {
+                pscript = enemy.transform.GetChild(1).GetChild(0).GetChild(1).GetComponent<Player>();
+            } else if(psize.size == Size.Large)
+            {
+                pscript = enemy.transform.GetChild(2).GetChild(0).GetChild(1).GetComponent<Player>();
+            }
+            if (enemy != null && pscript != null)
+            {
+                bool isDashing = pscript.dashing;
+                OnStaggerSelf(isDashing, psize.color);
+            }
         }
-    }
 
-    private IEnumerator waitingForUnstaggerCoroutine(int time){
-
-        yield return new WaitForSeconds (time); 
-
-        Unstagger(); 
     }
 }
