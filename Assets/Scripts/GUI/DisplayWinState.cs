@@ -43,7 +43,7 @@ public class DisplayWinState : MonoBehaviour
 
     private void RedWin()
     {
-
+        //GameObject.Find("BluePlayer").transform.position = 
     }
 
     private void BlueWin()
