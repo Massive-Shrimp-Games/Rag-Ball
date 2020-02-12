@@ -24,4 +24,9 @@ public class Audio : MonoBehaviour
     {
         audioSources[name]?.Play();
     }
+
+    public void StopAudio(string name)
+    {
+        audioSources[name]?.Stop();
+    }
 }
