@@ -184,20 +184,22 @@ public class Player : MonoBehaviour
     #region Player Abilities
     private void OnMove(InputValue inputValue)
     {
-        Vector2 stickDirection = inputValue.Get<Vector2>();
-        Vector3 force = new Vector3(stickDirection.x, 0, stickDirection.y) * playerSpeed * Time.deltaTime;
-        hipsRigidBody.AddForce(force);
-        //Debug.LogFormat("stickDir is {0}", stickDirection);
-        if (Mathf.Abs(stickDirection.x) >= 0.1 || Mathf.Abs(stickDirection.y) >= 0.1)
-        {
-            hips.transform.forward = new Vector3(stickDirection.x, 0, stickDirection.y);
+        if (hips.tag != "Grabbed"){
+            Vector2 stickDirection = inputValue.Get<Vector2>();
+            Vector3 force = new Vector3(stickDirection.x, 0, stickDirection.y) * playerSpeed * Time.deltaTime;
+            hipsRigidBody.AddForce(force);
+            //Debug.LogFormat("stickDir is {0}", stickDirection);
+            if (Mathf.Abs(stickDirection.x) >= 0.1 || Mathf.Abs(stickDirection.y) >= 0.1)
+            {
+                hips.transform.forward = new Vector3(stickDirection.x, 0, stickDirection.y);
+            }
+            animator.Play(force.magnitude >= 0.03 ? "Walk" : "Idle");
         }
-        animator.Play(force.magnitude >= 0.03 ? "Walk" : "Idle");
     }
 
     private void OnJump(InputValue inputValue)
     {
-        if (canJump && staggerCharges >= 0)
+        if (canJump && staggerCharges >= 0 && hips.tag != "Grabbed")
         {
             Vector3 boostDir = hips.transform.up;
             hipsRigidBody.AddForce(boostDir * jumpForce);
@@ -212,7 +214,7 @@ public class Player : MonoBehaviour
 
     private void OnDash(InputValue inputValue)
     {
-        if (staggerCharges >= staggerDashCharge)
+        if (staggerCharges >= staggerDashCharge && hips.tag != "Grabbed")
         {
             Vector3 boostDir = hips.transform.forward;
             hipsRigidBody.AddForce(boostDir * dashForce);
@@ -235,6 +237,7 @@ public class Player : MonoBehaviour
             {
                 grabbing.GetComponent<Rigidbody>().isKinematic = true;
                 grabbing.tag = "Grabbed";
+                //grabbing.GetComponentInParent<GameObject>().GetComponentInParent<GameObject>().GetComponentInParent<Player>().;
                 hips.tag = "Grabbing";
             }
         }
