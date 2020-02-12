@@ -17,8 +17,6 @@ public class DisplayWinState : MonoBehaviour
 
     public void DisplayWinner()
     {
-        Debug.Log("Hello?");
-
         if (RagballRuleset.redScore >= GameModeSelect.goalLimit && GameModeSelect.goalLimit != 0)
         {
             RedWin.SetActive(true);
