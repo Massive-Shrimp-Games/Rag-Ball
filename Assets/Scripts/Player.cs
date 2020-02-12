@@ -27,7 +27,8 @@ public class Player : MonoBehaviour
     public int staggerJumpCharge;
     //private int staminaCharges;
 
-    private bool canJump;
+    [SerializeField] private bool canJump;
+
 
     private const int StaminaMaxCharge = 5;  
 
@@ -147,7 +148,7 @@ public class Player : MonoBehaviour
 
         grabbing = null;
         isRecharging = false; 
-        hasStartedRecharging = false; 
+        hasStartedRecharging = false;
     }
 
     private void OnDestroy()
@@ -164,11 +165,11 @@ public class Player : MonoBehaviour
 
         if (hipsRigidBody.velocity.magnitude > trailSpeed)
         {
-            trailRenderer.enabled = true;
+            //trailRenderer.enabled = true;
         }
         else
         {
-            trailRenderer.enabled = false;
+            //trailRenderer.enabled = false;
         }
     }
 
