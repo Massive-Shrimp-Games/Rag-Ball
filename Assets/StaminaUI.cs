@@ -13,7 +13,7 @@ public class StaminaUI : MonoBehaviour
     [SerializeField] private Sprite REDPLAYER;
     [SerializeField] private Sprite BLUEPLAYER;
 
-    private PlayerSize[] players;
+    [SerializeField] private PlayerSize[] players;
     private GameObject[] UIS;
     void Start()
     {
@@ -47,7 +47,6 @@ public class StaminaUI : MonoBehaviour
     }
     private void OnDestroy()
     {
-        
         foreach(PlayerSize p in players)
         {
             foreach (Player pl in p.GetComponentsInChildren<Player>())

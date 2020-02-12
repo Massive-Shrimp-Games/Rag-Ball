@@ -51,6 +51,19 @@ MonoBehaviour:
   small: {fileID: 5668778724140146923}
   medium: {fileID: 2886622875346335816}
   large: {fileID: 5635737402853199230}
+  playerNumber: 0
+--- !u!114 &8840856436855423013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965315396538370311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d0137f10ed2f1b49b2b530fb776d764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1638069420614780397
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -248,6 +261,16 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -3.77
       objectReference: {fileID: 0}
+    - target: {fileID: 383636676227164208, guid: 15d3de9e78381944ba1e8b53649b39d5,
+        type: 3}
+      propertyPath: staggerCheck
+      value: 
+      objectReference: {fileID: 8840856436855423013}
+    - target: {fileID: 383636676227164208, guid: 15d3de9e78381944ba1e8b53649b39d5,
+        type: 3}
+      propertyPath: dashVelocityMinimum
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15d3de9e78381944ba1e8b53649b39d5, type: 3}
 --- !u!1 &2886622875346335816 stripped
@@ -259,6 +282,12 @@ GameObject:
 --- !u!4 &8500217297238844617 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7155447869370130724, guid: 15d3de9e78381944ba1e8b53649b39d5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1638069420614780397}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1965315396538370311 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1008142784070814954, guid: 15d3de9e78381944ba1e8b53649b39d5,
     type: 3}
   m_PrefabInstance: {fileID: 1638069420614780397}
   m_PrefabAsset: {fileID: 0}
@@ -439,6 +468,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6582401991683237434, guid: 71184bdcae98a7049a12213a0c76c4cc,
+        type: 3}
+      propertyPath: dashVelocityMinimum
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71184bdcae98a7049a12213a0c76c4cc, type: 3}
 --- !u!1 &5668778724140146923 stripped
@@ -460,16 +494,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4481739280208597564}
     m_Modifications:
-    - target: {fileID: 1273088810089807204, guid: 301627030d30d094e9756e5b3e7f8f2d,
-        type: 3}
-      propertyPath: m_Name
-      value: Large
-      objectReference: {fileID: 0}
-    - target: {fileID: 1273088810089807204, guid: 301627030d30d094e9756e5b3e7f8f2d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4720809429773742676, guid: 301627030d30d094e9756e5b3e7f8f2d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -523,6 +547,16 @@ PrefabInstance:
     - target: {fileID: 4720809429773742676, guid: 301627030d30d094e9756e5b3e7f8f2d,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1273088810089807204, guid: 301627030d30d094e9756e5b3e7f8f2d,
+        type: 3}
+      propertyPath: m_Name
+      value: Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 1273088810089807204, guid: 301627030d30d094e9756e5b3e7f8f2d,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1462637983584979763, guid: 301627030d30d094e9756e5b3e7f8f2d,
@@ -584,6 +618,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TranslationOffset.z
       value: -0.49576652
+      objectReference: {fileID: 0}
+    - target: {fileID: 8652121543698198146, guid: 301627030d30d094e9756e5b3e7f8f2d,
+        type: 3}
+      propertyPath: staggerCheck
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8652121543698198146, guid: 301627030d30d094e9756e5b3e7f8f2d,
+        type: 3}
+      propertyPath: dashVelocityMinimum
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 301627030d30d094e9756e5b3e7f8f2d, type: 3}

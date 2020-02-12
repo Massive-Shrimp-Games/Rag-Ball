@@ -32,8 +32,6 @@ public class Player : MonoBehaviour
     public bool dashing;    // Protect this with a Getter
     [SerializeField] private float dashVelocityMinimum;
     [SerializeField] private StaggerCheck staggerCheck;
-    [SerializeField] private bool canJump;
-
 
     private const int StaminaMaxCharge = 5;  
 
@@ -336,7 +334,7 @@ public class Player : MonoBehaviour
 
     private void StaggerSelf(bool enemyDashing, TeamColor enemyColor)
     {
-        if (enemyDashing == true && enemyColor != color)
+        if (enemyDashing == true && enemyColor != gameObject.transform.root.GetComponent<PlayerSize>().color)
         {
             hipsRigidBody.isKinematic = true;
             animator.enabled = false;
