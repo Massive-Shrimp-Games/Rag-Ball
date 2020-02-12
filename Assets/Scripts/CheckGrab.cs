@@ -32,7 +32,7 @@ public class CheckGrab : MonoBehaviour
         GameObject nearest = null;
         foreach (GameObject grab in grabbables)
         {
-            if (nearest == null)
+            if (nearest == null && grab.tag != "Grabbed")
             {
                 nearest = grab;
             }
