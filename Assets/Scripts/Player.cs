@@ -67,8 +67,11 @@ public class Player : MonoBehaviour
 
     public int playerNumber;
 
-
     private Controller controller;
+
+    //Gravity Modifiers
+    public float fallMultiplier = 30f;
+    public float jumpMultiplier = 8f;
 
     //private Vector2 movement;
 
@@ -98,6 +101,25 @@ public class Player : MonoBehaviour
         canJump = leftFoot || rightFoot;
 
         staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
+
+        if (!canJump)
+        {
+            if (hips.GetComponent<Rigidbody>().velocity.y > 0)
+            {
+                //Debug.Log("GOING UP");
+                hipsRigidBody.velocity += Vector3.up * Physics.gravity.y * (jumpMultiplier - 1) * Time.deltaTime;
+            }
+            else if (hips.GetComponent<Rigidbody>().velocity.y < 0)
+            {
+                //Debug.Log("GOING DOWN");
+                //hips.GetComponent<Rigidbody>().velocity = hips.GetComponent<Rigidbody>().velocity * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+                hipsRigidBody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+            }
+            else
+            {
+                //Debug.Log("ZERO");
+            }
+        }
     }
 
     void Start()
@@ -186,8 +208,10 @@ public class Player : MonoBehaviour
     {
         Vector2 stickDirection = inputValue.Get<Vector2>();
         Vector3 force = new Vector3(stickDirection.x, 0, stickDirection.y) * playerSpeed * Time.deltaTime;
-        hipsRigidBody.AddForce(force);
-        //Debug.LogFormat("stickDir is {0}", stickDirection);
+        //hipsRigidBody.AddForce(force);
+        hipsRigidBody.MovePosition(new Vector3(hipsRigidBody.position.x + (stickDirection.x * .1f), hipsRigidBody.position.y, hipsRigidBody.position.z + (stickDirection.y * .1f)));
+        hips.transform.position = hipsRigidBody.position;
+        //hips.transform.position = new Vector3(hipsRigidBody.position.x + (stickDirection.x * .1f), hipsRigidBody.position.y, hipsRigidBody.position.z + (stickDirection.y * .1f));
         if (Mathf.Abs(stickDirection.x) >= 0.1 || Mathf.Abs(stickDirection.y) >= 0.1)
         {
             hips.transform.forward = new Vector3(stickDirection.x, 0, stickDirection.y);
