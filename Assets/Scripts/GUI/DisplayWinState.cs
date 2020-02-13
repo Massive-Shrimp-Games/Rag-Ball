@@ -12,6 +12,8 @@ public class DisplayWinState : MonoBehaviour
     public GameObject LoseLeftPosition;
     public GameObject LoseRightPosition;
 
+    
+
     public void Start()
     {
         RedWinText.SetActive(false);
@@ -43,7 +45,7 @@ public class DisplayWinState : MonoBehaviour
 
     private void RedWin()
     {
-        //GameObject.Find("BluePlayer").transform.position = 
+        
     }
 
     private void BlueWin()
