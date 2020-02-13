@@ -12,14 +12,21 @@ public class DisplayWinState : MonoBehaviour
     public GameObject LoseLeftPosition;
     public GameObject LoseRightPosition;
 
-    
+    public List<GameObject> RedList = GameObject.Find("Players").GetComponent<FindPlayerTeams>().RedTeamHips;
+    public List<GameObject> BlueList = GameObject.Find("Players").GetComponent<FindPlayerTeams>().BlueTeamHips;
+
+
 
     public void Start()
     {
         RedWinText.SetActive(false);
         BlueWinText.SetActive(false);
         TieWinText.SetActive(false);
+
+
     }
+
+
 
     public void DisplayWinner()
     {
@@ -45,12 +52,20 @@ public class DisplayWinState : MonoBehaviour
 
     private void RedWin()
     {
-        
+        RedList[0].transform.position = WinLeftPosition.transform.position;
+        RedList[1].transform.position = WinRightPosition.transform.position;
+
+        BlueList[0].transform.position = LoseLeftPosition.transform.position;
+        BlueList[1].transform.position = LoseRightPosition.transform.position;
     }
 
     private void BlueWin()
     {
+        BlueList[0].transform.position = WinLeftPosition.transform.position;
+        BlueList[1].transform.position = WinRightPosition.transform.position;
 
+        RedList[0].transform.position = LoseLeftPosition.transform.position;
+        RedList[1].transform.position = LoseRightPosition.transform.position;
     }
 
     private void TieWin()
