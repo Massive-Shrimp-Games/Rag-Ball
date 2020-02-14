@@ -1,13 +1,13 @@
 ﻿public static class MenuActions
 {
     public delegate void MenuAction();
-    public static event MenuAction _ToGameMode;
+    public static event MenuAction _ToGameModeSelect;
     public static event MenuAction _ToLevelSelect;
     public static event MenuAction _ToCharacterSelect;
 
-    public static void ToGameMode()
+    public static void ToGameModeSelect()
     {
-        _ToGameMode();
+        _ToGameModeSelect();
     }
 
     public static void ToLevelSelect()
