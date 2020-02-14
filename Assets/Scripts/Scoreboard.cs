@@ -48,48 +48,13 @@ public class Scoreboard : MonoBehaviour
             scoreMesh.text = scoreSTR;
         }*/
 
-        if (player == player.transform.root.GetChild(0).GetChild(0).gameObject)
+        if (player.transform.parent.parent.parent.parent.GetComponent<PlayerSize>().color != color)
         {
-            if (player.transform.root.GetChild(0).GetComponent<PlayerSize>().color != color)
-            {
-                string scoreSTR = score.ToString();
-                //if (score < 10)
-                //   scoreSTR = "0" + scoreSTR;
-                scoreMesh.text = scoreSTR;
-            }
-        }
-
-        if (player == player.transform.root.GetChild(1).GetChild(0).gameObject)
-        {
-            if (player.transform.root.GetChild(1).GetComponent<PlayerSize>().color != color)
-            {
-                string scoreSTR = score.ToString();
-                //if (score < 10)
-                //   scoreSTR = "0" + scoreSTR;
-                scoreMesh.text = scoreSTR;
-            }
-        }
-
-        if (player == player.transform.root.GetChild(2).GetChild(0).gameObject)
-        {
-            if (player.transform.root.GetChild(2).GetComponent<PlayerSize>().color != color)
-            {
-                string scoreSTR = score.ToString();
-                //if (score < 10)
-                //   scoreSTR = "0" + scoreSTR;
-                scoreMesh.text = scoreSTR;
-            }
-        }
-
-        if (player == player.transform.root.GetChild(3).GetChild(0).gameObject)
-        {
-            if (player.transform.root.GetChild(3).GetComponent<PlayerSize>().color != color)
-            {
-                string scoreSTR = score.ToString();
-                //if (score < 10)
-                //   scoreSTR = "0" + scoreSTR;
-                scoreMesh.text = scoreSTR;
-            }
+            Debug.Log("Same color as pipe");
+            string scoreSTR = score.ToString();
+            //if (score < 10)
+            //   scoreSTR = "0" + scoreSTR;
+            scoreMesh.text = scoreSTR;
         }
 
     }

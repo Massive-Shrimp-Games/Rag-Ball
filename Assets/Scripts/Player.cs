@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
     private Animator animator;
     private Rigidbody hipsRigidBody;
 
-    public int playerNumber;
+    public int playerNumber = 0;
     private Controller controller;
 
     void Awake()
