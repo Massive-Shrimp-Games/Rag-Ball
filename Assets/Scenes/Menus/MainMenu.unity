@@ -828,8 +828,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5344c5c3a34159447925408cafb445da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camAnimator: {fileID: 691486607}
-  currentMenu: 0
+  cameraAnimator: {fileID: 691486607}
+  gameModeSelectMenu: {fileID: 235276514}
+  levelSelectMenu: {fileID: 1581098079}
+  characterSelectMenu: {fileID: 1924696073}
 --- !u!114 &161071463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3600,7 +3602,6 @@ MonoBehaviour:
   down: {fileID: 0}
   left: {fileID: 0}
   right: {fileID: 0}
-  cameraAnimator: {fileID: 691486607}
 --- !u!224 &1167494163
 RectTransform:
   m_ObjectHideFlags: 0
