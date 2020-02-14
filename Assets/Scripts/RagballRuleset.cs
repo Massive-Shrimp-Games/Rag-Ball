@@ -81,7 +81,7 @@ public class RagballRuleset : MonoBehaviour
         }
     }
 
-    IEnumerator WaitForTime()
+    public IEnumerator WaitForTime()
     {
         yield return new WaitForSeconds(2);
         WinStateGame();

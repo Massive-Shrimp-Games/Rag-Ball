@@ -12,6 +12,11 @@ public class DisplayWinState : MonoBehaviour
     public GameObject LoseLeftPosition;
     public GameObject LoseRightPosition;
 
+    public GameObject TieLeftLeftPosition;
+    public GameObject TieLeftMiddlePosition;
+    public GameObject TieRightMiddlePosition;
+    public GameObject TieRightRightPosition;
+
     public List<GameObject> RedList = GameObject.Find("Players").GetComponent<FindPlayerTeams>().RedTeamHips;
     public List<GameObject> BlueList = GameObject.Find("Players").GetComponent<FindPlayerTeams>().BlueTeamHips;
 
@@ -43,7 +48,12 @@ public class DisplayWinState : MonoBehaviour
             BlueWinText.SetActive(true);
             BlueWin();
         }
-        if (RagballRuleset.blueScore == RagballRuleset.redScore && RagballRuleset.blueScore == GameModeSelect.goalLimit && GameModeSelect.goalLimit != 0)
+        /*if (RagballRuleset.blueScore == RagballRuleset.redScore && RagballRuleset.blueScore == GameModeSelect.goalLimit && GameModeSelect.goalLimit != 0)
+        {
+            TieWinText.SetActive(true);
+            TieWin();
+        }*/
+        if (RagballRuleset.redScore == RagballRuleset.blueScore)
         {
             TieWinText.SetActive(true);
             TieWin();
@@ -70,7 +80,11 @@ public class DisplayWinState : MonoBehaviour
 
     private void TieWin()
     {
+        BlueList[0].transform.position = TieRightMiddlePosition.transform.position;
+        BlueList[1].transform.position = TieRightRightPosition.transform.position;
 
+        RedList[0].transform.position = TieLeftLeftPosition.transform.position;
+        RedList[1].transform.position = TieLeftMiddlePosition.transform.position;
     }
 
 

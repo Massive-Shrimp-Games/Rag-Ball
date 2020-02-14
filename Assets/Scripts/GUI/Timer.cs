@@ -43,11 +43,12 @@ public class Timer : MonoBehaviour
             doOnce = true;
             TimerText.text = "0.00";
             timer = 0.0f;
-            GameOver();
+            //GameOver();
+            StartCoroutine(GameObject.Find("Ruleset").GetComponent<RagballRuleset>().WaitForTime());
         }
     }
 
-    void GameOver()
+    /*void GameOver()
     {      
         RedPipeConfetti.loop = true;
         BluePipeConfetti.loop = true;
@@ -63,5 +64,5 @@ public class Timer : MonoBehaviour
         {
             BlueWinScreen.enabled = true;
         }
-    }
+    }*/
 }
