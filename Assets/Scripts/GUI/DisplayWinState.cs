@@ -17,8 +17,11 @@ public class DisplayWinState : MonoBehaviour
     public GameObject TieRightMiddlePosition;
     public GameObject TieRightRightPosition;
 
-    public List<GameObject> RedList = new List<GameObject>();
-    public List<GameObject> BlueList = new List<GameObject>();
+    public List<GameObject> RedHipsList = new List<GameObject>();
+    public List<GameObject> BlueHipsList = new List<GameObject>();
+
+    public List<GameObject> RedPlayerList = new List<GameObject>();
+    public List<GameObject> BluePlayerList = new List<GameObject>();
 
     public void Start()
     {
@@ -31,8 +34,11 @@ public class DisplayWinState : MonoBehaviour
 
     public void DisplayWinner()
     {
-        RedList = GameObject.Find("Players").GetComponent<FindPlayerTeams>().RedTeamHips;
-        BlueList = GameObject.Find("Players").GetComponent<FindPlayerTeams>().BlueTeamHips;
+        RedHipsList = GameObject.Find("Players").GetComponent<FindPlayerTeams>().RedTeamHips;
+        BlueHipsList = GameObject.Find("Players").GetComponent<FindPlayerTeams>().BlueTeamHips;
+
+        RedPlayerList = GameObject.Find("Players").GetComponent<FindPlayerTeams>().RedTeam;
+        BluePlayerList = GameObject.Find("Players").GetComponent<FindPlayerTeams>().BlueTeam;
 
         ActionMapEvent.InMenu?.Invoke();
         GameObject.Find("Stamina_Canvas").SetActive(false);
@@ -62,29 +68,41 @@ public class DisplayWinState : MonoBehaviour
 
     private void RedWin()
     {
-        RedList[0].transform.position = WinLeftPosition.transform.position;
-        RedList[1].transform.position = WinRightPosition.transform.position;
+        RedHipsList[0].transform.position = WinLeftPosition.transform.position;
+        RedHipsList[1].transform.position = WinRightPosition.transform.position;
+        RedHipsList[0].transform.rotation = WinLeftPosition.transform.rotation;
+        RedHipsList[1].transform.rotation = WinRightPosition.transform.rotation;
 
-        BlueList[0].transform.position = LoseLeftPosition.transform.position;
-        BlueList[1].transform.position = LoseRightPosition.transform.position;
+        BlueHipsList[0].transform.position = LoseLeftPosition.transform.position;
+        BlueHipsList[1].transform.position = LoseRightPosition.transform.position;
+        BlueHipsList[0].transform.rotation = LoseLeftPosition.transform.rotation;
+        BlueHipsList[1].transform.rotation = LoseRightPosition.transform.rotation;
     }
 
     private void BlueWin()
     {
-        BlueList[0].transform.position = WinLeftPosition.transform.position;
-        BlueList[1].transform.position = WinRightPosition.transform.position;
+        BlueHipsList[0].transform.position = WinLeftPosition.transform.position;
+        BlueHipsList[1].transform.position = WinRightPosition.transform.position;
+        BlueHipsList[0].transform.rotation = WinLeftPosition.transform.rotation;
+        BlueHipsList[1].transform.rotation = WinRightPosition.transform.rotation;
 
-        RedList[0].transform.position = LoseLeftPosition.transform.position;
-        RedList[1].transform.position = LoseRightPosition.transform.position;
+        RedHipsList[0].transform.position = LoseLeftPosition.transform.position;
+        RedHipsList[1].transform.position = LoseRightPosition.transform.position;
+        RedHipsList[0].transform.rotation = LoseLeftPosition.transform.rotation;
+        RedHipsList[1].transform.rotation = LoseRightPosition.transform.rotation;
     }
 
     private void TieWin()
     {
-        BlueList[0].transform.position = TieRightMiddlePosition.transform.position;
-        BlueList[1].transform.position = TieRightRightPosition.transform.position;
+        BlueHipsList[0].transform.position = TieRightMiddlePosition.transform.position;
+        BlueHipsList[1].transform.position = TieRightRightPosition.transform.position;
+        BlueHipsList[0].transform.rotation = TieRightMiddlePosition.transform.rotation;
+        BlueHipsList[1].transform.rotation = TieRightRightPosition.transform.rotation;
 
-        RedList[0].transform.position = TieLeftLeftPosition.transform.position;
-        RedList[1].transform.position = TieLeftMiddlePosition.transform.position;
+        RedHipsList[0].transform.rotation = TieLeftLeftPosition.transform.rotation;
+        RedHipsList[1].transform.rotation = TieLeftMiddlePosition.transform.rotation;
+        RedHipsList[0].transform.position = TieLeftLeftPosition.transform.position;
+        RedHipsList[1].transform.position = TieLeftMiddlePosition.transform.position;
     }
 
 
