@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
 
     private void AssignMaterial()
     {
-        PlayerSize player = transform.root.GetComponent<PlayerSize>();
+        PlayerSize player = transform.root.GetChild(playerNumber).GetComponent<PlayerSize>();
         if(player.color == TeamColor.Red)
         {
             if(player.size == Size.Small)

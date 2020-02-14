@@ -17,24 +17,24 @@ public class DisplayWinState : MonoBehaviour
     public GameObject TieRightMiddlePosition;
     public GameObject TieRightRightPosition;
 
-    public List<GameObject> RedList = GameObject.Find("Players").GetComponent<FindPlayerTeams>().RedTeamHips;
-    public List<GameObject> BlueList = GameObject.Find("Players").GetComponent<FindPlayerTeams>().BlueTeamHips;
-
-
+    public List<GameObject> RedList = new List<GameObject>();
+    public List<GameObject> BlueList = new List<GameObject>();
 
     public void Start()
     {
         RedWinText.SetActive(false);
         BlueWinText.SetActive(false);
         TieWinText.SetActive(false);
-
-
     }
 
 
 
     public void DisplayWinner()
     {
+        RedList = GameObject.Find("Players").GetComponent<FindPlayerTeams>().RedTeamHips;
+        BlueList = GameObject.Find("Players").GetComponent<FindPlayerTeams>().BlueTeamHips;
+
+        ActionMapEvent.InMenu?.Invoke();
         GameObject.Find("Stamina_Canvas").SetActive(false);
         GameObject.Find("Main Camera").transform.position = new Vector3(0.55f, 4.62f, 1.19f);
         GameObject.Find("Main Camera").transform.Rotate(-18.372f, 0f, 0f);
