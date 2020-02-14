@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuControl : MonoBehaviour
 {
+    
     public Animator cameraAnimator;
     public GameObject gameModeSelectMenu;
     public GameObject levelSelectMenu;
@@ -53,6 +54,7 @@ public class MenuControl : MonoBehaviour
 
     private void ToCharacterSelect()
     {
+        Debug.Log("testingCharSel");
         currentMenu = MenuType.CharacterSelect;
         cameraAnimator.SetInteger("MenuType", (int) currentMenu);
         levelSelectMenu.SetActive(false);
