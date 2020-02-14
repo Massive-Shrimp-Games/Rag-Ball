@@ -54,6 +54,8 @@ public class MenuControl : MonoBehaviour
     private void ToCharacterSelect()
     {
         currentMenu = MenuType.CharacterSelect;
-        Debug.Log("Testingggggggggggg33333333333");
+        cameraAnimator.SetInteger("MenuType", (int) currentMenu);
+        levelSelectMenu.SetActive(false);
+        characterSelectMenu.SetActive(true);
     }
 }
