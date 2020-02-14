@@ -334,7 +334,7 @@ public class Player : MonoBehaviour
 
     private void StaggerSelf(bool enemyDashing, TeamColor enemyColor)
     {
-        if (enemyDashing == true && enemyColor != gameObject.transform.root.GetComponent<PlayerSize>().color)
+        if (enemyDashing == true && enemyColor != gameObject.transform.root.GetChild(playerNumber).GetComponent<PlayerSize>().color)
         {
             hipsRigidBody.isKinematic = true;
             animator.enabled = false;

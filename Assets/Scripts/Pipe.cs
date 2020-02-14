@@ -50,7 +50,7 @@ public class Pipe : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             //Debug.Log("Player entered a goal");
-            GameObject player = collision.gameObject.transform.root.GetChild(1).GetChild(1).GetChild(0).gameObject;
+            GameObject player = collision.gameObject.transform.root.GetChild(1).GetChild(0).GetChild(0).gameObject;
             if (player.GetComponent<Player>().getHips().tag == "Grabbable"){
                 if (player.transform.root.GetChild(1).GetComponent<PlayerSize>().color == color)
                 {

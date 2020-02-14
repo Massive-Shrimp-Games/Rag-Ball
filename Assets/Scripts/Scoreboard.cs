@@ -40,13 +40,57 @@ public class Scoreboard : MonoBehaviour
     {
         //Debug.Log("Player Color: " + player.transform.root.GetComponent<PlayerSize>().color + " with score " + score.ToString());
 
-        if(player.transform.root.GetChild(1).GetComponent<PlayerSize>().color != color)
+        /*if(player.transform.root.GetChild(1).GetComponent<PlayerSize>().color != color)
         {
             string scoreSTR = score.ToString();
             //if (score < 10)
              //   scoreSTR = "0" + scoreSTR;
             scoreMesh.text = scoreSTR;
+        }*/
+
+        if (player == player.transform.root.GetChild(0).GetChild(0).gameObject)
+        {
+            if (player.transform.root.GetChild(0).GetComponent<PlayerSize>().color != color)
+            {
+                string scoreSTR = score.ToString();
+                //if (score < 10)
+                //   scoreSTR = "0" + scoreSTR;
+                scoreMesh.text = scoreSTR;
+            }
         }
-        
+
+        if (player == player.transform.root.GetChild(1).GetChild(0).gameObject)
+        {
+            if (player.transform.root.GetChild(1).GetComponent<PlayerSize>().color != color)
+            {
+                string scoreSTR = score.ToString();
+                //if (score < 10)
+                //   scoreSTR = "0" + scoreSTR;
+                scoreMesh.text = scoreSTR;
+            }
+        }
+
+        if (player == player.transform.root.GetChild(2).GetChild(0).gameObject)
+        {
+            if (player.transform.root.GetChild(2).GetComponent<PlayerSize>().color != color)
+            {
+                string scoreSTR = score.ToString();
+                //if (score < 10)
+                //   scoreSTR = "0" + scoreSTR;
+                scoreMesh.text = scoreSTR;
+            }
+        }
+
+        if (player == player.transform.root.GetChild(3).GetChild(0).gameObject)
+        {
+            if (player.transform.root.GetChild(3).GetComponent<PlayerSize>().color != color)
+            {
+                string scoreSTR = score.ToString();
+                //if (score < 10)
+                //   scoreSTR = "0" + scoreSTR;
+                scoreMesh.text = scoreSTR;
+            }
+        }
+
     }
 }
