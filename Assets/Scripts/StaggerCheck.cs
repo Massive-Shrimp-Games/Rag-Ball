@@ -17,7 +17,7 @@ public class StaggerCheck : MonoBehaviour
         GameObject enemy;
         if (other.gameObject.tag == "Grabbable")
         {
-            enemy = other.transform.root.gameObject;
+            enemy = other.transform.GetComponent<BaseObject>().BaseGameObject.gameObject;
             PlayerSize psize = enemy.transform.GetComponent<PlayerSize>();
             Player pscript = null;
             if(psize.size == Size.Small)
