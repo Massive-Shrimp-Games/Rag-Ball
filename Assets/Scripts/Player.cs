@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
     public float fallMultiplier = 30f;
     public float jumpMultiplier = 8f;
 
-    //private Vector2 movement;
+    private Vector2 movement;
 
     void Awake()
     {
@@ -102,6 +102,8 @@ public class Player : MonoBehaviour
 
         staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
 
+
+        Move();
         if (!canJump)
         {
             if (hips.GetComponent<Rigidbody>().velocity.y > 0)
@@ -203,20 +205,49 @@ public class Player : MonoBehaviour
     }
     #endregion
 
+    private void Move()
+    {
+        Vector3 force = Vector3.zero;
+
+        /*
+        if (movement == Vector2.zero)
+        {
+            Vector2 newDirection = new Vector2(hips.transform.forward.x, hips.transform.forward.z);
+            hipsRigidBody.velocity = new Vector3(newDirection.normalized.x * hipsRigidBody.velocity.magnitude, hipsRigidBody.velocity.y, newDirection.normalized.y);
+        }
+        else
+        {
+            force = new Vector3(movement.x, 0, movement.y) * playerSpeed * Time.deltaTime;
+            hipsRigidBody.AddForce(force);
+            //hipsRigidBody.MovePosition(new Vector3(hipsRigidBody.position.x + (movement.x * 1f), hipsRigidBody.position.y, hipsRigidBody.position.z + (movement.y * 1f)));
+            //***hipsRigidBody.transform.position = new Vector3(hipsRigidBody.position.x + (movement.x * .1f), hipsRigidBody.position.y, hipsRigidBody.position.z + (movement.y * .1f));
+            //***hips.transform.position = new Vector3(hipsRigidBody.position.x + (movement.x * .1f), hipsRigidBody.position.y, hipsRigidBody.position.z + (movement.y * .1f));
+            //Debug.Log(hips.transform.position);
+            //hips.transform.position = new Vector3(hipsRigidBody.position.x + (stickDirection.x * .1f), hipsRigidBody.position.y, hipsRigidBody.position.z + (stickDirection.y * .1f));
+            if (Mathf.Abs(movement.x) >= 0.1 || Mathf.Abs(movement.y) >= 0.1)
+            {
+                hips.transform.forward = new Vector3(movement.x, 0, movement.y);
+            }
+        }
+        */
+
+        force = new Vector3(movement.x, 0, movement.y) * playerSpeed * Time.deltaTime;
+        hipsRigidBody.AddForce(force, ForceMode.Impulse);
+
+        if (Mathf.Abs(movement.x) >= 0.1 || Mathf.Abs(movement.y) >= 0.1)
+        {
+            hips.transform.forward = new Vector3(movement.x, 0, movement.y);
+        }
+
+        animator.Play(force.magnitude >= 0.03 ? "Walk" : "Idle");
+    }
+
     #region Player Abilities
     private void OnMove(InputValue inputValue)
     {
         Vector2 stickDirection = inputValue.Get<Vector2>();
-        Vector3 force = new Vector3(stickDirection.x, 0, stickDirection.y) * playerSpeed * Time.deltaTime;
-        //hipsRigidBody.AddForce(force);
-        hipsRigidBody.MovePosition(new Vector3(hipsRigidBody.position.x + (stickDirection.x * .1f), hipsRigidBody.position.y, hipsRigidBody.position.z + (stickDirection.y * .1f)));
-        hips.transform.position = hipsRigidBody.position;
-        //hips.transform.position = new Vector3(hipsRigidBody.position.x + (stickDirection.x * .1f), hipsRigidBody.position.y, hipsRigidBody.position.z + (stickDirection.y * .1f));
-        if (Mathf.Abs(stickDirection.x) >= 0.1 || Mathf.Abs(stickDirection.y) >= 0.1)
-        {
-            hips.transform.forward = new Vector3(stickDirection.x, 0, stickDirection.y);
-        }
-        animator.Play(force.magnitude >= 0.03 ? "Walk" : "Idle");
+        movement = stickDirection;
+        Debug.Log(stickDirection);
     }
 
     private void OnJump(InputValue inputValue)
