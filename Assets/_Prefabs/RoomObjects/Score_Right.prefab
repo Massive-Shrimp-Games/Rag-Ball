@@ -217,6 +217,7 @@ GameObject:
   - component: {fileID: 8889352883172082075}
   - component: {fileID: 2909846743486758242}
   - component: {fileID: 7181532316149389338}
+  - component: {fileID: 2537166894157336989}
   m_Layer: 0
   m_Name: Score_Right
   m_TagString: Untagged
@@ -297,3 +298,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: 0
+--- !u!65 &2537166894157336989
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3484955149460883902}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.04, y: 0.04, z: 0.007961623}
+  m_Center: {x: -9.313226e-10, y: -0.0000000018626451, z: -0.0014808116}
