@@ -41,7 +41,11 @@ public class MenuControl : MonoBehaviour
     private void ToGameModeSelect()
     {
         currentMenu = MenuType.GameModeSelect;
-        Debug.Log("Testingggggggggggg");
+        cameraAnimator.SetInteger("MenuType", (int) currentMenu);
+        Instantiate();
+        gameModeSelectMenu.SetActive(true);
+        levelSelectMenu.SetActive(false);
+        characterSelectMenu.SetActive(false);
     }
 
     private void ToLevelSelect()
@@ -50,6 +54,7 @@ public class MenuControl : MonoBehaviour
         cameraAnimator.SetInteger("MenuType", (int) currentMenu);
         gameModeSelectMenu.SetActive(false);
         levelSelectMenu.SetActive(true);
+        characterSelectMenu.SetActive(false);
     }
 
     private void ToCharacterSelect()
@@ -57,6 +62,7 @@ public class MenuControl : MonoBehaviour
         Debug.Log("testingCharSel");
         currentMenu = MenuType.CharacterSelect;
         cameraAnimator.SetInteger("MenuType", (int) currentMenu);
+        gameModeSelectMenu.SetActive(false);
         levelSelectMenu.SetActive(false);
         characterSelectMenu.SetActive(true);
     }
