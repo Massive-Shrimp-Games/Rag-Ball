@@ -25,7 +25,7 @@ public class RagOfTheHill : MonoBehaviour
 
             if (player.GetComponent<Player>().playerNumber == 0)
             {
-                Debug.Log("peeppee");
+                Debug.Log("Maestro Can't Save Us Now");
             }
         }
     }
