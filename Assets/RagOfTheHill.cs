@@ -5,6 +5,7 @@ using UnityEngine;
 public class RagOfTheHill : MonoBehaviour
 {
     public GameObject player;
+    public GameObject GameManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +26,7 @@ public class RagOfTheHill : MonoBehaviour
 
             if (player.GetComponent<Player>().playerNumber == 0)
             {
-                Debug.Log("Maestro Can't Save Us Now");
+                GameManager.GetComponent<ROTHManager>().P1Score +=1;
             }
         }
     }
