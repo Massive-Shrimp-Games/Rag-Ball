@@ -6,51 +6,55 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
 
-    public delegate void Exert(int player,int stamina);
+    public delegate void Exert(int player, int stamina);
 
     public event Exert OnPlayerExertion;
-    
+
     [SerializeField] private float dashForce; // Set in editor
-    [SerializeField] private float jumpForce; // Set in editor
+    [SerializeField] private float jumpForce = 12000; // Set in editor
     [SerializeField] private float directThrowForce; // Set in editor
     [SerializeField] private float arcThrowForce; // Set in editor
 
     public TeamColor color;
-    
+
     private Vector3 directThrowForceVel;
     private Vector3 arcThrowForceVel;
 
-    public float playerSpeed;
+    public float playerSpeed = 200f;
     public int staggerCharges;
     public int staggerMaxCharge;
     public int staggerDashCharge;
     public int staggerJumpCharge;
     //private int staminaCharges;
 
-    private bool canJump;
+    // Airborne Variables
+    // Set isThrown to TRUE on any player when they are thrown -> access the grabbed objects isThrown variable
+    // Set canJump to FALSE on any player when they are thrown
+    public bool isThrown = false;
+    public bool canJump;
 
-    private const int StaminaMaxCharge = 5;  
+    private const int StaminaMaxCharge = 5;
 
-    private const int StaminaDashCharge = 1; 
+    private const int StaminaDashCharge = 1;
 
-    private const int StaminaJumpCharge = 1; 
+    private const int StaminaJumpCharge = 1;
 
     private int StaggerTime = 5;
 
-    private float StaminaRechargeTime = 1.5f; 
+    private float StaminaRechargeTime = 1.5f;
     private Collider hipsCollider;
 
     private bool isRecharging;
 
-    private bool hasStartedRecharging;  
-    private SpriteRenderer sp_cursor; 
+    private bool hasStartedRecharging;
+    private SpriteRenderer sp_cursor;
 
     [SerializeField] private CheckGrab grabCheckCollider;   // Set in editor
     [SerializeField] private Transform grabPos; // Set in editor
     [SerializeField] private Transform directThrowDirection;
     [SerializeField] private Transform arcThrowDirection;
     [SerializeField] private GameObject grabbing;
-    
+
     // Instead of this, have a particle handler
     [SerializeField] private GameObject staggerStars;
     TrailRenderer trailRenderer;
@@ -69,9 +73,10 @@ public class Player : MonoBehaviour
 
     private Controller controller;
 
-    //Gravity Modifiers
-    public float fallMultiplier = 30f;
-    public float jumpMultiplier = 8f;
+    //Jump Variables
+    [SerializeField] private float fallMultiplier = 60f;
+    [SerializeField] private float jumpMultiplier = 12f;
+    private bool aIsPressed = false;
 
     private Vector2 movement;
 
@@ -82,10 +87,10 @@ public class Player : MonoBehaviour
 
     private void AssignMaterial()
     {
-        if(color == TeamColor.Red)
+        if (color == TeamColor.Red)
         {
             transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Medium");
-            transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Red_01"); 
+            transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Red_01");
         }
         else if (color == TeamColor.Blue)
         {
@@ -104,23 +109,50 @@ public class Player : MonoBehaviour
 
 
         Move();
-        if (!canJump)
+        JumpPhysics();
+        UpdateThrown();
+    }
+
+    /// <summary>
+    /// Controls decay of player as they fall, called from UPDATE
+    /// </summary>
+    private void JumpPhysics()
+    {
+        if (!canJump && !isThrown)
         {
-            if (hips.GetComponent<Rigidbody>().velocity.y > 0)
+            if (hips.GetComponent<Rigidbody>().velocity.y > 0 && aIsPressed)
             {
-                //Debug.Log("GOING UP");
                 hipsRigidBody.velocity += Vector3.up * Physics.gravity.y * (jumpMultiplier - 1) * Time.deltaTime;
-            }
-            else if (hips.GetComponent<Rigidbody>().velocity.y < 0)
-            {
-                //Debug.Log("GOING DOWN");
-                //hips.GetComponent<Rigidbody>().velocity = hips.GetComponent<Rigidbody>().velocity * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
-                hipsRigidBody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
             }
             else
             {
-                //Debug.Log("ZERO");
+                hipsRigidBody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
             }
+        }
+    }
+
+    /// <summary>
+    /// Checks if the player has landed and stops treating them as a projectile
+    /// </summary>
+    private void UpdateThrown()
+    {
+        if (isThrown && canJump)
+        {
+            isThrown = false;
+        }
+    }
+
+    /// <summary>
+    /// Set a victim's canJump and isThrown from a 'OnThrow' event
+    /// ATTN: Assumes 'grabbing' is NOT NULL
+    /// </summary>
+    private void VictimVariables()
+    {
+        if (grabbing)
+        {
+            Player victim = grabbing.GetComponent<Player>();
+            victim.isThrown = true;
+            victim.canJump = false; // Don't want them getting away now, do we? H AH AH A HA HA AH HA A HA !!!!!
         }
     }
 
@@ -210,28 +242,6 @@ public class Player : MonoBehaviour
     {
         Vector3 force = Vector3.zero;
 
-        /*
-        if (movement == Vector2.zero)
-        {
-            Vector2 newDirection = new Vector2(hips.transform.forward.x, hips.transform.forward.z);
-            hipsRigidBody.velocity = new Vector3(newDirection.normalized.x * hipsRigidBody.velocity.magnitude, hipsRigidBody.velocity.y, newDirection.normalized.y);
-        }
-        else
-        {
-            force = new Vector3(movement.x, 0, movement.y) * playerSpeed * Time.deltaTime;
-            hipsRigidBody.AddForce(force);
-            //hipsRigidBody.MovePosition(new Vector3(hipsRigidBody.position.x + (movement.x * 1f), hipsRigidBody.position.y, hipsRigidBody.position.z + (movement.y * 1f)));
-            //***hipsRigidBody.transform.position = new Vector3(hipsRigidBody.position.x + (movement.x * .1f), hipsRigidBody.position.y, hipsRigidBody.position.z + (movement.y * .1f));
-            //***hips.transform.position = new Vector3(hipsRigidBody.position.x + (movement.x * .1f), hipsRigidBody.position.y, hipsRigidBody.position.z + (movement.y * .1f));
-            //Debug.Log(hips.transform.position);
-            //hips.transform.position = new Vector3(hipsRigidBody.position.x + (stickDirection.x * .1f), hipsRigidBody.position.y, hipsRigidBody.position.z + (stickDirection.y * .1f));
-            if (Mathf.Abs(movement.x) >= 0.1 || Mathf.Abs(movement.y) >= 0.1)
-            {
-                hips.transform.forward = new Vector3(movement.x, 0, movement.y);
-            }
-        }
-        */
-
         force = new Vector3(movement.x, 0, movement.y) * playerSpeed * Time.deltaTime;
         hipsRigidBody.AddForce(force, ForceMode.Impulse);
 
@@ -248,19 +258,19 @@ public class Player : MonoBehaviour
     {
         Vector2 stickDirection = inputValue.Get<Vector2>();
         movement = stickDirection;
-        Debug.Log(stickDirection);
     }
 
     private void OnJump(InputValue inputValue)
     {
-        // https://forum.unity.com/threads/how-would-you-handle-a-getbuttondown-situaiton-with-the-new-input-system.627184/
         if (canJump && staggerCharges >= 0)
         {
+            aIsPressed = true;
+
             Vector3 boostDir = hips.transform.up;
             hipsRigidBody.AddForce(boostDir * jumpForce);
             staggerCharges = staggerCharges - staggerJumpCharge;
-            OnPlayerExertion(playerNumber,staggerCharges);
-            if(!hasStartedRecharging)
+            OnPlayerExertion(playerNumber, staggerCharges);
+            if (!hasStartedRecharging)
             {
                 StartCoroutine(rechargeStamina());
             }
@@ -269,7 +279,8 @@ public class Player : MonoBehaviour
 
     private void OnJumpRelease(InputValue inputValue)
     {
-
+        // This gets the time difference and applies the jump force as a result
+        aIsPressed = false;
     }
 
     private void OnDash(InputValue inputValue)
@@ -289,8 +300,10 @@ public class Player : MonoBehaviour
 
     private void OnGrabDrop(InputValue inputValue)
     {
-        if (grabbing == null) {
-            if (hips.tag == "Grabbable"){
+        if (grabbing == null)
+        {
+            if (hips.tag == "Grabbable")
+            {
                 grabbing = grabCheckCollider.FindClosest();
             }
             if (grabbing != null)
@@ -300,7 +313,8 @@ public class Player : MonoBehaviour
                 hips.tag = "Grabbing";
             }
         }
-        else {
+        else
+        {
             grabbing.tag = "Grabbable";
             hips.tag = "Grabbable";
 
@@ -322,6 +336,7 @@ public class Player : MonoBehaviour
         GameObject objectToThrow = grabbing;
         OnGrabDrop(null);
 
+        VictimVariables();
         arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
         objectToThrow.GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
         staggerCharges = staggerCharges - staggerDashCharge;
@@ -334,9 +349,10 @@ public class Player : MonoBehaviour
         
         // Get reference to what we are holding before we release it
         GameObject objectToThrow = grabbing;
-        grabbing.GetComponent<Rigidbody>().AddForce(directThrowForce * directThrowDirection.forward);
+        //grabbing.GetComponent<Rigidbody>().AddForce(directThrowForce * directThrowDirection.forward);
         OnGrabDrop(null);
-        
+
+        VictimVariables();
         directThrowForceVel = directThrowForce * directThrowDirection.forward;
         objectToThrow.GetComponent<Rigidbody>().AddForce(directThrowForceVel);
         staggerCharges = staggerCharges - staggerDashCharge;
