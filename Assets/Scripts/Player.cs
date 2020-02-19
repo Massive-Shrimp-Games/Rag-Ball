@@ -53,7 +53,6 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform directThrowDirection;
     [SerializeField] private Transform arcThrowDirection;
     [SerializeField] private GameObject staggerStars;
-    [SerializeField] private Transform follow;
     private TrailRenderer trailRenderer;
 
     private GameObject grabbing;

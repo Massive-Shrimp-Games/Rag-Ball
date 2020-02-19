@@ -2233,9 +2233,8 @@ GameObject:
   - component: {fileID: 3679290696171531611}
   - component: {fileID: 3679290696171531612}
   - component: {fileID: 383636676227164208}
-  - component: {fileID: 7746702106835810439}
   - component: {fileID: 9199070168674078336}
-  m_Layer: 9
+  m_Layer: 15
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2308,23 +2307,10 @@ MonoBehaviour:
   directThrowDirection: {fileID: 1463392894389788678}
   arcThrowDirection: {fileID: 1463392894371477786}
   staggerStars: {fileID: 2110709679184220633}
+  follow: {fileID: 0}
   playerNumber: 0
   size: 0
   color: 0
---- !u!136 &7746702106835810439
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3679290696171531610}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.2831098
-  m_Height: 2.0898976
-  m_Direction: 1
-  m_Center: {x: -0.4436247, y: 0.88862634, z: 0.12929547}
 --- !u!54 &9199070168674078336
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3094,9 +3080,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 964935937279468917}
-  m_Layer: 15
-  m_Name: FollowPoint
-  m_TagString: Untagged
+  - component: {fileID: 8991289532594365142}
+  - component: {fileID: 7695683271947323590}
+  m_Layer: 9
+  m_Name: CollisionTrigger
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3108,13 +3096,40 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7565254737649259438}
-  m_LocalRotation: {x: 0.000000012065851, y: 0.7844126, z: 0.62023944, w: -0.00000018291067}
-  m_LocalPosition: {x: 0, y: 0.00385, z: 0.00411}
+  m_LocalRotation: {x: -0.12304011, y: -0, z: -0, w: 0.9924017}
+  m_LocalPosition: {x: 0, y: 0.00326, z: 0.00068}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 68953021133953271}
   m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: -76.66701, y: 179.99998, z: 0}
+  m_LocalEulerAnglesHint: {x: -14.135, y: 0, z: 0}
+--- !u!136 &8991289532594365142
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7565254737649259438}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.002841272
+  m_Height: 0.022431726
+  m_Direction: 1
+  m_Center: {x: -0.000012803972, y: -0.0012922449, z: -0.0009474892}
+--- !u!114 &7695683271947323590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7565254737649259438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 252ecde952e633d44a6f75ad9bf41501, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 383636676227164208}
 --- !u!1 &7593445379743716839
 GameObject:
   m_ObjectHideFlags: 0
