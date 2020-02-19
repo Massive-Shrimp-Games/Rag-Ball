@@ -134,7 +134,6 @@ public class Player : MonoBehaviour
             trailRenderer.enabled = false;
         }
     }
-
     void Start()
     {
         canJump = false;

@@ -47,10 +47,12 @@ public class Pipe : MonoBehaviour
 
     private void TriggerEnter(Collider collision)
     {
+        Debug.Log("Something hit me");
         if (collision.gameObject.tag == "Player")
         {
-            //Debug.Log("Player entered a goal");
-            Player player = collision.GetComponent<Player>();
+            Debug.Log("Player entered a goal");
+            Player player = collision.GetComponent<BaseObject>().player;
+            if (player == null) return;
             if (player.getHips().tag == "Grabbable"){
                 if (player.color == color)
                 {
