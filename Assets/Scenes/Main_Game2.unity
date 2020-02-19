@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44888645, g: 0.4989527, b: 0.57570475, a: 1}
+  m_IndirectSpecularColor: {r: 0.44888693, g: 0.49895316, b: 0.5757065, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -553,6 +553,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 606033189716713519, guid: 93d9f76b6e3cdf4419fb4502eee039d8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4481739280208597564, guid: 93d9f76b6e3cdf4419fb4502eee039d8,
         type: 3}
@@ -1766,6 +1771,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 606033189716713519, guid: 93d9f76b6e3cdf4419fb4502eee039d8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4481739280208597564, guid: 93d9f76b6e3cdf4419fb4502eee039d8,
         type: 3}
@@ -3376,6 +3386,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 606033189716713519, guid: 93d9f76b6e3cdf4419fb4502eee039d8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4481739280208597564, guid: 93d9f76b6e3cdf4419fb4502eee039d8,
         type: 3}
