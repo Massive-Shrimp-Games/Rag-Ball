@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 630619739}
   - component: {fileID: 630619738}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -215,6 +215,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1103163773}
   GameManager: {fileID: 890823710}
+  P1timer: 5
+  P2timer: 5
+  P3timer: 5
+  P4timer: 5
+  pointValue: 5
 --- !u!65 &630619739
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -507,6 +512,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   P1Score: 0
+  P2Score: 0
+  P3Score: 0
+  P4Score: 0
+  P1Text: {fileID: 1119324214}
 --- !u!4 &890823712
 Transform:
   m_ObjectHideFlags: 0
@@ -515,7 +524,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 890823710}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -592,6 +601,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TranslationOffset.x
       value: -0.00999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 383636676227164208, guid: 15d3de9e78381944ba1e8b53649b39d5,
+        type: 3}
+      propertyPath: playerNumber
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3679290696171531610, guid: 15d3de9e78381944ba1e8b53649b39d5,
         type: 3}
