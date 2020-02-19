@@ -62,6 +62,8 @@ public class Player : MonoBehaviour
     private Rigidbody hipsRigidBody;
 
     public int playerNumber = 0;
+    public Size size;
+    public TeamColor color;
     private Controller controller;
 
     void Awake()
@@ -78,39 +80,34 @@ public class Player : MonoBehaviour
 
     private void AssignMaterial()
     {
-        PlayerSize player = transform.root.GetChild(playerNumber).GetComponent<PlayerSize>();
-        if(player.color == TeamColor.Red)
+        if(color == TeamColor.Red)
         {
-            if(player.size == Size.Small)
+            if(size == Size.Small)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Small");
-                transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Red_01");
-            } else if (player.size == Size.Medium)
+                
+            } else if (size == Size.Medium)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Medium");
-                transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Red_01");
-            } else if (player.size == Size.Large)
+            } else if (size == Size.Large)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Large");
-                transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Red_01");
             }
-             
+            transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Red_01");
         }
-        else if (player.color == TeamColor.Blue)
+        else if (color == TeamColor.Blue)
         {
-            if(player.size == Size.Small)
+            if(size == Size.Small)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Small");
-                transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Blue_01");
-            } else if (player.size == Size.Medium)
+            } else if (size == Size.Medium)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Medium");
-                transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Blue_01");
-            } else if (player.size == Size.Large)
+            } else if (size == Size.Large)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Large");
-                transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Blue_01");
             }
+            transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Blue_01");
         }
     }
     private void Update()
@@ -337,7 +334,7 @@ public class Player : MonoBehaviour
 
     private void StaggerSelf(bool enemyDashing, TeamColor enemyColor)
     {
-        if (enemyDashing == true && enemyColor != gameObject.transform.root.GetChild(playerNumber).GetComponent<PlayerSize>().color)
+        if (enemyDashing == true && enemyColor != color)
         {
             hipsRigidBody.isKinematic = true;
             animator.enabled = false;
