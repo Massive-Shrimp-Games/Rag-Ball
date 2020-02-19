@@ -320,10 +320,9 @@ GameObject:
   - component: {fileID: 1008142784070814955}
   - component: {fileID: 4820896358821487629}
   - component: {fileID: 5742212452533920421}
-  - component: {fileID: 707211963365154854}
   m_Layer: 15
   m_Name: hips
-  m_TagString: Grabbable
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -498,18 +497,6 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &707211963365154854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1008142784070814954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d0137f10ed2f1b49b2b530fb776d764, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1463392894371477787
 GameObject:
   m_ObjectHideFlags: 0
@@ -1051,7 +1038,7 @@ GameObject:
   - component: {fileID: 9161909979265432289}
   - component: {fileID: 4076245742659949491}
   - component: {fileID: 4010641574527136018}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GrabCheck
   m_TagString: Invisible
   m_Icon: {fileID: 0}
@@ -2293,20 +2280,22 @@ MonoBehaviour:
   jumpForce: 7500
   directThrowForce: 10000
   arcThrowForce: 10000
-  staggerTime: 0
+  staggerTime: 4
   playerSpeed: 3000
   staggerCharges: 0
   staggerMaxCharge: 0
   staggerDashCharge: 0
   staggerJumpCharge: 0
   dashing: 0
+  staggered: 0
   dashVelocityMinimum: 6
-  staggerCheck: {fileID: 707211963365154854}
+  staggerCheck: {fileID: 7426943625875570347}
   grabCheckCollider: {fileID: 4010641574527136018}
   grabPos: {fileID: 6876865634196861810}
   directThrowDirection: {fileID: 1463392894389788678}
   arcThrowDirection: {fileID: 1463392894371477786}
   staggerStars: {fileID: 2110709679184220633}
+  collisionTrigger: {fileID: 7565254737649259438}
   playerNumber: 0
   size: 1
   color: 0
@@ -3081,9 +3070,10 @@ GameObject:
   - component: {fileID: 964935937279468917}
   - component: {fileID: 8991289532594365142}
   - component: {fileID: 7695683271947323590}
+  - component: {fileID: 7426943625875570347}
   m_Layer: 9
   m_Name: CollisionTrigger
-  m_TagString: Player
+  m_TagString: Grabbable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3129,6 +3119,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 383636676227164208}
+--- !u!114 &7426943625875570347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7565254737649259438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d0137f10ed2f1b49b2b530fb776d764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7593445379743716839
 GameObject:
   m_ObjectHideFlags: 0
