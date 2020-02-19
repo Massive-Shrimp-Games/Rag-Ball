@@ -2307,9 +2307,8 @@ MonoBehaviour:
   directThrowDirection: {fileID: 1463392894389788678}
   arcThrowDirection: {fileID: 1463392894371477786}
   staggerStars: {fileID: 2110709679184220633}
-  follow: {fileID: 0}
   playerNumber: 0
-  size: 0
+  size: 1
   color: 0
 --- !u!54 &9199070168674078336
 Rigidbody:
