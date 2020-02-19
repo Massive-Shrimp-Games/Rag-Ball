@@ -48,26 +48,23 @@ public class Pipe : MonoBehaviour
     private void TriggerEnter(Collider collision)
     {
         Debug.Log("Something hit me");
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Grabbable")
         {
             Debug.Log("Player entered a goal");
             Player player = collision.GetComponent<BaseObject>().player;
             if (player == null) return;
-            if (player.getHips().tag == "Grabbable"){
-                if (player.color == color)
+            if (player.color == color)
+            {
+                if (color == TeamColor.Red)
                 {
-               
-                    if (color == TeamColor.Red)
-                    {
-                        Debug.Log("player has same color");
-                        ruleset.BlueScore(player.transform.gameObject);
-                    }
-                    else
-                    {
-                        ruleset.RedScore(player.transform.gameObject);
-                    }
-                    confetti.Play();
-                } 
+                    Debug.Log("player has same color");
+                    ruleset.BlueScore(player.transform.gameObject);
+                }
+                else
+                {
+                    ruleset.RedScore(player.transform.gameObject);
+                }
+                confetti.Play();
             }
             else{
                 Debug.Log("Hello, Im being grabbed"); 
