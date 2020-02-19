@@ -43,7 +43,7 @@ public class TitleScreen : MonoBehaviour
 
     private void OnStart(InputValue inputValue)
     {
-        SceneManager.LoadScene("GameModeSelect");
+        SceneManager.LoadScene("MainMenu");
     }
 
     private void OnNavigate(InputValue inputValue) { }
