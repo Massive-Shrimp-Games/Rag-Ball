@@ -17,24 +17,9 @@ public class StaggerCheck : MonoBehaviour
         GameObject enemy;
         if (other.gameObject.tag == "Grabbable")
         {
-            enemy = other.transform.GetComponent<BaseObject>().BaseGameObject.gameObject;
-            PlayerSize psize = enemy.transform.parent.transform.parent.transform.GetComponent<PlayerSize>();
-            Player pscript = null;
-            if(psize.size == Size.Small)
-            {
-                pscript = enemy.transform.GetComponent<Player>();
-            } else if(psize.size == Size.Medium)
-            {
-                pscript = enemy.transform.GetComponent<Player>();
-            } else if(psize.size == Size.Large)
-            {
-                pscript = enemy.transform.GetComponent<Player>();
-            }
-            if (enemy != null && pscript != null)
-            {
-                bool isDashing = pscript.dashing;
-                OnStaggerSelf(isDashing, psize.color);
-            }
+            Player player = other.GetComponent<Player>();
+            if (player == null) return;
+            OnStaggerSelf(player.dashing, player.color);
         }
 
     }

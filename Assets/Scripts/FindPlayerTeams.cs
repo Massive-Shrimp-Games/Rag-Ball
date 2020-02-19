@@ -14,50 +14,26 @@ public class FindPlayerTeams : MonoBehaviour
 
     void Start()
     {
-        foreach (Transform child in gameObject.transform)
+        foreach (Player player in FindObjectsOfType<Player>())
         {
-            if (child.GetComponent<PlayerSize>().color == TeamColor.Red)
+            if (player.color == TeamColor.Red)
             {
-                RedTeam.Add(child.gameObject);
+                RedTeam.Add(player.transform.gameObject);
             }
-            if (child.GetComponent<PlayerSize>().color == TeamColor.Blue)
+            if (player.color == TeamColor.Blue)
             {
-                BlueTeam.Add(child.gameObject);
+                BlueTeam.Add(player.transform.gameObject);
             }
         }
 
-        foreach (GameObject gameObject in RedTeam)
+        foreach (GameObject player in RedTeam)
         {
-            if (gameObject.GetComponent<PlayerSize>().size == Size.Small)
-            {
-                RedTeamHips.Add(gameObject.transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).transform.GetChild(0).gameObject);
-            }
-            if (gameObject.GetComponent<PlayerSize>().size == Size.Medium)
-            {
-                RedTeamHips.Add(gameObject.transform.GetChild(1).transform.GetChild(0).transform.GetChild(1).transform.GetChild(0).gameObject);
-            }
-            if (gameObject.GetComponent<PlayerSize>().size == Size.Large)
-            {
-                RedTeamHips.Add(gameObject.transform.GetChild(2).transform.GetChild(0).transform.GetChild(1).transform.GetChild(0).gameObject);
-            }
+            RedTeamHips.Add(player.GetComponent<Player>().getHips());
         }
 
-        foreach (GameObject gameObject in BlueTeam)
+        foreach (GameObject player in BlueTeam)
         {
-            if (gameObject.GetComponent<PlayerSize>().size == Size.Small)
-            {
-                BlueTeamHips.Add(gameObject.transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).transform.GetChild(0).gameObject);
-            }
-            if (gameObject.GetComponent<PlayerSize>().size == Size.Medium)
-            {
-                BlueTeamHips.Add(gameObject.transform.GetChild(1).transform.GetChild(0).transform.GetChild(1).transform.GetChild(0).gameObject);
-            }
-            if (gameObject.GetComponent<PlayerSize>().size == Size.Large)
-            {
-                BlueTeamHips.Add(gameObject.transform.GetChild(2).transform.GetChild(0).transform.GetChild(1).transform.GetChild(0).gameObject);
-            }
+            BlueTeamHips.Add(player.GetComponent<Player>().getHips());
         }
-
-
     }
 }
