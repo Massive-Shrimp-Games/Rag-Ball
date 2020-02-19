@@ -48,5 +48,7 @@ public class TitleScreen : MonoBehaviour
 
     private void OnNavigate(InputValue inputValue) { }
     private void OnConfirm(InputValue inputValue) { }
-    private void OnReturn(InputValue inputValue) { }
+    private void OnReturn(InputValue inputValue) {
+        Application.Quit();
+    }
 }
