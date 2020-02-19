@@ -180,6 +180,7 @@ public class Player : MonoBehaviour
         {
             controller._OnMove += OnMove;
             controller._OnJump += OnJump;
+            controller._OnJumpRelease += OnJumpRelease;
             controller._OnDash += OnDash;
             controller._OnGrabDrop += OnGrabDrop;
             controller._OnPause += OnPause;
@@ -188,13 +189,13 @@ public class Player : MonoBehaviour
             controller._OnStaggerSelf += OnStaggerSelf;
         }
     }
-
     private void UnMapControls()
     {
         if (controller != null)
         {
             controller._OnMove -= OnMove;
             controller._OnJump -= OnJump;
+            controller._OnJumpRelease -= OnJumpRelease;
             controller._OnDash -= OnDash;
             controller._OnGrabDrop -= OnGrabDrop;
             controller._OnPause -= OnPause;
@@ -252,6 +253,7 @@ public class Player : MonoBehaviour
 
     private void OnJump(InputValue inputValue)
     {
+        // https://forum.unity.com/threads/how-would-you-handle-a-getbuttondown-situaiton-with-the-new-input-system.627184/
         if (canJump && staggerCharges >= 0)
         {
             Vector3 boostDir = hips.transform.up;
@@ -263,6 +265,11 @@ public class Player : MonoBehaviour
                 StartCoroutine(rechargeStamina());
             }
         }
+    }
+
+    private void OnJumpRelease(InputValue inputValue)
+    {
+
     }
 
     private void OnDash(InputValue inputValue)

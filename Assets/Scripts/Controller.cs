@@ -7,6 +7,7 @@ public class Controller : MonoBehaviour
 
     public event InputEventHandler _OnMove;
     public event InputEventHandler _OnJump;
+    public event InputEventHandler _OnJumpRelease;
     public event InputEventHandler _OnDash;
     public event InputEventHandler _OnGrabDrop;
     public event InputEventHandler _OnPause;
@@ -26,6 +27,11 @@ public class Controller : MonoBehaviour
     private void OnJump(InputValue inputValue)
     {
         _OnJump?.Invoke(inputValue);
+    }
+
+    private void OnJumpRelease(InputValue inputValue)
+    {
+        _OnJumpRelease?.Invoke(inputValue);
     }
 
     private void OnDash(InputValue inputValue)
