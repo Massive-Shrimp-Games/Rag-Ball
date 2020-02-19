@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
     private Animator animator;
     private Rigidbody hipsRigidBody;
 
-    public int playerNumber;
+    public int playerNumber = 0;
     private Controller controller;
 
     void Awake()
@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
 
     private void AssignMaterial()
     {
-        PlayerSize player = transform.root.GetComponent<PlayerSize>();
+        PlayerSize player = transform.root.GetChild(playerNumber).GetComponent<PlayerSize>();
         if(player.color == TeamColor.Red)
         {
             if(player.size == Size.Small)
@@ -337,7 +337,7 @@ public class Player : MonoBehaviour
 
     private void StaggerSelf(bool enemyDashing, TeamColor enemyColor)
     {
-        if (enemyDashing == true && enemyColor != gameObject.transform.root.GetComponent<PlayerSize>().color)
+        if (enemyDashing == true && enemyColor != gameObject.transform.root.GetChild(playerNumber).GetComponent<PlayerSize>().color)
         {
             hipsRigidBody.isKinematic = true;
             animator.enabled = false;
