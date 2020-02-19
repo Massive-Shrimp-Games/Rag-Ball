@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform directThrowDirection;
     [SerializeField] private Transform arcThrowDirection;
     [SerializeField] private GameObject staggerStars;
+    [SerializeField] private Transform follow;
     private TrailRenderer trailRenderer;
 
     private GameObject grabbing;
@@ -113,6 +114,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         UpdateHeld();
+        UpdateTransform();
         bool leftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
         bool rightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
         canJump = leftFoot || rightFoot;
@@ -134,7 +136,10 @@ public class Player : MonoBehaviour
             trailRenderer.enabled = false;
         }
     }
-
+    private void UpdateTransform()
+    {
+        //transform.localPosition = follow.position;
+    }
     void Start()
     {
         canJump = false;
