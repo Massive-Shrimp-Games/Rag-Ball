@@ -48,7 +48,7 @@ public class Scoreboard : MonoBehaviour
             scoreMesh.text = scoreSTR;
         }*/
 
-        if (player.transform.parent.parent.parent.parent.GetComponent<PlayerSize>().color != color)
+        if (player.GetComponent<Player>().color != color)
         {
             Debug.Log("Same color as pipe");
             string scoreSTR = score.ToString();

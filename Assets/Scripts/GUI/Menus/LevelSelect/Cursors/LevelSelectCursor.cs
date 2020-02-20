@@ -5,7 +5,7 @@ public class LevelSelectCursor : PlayerCursor
 {
     protected override void OnReturn(InputValue inputValue)
     {
-        SceneManager.LoadScene("GameModeSelect");
+        MenuActions.ToGameModeSelect();
     }
 
     protected override void OnStart(InputValue inputValue) { }

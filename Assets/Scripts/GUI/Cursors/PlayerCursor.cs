@@ -11,12 +11,24 @@ public abstract class PlayerCursor : MonoBehaviour
 
     protected virtual void Start()
     {
+        //BindController();
+        //MapControls();
+        //MoveToCurrentMenuItem();
+    }
+
+    protected virtual void OnDestroy()
+    {
+        //UnmapControls();
+    }
+
+    protected virtual void OnEnable()
+    {
         BindController();
         MapControls();
         MoveToCurrentMenuItem();
     }
 
-    protected virtual void OnDestroy()
+    protected virtual void OnDisable()
     {
         UnmapControls();
     }

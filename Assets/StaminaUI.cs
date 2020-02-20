@@ -13,7 +13,7 @@ public class StaminaUI : MonoBehaviour
     [SerializeField] private Sprite REDPLAYER;
     [SerializeField] private Sprite BLUEPLAYER;
 
-    [SerializeField] private PlayerSize[] players;
+    [SerializeField] private Player[] players;
     private GameObject[] UIS;
     void Start()
     {
@@ -22,12 +22,9 @@ public class StaminaUI : MonoBehaviour
     }
     private void OnDestroy()
     {
-        foreach(PlayerSize p in players)
+        foreach (Player pl in players)
         {
-            foreach (Player pl in p.GetComponentsInChildren<Player>())
-            {
-                pl.OnPlayerExertion -= OnExert;
-            }
+            pl.OnPlayerExertion -= OnExert;
         }
     }
     private void OnExert(int player, int stamina)
@@ -46,10 +43,10 @@ public class StaminaUI : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
 
-        players = FindObjectsOfType<PlayerSize>();
+        players = FindObjectsOfType<Player>();
         UIS = new GameObject[players.Length];
 
-        foreach (PlayerSize p in players)
+        foreach (Player p in players)
         {
             int index = p.playerNumber;
             //instantiates UIS based on number of players and assigns to the locations //NOTE: WILL THROW ERROR IF MORE PLAYERS THAN STAMINA POSITIONS
@@ -66,11 +63,7 @@ public class StaminaUI : MonoBehaviour
             //sets stamina sprite
             UIS[index].transform.GetChild(1).GetComponent<Image>().sprite = staminas[5];
             //Subscribes OnExert to every player
-            foreach (Player pl in p.GetComponentsInChildren<Player>())
-            {
-                pl.OnPlayerExertion += OnExert;
-            }
-
+            p.OnPlayerExertion += OnExert;
         }
     }
 }
