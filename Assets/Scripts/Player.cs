@@ -279,7 +279,9 @@ public class Player : MonoBehaviour
             }
             if (grabbing != null)
             {
-                grabbing.GetComponent<BaseObject>().player.getHips().GetComponent<Rigidbody>().isKinematic = true;
+                BaseObject pl = grabbing.GetComponent<BaseObject>();
+                if (pl != null)
+                    pl.player.getHips().GetComponent<Rigidbody>().isKinematic = true;
                 grabbing.tag = "Grabbed";
                 //grabbing.GetComponentInParent<GameObject>().GetComponentInParent<GameObject>().GetComponentInParent<Player>().;
                 collisionTrigger.tag = "Grabbing";

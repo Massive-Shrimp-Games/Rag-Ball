@@ -27,6 +27,7 @@ public class CheckGrab : MonoBehaviour
 
     public GameObject FindClosest()
     {
+        Debug.Log("FindClosest called");
         if (grabbables.Count == 0) { return null; }
 
         GameObject nearest = null;
@@ -44,8 +45,8 @@ public class CheckGrab : MonoBehaviour
             }
            if (nearest != null)
             {
-                float grabDistance = Vector3.Distance(player.getHips().transform.position, grab.transform.position);
-                float nearestDistance = Vector3.Distance(player.getHips().transform.position, nearest.transform.position);
+                float grabDistance = Vector3.Distance(hips.transform.position, grab.transform.position);
+                float nearestDistance = Vector3.Distance(hips.transform.position, nearest.transform.position);
                 if (grabDistance < nearestDistance)
                 {
                     nearest = grab;
