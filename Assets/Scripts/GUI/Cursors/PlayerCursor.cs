@@ -11,21 +11,17 @@ public abstract class PlayerCursor : MonoBehaviour
 
     protected virtual void Start()
     {
-        //BindController();
-        //MapControls();
-        //MoveToCurrentMenuItem();
+        MoveToCurrentMenuItem();
     }
 
     protected virtual void OnDestroy()
     {
-        //UnmapControls();
     }
 
     protected virtual void OnEnable()
     {
         BindController();
         MapControls();
-        MoveToCurrentMenuItem();
     }
 
     protected virtual void OnDisable()
@@ -80,6 +76,7 @@ public abstract class PlayerCursor : MonoBehaviour
 
     private void MoveToCurrentMenuItem()
     {
+        Debug.Log("MoveToCurrentMenuItem");
         gameObject.transform.position = currentMenuItem.Position;
     }
 }
