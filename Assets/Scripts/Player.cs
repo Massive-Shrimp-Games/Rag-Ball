@@ -283,13 +283,13 @@ public class Player : MonoBehaviour
     private void Move()
     {
         if (hips.tag != "Grabbed"){
-            Vector2 stickDirection = inputValue.Get<Vector2>();
-            Vector3 force = new Vector3(stickDirection.x, 0, stickDirection.y) * playerSpeed * Time.deltaTime;
-            hipsRigidBody.AddForce(force);
-            //Debug.LogFormat("stickDir is {0}", stickDirection);
-            if (Mathf.Abs(stickDirection.x) >= 0.1 || Mathf.Abs(stickDirection.y) >= 0.1)
+            //Vector2 stickDirection = inputValue.Get<Vector2>();
+            Vector3 force = new Vector3(movement.x, 0, movement.y) * playerSpeed * Time.deltaTime;
+            hipsRigidBody.AddForce(force, ForceMode.Impulse);
+            //Debug.LogFormat("stickDir is {0}", movement);
+            if (Mathf.Abs(movement.x) >= 0.1 || Mathf.Abs(movement.y) >= 0.1)
             {
-                hips.transform.forward = new Vector3(stickDirection.x, 0, stickDirection.y);
+                hips.transform.forward = new Vector3(movement.x, 0, movement.y);
             }
             animator.Play(force.magnitude >= 0.03 ? "Walk" : "Idle");
         }
@@ -389,10 +389,6 @@ public class Player : MonoBehaviour
         }
 
         VictimVariables();
-        arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
-        objectToThrow.GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
-        staggerCharges = staggerCharges - staggerDashCharge;
-        OnPlayerExertion(playerNumber,staggerCharges);
     }
 
     private void OnDirectThrow(InputValue inputValue)

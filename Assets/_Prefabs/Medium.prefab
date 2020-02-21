@@ -2277,15 +2277,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dashForce: 5000
-  jumpForce: 7500
+  jumpForce: 12000
   directThrowForce: 10000
   arcThrowForce: 10000
   staggerTime: 4
-  playerSpeed: 3000
+  playerSpeed: 200
   staggerCharges: 0
   staggerMaxCharge: 0
   staggerDashCharge: 0
   staggerJumpCharge: 0
+  isThrown: 0
+  canJump: 0
   dashing: 0
   staggered: 0
   dashVelocityMinimum: 6
@@ -2294,8 +2296,11 @@ MonoBehaviour:
   grabPos: {fileID: 6876865634196861810}
   directThrowDirection: {fileID: 1463392894389788678}
   arcThrowDirection: {fileID: 1463392894371477786}
+  grabbing: {fileID: 0}
   staggerStars: {fileID: 2110709679184220633}
   collisionTrigger: {fileID: 7565254737649259438}
+  fallMultiplier: 60
+  jumpMultiplier: 12
   playerNumber: 0
   size: 1
   color: 0
@@ -3528,16 +3533,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 68953021133953271}
     m_Modifications:
-    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
-        type: 3}
-      propertyPath: m_Name
-      value: RagdollTrail
-      objectReference: {fileID: 0}
-    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8130124753009482852, guid: 46cda7ba68426ef49b2bbd958eeec03a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3591,6 +3586,16 @@ PrefabInstance:
     - target: {fileID: 8130124753009482852, guid: 46cda7ba68426ef49b2bbd958eeec03a,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
+        type: 3}
+      propertyPath: m_Name
+      value: RagdollTrail
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
