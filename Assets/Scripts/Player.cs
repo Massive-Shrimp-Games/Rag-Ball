@@ -14,8 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpForce = 12000; // Set in editor
     [SerializeField] private float directThrowForce; // Set in editor
     [SerializeField] private float arcThrowForce; // Set in editor
-
-    public TeamColor color;
+    [SerializeField] private int staggerTime; // Set in editor
 
     private Vector3 directThrowForceVel;
     private Vector3 arcThrowForceVel;
@@ -27,11 +26,17 @@ public class Player : MonoBehaviour
     public int staggerJumpCharge;
     //private int staminaCharges;
 
+
     // Airborne Variables
     // Set isThrown to TRUE on any player when they are thrown -> access the grabbed objects isThrown variable
     // Set canJump to FALSE on any player when they are thrown
     public bool isThrown = false;
     public bool canJump;
+    public bool dashing;   // Protect this with a Getter
+    public bool staggered = false;
+    [SerializeField] private float dashVelocityMinimum;
+    [SerializeField] private StaggerCheck staggerCheck;
+
 
     private const int StaminaMaxCharge = 5;
 
@@ -39,9 +44,8 @@ public class Player : MonoBehaviour
 
     private const int StaminaJumpCharge = 1;
 
-    private int StaggerTime = 5;
-
     private float StaminaRechargeTime = 1.5f;
+
     private Collider hipsCollider;
 
     private bool isRecharging;
@@ -53,25 +57,18 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform grabPos; // Set in editor
     [SerializeField] private Transform directThrowDirection;
     [SerializeField] private Transform arcThrowDirection;
+
     [SerializeField] private GameObject grabbing;
 
     // Instead of this, have a particle handler
     [SerializeField] private GameObject staggerStars;
-    TrailRenderer trailRenderer;
-
-    public float trailSpeed = 6f;
+    [SerializeField] private GameObject collisionTrigger;
+    private TrailRenderer trailRenderer;
 
     private GameObject hips;
     private Animator animator;
-    //animator.State.name
-
     private Rigidbody hipsRigidBody;
 
-    public StaggerCheck staggerCheck;
-
-    public int playerNumber;
-
-    private Controller controller;
 
     //Jump Variables
     [SerializeField] private float fallMultiplier = 60f;
@@ -80,21 +77,52 @@ public class Player : MonoBehaviour
 
     private Vector2 movement;
 
+    public int playerNumber = 0;
+    public Size size;
+    public TeamColor color;
+    private Controller controller;
+
     void Awake()
     {
+        hips = transform.GetChild(1).GetChild(0).gameObject; //set reference to player's hips
+        hipsRigidBody = hips.gameObject.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
+        animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
+        hipsCollider = hips.gameObject.GetComponent<Collider>();
+        trailRenderer = hips.GetComponent<TrailRenderer>();
+
         AssignMaterial();
+        staggerCheck.OnStaggerSelf += StaggerSelf;
     }
 
     private void AssignMaterial()
     {
         if (color == TeamColor.Red)
         {
-            transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Medium");
+            if(size == Size.Small)
+            {
+                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Small");
+                
+            } else if (size == Size.Medium)
+            {
+                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Medium");
+            } else if (size == Size.Large)
+            {
+                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Large");
+            }
             transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Red_01");
         }
         else if (color == TeamColor.Blue)
         {
-            transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Medium_Blue");
+            if(size == Size.Small)
+            {
+                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Small");
+            } else if (size == Size.Medium)
+            {
+                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Medium");
+            } else if (size == Size.Large)
+            {
+                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Large");
+            }
             transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Blue_01");
         }
     }
@@ -106,11 +134,13 @@ public class Player : MonoBehaviour
         canJump = leftFoot || rightFoot;
 
         staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
-
-
         Move();
         JumpPhysics();
         UpdateThrown();
+
+        if (isRecharging == false && hasStartedRecharging == true){
+            StartCoroutine(rechargeStamina());
+        }
     }
 
     /// <summary>
@@ -156,6 +186,7 @@ public class Player : MonoBehaviour
         }
     }
 
+
     void Start()
     {
         canJump = false;
@@ -177,9 +208,11 @@ public class Player : MonoBehaviour
 
         trailRenderer = transform.GetChild(1).GetChild(0).GetComponent<TrailRenderer>();
 
+        
+        dashing = false;
         grabbing = null;
         isRecharging = false; 
-        hasStartedRecharging = false; 
+        hasStartedRecharging = false;
     }
 
     private void OnDestroy()
@@ -191,10 +224,21 @@ public class Player : MonoBehaviour
     {
         if (grabbing != null)
         {
-            grabbing.GetComponent<Rigidbody>().position = grabPos.position;
+            BaseObject held = grabbing.GetComponent<BaseObject>();
+            if(held != null)
+            {
+                held.player.getHips().GetComponent<Rigidbody>().position = grabPos.position;
+            }
+            else
+            {
+                grabbing.GetComponent<Rigidbody>().position = grabPos.position;
+            }
         }
 
-        if (hipsRigidBody.velocity.magnitude > trailSpeed)
+        dashing = hipsRigidBody.velocity.magnitude > dashVelocityMinimum;
+        staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
+
+        if (hipsRigidBody.velocity.magnitude > 6f)
         {
             trailRenderer.enabled = true;
         }
@@ -218,7 +262,6 @@ public class Player : MonoBehaviour
             controller._OnPause += OnPause;
             controller._OnArcThrow += OnArcThrow;
             controller._OnDirectThrow += OnDirectThrow;
-            controller._OnStaggerSelf += OnStaggerSelf;
         }
     }
     private void UnMapControls()
@@ -233,24 +276,23 @@ public class Player : MonoBehaviour
             controller._OnPause -= OnPause;
             controller._OnArcThrow -= OnArcThrow;
             controller._OnDirectThrow -= OnDirectThrow;
-            controller._OnStaggerSelf -= OnStaggerSelf;
         }
     }
     #endregion
 
     private void Move()
     {
-        Vector3 force = Vector3.zero;
-
-        force = new Vector3(movement.x, 0, movement.y) * playerSpeed * Time.deltaTime;
-        hipsRigidBody.AddForce(force, ForceMode.Impulse);
-
-        if (Mathf.Abs(movement.x) >= 0.1 || Mathf.Abs(movement.y) >= 0.1)
-        {
-            hips.transform.forward = new Vector3(movement.x, 0, movement.y);
+        if (hips.tag != "Grabbed"){
+            Vector2 stickDirection = inputValue.Get<Vector2>();
+            Vector3 force = new Vector3(stickDirection.x, 0, stickDirection.y) * playerSpeed * Time.deltaTime;
+            hipsRigidBody.AddForce(force);
+            //Debug.LogFormat("stickDir is {0}", stickDirection);
+            if (Mathf.Abs(stickDirection.x) >= 0.1 || Mathf.Abs(stickDirection.y) >= 0.1)
+            {
+                hips.transform.forward = new Vector3(stickDirection.x, 0, stickDirection.y);
+            }
+            animator.Play(force.magnitude >= 0.03 ? "Walk" : "Idle");
         }
-
-        animator.Play(force.magnitude >= 0.03 ? "Walk" : "Idle");
     }
 
     #region Player Abilities
@@ -262,7 +304,7 @@ public class Player : MonoBehaviour
 
     private void OnJump(InputValue inputValue)
     {
-        if (canJump && staggerCharges >= 0)
+        if (canJump && staggerCharges >= 0 && hips.tag != "Grabbed")
         {
             aIsPressed = true;
 
@@ -285,7 +327,7 @@ public class Player : MonoBehaviour
 
     private void OnDash(InputValue inputValue)
     {
-        if (staggerCharges >= staggerDashCharge)
+        if (staggerCharges >= staggerDashCharge && hips.tag != "Grabbed")
         {
             Vector3 boostDir = hips.transform.forward;
             hipsRigidBody.AddForce(boostDir * dashForce);
@@ -300,25 +342,27 @@ public class Player : MonoBehaviour
 
     private void OnGrabDrop(InputValue inputValue)
     {
-        if (grabbing == null)
-        {
-            if (hips.tag == "Grabbable")
-            {
+        if (grabbing == null) {
+            if (collisionTrigger.tag == "Grabbable"){
                 grabbing = grabCheckCollider.FindClosest();
             }
             if (grabbing != null)
             {
-                grabbing.GetComponent<Rigidbody>().isKinematic = true;
+                BaseObject pl = grabbing.GetComponent<BaseObject>();
+                if (pl != null)
+                    pl.player.getHips().GetComponent<Rigidbody>().isKinematic = true;
                 grabbing.tag = "Grabbed";
-                hips.tag = "Grabbing";
+                //grabbing.GetComponentInParent<GameObject>().GetComponentInParent<GameObject>().GetComponentInParent<Player>().;
+                collisionTrigger.tag = "Grabbing";
             }
         }
         else
         {
             grabbing.tag = "Grabbable";
-            hips.tag = "Grabbable";
+            collisionTrigger.tag = "Grabbable";
 
-            grabbing.GetComponent<Rigidbody>().isKinematic = false;
+            grabbing.GetComponent<BaseObject>().player.getHips().GetComponent<Rigidbody>().isKinematic = false;
+            //Game.Instance.Controllers.GetController(grabbing.GetComponent<BaseObject>().player.playerNumber).GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
             grabbing = null;
         }
     }
@@ -332,9 +376,17 @@ public class Player : MonoBehaviour
     {
         if (grabbing == null) { return; }
 
-        // Get reference to what we are holding before we release it
-        GameObject objectToThrow = grabbing;
+        arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
         OnGrabDrop(null);
+        BaseObject held = grabbing.GetComponent<BaseObject>();
+        if (held != null)
+        {
+            held.player.getHips().GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
+        }
+        else
+        {
+            grabbing.GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
+        }
 
         VictimVariables();
         arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
@@ -348,57 +400,48 @@ public class Player : MonoBehaviour
         if (grabbing == null) { return; }
         
         // Get reference to what we are holding before we release it
-        GameObject objectToThrow = grabbing;
-        //grabbing.GetComponent<Rigidbody>().AddForce(directThrowForce * directThrowDirection.forward);
-        OnGrabDrop(null);
-
-        VictimVariables();
+        BaseObject held = grabbing.GetComponent<BaseObject>();
         directThrowForceVel = directThrowForce * directThrowDirection.forward;
-        objectToThrow.GetComponent<Rigidbody>().AddForce(directThrowForceVel);
-        staggerCharges = staggerCharges - staggerDashCharge;
-        OnPlayerExertion(playerNumber,staggerCharges);
+        VictimVariables();
+        OnGrabDrop(null);
+        if (held != null)
+        {
+            held.player.getHips().GetComponent<Rigidbody>().AddForce(directThrowForceVel);
+        }
+        else
+        {
+            grabbing.GetComponent<Rigidbody>().AddForce(directThrowForceVel);
+        }
+        
     }
 
-    private void OnStaggerSelf(InputValue inputValue)
-    {
-        staggerStars.SetActive(true);
-        StartCoroutine("StaggerSelf");
-        if (grabbing != null)
-        {
-            OnGrabDrop(null);
-        }
-    }
     #endregion
 
-    private IEnumerator StaggerSelf()
+    private void StaggerSelf(bool enemyDashing, TeamColor enemyColor)
     {
-        yield return new WaitForSeconds(4);
-        staggerStars.SetActive(false);
+        if (Game.Instance == null) return;
+        if (enemyDashing == true && enemyColor != color)
+        {
+            Debug.Log("Staggered guy");
+            Game.Instance.Controllers.GetController(playerNumber).GetComponent<PlayerInput>().SwitchCurrentActionMap("Menu");
+            staggered = true;
+            animator.enabled = false;
+            staggerStars.SetActive(true);
+            if (grabbing) { OnGrabDrop(null); }
+            StartCoroutine("UnStagger");
+        }
     }
 
-    void Stagger()
+    private IEnumerator UnStagger()
     {
-        hipsRigidBody.constraints = RigidbodyConstraints.None;
-        animator.enabled = false;
-        Debug.Log("Stagger time");
-
-        waitingForUnstaggerCoroutine(5);
-        waitingForUnstaggerCoroutine(StaggerTime); 
-    }
-
-    void Unstagger()
-    {
-        hipsRigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+        yield return new WaitForSeconds(staggerTime);
+        if (hips.tag != "Grabbed")
+        {
+            Game.Instance.Controllers.GetController(playerNumber).GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
+        }
+        staggered = false;
         animator.enabled = true;
         staggerStars.SetActive(false);
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        /*if (other.gameObject.tag == "Stagger"){
-            //Debug.Log("Hit a box");
-            Stagger(5); 
-        }*/
     }
 
     private IEnumerator rechargeStamina(){
@@ -424,14 +467,7 @@ public class Player : MonoBehaviour
         }
         
     }
-    private IEnumerator waitingForUnstaggerCoroutine(int time)
-    {
-
-        yield return new WaitForSeconds(time);
-
-        Unstagger();
-    }
-
+ 
     public void ResetVelocity()
     {
         hipsRigidBody.velocity = Vector3.zero;

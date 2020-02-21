@@ -4,48 +4,22 @@ using UnityEngine;
 
 public class StaggerCheck : MonoBehaviour
 {
-    // Start is called before the first frame update
-    private GameObject hips;
-    //private Animator animator;
+    public delegate void StaggerSelf(bool enemyDashing, TeamColor enemyColor);
 
-    private Rigidbody hipsRigidBody; 
-    void Start()
+    public event StaggerSelf OnStaggerSelf;
+
+    // If the person that ran into us was dashing, stagger self.
+    // Check if we hit hips. Need a stronger system to check if we collide with Player
+    // Can't check player tag because self is hips, which collides with Player.
+    private void OnTriggerEnter(Collider other)
     {
-        hips = transform.gameObject; 
-        hipsRigidBody = hips.gameObject.GetComponent<Rigidbody>(); 
+        if(Game.Instance == null) return;
+        Debug.Log("player collision event trigger");
+        BaseObject coll = other.GetComponent<BaseObject>();
+        if (coll == null) return;
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void Stagger(int time){
-        hipsRigidBody.constraints = RigidbodyConstraints.None;
-        Debug.Log("Stagger time");
-        //animator.enabled = false;
-        waitingForUnstaggerCoroutine(5); 
-    }
-
-    void Unstagger(){
-        hipsRigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
-        //animator.enabled = true;
-        Debug.Log("Unstagger time");
-    }
-
-    private void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag == "StaggerBox"){
-            Debug.Log("Why");
-            Stagger(5); 
-        }
-    }
-
-    private IEnumerator waitingForUnstaggerCoroutine(int time){
-
-        yield return new WaitForSeconds (time); 
-
-        Unstagger(); 
+        Player player = coll.player;
+        if (player == null) return;
+        OnStaggerSelf(player.dashing, player.color);
     }
 }

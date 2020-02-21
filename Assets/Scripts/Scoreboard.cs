@@ -38,15 +38,24 @@ public class Scoreboard : MonoBehaviour
 
     private void OnScore(GameObject player, int score)
     {
-        Debug.Log("Player Color: " + player.transform.root.GetChild(0).GetComponent<Player>().color + " with score " + score.ToString());
+        //Debug.Log("Player Color: " + player.transform.root.GetComponent<PlayerSize>().color + " with score " + score.ToString());
 
-        if(player.transform.root.GetChild(0).GetComponent<Player>().color != color)
+        /*if(player.transform.root.GetChild(1).GetComponent<PlayerSize>().color != color)
         {
             string scoreSTR = score.ToString();
             //if (score < 10)
              //   scoreSTR = "0" + scoreSTR;
             scoreMesh.text = scoreSTR;
+        }*/
+
+        if (player.GetComponent<Player>().color != color)
+        {
+            Debug.Log("Same color as pipe");
+            string scoreSTR = score.ToString();
+            //if (score < 10)
+            //   scoreSTR = "0" + scoreSTR;
+            scoreMesh.text = scoreSTR;
         }
-        
+
     }
 }

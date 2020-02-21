@@ -8510,6 +8510,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1481770193416468325, guid: 86b4a6a6a5eb0da41b33f2da59137971,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.0194
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86b4a6a6a5eb0da41b33f2da59137971, type: 3}
 --- !u!4 &7067320202219415873 stripped
@@ -9066,7 +9071,7 @@ PrefabInstance:
     - target: {fileID: 434128862069013421, guid: 86b4a6a6a5eb0da41b33f2da59137971,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.880923
+      value: 7.46
       objectReference: {fileID: 0}
     - target: {fileID: 434128862069013421, guid: 86b4a6a6a5eb0da41b33f2da59137971,
         type: 3}

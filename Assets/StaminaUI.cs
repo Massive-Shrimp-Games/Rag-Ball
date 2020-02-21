@@ -13,25 +13,50 @@ public class StaminaUI : MonoBehaviour
     [SerializeField] private Sprite REDPLAYER;
     [SerializeField] private Sprite BLUEPLAYER;
 
-    private Player[] players;
+    [SerializeField] private Player[] players;
     private GameObject[] UIS;
     void Start()
     {
-        if (Game.Instance == null) return;
-       
+        StartCoroutine("WaitForStart");
+        
+    }
+    private void OnDestroy()
+    {
+        foreach (Player pl in players)
+        {
+            pl.OnPlayerExertion -= OnExert;
+        }
+    }
+    private void OnExert(int player, int stamina)
+    {
+        //Debug.Log("Player: " + player + " Stamina: " + stamina);
+        UIS[player].transform.GetChild(1).GetComponent<Image>().sprite = staminas[stamina];
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    IEnumerator WaitForStart()
+    {
+        yield return new WaitForEndOfFrame();
+
         players = FindObjectsOfType<Player>();
         UIS = new GameObject[players.Length];
-        
-        foreach(Player p in players)
+
+        foreach (Player p in players)
         {
             int index = p.playerNumber;
             //instantiates UIS based on number of players and assigns to the locations //NOTE: WILL THROW ERROR IF MORE PLAYERS THAN STAMINA POSITIONS
-            UIS[index] = Instantiate(UIPrefab,UILocations[index].transform.position,Quaternion.identity,gameObject.transform);
+            UIS[index] = Instantiate(UIPrefab, UILocations[index].transform.position, Quaternion.identity, gameObject.transform);
 
-            if(p.color == TeamColor.Red)
+            if (p.color == TeamColor.Red)
             {
                 UIS[index].transform.GetChild(0).GetComponent<Image>().sprite = REDPLAYER;
-            } else if (p.color == TeamColor.Blue)
+            }
+            else if (p.color == TeamColor.Blue)
             {
                 UIS[index].gameObject.transform.GetChild(0).GetComponent<Image>().sprite = BLUEPLAYER;
             }
@@ -40,24 +65,5 @@ public class StaminaUI : MonoBehaviour
             //Subscribes OnExert to every player
             p.OnPlayerExertion += OnExert;
         }
-    }
-    private void OnDestroy()
-    {
-        
-        foreach(Player p in players)
-        {
-            p.OnPlayerExertion -= OnExert;
-        }
-    }
-    private void OnExert(int player, int stamina)
-    {
-        Debug.Log("Player: " + player + " Stamina: " + stamina);
-        UIS[player].transform.GetChild(1).GetComponent<Image>().sprite = staminas[stamina];
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

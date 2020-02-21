@@ -230,6 +230,19 @@ GUIText:
     rgba: 4294967295
   m_PixelCorrect: 1
   m_RichText: 1
+--- !u!65 &6361519251245971541
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5603905481422675407}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.010256356, y: 0.010647057, z: 0.010000879}
+  m_Center: {x: -0.000000010244554, y: 0.0003235284, z: 0.00000043679054}
 --- !u!1001 &4532027837009315014
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -314,6 +327,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: baad3f4be2a6e3044940008cb87bbfd4, type: 3}
+--- !u!1 &5603905481422675407 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: baad3f4be2a6e3044940008cb87bbfd4,
+    type: 3}
+  m_PrefabInstance: {fileID: 4532027837009315014}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8907640129746038748 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: baad3f4be2a6e3044940008cb87bbfd4,

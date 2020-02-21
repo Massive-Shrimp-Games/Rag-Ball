@@ -27,23 +27,33 @@ public class CheckGrab : MonoBehaviour
 
     public GameObject FindClosest()
     {
+        Debug.Log("FindClosest called");
         if (grabbables.Count == 0) { return null; }
 
         GameObject nearest = null;
         foreach (GameObject grab in grabbables)
         {
-            if (nearest == null)
+            Player player = grab.GetComponent<BaseObject>().player;
+            if (nearest == null && grab.tag != "Grabbed")
             {
-                nearest = grab;
+                //if is a player and they are staggered
+                if (player != null && player.staggered)
+                    nearest = grab;
+                //otherwise if they are not a player (already checked if grabbable) must be a grabbable object of type not player
+                else if (player == null)
+                    nearest = grab;
+            }
+           if (nearest != null)
+            {
+                float grabDistance = Vector3.Distance(hips.transform.position, grab.transform.position);
+                float nearestDistance = Vector3.Distance(hips.transform.position, nearest.transform.position);
+                if (grabDistance < nearestDistance)
+                {
+                    nearest = grab;
+                }
             }
 
-            float grabDistance = Vector3.Distance(hips.transform.position, grab.transform.position);
-            float nearestDistance = Vector3.Distance(hips.transform.position, nearest.transform.position);
-
-            if (grabDistance < nearestDistance)
-            {
-                nearest = grab;
-            }
+            
         }
 
         return nearest;
