@@ -36,7 +36,7 @@ public class PlayerFactory : MonoBehaviour
     {
         if (Game.Instance == null) return;
         for (int i = 0; i < Game.Instance.Controllers.Count(); i++) {
-            CreatePlayer(i, spawnPoints[i], TeamColor.Blue, Size.Medium);
+            CreatePlayer(i, spawnPoints[i], TeamColor.Red, Size.Large);
         }
     }
 }
