@@ -8,7 +8,8 @@ public class PlayerFactory : MonoBehaviour
     public Prefabber mediumPrefabber;
     public Prefabber largePrefabber;
     public Transform[] spawnPoints;
-    public GameObject CreatePlayer(int playerNumber, Transform spawnPoint, TeamColor color, Size size)
+    public Transform parent;
+    public GameObject CreatePlayer(int playerNumber, Transform spawnPoint, Transform parent, TeamColor color, Size size)
     {
         Prefabber prefabber = null;
         switch (size) {
@@ -29,6 +30,8 @@ public class PlayerFactory : MonoBehaviour
         GameObject player = Instantiate(prefabber.prefab);
         player.name = string.Format("Player #{0}", playerNumber);
         player.transform.position = spawnPoint.position;
+        player.transform.rotation = spawnPoint.rotation;
+        player.transform.parent = parent;
         return player;
     }
 
@@ -36,7 +39,7 @@ public class PlayerFactory : MonoBehaviour
     {
         if (Game.Instance == null) return;
         for (int i = 0; i < Game.Instance.Controllers.Count(); i++) {
-            CreatePlayer(i, spawnPoints[i], TeamColor.Red, Size.Large);
+            CreatePlayer(i, spawnPoints[i], parent, TeamColor.Red, Size.Large);
         }
     }
 }
