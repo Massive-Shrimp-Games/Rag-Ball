@@ -144,8 +144,7 @@ public class Player : MonoBehaviour
 
         float determinDirection = Vector3.Dot(hipsRigidBody.velocity.normalized, hips.transform.forward);
         float determineMagnitue = hipsRigidBody.velocity.magnitude;
-        dashing = (hipsRigidBody.velocity.magnitude > dashVelocityMinimum) && (Mathf.Abs(determinDirection) > .5) ;
-        print("DotPrd:\t" + determinDirection + "Mag:\t" + determineMagnitue + "Should dash:\t" + dashing);
+        dashing = (hipsRigidBody.velocity.magnitude > dashVelocityMinimum) && (Mathf.Abs(determinDirection) > .5);
 
         if (dashing)
         {
