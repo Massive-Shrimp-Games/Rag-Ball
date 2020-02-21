@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
     private Vector2 movement;
 
     public int playerNumber = 0;
-    public Size size;
+    public RagdollSize size;
     public TeamColor color;
     private Controller controller;
 
@@ -98,14 +98,14 @@ public class Player : MonoBehaviour
     {
         if (color == TeamColor.Red)
         {
-            if(size == Size.Small)
+            if(size == RagdollSize.Small)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Small");
                 
-            } else if (size == Size.Medium)
+            } else if (size == RagdollSize.Medium)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Medium");
-            } else if (size == Size.Large)
+            } else if (size == RagdollSize.Large)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Large");
             }
@@ -113,13 +113,13 @@ public class Player : MonoBehaviour
         }
         else if (color == TeamColor.Blue)
         {
-            if(size == Size.Small)
+            if(size == RagdollSize.Small)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Small");
-            } else if (size == Size.Medium)
+            } else if (size == RagdollSize.Medium)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Medium");
-            } else if (size == Size.Large)
+            } else if (size == RagdollSize.Large)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Large");
             }

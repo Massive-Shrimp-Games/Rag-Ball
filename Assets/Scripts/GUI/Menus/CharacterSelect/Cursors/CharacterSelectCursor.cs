@@ -21,7 +21,7 @@ public class CharacterSelectCursor : PlayerCursor
 
     protected override void OnStart(InputValue inputValue)
     {
-        SceneManager.LoadScene("Main_Game3");
+        SceneManager.LoadScene("Court");
     }
 
     private void SetImage()
