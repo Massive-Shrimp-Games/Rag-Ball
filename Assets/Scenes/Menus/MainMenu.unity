@@ -4288,6 +4288,41 @@ PrefabInstance:
       propertyPath: defaultMenuItem
       value: 
       objectReference: {fileID: 5579168931275823828}
+    - target: {fileID: 5579168930335413405, guid: 3ef35908a74183d48b0c83498e4f244a,
+        type: 3}
+      propertyPath: size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5579168931052825455, guid: 3ef35908a74183d48b0c83498e4f244a,
+        type: 3}
+      propertyPath: color
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5579168931052825455, guid: 3ef35908a74183d48b0c83498e4f244a,
+        type: 3}
+      propertyPath: size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5579168931055885838, guid: 3ef35908a74183d48b0c83498e4f244a,
+        type: 3}
+      propertyPath: size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5579168931827215101, guid: 3ef35908a74183d48b0c83498e4f244a,
+        type: 3}
+      propertyPath: color
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5579168931827215101, guid: 3ef35908a74183d48b0c83498e4f244a,
+        type: 3}
+      propertyPath: size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5579168932001691539, guid: 3ef35908a74183d48b0c83498e4f244a,
+        type: 3}
+      propertyPath: color
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ef35908a74183d48b0c83498e4f244a, type: 3}
 --- !u!114 &5579168931275823828 stripped
