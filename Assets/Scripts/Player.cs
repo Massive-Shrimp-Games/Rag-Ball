@@ -141,6 +141,20 @@ public class Player : MonoBehaviour
         if (isRecharging == false && hasStartedRecharging == true){
             StartCoroutine(rechargeStamina());
         }
+
+        float determinDirection = Vector3.Dot(hipsRigidBody.velocity.normalized, hips.transform.forward);
+        float determineMagnitue = hipsRigidBody.velocity.magnitude;
+        dashing = (hipsRigidBody.velocity.magnitude > dashVelocityMinimum) && (Mathf.Abs(determinDirection) > .5) ;
+        print("DotPrd:\t" + determinDirection + "Mag:\t" + determineMagnitue + "Should dash:\t" + dashing);
+
+        if (dashing)
+        {
+            trailRenderer.enabled = true;
+        }
+        else
+        {
+            trailRenderer.enabled = false;
+        }
     }
 
     /// <summary>
@@ -234,18 +248,6 @@ public class Player : MonoBehaviour
             {
                 grabbing.GetComponent<Rigidbody>().position = grabPos.position;
             }
-        }
-
-        dashing = hipsRigidBody.velocity.magnitude > dashVelocityMinimum;
-        staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
-
-        if (hipsRigidBody.velocity.magnitude > 6f)
-        {
-            trailRenderer.enabled = true;
-        }
-        else
-        {
-            trailRenderer.enabled = false;
         }
     }
 
@@ -414,10 +416,10 @@ public class Player : MonoBehaviour
 
     #endregion
 
-    private void StaggerSelf(bool enemyDashing, TeamColor enemyColor)
+    private void StaggerSelf(bool shouldStagger, TeamColor enemyColor)
     {
         if (Game.Instance == null) return;
-        if (enemyDashing == true && enemyColor != color)
+        if (shouldStagger == true && enemyColor != color)
         {
             Debug.Log("Staggered guy");
             Game.Instance.Controllers.GetController(playerNumber).GetComponent<PlayerInput>().SwitchCurrentActionMap("Menu");
