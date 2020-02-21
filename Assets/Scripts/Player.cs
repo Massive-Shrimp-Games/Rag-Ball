@@ -31,7 +31,8 @@ public class Player : MonoBehaviour
     // Set isThrown to TRUE on any player when they are thrown -> access the grabbed objects isThrown variable
     // Set canJump to FALSE on any player when they are thrown
     public bool isThrown = false;
-    public bool canJump;
+    public bool canJump;                    // Can the Player jump - the robust value we use for decision making
+    [SerializeField] bool isLanded = false; // Is the plaer on the ground - the raw value to transform into canJump
     public bool dashing;   // Protect this with a Getter
     public bool staggered = false;
     [SerializeField] private float dashVelocityMinimum;
@@ -131,7 +132,11 @@ public class Player : MonoBehaviour
         UpdateHeld();
         bool leftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
         bool rightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
-        canJump = leftFoot || rightFoot;
+        if (! canJump)
+        {
+            canJump = isLanded;
+        }
+        isLanded = leftFoot || rightFoot;
 
         staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
         Move();
@@ -309,7 +314,7 @@ public class Player : MonoBehaviour
         if (canJump && staggerCharges >= 0 && hips.tag != "Grabbed")
         {
             aIsPressed = true;
-
+            canJump = false;
             Vector3 boostDir = hips.transform.up;
             hipsRigidBody.AddForce(boostDir * jumpForce);
             staggerCharges = staggerCharges - staggerJumpCharge;
@@ -325,6 +330,7 @@ public class Player : MonoBehaviour
     {
         // This gets the time difference and applies the jump force as a result
         aIsPressed = false;
+        canJump = false;
     }
 
     private void OnDash(InputValue inputValue)
