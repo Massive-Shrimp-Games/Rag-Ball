@@ -20,6 +20,6 @@ public class StaggerCheck : MonoBehaviour
 
         Player player = coll.player;
         if (player == null) return;
-        OnStaggerSelf(player.dashing, player.color);
+        OnStaggerSelf((player.dashing || player.isThrown), player.color);
     }
 }
