@@ -180,7 +180,8 @@ public class Player : MonoBehaviour
     {
         if (grabbing)
         {
-            Player victim = grabbing.GetComponent<Player>();
+            Player victim = grabbing.GetComponent<BaseObject>().player;
+            if (victim == null) return; // This is for throwing non-players
             victim.isThrown = true;
             victim.canJump = false; // Don't want them getting away now, do we? H AH AH A HA HA AH HA A HA !!!!!
         }
@@ -344,7 +345,7 @@ public class Player : MonoBehaviour
     {
         if (grabbing == null) {
             if (collisionTrigger.tag == "Grabbable"){
-                grabbing = grabCheckCollider.FindClosest();
+                grabbing = grabCheckCollider.FindClosest(color);
             }
             if (grabbing != null)
             {
