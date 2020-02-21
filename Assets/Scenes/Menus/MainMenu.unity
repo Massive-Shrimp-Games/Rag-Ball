@@ -4288,6 +4288,11 @@ PrefabInstance:
       propertyPath: defaultMenuItem
       value: 
       objectReference: {fileID: 5579168931275823828}
+    - target: {fileID: 5579168931323944142, guid: 3ef35908a74183d48b0c83498e4f244a,
+        type: 3}
+      propertyPath: createOnStart
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5579168930335413405, guid: 3ef35908a74183d48b0c83498e4f244a,
         type: 3}
       propertyPath: size
