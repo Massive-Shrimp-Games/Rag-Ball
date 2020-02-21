@@ -29,7 +29,8 @@ public class Player : MonoBehaviour
     //private int staminaCharges;
 
     private bool canJump;
-    public bool dashing;    // Protect this with a Getter
+    public bool dashing;   // Protect this with a Getter
+    public bool staggered = false;
     [SerializeField] private float dashVelocityMinimum;
     [SerializeField] private StaggerCheck staggerCheck;
 
@@ -53,6 +54,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform directThrowDirection;
     [SerializeField] private Transform arcThrowDirection;
     [SerializeField] private GameObject staggerStars;
+    [SerializeField] private GameObject collisionTrigger;
     private TrailRenderer trailRenderer;
 
     private GameObject grabbing;
@@ -171,7 +173,15 @@ public class Player : MonoBehaviour
     {
         if (grabbing != null)
         {
-            grabbing.GetComponent<Rigidbody>().position = grabPos.position;
+            BaseObject held = grabbing.GetComponent<BaseObject>();
+            if(held != null)
+            {
+                held.player.getHips().GetComponent<Rigidbody>().position = grabPos.position;
+            }
+            else
+            {
+                grabbing.GetComponent<Rigidbody>().position = grabPos.position;
+            }
         }
 
         if (hipsRigidBody.velocity.magnitude > dashVelocityMinimum)
@@ -197,7 +207,6 @@ public class Player : MonoBehaviour
             controller._OnPause += OnPause;
             controller._OnArcThrow += OnArcThrow;
             controller._OnDirectThrow += OnDirectThrow;
-            controller._OnStaggerSelf += OnStaggerSelf;
         }
     }
 
@@ -212,7 +221,6 @@ public class Player : MonoBehaviour
             controller._OnPause -= OnPause;
             controller._OnArcThrow -= OnArcThrow;
             controller._OnDirectThrow -= OnDirectThrow;
-            controller._OnStaggerSelf -= OnStaggerSelf;
         }
     }
     #endregion
@@ -266,22 +274,25 @@ public class Player : MonoBehaviour
     private void OnGrabDrop(InputValue inputValue)
     {
         if (grabbing == null) {
-            if (hips.tag == "Grabbable"){
+            if (collisionTrigger.tag == "Grabbable"){
                 grabbing = grabCheckCollider.FindClosest();
             }
             if (grabbing != null)
             {
-                grabbing.GetComponent<Rigidbody>().isKinematic = true;
+                BaseObject pl = grabbing.GetComponent<BaseObject>();
+                if (pl != null)
+                    pl.player.getHips().GetComponent<Rigidbody>().isKinematic = true;
                 grabbing.tag = "Grabbed";
                 //grabbing.GetComponentInParent<GameObject>().GetComponentInParent<GameObject>().GetComponentInParent<Player>().;
-                hips.tag = "Grabbing";
+                collisionTrigger.tag = "Grabbing";
             }
         }
         else {
             grabbing.tag = "Grabbable";
-            hips.tag = "Grabbable";
+            collisionTrigger.tag = "Grabbable";
 
-            grabbing.GetComponent<Rigidbody>().isKinematic = false;
+            grabbing.GetComponent<BaseObject>().player.getHips().GetComponent<Rigidbody>().isKinematic = false;
+            //Game.Instance.Controllers.GetController(grabbing.GetComponent<BaseObject>().player.playerNumber).GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
             grabbing = null;
         }
     }
@@ -295,14 +306,19 @@ public class Player : MonoBehaviour
     {
         if (grabbing == null) { return; }
 
-        // Get reference to what we are holding before we release it
-        GameObject objectToThrow = grabbing;
-        OnGrabDrop(null);
-
         arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
-        objectToThrow.GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
-        staggerCharges = staggerCharges - staggerDashCharge;
-        OnPlayerExertion(playerNumber,staggerCharges);
+        OnGrabDrop(null);
+        BaseObject held = grabbing.GetComponent<BaseObject>();
+        if (held != null)
+        {
+            held.player.getHips().GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
+        }
+        else
+        {
+            grabbing.GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
+        }
+        
+
     }
 
     private void OnDirectThrow(InputValue inputValue)
@@ -310,32 +326,30 @@ public class Player : MonoBehaviour
         if (grabbing == null) { return; }
         
         // Get reference to what we are holding before we release it
-        GameObject objectToThrow = grabbing;
-        grabbing.GetComponent<Rigidbody>().AddForce(directThrowForce * directThrowDirection.forward);
-        OnGrabDrop(null);
-        
+        BaseObject held = grabbing.GetComponent<BaseObject>();
         directThrowForceVel = directThrowForce * directThrowDirection.forward;
-        objectToThrow.GetComponent<Rigidbody>().AddForce(directThrowForceVel);
-        staggerCharges = staggerCharges - staggerDashCharge;
-        OnPlayerExertion(playerNumber,staggerCharges);
+        OnGrabDrop(null);
+        if (held != null)
+        {
+            held.player.getHips().GetComponent<Rigidbody>().AddForce(directThrowForceVel);
+        }
+        else
+        {
+            grabbing.GetComponent<Rigidbody>().AddForce(directThrowForceVel);
+        }
+        
     }
 
-    private void OnStaggerSelf(InputValue inputValue)
-    {
-        staggerStars.SetActive(true);
-        StartCoroutine("StaggerSelf");
-        if (grabbing != null)
-        {
-            OnGrabDrop(null);
-        }
-    }
     #endregion
 
     private void StaggerSelf(bool enemyDashing, TeamColor enemyColor)
     {
+        if (Game.Instance == null) return;
         if (enemyDashing == true && enemyColor != color)
         {
-            hipsRigidBody.isKinematic = true;
+            Debug.Log("Staggered guy");
+            Game.Instance.Controllers.GetController(playerNumber).GetComponent<PlayerInput>().SwitchCurrentActionMap("Menu");
+            staggered = true;
             animator.enabled = false;
             staggerStars.SetActive(true);
             if (grabbing) { OnGrabDrop(null); }
@@ -346,7 +360,11 @@ public class Player : MonoBehaviour
     private IEnumerator UnStagger()
     {
         yield return new WaitForSeconds(staggerTime);
-        hipsRigidBody.isKinematic = false;
+        if (hips.tag != "Grabbed")
+        {
+            Game.Instance.Controllers.GetController(playerNumber).GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
+        }
+        staggered = false;
         animator.enabled = true;
         staggerStars.SetActive(false);
     }
@@ -374,14 +392,7 @@ public class Player : MonoBehaviour
         }
         
     }
-    private IEnumerator waitingForUnstaggerCoroutine(int time)
-    {
-
-        yield return new WaitForSeconds(time);
-
-        UnStagger();
-    }
-
+ 
     public void ResetVelocity()
     {
         hipsRigidBody.velocity = Vector3.zero;
