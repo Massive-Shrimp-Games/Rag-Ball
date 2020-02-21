@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
     private Vector2 movement;
 
     public int playerNumber = 0;
-    public Size size;
+    public RagdollSize size;
     public TeamColor color;
     private Controller controller;
 
@@ -99,14 +99,14 @@ public class Player : MonoBehaviour
     {
         if (color == TeamColor.Red)
         {
-            if(size == Size.Small)
+            if(size == RagdollSize.Small)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Small");
                 
-            } else if (size == Size.Medium)
+            } else if (size == RagdollSize.Medium)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Medium");
-            } else if (size == Size.Large)
+            } else if (size == RagdollSize.Large)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Large");
             }
@@ -114,13 +114,13 @@ public class Player : MonoBehaviour
         }
         else if (color == TeamColor.Blue)
         {
-            if(size == Size.Small)
+            if(size == RagdollSize.Small)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Small");
-            } else if (size == Size.Medium)
+            } else if (size == RagdollSize.Medium)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Medium");
-            } else if (size == Size.Large)
+            } else if (size == RagdollSize.Large)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Large");
             }
@@ -145,6 +145,20 @@ public class Player : MonoBehaviour
 
         if (isRecharging == false && hasStartedRecharging == true){
             StartCoroutine(rechargeStamina());
+        }
+
+        float determinDirection = Vector3.Dot(hipsRigidBody.velocity.normalized, hips.transform.forward);
+        float determineMagnitue = hipsRigidBody.velocity.magnitude;
+        dashing = (hipsRigidBody.velocity.magnitude > dashVelocityMinimum) && (Mathf.Abs(determinDirection) > .5) ;
+        print("DotPrd:\t" + determinDirection + "Mag:\t" + determineMagnitue + "Should dash:\t" + dashing);
+
+        if (dashing)
+        {
+            trailRenderer.enabled = true;
+        }
+        else
+        {
+            trailRenderer.enabled = false;
         }
     }
 
@@ -185,7 +199,8 @@ public class Player : MonoBehaviour
     {
         if (grabbing)
         {
-            Player victim = grabbing.GetComponent<Player>();
+            Player victim = grabbing.GetComponent<BaseObject>().player;
+            if (victim == null) return; // This is for throwing non-players
             victim.isThrown = true;
             victim.canJump = false; // Don't want them getting away now, do we? H AH AH A HA HA AH HA A HA !!!!!
         }
@@ -238,18 +253,6 @@ public class Player : MonoBehaviour
             {
                 grabbing.GetComponent<Rigidbody>().position = grabPos.position;
             }
-        }
-
-        dashing = hipsRigidBody.velocity.magnitude > dashVelocityMinimum;
-        staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
-
-        if (hipsRigidBody.velocity.magnitude > 6f)
-        {
-            trailRenderer.enabled = true;
-        }
-        else
-        {
-            trailRenderer.enabled = false;
         }
     }
 
@@ -350,7 +353,7 @@ public class Player : MonoBehaviour
     {
         if (grabbing == null) {
             if (collisionTrigger.tag == "Grabbable"){
-                grabbing = grabCheckCollider.FindClosest();
+                grabbing = grabCheckCollider.FindClosest(color);
             }
             if (grabbing != null)
             {
@@ -419,10 +422,10 @@ public class Player : MonoBehaviour
 
     #endregion
 
-    private void StaggerSelf(bool enemyDashing, TeamColor enemyColor)
+    private void StaggerSelf(bool shouldStagger, TeamColor enemyColor)
     {
         if (Game.Instance == null) return;
-        if (enemyDashing == true && enemyColor != color)
+        if (shouldStagger == true && enemyColor != color)
         {
             Debug.Log("Staggered guy");
             Game.Instance.Controllers.GetController(playerNumber).GetComponent<PlayerInput>().SwitchCurrentActionMap("Menu");

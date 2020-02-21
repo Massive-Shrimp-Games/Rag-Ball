@@ -25,7 +25,7 @@ public class CheckGrab : MonoBehaviour
         grabbables.Remove(other.gameObject);
     }
 
-    public GameObject FindClosest()
+    public GameObject FindClosest(TeamColor teamColor)
     {
         Debug.Log("FindClosest called");
         if (grabbables.Count == 0) { return null; }
@@ -37,8 +37,9 @@ public class CheckGrab : MonoBehaviour
             if (nearest == null && grab.tag != "Grabbed")
             {
                 //if is a player and they are staggered
-                if (player != null && player.staggered)
+                if (player != null && (player.staggered || player.color == teamColor )) {
                     nearest = grab;
+                }
                 //otherwise if they are not a player (already checked if grabbable) must be a grabbable object of type not player
                 else if (player == null)
                     nearest = grab;
