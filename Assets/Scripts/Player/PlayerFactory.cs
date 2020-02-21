@@ -9,17 +9,17 @@ public class PlayerFactory : MonoBehaviour
     public Prefabber largePrefabber;
     public Transform[] spawnPoints;
     public Transform parent;
-    public GameObject CreatePlayer(int playerNumber, Transform spawnPoint, Transform parent, TeamColor color, Size size)
+    public GameObject CreatePlayer(int playerNumber, Transform spawnPoint, Transform parent, TeamColor color, RagdollSize size)
     {
         Prefabber prefabber = null;
         switch (size) {
-            case Size.Small:
+            case RagdollSize.Small:
                 prefabber = smallPrefabber;
                 break;
-            case Size.Medium:
+            case RagdollSize.Medium:
                 prefabber = mediumPrefabber;
                 break;
-            case Size.Large:
+            case RagdollSize.Large:
                 prefabber = largePrefabber;
                 break;
         }
@@ -27,6 +27,7 @@ public class PlayerFactory : MonoBehaviour
         if (prefabber == null) return null;
         prefabber.prefab.transform.GetChild(0).GetComponent<Player>().size = size;
         prefabber.prefab.transform.GetChild(0).GetComponent<Player>().color = color;
+        prefabber.prefab.transform.GetChild(0).GetComponent<Player>().playerNumber = playerNumber;
         GameObject player = Instantiate(prefabber.prefab);
         player.name = string.Format("Player #{0}", playerNumber);
         player.transform.position = spawnPoint.position;
@@ -39,7 +40,7 @@ public class PlayerFactory : MonoBehaviour
     {
         if (Game.Instance == null) return;
         for (int i = 0; i < Game.Instance.Controllers.Count(); i++) {
-            CreatePlayer(i, spawnPoints[i], parent, TeamColor.Red, Size.Large);
+            CreatePlayer(i, spawnPoints[i], parent, CharacterSelect.playerSelections[i].color, CharacterSelect.playerSelections[i].size);
         }
     }
 }
