@@ -562,6 +562,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabber: {fileID: 11400000, guid: b026ff1bb407fa715918dda5efc77757, type: 2}
+  defaultMenuItem: {fileID: 4255202977055153123}
+  parent: {fileID: 4789654794656577837}
 --- !u!1 &1061054452
 GameObject:
   m_ObjectHideFlags: 0
