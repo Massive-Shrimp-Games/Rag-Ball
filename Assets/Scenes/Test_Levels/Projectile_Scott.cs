@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Projectile_Scott : MonoBehaviour
 {
-    public Rigidbody projectile;
+    //public Rigidbody projectile;
     public GameObject cursor;
     public Transform shootPoint;
     public LayerMask layer;
@@ -43,12 +43,6 @@ public class Projectile_Scott : MonoBehaviour
                 Visualize(vo);
 
                 //transform.rotation = Quaternion.LookRotation(vo);
-
-                if (Input.GetMouseButtonUp(0))
-                {
-                    Rigidbody obj = Instantiate(projectile, shootPoint.position, Quaternion.identity);
-                    obj.velocity = vo;
-                }
             }
         }
     }

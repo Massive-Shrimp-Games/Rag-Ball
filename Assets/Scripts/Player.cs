@@ -486,7 +486,7 @@ public class Player : MonoBehaviour
         return hips; 
     }
 
-
+/*
     void LaunchProjectile()
     {
         if (Input.GetMouseButton(0))
@@ -560,5 +560,6 @@ public class Player : MonoBehaviour
 
         return result;
     }
+    */
 }
 
