@@ -368,6 +368,7 @@ public class Player : MonoBehaviour
                 grabbing.tag = "Grabbed";
                 //grabbing.GetComponentInParent<GameObject>().GetComponentInParent<GameObject>().GetComponentInParent<Player>().;
                 collisionTrigger.tag = "Grabbing";
+                lineVisual.enabled = true;
             }
         }
         else
@@ -377,7 +378,8 @@ public class Player : MonoBehaviour
 
             grabbing.GetComponent<BaseObject>().player.getHips().GetComponent<Rigidbody>().isKinematic = false;
             //Game.Instance.Controllers.GetController(grabbing.GetComponent<BaseObject>().player.playerNumber).GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
-            grabbing = null;
+            grabbing = null; 
+            lineVisual.enabled = false;
         }
     }
 
@@ -512,6 +514,7 @@ public class Player : MonoBehaviour
         //Ray camRay = cam.ScreenPointToRay(Input.mousePosition);
         Ray playerThrowRay = new Ray(hips.transform.position, hips.transform.forward); 
         RaycastHit hit;//This is the point where out mouse cursor is
+        lineVisual.enabled = true; 
 
         if (Physics.Raycast(playerThrowRay, out hit, 100f))
         {
