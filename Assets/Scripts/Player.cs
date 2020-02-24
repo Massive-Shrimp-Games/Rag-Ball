@@ -94,6 +94,7 @@ public class Player : MonoBehaviour
         animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
         hipsCollider = hips.gameObject.GetComponent<Collider>();
         trailRenderer = hips.GetComponent<TrailRenderer>();
+        lineVisual = hips.transform.parent.parent.GetChild(2).GetChild(1).gameObject.GetComponent<LineRenderer>(); 
 
         AssignMaterial();
         staggerCheck.OnStaggerSelf += StaggerSelf;
@@ -388,8 +389,10 @@ public class Player : MonoBehaviour
     private void OnArcThrow(InputValue inputValue)
     {
         if (grabbing == null) { return; }
-
+        
         arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
+        //Makes line renderer stuff
+        LaunchProjectile(arcThrowForceVel); 
         OnGrabDrop(null);
         BaseObject held = grabbing.GetComponent<BaseObject>();
         if (held != null)
@@ -411,6 +414,9 @@ public class Player : MonoBehaviour
         // Get reference to what we are holding before we release it
         BaseObject held = grabbing.GetComponent<BaseObject>();
         directThrowForceVel = directThrowForce * directThrowDirection.forward;
+        //Makes line renderer stuff
+        LaunchProjectile(directThrowForceVel); 
+
         VictimVariables();
         OnGrabDrop(null);
         if (held != null)
@@ -486,31 +492,39 @@ public class Player : MonoBehaviour
         return hips; 
     }
 
-/*
-    void LaunchProjectile()
+    void LaunchProjectile(Vector3 throwVelocity)
     {
-        if (Input.GetMouseButton(0))
+    	/*
+        Direction of player
+        hips.transform.forward
+        */
+        
+        /* <-- where the object thrown is held --> where the object thrown is landing
+        
+        	force of the throw, the weight of what's being thrown and the direction
+          		where it's landing
+              
+        	force of throw -> directThrowForceVel OR arcThrowForceVel
+          weight of object -> Found in inspector (probably)
+          //direction -> hips.transform.forward OR ArcThrowDirection/DirectThrowDirection
+        
+        */
+        //Ray camRay = cam.ScreenPointToRay(Input.mousePosition);
+        Ray playerThrowRay = new Ray(hips.transform.position, hips.transform.forward); 
+        RaycastHit hit;//This is the point where out mouse cursor is
+
+        if (Physics.Raycast(playerThrowRay, out hit, 100f))
         {
-            Ray camRay = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit; //This is the point where out mouse cursor is
+            Debug.Log("we might get rid of this conditional statement");
+            //endPoint calculation function called here
+            //getting rid of anything that deals with the mouse. 
+            //Making sure it works.
+            //cursor.SetActive(true);
+            //cursor.transform.position = hit.point + Vector3.up * 0.1f;
 
-            if (Physics.Raycast(camRay, out hit, 100f, layer))
-            {
-                cursor.SetActive(true);
-                cursor.transform.position = hit.point + Vector3.up * 0.1f;
+            Vector3 vo = CalculateVelocity(hit.point, grabPos.position, 1f);
 
-                Vector3 vo = CalculateVelocty(hit.point, shootPoint.position, 1f);
-
-                Visualize(vo);
-
-                //transform.rotation = Quaternion.LookRotation(vo);
-
-                if (Input.GetMouseButtonUp(0))
-                {
-                    Rigidbody obj = Instantiate(projectile, shootPoint.position, Quaternion.identity);
-                    obj.velocity = vo;
-                }
-            }
+            Visualize(vo);
         }
     }
 
@@ -523,7 +537,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    Vector3 CalculateVelocty(Vector3 target, Vector3 origin, float time)
+    Vector3 CalculateVelocity(Vector3 target, Vector3 origin, float time)
     {
         //define the distance x and y first                 --------x---------Horizontal        |y| vertical
 
@@ -553,13 +567,13 @@ public class Player : MonoBehaviour
         Vector3 Vxz = vo;
         Vxz.y = 0f;
 
-        Vector3 result = shootPoint.position + vo * time;
-        float sY = (-0.5f * Mathf.Abs(Physics.gravity.y) * (time * time)) + (vo.y * time) + shootPoint.position.y;
+        Vector3 result = grabPos.position + vo * time;
+        float sY = (-0.5f * Mathf.Abs(Physics.gravity.y) * (time * time)) + (vo.y * time) + grabPos.position.y;
 
         result.y = sY;
 
         return result;
     }
-    */
+    
 }
 
