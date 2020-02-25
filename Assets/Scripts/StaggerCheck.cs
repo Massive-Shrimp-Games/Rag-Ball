@@ -17,18 +17,18 @@ public class StaggerCheck : MonoBehaviour
         GameObject enemy;
         if (other.gameObject.tag == "Grabbable")
         {
-            enemy = other.transform.root.gameObject;
-            PlayerSize psize = enemy.transform.GetComponent<PlayerSize>();
+            enemy = other.transform.GetComponent<BaseObject>().BaseGameObject.gameObject;
+            PlayerSize psize = enemy.transform.parent.transform.parent.transform.GetComponent<PlayerSize>();
             Player pscript = null;
             if(psize.size == Size.Small)
             {
-                pscript = enemy.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Player>();
+                pscript = enemy.transform.GetComponent<Player>();
             } else if(psize.size == Size.Medium)
             {
-                pscript = enemy.transform.GetChild(1).GetChild(0).GetChild(1).GetComponent<Player>();
+                pscript = enemy.transform.GetComponent<Player>();
             } else if(psize.size == Size.Large)
             {
-                pscript = enemy.transform.GetChild(2).GetChild(0).GetChild(1).GetComponent<Player>();
+                pscript = enemy.transform.GetComponent<Player>();
             }
             if (enemy != null && pscript != null)
             {

@@ -10,24 +10,23 @@ public class RagballRuleset : MonoBehaviour
     public event Score OnRedScore;
     public event Score OnBlueScore;
 
-    private int redScore = 0;
-    private int blueScore = 0;
+    public static int redScore = 0;
+    public static int blueScore = 0;
 
     public Transform respawnPoint;
 
     private bool winState = false;
-    public GameObject RedWin;
-    public GameObject BlueWin;
-    public GameObject TieWin;
+    public Animator transitionAnim;
+    public ParticleSystem BlueConfetti;
+    public ParticleSystem RedConfetti;
+    public ParticleSystem ExitConfetti;
 
     private void Start()
     {
         ActionMapEvent.InGameplay?.Invoke();
         OnRedScore += AddRedScore;
         OnBlueScore += AddBlueScore;
-        RedWin.SetActive(false);
-        BlueWin.SetActive(false);
-        TieWin.SetActive(false);
+        transitionAnim.SetBool("Transition", false);
     }
 
     private void OnDestroy()
@@ -61,13 +60,36 @@ public class RagballRuleset : MonoBehaviour
     {
         if (winState == false && redScore >= GameModeSelect.goalLimit && GameModeSelect.goalLimit != 0)
         {
-            RedWin.SetActive(true);
-            winState = true;
+            BlueConfetti.Play();
+            RedConfetti.Play();
+            ExitConfetti.Play();
+            StartCoroutine(WaitForTime());
         }
         if (winState == false && blueScore >= GameModeSelect.goalLimit && GameModeSelect.goalLimit != 0)
         {
-            BlueWin.SetActive(true);
-            winState = true;
+            BlueConfetti.Play();
+            RedConfetti.Play();
+            ExitConfetti.Play();
+            StartCoroutine(WaitForTime());
         }
+        if (RagballRuleset.blueScore == RagballRuleset.redScore && RagballRuleset.blueScore == GameModeSelect.goalLimit && GameModeSelect.goalLimit != 0)
+        {
+            BlueConfetti.Play();
+            RedConfetti.Play();
+            ExitConfetti.Play();
+            StartCoroutine(WaitForTime());
+        }
+    }
+
+    public IEnumerator WaitForTime()
+    {
+        yield return new WaitForSeconds(2);
+        WinStateGame();
+    }
+
+    private void WinStateGame()
+    {
+        transitionAnim.SetBool("Transition", true);
+        winState = true;
     }
 }

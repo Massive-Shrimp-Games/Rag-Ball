@@ -18,17 +18,23 @@ public class PlayerSize : MonoBehaviour
         if(size == Size.Small)
         {
             small.SetActive(true);
+            Destroy(medium);
+            Destroy(large);
             transform.GetChild(0).GetChild(0).GetComponent<Player>().playerNumber = playerNumber;
             //small.GetComponent<Player>().color = color;
         } else if (size == Size.Medium)
         {
             medium.SetActive(true);
-            transform.GetChild(1).GetChild(0).GetComponent<Player>().playerNumber = playerNumber;
+            Destroy(small);
+            Destroy(large);
+            transform.GetChild(0).GetChild(0).GetComponent<Player>().playerNumber = playerNumber;
             //medium.GetComponent<Player>().color = color;
         } else if (size == Size.Large)
         {
             large.SetActive(true);
-            transform.GetChild(2).GetChild(0).GetComponent<Player>().playerNumber = playerNumber;
+            Destroy(small);
+            Destroy(medium);
+            transform.GetChild(0).GetChild(0).GetComponent<Player>().playerNumber = playerNumber;
             //large.GetComponent<Player>().color = color;
         }
 
