@@ -387,9 +387,9 @@ public class Player : MonoBehaviour
     {
         if (grabbing == null) { return; }
 
+        BaseObject held = grabbing.GetComponent<BaseObject>();
         arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
         OnGrabDrop(null);
-        BaseObject held = grabbing.GetComponent<BaseObject>();
         if (held != null)
         {
             held.player.getHips().GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
