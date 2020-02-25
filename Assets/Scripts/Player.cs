@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     // Set canJump to FALSE on any player when they are thrown
     public bool isThrown = false;
     public bool canJump;                    // Can the Player jump - the robust value we use for decision making
-    [SerializeField] bool isLanded = false; // Is the plaer on the ground - the raw value to transform into canJump
+    // [SerializeField] bool isLanded = false; // Is the plaer on the ground - the raw value to transform into canJump
     public bool dashing;   // Protect this with a Getter
     public bool staggered = false;
     [SerializeField] private float dashVelocityMinimum;
@@ -389,6 +389,7 @@ public class Player : MonoBehaviour
 
         BaseObject held = grabbing.GetComponent<BaseObject>();
         arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
+        VictimVariables();
         OnGrabDrop(null);
         if (held != null)
         {
@@ -398,8 +399,6 @@ public class Player : MonoBehaviour
         {
             grabbing.GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
         }
-
-        VictimVariables();
     }
 
     private void OnDirectThrow(InputValue inputValue)
