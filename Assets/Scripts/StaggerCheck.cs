@@ -14,28 +14,12 @@ public class StaggerCheck : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(Game.Instance == null) return;
-        GameObject enemy;
-        if (other.gameObject.tag == "Grabbable")
-        {
-            enemy = other.transform.root.gameObject;
-            PlayerSize psize = enemy.transform.GetComponent<PlayerSize>();
-            Player pscript = null;
-            if(psize.size == Size.Small)
-            {
-                pscript = enemy.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Player>();
-            } else if(psize.size == Size.Medium)
-            {
-                pscript = enemy.transform.GetChild(1).GetChild(0).GetChild(1).GetComponent<Player>();
-            } else if(psize.size == Size.Large)
-            {
-                pscript = enemy.transform.GetChild(2).GetChild(0).GetChild(1).GetComponent<Player>();
-            }
-            if (enemy != null && pscript != null)
-            {
-                bool isDashing = pscript.dashing;
-                OnStaggerSelf(isDashing, psize.color);
-            }
-        }
+        Debug.Log("player collision event trigger");
+        BaseObject coll = other.GetComponent<BaseObject>();
+        if (coll == null) return;
 
+        Player player = coll.player;
+        if (player == null) return;
+        OnStaggerSelf((player.dashing || player.isThrown), player.color);
     }
 }

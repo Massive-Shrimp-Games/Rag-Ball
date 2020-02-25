@@ -81,6 +81,14 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""JumpRelease"",
+                    ""type"": ""Button"",
+                    ""id"": ""40ad02f1-43d4-4c32-a965-ea8c19368ddf"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -154,7 +162,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""07f8d204-734f-4265-9230-8e54f97bcf67"",
                     ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Jump"",
@@ -165,7 +173,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""e2c6407b-3af0-43b0-abfb-3bc6e6ba868d"",
                     ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Jump"",
@@ -303,6 +311,28 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""action"": ""StaggerSelf"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6289f730-ebee-40ae-bec3-09982eafb993"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""JumpRelease"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""949fe199-6525-4683-9488-7ab58291845f"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""JumpRelease"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -437,6 +467,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
         m_Player_GrabDrop = m_Player.FindAction("GrabDrop", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_JumpRelease = m_Player.FindAction("JumpRelease", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Start = m_Menu.FindAction("Start", throwIfNotFound: true);
@@ -500,6 +531,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_GrabDrop;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_JumpRelease;
     public struct PlayerActions
     {
         private @ActionMap m_Wrapper;
@@ -512,6 +544,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
         public InputAction @GrabDrop => m_Wrapper.m_Player_GrabDrop;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @JumpRelease => m_Wrapper.m_Player_JumpRelease;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -545,6 +578,9 @@ public class @ActionMap : IInputActionCollection, IDisposable
                 @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @JumpRelease.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJumpRelease;
+                @JumpRelease.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJumpRelease;
+                @JumpRelease.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJumpRelease;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -573,6 +609,9 @@ public class @ActionMap : IInputActionCollection, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @JumpRelease.started += instance.OnJumpRelease;
+                @JumpRelease.performed += instance.OnJumpRelease;
+                @JumpRelease.canceled += instance.OnJumpRelease;
             }
         }
     }
@@ -662,6 +701,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
         void OnGrabDrop(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnJumpRelease(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {
