@@ -132,11 +132,14 @@ public class Player : MonoBehaviour
         UpdateHeld();
         bool leftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
         bool rightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
+        /*
         if (! canJump)
         {
             canJump = isLanded;
         }
         isLanded = leftFoot || rightFoot;
+        */
+        canJump = leftFoot || rightFoot;
 
         staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
         Move();
