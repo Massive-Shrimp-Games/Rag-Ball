@@ -2302,7 +2302,9 @@ MonoBehaviour:
   staggerStars: {fileID: 2110709679184220633}
   collisionTrigger: {fileID: 7565254737649259438}
   lineSegment: 10
-  lineVisual: {fileID: 0}
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
   fallMultiplier: 60
   jumpMultiplier: 12
   playerNumber: 0
@@ -3506,16 +3508,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 68953021133953271}
     m_Modifications:
-    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
-        type: 3}
-      propertyPath: m_Name
-      value: RagdollTrail
-      objectReference: {fileID: 0}
-    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8130124753009482852, guid: 46cda7ba68426ef49b2bbd958eeec03a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3571,6 +3563,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
+        type: 3}
+      propertyPath: m_Name
+      value: RagdollTrail
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46cda7ba68426ef49b2bbd958eeec03a, type: 3}
 --- !u!4 &1378363881667528155 stripped
@@ -3586,11 +3588,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3679290694193894674}
     m_Modifications:
-    - target: {fileID: 7154583340518013978, guid: 0ef678bbdb1bd184e82c9661e8b2c0ab,
-        type: 3}
-      propertyPath: m_Name
-      value: LineRenderer
-      objectReference: {fileID: 0}
     - target: {fileID: 2606533489033805280, guid: 0ef678bbdb1bd184e82c9661e8b2c0ab,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3645,6 +3642,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7154583340518013978, guid: 0ef678bbdb1bd184e82c9661e8b2c0ab,
+        type: 3}
+      propertyPath: m_Name
+      value: LineRenderer
+      objectReference: {fileID: 0}
+    - target: {fileID: 5152641253197324077, guid: 0ef678bbdb1bd184e82c9661e8b2c0ab,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5152641253197324077, guid: 0ef678bbdb1bd184e82c9661e8b2c0ab,
+        type: 3}
+      propertyPath: m_Positions.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5152641253197324077, guid: 0ef678bbdb1bd184e82c9661e8b2c0ab,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+    - target: {fileID: 5152641253197324077, guid: 0ef678bbdb1bd184e82c9661e8b2c0ab,
+        type: 3}
+      propertyPath: m_Positions.Array.data[2].z
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ef678bbdb1bd184e82c9661e8b2c0ab, type: 3}

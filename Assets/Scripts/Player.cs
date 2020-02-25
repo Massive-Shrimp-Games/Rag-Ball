@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.InputSystem; 
 
 public class Player : MonoBehaviour
 {
@@ -71,8 +71,9 @@ public class Player : MonoBehaviour
     private Rigidbody hipsRigidBody;
 
     //Used for creating the visualized arc when throwing
-    public int lineSegment = 10;
-    public LineRenderer lineVisual;
+    public int lineSegment = 3;
+    private LineRenderer lineVisual;
+    public LayerMask layer;
 
 
     //Jump Variables
@@ -368,7 +369,7 @@ public class Player : MonoBehaviour
                 grabbing.tag = "Grabbed";
                 //grabbing.GetComponentInParent<GameObject>().GetComponentInParent<GameObject>().GetComponentInParent<Player>().;
                 collisionTrigger.tag = "Grabbing";
-                lineVisual.enabled = true;
+                //lineVisual.enabled = true;
             }
         }
         else
@@ -379,7 +380,7 @@ public class Player : MonoBehaviour
             grabbing.GetComponent<BaseObject>().player.getHips().GetComponent<Rigidbody>().isKinematic = false;
             //Game.Instance.Controllers.GetController(grabbing.GetComponent<BaseObject>().player.playerNumber).GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
             grabbing = null; 
-            lineVisual.enabled = false;
+            //lineVisual.enabled = false;
         }
     }
 
@@ -512,30 +513,50 @@ public class Player : MonoBehaviour
         
         */
         //Ray camRay = cam.ScreenPointToRay(Input.mousePosition);
-        Ray playerThrowRay = new Ray(hips.transform.position, hips.transform.forward); 
+        Ray playerThrowRay = new Ray(grabPos.position, hips.transform.forward); 
         RaycastHit hit;//This is the point where out mouse cursor is
-        lineVisual.enabled = true; 
-
-        if (Physics.Raycast(playerThrowRay, out hit, 100f))
+        //lineVisual.enabled = true; 
+        //playerThrowRay
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 40f))
         {
             Debug.Log("we might get rid of this conditional statement");
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward)*hit.distance, Color.yellow);
             //endPoint calculation function called here
             //getting rid of anything that deals with the mouse. 
             //Making sure it works.
             //cursor.SetActive(true);
             //cursor.transform.position = hit.point + Vector3.up * 0.1f;
 
-            Vector3 vo = CalculateVelocity(hit.point, grabPos.position, 1f);
+            //Vector3 vo = CalculateVelocity(hit.point, grabPos.position, 1f);
+            Vector3 vo = CalculateVelocity(CalculateEndpoint(throwVelocity), grabPos.position, 1f);
 
             Visualize(vo);
         }
     }
 
+    Vector3 CalculateEndpoint(Vector3 initVelo){
+        //Experimental time = 1.54 s
+        /* d = v*t + 1/2 a * t^2*/
+
+        //Vector3 newVec = new Vector3(initVelo.x*.015f, initVelo.y*.015f, initVelo.z*.015f);
+        Vector3 spotWhereItHits = new Vector3(initVelo.x*.001f , 0f, initVelo.z*.001f); 
+        return spotWhereItHits;
+    }
+
     void Visualize(Vector3 vo)
     {
+        /*Make raycast
+        See when raycast hits collider
+        Put cursor/marker there
+        calculate line
+        */ 
         for (int i = 0; i < lineSegment; i++)
         {
             Vector3 pos = CalculatePosInTime(vo, i / (float)lineSegment);
+            if (i >= lineVisual.positionCount){
+                lineVisual.positionCount = i+1; 
+            }
+            
             lineVisual.SetPosition(i, pos);
         }
     }
