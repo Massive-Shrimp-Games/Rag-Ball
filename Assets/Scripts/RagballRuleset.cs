@@ -15,7 +15,7 @@ public class RagballRuleset : MonoBehaviour
 
     public Transform respawnPoint;
 
-    private bool winState = false;
+    [SerializeField] private bool winState = false;
     public Animator transitionAnim;
     public ParticleSystem BlueConfetti;
     public ParticleSystem RedConfetti;
@@ -46,13 +46,13 @@ public class RagballRuleset : MonoBehaviour
     private void AddRedScore(GameObject player, int score)
     {
         //redScore++;
-        player.GetComponent<Player>().getHips().transform.position = respawnPoint.transform.position;
+        player.transform.position = respawnPoint.transform.position;
     }
 
     private void AddBlueScore(GameObject player, int score)
     {
         //blueScore++;
-        player.GetComponent<Player>().getHips().transform.position = respawnPoint.transform.position;
+        player.transform.position = respawnPoint.transform.position;
         //player.transform.GetComponent<Player>().ResetVelocity();
     }
 
@@ -63,6 +63,7 @@ public class RagballRuleset : MonoBehaviour
             BlueConfetti.Play();
             RedConfetti.Play();
             ExitConfetti.Play();
+            GameObject.Find("Timer").GetComponent<Timer>().canCount = false;
             StartCoroutine(WaitForTime());
         }
         if (winState == false && blueScore >= GameModeSelect.goalLimit && GameModeSelect.goalLimit != 0)
@@ -70,6 +71,7 @@ public class RagballRuleset : MonoBehaviour
             BlueConfetti.Play();
             RedConfetti.Play();
             ExitConfetti.Play();
+            GameObject.Find("Timer").GetComponent<Timer>().canCount = false;
             StartCoroutine(WaitForTime());
         }
         if (RagballRuleset.blueScore == RagballRuleset.redScore && RagballRuleset.blueScore == GameModeSelect.goalLimit && GameModeSelect.goalLimit != 0)
@@ -77,12 +79,14 @@ public class RagballRuleset : MonoBehaviour
             BlueConfetti.Play();
             RedConfetti.Play();
             ExitConfetti.Play();
+            GameObject.Find("Timer").GetComponent<Timer>().canCount = false;
             StartCoroutine(WaitForTime());
         }
     }
 
     public IEnumerator WaitForTime()
     {
+        GameObject.Find("Goal_AudioSource").GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(2);
         WinStateGame();
     }

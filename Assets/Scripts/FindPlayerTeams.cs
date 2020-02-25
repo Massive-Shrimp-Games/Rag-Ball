@@ -8,32 +8,56 @@ public class FindPlayerTeams : MonoBehaviour
     public List<GameObject> RedTeam = new List<GameObject>();
     public List<GameObject> BlueTeam = new List<GameObject>();
 
-    public List<GameObject> RedTeamHips = new List<GameObject>();
-    public List<GameObject> BlueTeamHips = new List<GameObject>();
+    //public List<GameObject> RedTeamHips = new List<GameObject>();
+    //public List<GameObject> BlueTeamHips = new List<GameObject>();
 
 
     void Start()
     {
-        foreach (Player player in FindObjectsOfType<Player>())
+        foreach (Transform child in gameObject.transform)
         {
-            if (player.color == TeamColor.Red)
+            if (child.GetChild(0).GetComponent<Player>().color == TeamColor.Red)
             {
-                RedTeam.Add(player.transform.gameObject);
+                RedTeam.Add(child.gameObject);
             }
-            if (player.color == TeamColor.Blue)
+            if (child.GetChild(0).GetComponent<Player>().color == TeamColor.Blue)
             {
-                BlueTeam.Add(player.transform.gameObject);
+                BlueTeam.Add(child.gameObject);
             }
         }
 
-        foreach (GameObject player in RedTeam)
+        /*foreach (GameObject gameObject in RedTeam)
         {
-            RedTeamHips.Add(player.GetComponent<Player>().getHips());
+            if (gameObject.GetComponent<PlayerSize>().size == Size.Small)
+            {
+                RedTeamHips.Add(gameObject.transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).transform.GetChild(0).gameObject);
+            }
+            if (gameObject.GetComponent<PlayerSize>().size == Size.Medium)
+            {
+                RedTeamHips.Add(gameObject.transform.GetChild(1).transform.GetChild(0).transform.GetChild(1).transform.GetChild(0).gameObject);
+            }
+            if (gameObject.GetComponent<PlayerSize>().size == Size.Large)
+            {
+                RedTeamHips.Add(gameObject.transform.GetChild(2).transform.GetChild(0).transform.GetChild(1).transform.GetChild(0).gameObject);
+            }
         }
 
-        foreach (GameObject player in BlueTeam)
+        foreach (GameObject gameObject in BlueTeam)
         {
-            BlueTeamHips.Add(player.GetComponent<Player>().getHips());
-        }
+            if (gameObject.GetComponent<PlayerSize>().size == Size.Small)
+            {
+                BlueTeamHips.Add(gameObject.transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).transform.GetChild(0).gameObject);
+            }
+            if (gameObject.GetComponent<PlayerSize>().size == Size.Medium)
+            {
+                BlueTeamHips.Add(gameObject.transform.GetChild(1).transform.GetChild(0).transform.GetChild(1).transform.GetChild(0).gameObject);
+            }
+            if (gameObject.GetComponent<PlayerSize>().size == Size.Large)
+            {
+                BlueTeamHips.Add(gameObject.transform.GetChild(2).transform.GetChild(0).transform.GetChild(1).transform.GetChild(0).gameObject);
+            }
+        }*/
+
+
     }
 }
