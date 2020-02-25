@@ -21,6 +21,8 @@ public class FakeUI_MenuManager : MonoBehaviour
     //
     public Text scoreTitle;
     public Text ScoreChanger;
+    //
+    public Text NextChanger;
     [Space(10)]
     //Check out this genius 1000iq play im gonna pull
     public Text REALMENUGamemode;
@@ -62,6 +64,7 @@ public class FakeUI_MenuManager : MonoBehaviour
                 //else
                 timerTitle.color = Color.black;
                 scoreTitle.color = Color.black;
+                NextChanger.color = Color.black;
                
 
             } else if (rt.anchoredPosition.y < 0 && rt.anchoredPosition.y > -75)
@@ -71,7 +74,8 @@ public class FakeUI_MenuManager : MonoBehaviour
                 //
                 scoreTitle.color = Color.black;
                 gamemodeTitle.color = Color.black;
-                
+                NextChanger.color = Color.black;
+
             } else if (rt.anchoredPosition.y < -75 && rt.anchoredPosition.y > -400)
             {
                 //Score
@@ -79,13 +83,15 @@ public class FakeUI_MenuManager : MonoBehaviour
                 //
                 timerTitle.color = Color.black;
                 gamemodeTitle.color = Color.black;
-                
+                NextChanger.color = Color.black;
+
             }
             else
             {
                 timerTitle.color = Color.black;
                 gamemodeTitle.color = Color.black;
                 scoreTitle.color = Color.black;
+                NextChanger.color = Color.white;
                 //next
             }
             
