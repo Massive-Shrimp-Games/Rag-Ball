@@ -276,6 +276,8 @@ public class Player : MonoBehaviour
             controller._OnPause += OnPause;
             controller._OnArcThrow += OnArcThrow;
             controller._OnDirectThrow += OnDirectThrow;
+            controller._OnHoldArcThrow += OnHoldArcThrow;
+            controller._OnHoldDirectThrow += OnHoldDirectThrow;
         }
     }
     private void UnMapControls()
@@ -290,6 +292,8 @@ public class Player : MonoBehaviour
             controller._OnPause -= OnPause;
             controller._OnArcThrow -= OnArcThrow;
             controller._OnDirectThrow -= OnDirectThrow;
+            controller._OnHoldArcThrow -= OnHoldArcThrow;
+            controller._OnHoldDirectThrow -= OnHoldDirectThrow;
         }
     }
     #endregion
@@ -394,8 +398,6 @@ public class Player : MonoBehaviour
         if (grabbing == null) { return; }
         
         arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
-        //Makes line renderer stuff
-        LaunchProjectile(arcThrowForceVel); 
         OnGrabDrop(null);
         BaseObject held = grabbing.GetComponent<BaseObject>();
         if (held != null)
@@ -408,6 +410,7 @@ public class Player : MonoBehaviour
         }
 
         VictimVariables();
+        lineVisual.enabled = false;
     }
 
     private void OnDirectThrow(InputValue inputValue)
@@ -417,8 +420,6 @@ public class Player : MonoBehaviour
         // Get reference to what we are holding before we release it
         BaseObject held = grabbing.GetComponent<BaseObject>();
         directThrowForceVel = directThrowForce * directThrowDirection.forward;
-        //Makes line renderer stuff
-        LaunchProjectile(directThrowForceVel); 
 
         VictimVariables();
         OnGrabDrop(null);
@@ -430,7 +431,7 @@ public class Player : MonoBehaviour
         {
             grabbing.GetComponent<Rigidbody>().AddForce(directThrowForceVel);
         }
-        
+        lineVisual.enabled = false;
     }
 
     #endregion
@@ -495,6 +496,19 @@ public class Player : MonoBehaviour
         return hips; 
     }
 
+    void OnHoldDirectThrow(InputValue inputValue){
+        //Makes line renderer stuff
+        Debug.Log("I am Hold Direct, here i am"); 
+        lineVisual.enabled = true; 
+        LaunchProjectile(directThrowForceVel); 
+    }
+
+    void OnHoldArcThrow(InputValue inputValue){
+        //Makes line renderer stuff 
+        lineVisual.enabled = true;
+        LaunchProjectile(arcThrowForceVel); 
+    }
+
     void LaunchProjectile(Vector3 throwVelocity)
     {
     	/*
@@ -513,7 +527,7 @@ public class Player : MonoBehaviour
         
         */
         //Ray camRay = cam.ScreenPointToRay(Input.mousePosition);
-        Ray playerThrowRay = new Ray(grabPos.position, hips.transform.forward); 
+        Ray playerThrowRay = new Ray(hips.transform.position, hips.transform.forward); 
         RaycastHit hit;//This is the point where out mouse cursor is
         //lineVisual.enabled = true; 
         //playerThrowRay
@@ -540,6 +554,8 @@ public class Player : MonoBehaviour
 
         //Vector3 newVec = new Vector3(initVelo.x*.015f, initVelo.y*.015f, initVelo.z*.015f);
         Vector3 spotWhereItHits = new Vector3(initVelo.x*.001f , 0f, initVelo.z*.001f); 
+        //Vector3 spotWhereItHits = new Vector3(0f , 0f, 0f); 
+        //Vector3 spotWhereItHits = new Vector3(initVelo.x*.015f, initVelo.y*.015f, initVelo.z*.015f);
         return spotWhereItHits;
     }
 
