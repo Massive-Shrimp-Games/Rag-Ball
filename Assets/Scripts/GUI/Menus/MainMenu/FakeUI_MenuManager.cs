@@ -33,7 +33,16 @@ public class FakeUI_MenuManager : MonoBehaviour
     [Space(10)]
     [Header("Level Select Menu Objects")]
     //All level select canvases
-    public GameObject LevelSelectPlaceholder;
+
+    public Text CourtSelectTitle;
+    public Text CourtChanger;
+    public Image Court1Img;
+    public Image Court2Img;
+    public Image FancyNextImg;
+    //
+    [Space(10)]
+    public Text REALMENUCourt;
+    public GameObject LVCursor;
     [Header("Character Select Menu Objects")]
     //all char sel canvases
     public GameObject CharacterSelectPlaceholder;
@@ -42,7 +51,7 @@ public class FakeUI_MenuManager : MonoBehaviour
     void Start()
     {
         //get all the menuItemManagers
-        
+
 
 
     }
@@ -65,7 +74,7 @@ public class FakeUI_MenuManager : MonoBehaviour
                 timerTitle.color = Color.black;
                 scoreTitle.color = Color.black;
                 NextChanger.color = Color.black;
-               
+
 
             } else if (rt.anchoredPosition.y < 0 && rt.anchoredPosition.y > -75)
             {
@@ -94,7 +103,7 @@ public class FakeUI_MenuManager : MonoBehaviour
                 NextChanger.color = Color.white;
                 //next
             }
-            
+
             if (REALMENUGamemode.text == "RagBall")
             {
                 //Middle box
@@ -129,21 +138,53 @@ public class FakeUI_MenuManager : MonoBehaviour
         else if (CurrentMenuNumber == 1)
         {
             //Do level select checks here.
-        }
-        //else
-        //{
+            RectTransform rt = LVCursor.GetComponent<RectTransform>();
+            if (rt.anchoredPosition.y > -420)
+            {
+                //court
+                CourtSelectTitle.color = Color.magenta;
+                FancyNextImg.color = Color.white;
+            } else{
+                FancyNextImg.color = Color.magenta;
+                CourtSelectTitle.color = Color.black;
+
+                
+                 }
+
+
+            if (REALMENUCourt.text == "Court 1")
+                {
+                CourtChanger.text = REALMENUCourt.text;
+                    Court1Img.enabled = true;
+                    Court2Img.enabled = false;
+                } else if (REALMENUCourt.text == "Court 2")
+                {
+                CourtChanger.text = REALMENUCourt.text;
+                    Court1Img.enabled = false;
+                    Court2Img.enabled = true;
+                }
+                else
+                {
+                    Debug.Log("No court image, dumbyoafadjksfdsjkhfgbshydf");
+                }
+            }
+            //else
+            //{
             //Do char Sel checks here. Only necessary if charsel choices come up
-        //}
+            //}
 
 
 
-         //check gameobjects to see whats currently highlighted
+            //check gameobjects to see whats currently highlighted
 
 
-         //check values to see whats currently inputed
+            //check values to see whats currently inputed
 
 
-         //Change vals / highlights accordingly
-         
+            //Change vals / highlights accordingly
+
+        }
     }
-}
+
+
+
