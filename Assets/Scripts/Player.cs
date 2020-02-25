@@ -411,6 +411,7 @@ public class Player : MonoBehaviour
 
         VictimVariables();
         lineVisual.enabled = false;
+        StopCoroutine(renderThrowingLine(arcThrowForceVel, "arc"));
     }
 
     private void OnDirectThrow(InputValue inputValue)
@@ -432,6 +433,7 @@ public class Player : MonoBehaviour
             grabbing.GetComponent<Rigidbody>().AddForce(directThrowForceVel);
         }
         lineVisual.enabled = false;
+        StopCoroutine(renderThrowingLine(directThrowForceVel, "direct"));
     }
 
     #endregion
@@ -496,17 +498,34 @@ public class Player : MonoBehaviour
         return hips; 
     }
 
+    private IEnumerator renderThrowingLine(Vector3 throwForce, string throwType){
+        while(grabbing)
+        {
+            Debug.Log("The time is: " + Time.time);
+            if (throwType == "direct") {throwForce = directThrowForce * directThrowDirection.forward;}
+            if (throwType == "arc") {throwForce = arcThrowForce * arcThrowDirection.forward;}
+            LaunchProjectile(throwForce); 
+            yield return new WaitForSeconds (0.25f);
+        }
+        StopCoroutine(renderThrowingLine(throwForce, throwType));
+        lineVisual.enabled = false;
+    }
+
     void OnHoldDirectThrow(InputValue inputValue){
         //Makes line renderer stuff
         Debug.Log("I am Hold Direct, here i am"); 
+        directThrowForceVel = directThrowForce * directThrowDirection.forward;
         lineVisual.enabled = true; 
-        LaunchProjectile(directThrowForceVel); 
+        if(grabbing) {StartCoroutine(renderThrowingLine(directThrowForceVel, "direct"));}
+        else { lineVisual.enabled = false;}
     }
 
     void OnHoldArcThrow(InputValue inputValue){
         //Makes line renderer stuff 
         lineVisual.enabled = true;
-        LaunchProjectile(arcThrowForceVel); 
+        arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
+        if(grabbing) {StartCoroutine(renderThrowingLine(arcThrowForceVel, "arc"));}
+        else { lineVisual.enabled = false;}
     }
 
     void LaunchProjectile(Vector3 throwVelocity)
@@ -527,14 +546,14 @@ public class Player : MonoBehaviour
         
         */
         //Ray camRay = cam.ScreenPointToRay(Input.mousePosition);
-        Ray playerThrowRay = new Ray(hips.transform.position, hips.transform.forward); 
-        RaycastHit hit;//This is the point where out mouse cursor is
+        //Ray playerThrowRay = new Ray(hips.transform.position, hips.transform.forward); 
+        //RaycastHit hit;//This is the point where out mouse cursor is
         //lineVisual.enabled = true; 
         //playerThrowRay
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 40f))
-        {
-            Debug.Log("we might get rid of this conditional statement");
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward)*hit.distance, Color.yellow);
+        //if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 40f))
+        //{
+        //    Debug.Log("we might get rid of this conditional statement");
+        //    Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward)*hit.distance, Color.yellow);
             //endPoint calculation function called here
             //getting rid of anything that deals with the mouse. 
             //Making sure it works.
@@ -545,17 +564,15 @@ public class Player : MonoBehaviour
             Vector3 vo = CalculateVelocity(CalculateEndpoint(throwVelocity), grabPos.position, 1f);
 
             Visualize(vo);
-        }
+        //}
     }
 
     Vector3 CalculateEndpoint(Vector3 initVelo){
         //Experimental time = 1.54 s
         /* d = v*t + 1/2 a * t^2*/
 
-        //Vector3 newVec = new Vector3(initVelo.x*.015f, initVelo.y*.015f, initVelo.z*.015f);
-        Vector3 spotWhereItHits = new Vector3(initVelo.x*.001f , 0f, initVelo.z*.001f); 
-        //Vector3 spotWhereItHits = new Vector3(0f , 0f, 0f); 
-        //Vector3 spotWhereItHits = new Vector3(initVelo.x*.015f, initVelo.y*.015f, initVelo.z*.015f);
+        //Vector3 spotWhereItHits = new Vector3(initVelo.x*.001f , 0f, initVelo.z*.001f); 
+        Vector3 spotWhereItHits = new Vector3(initVelo.x*.001f , initVelo.y*.001f, initVelo.z*.0001f); 
         return spotWhereItHits;
     }
 
