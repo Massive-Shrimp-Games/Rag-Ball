@@ -14,9 +14,23 @@ public class CharacterSelectCursor : PlayerCursor
         SetImage();
     }
 
+    protected override void OnConfirm(InputValue inputValue)
+    {
+        base.OnConfirm(inputValue);
+        CharacterSelect.playerSelectionEvent?.Invoke(this);
+    }
+
     protected override void OnReturn(InputValue inputValue)
     {
-        MenuActions.ToLevelSelect();
+        if (hasControl)
+        {
+            MenuActions.ToLevelSelect();
+        }
+        else
+        {
+            hasControl = true;
+            CharacterSelect.playerSelectionEvent?.Invoke(this);
+        }
     }
 
     protected override void OnStart(InputValue inputValue)
