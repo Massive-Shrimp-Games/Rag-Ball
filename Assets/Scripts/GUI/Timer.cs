@@ -9,17 +9,18 @@ public class Timer : MonoBehaviour
     [SerializeField] private TextMeshPro TimerText;
     //[SerializeField] private float mainTimer;
 
-    public int RedScore;
-    public int BlueScore;
-    public Canvas RedWinScreen;
-    public Canvas BlueWinScreen;
+    //public int RedScore;
+    //public int BlueScore;
+    //public Canvas RedWinScreen;
+    //public Canvas BlueWinScreen;
     public ParticleSystem BluePipeConfetti;
     public ParticleSystem RedPipeConfetti;
     public ParticleSystem ExitPipeConfetti;
 
     private float timer;
-    private bool canCount = true;
+    public bool canCount = true;
     private bool doOnce = false;
+    private bool usingTimer = true;
 
 
     void Start()
@@ -32,21 +33,26 @@ public class Timer : MonoBehaviour
     void Update()
     {
 
-        if (timer >= 0.0f && canCount)
+        if (timer > 0.0f && canCount)
         {
             timer -= Time.deltaTime;
             int min = Mathf.FloorToInt(timer / 60);
             int sec = Mathf.FloorToInt(timer % 60);
             TimerText.text = min.ToString("00") + " : " + sec.ToString("00");
-            
+            usingTimer = false;
         }
 
-        else if (timer <= 0.0f && !doOnce)
+        else if (timer <= 0.0f && !doOnce && usingTimer == false)
         {
             canCount = false;
             doOnce = true;
             TimerText.text = ("00" + " : " + "00");
             timer = 0.0f;
+            RedPipeConfetti.Play();
+            BluePipeConfetti.Play();
+            ExitPipeConfetti.Play();
+            GameObject.Find("Goal_AudioSource").GetComponent<AudioSource>().Play();
+            StartCoroutine(GameObject.Find("Ruleset").GetComponent<RagballRuleset>().WaitForTime());
             //GameOver();
         }
     }

@@ -10,8 +10,13 @@ public class StaminaUI : MonoBehaviour
     [SerializeField] private GameObject UIPrefab;
     [SerializeField] private Sprite[] staminas;
 
-    [SerializeField] private Sprite REDPLAYER;
-    [SerializeField] private Sprite BLUEPLAYER;
+    [SerializeField] private Sprite redSmall;
+    [SerializeField] private Sprite redMedium;
+    [SerializeField] private Sprite redLarge;
+
+    [SerializeField] private Sprite blueSmall;
+    [SerializeField] private Sprite blueMedium;
+    [SerializeField] private Sprite blueLarge;
 
     [SerializeField] private Player[] players;
     private GameObject[] UIS;
@@ -54,11 +59,15 @@ public class StaminaUI : MonoBehaviour
 
             if (p.color == TeamColor.Red)
             {
-                UIS[index].transform.GetChild(0).GetComponent<Image>().sprite = REDPLAYER;
+                if (p.size == RagdollSize.Small) { UIS[index].transform.GetChild(0).GetComponent<Image>().sprite = redSmall;}
+                else if (p.size == RagdollSize.Medium) { UIS[index].transform.GetChild(0).GetComponent<Image>().sprite = redMedium; }
+                else { UIS[index].transform.GetChild(0).GetComponent<Image>().sprite = redLarge; }
             }
             else if (p.color == TeamColor.Blue)
             {
-                UIS[index].gameObject.transform.GetChild(0).GetComponent<Image>().sprite = BLUEPLAYER;
+                if (p.size == RagdollSize.Small) { UIS[index].transform.GetChild(0).GetComponent<Image>().sprite = blueSmall; }
+                else if (p.size == RagdollSize.Medium) { UIS[index].transform.GetChild(0).GetComponent<Image>().sprite = blueMedium; }
+                else { UIS[index].transform.GetChild(0).GetComponent<Image>().sprite = blueLarge; }
             }
             //sets stamina sprite
             UIS[index].transform.GetChild(1).GetComponent<Image>().sprite = staminas[5];

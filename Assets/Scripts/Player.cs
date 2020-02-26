@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public event Exert OnPlayerExertion;
 
     [SerializeField] private float dashForce; // Set in editor
-    [SerializeField] private float jumpForce = 12000; // Set in editor
+    [SerializeField] private float jumpForce; // Set in editor
     [SerializeField] private float directThrowForce; // Set in editor
     [SerializeField] private float arcThrowForce; // Set in editor
     [SerializeField] private int staggerTime; // Set in editor
@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     private Vector3 directThrowForceVel;
     private Vector3 arcThrowForceVel;
 
-    public float playerSpeed = 200f;
+    public float playerSpeed;
     public int staggerCharges;
     public int staggerMaxCharge;
     public int staggerDashCharge;
@@ -32,7 +32,6 @@ public class Player : MonoBehaviour
     // Set canJump to FALSE on any player when they are thrown
     public bool isThrown = false;
     public bool canJump;                    // Can the Player jump - the robust value we use for decision making
-    [SerializeField] bool isLanded = false; // Is the plaer on the ground - the raw value to transform into canJump
     public bool dashing;   // Protect this with a Getter
     public bool staggered = false;
     [SerializeField] private float dashVelocityMinimum;
@@ -77,8 +76,8 @@ public class Player : MonoBehaviour
 
 
     //Jump Variables
-    [SerializeField] private float fallMultiplier = 60f;
-    [SerializeField] private float jumpMultiplier = 12f;
+    [SerializeField] private float fallMultiplier;
+    [SerializeField] private float jumpMultiplier;
     private bool aIsPressed = false;
 
     private Vector2 movement;
@@ -138,11 +137,8 @@ public class Player : MonoBehaviour
         UpdateHeld();
         bool leftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
         bool rightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
-        if (! canJump)
-        {
-            canJump = isLanded;
-        }
-        isLanded = leftFoot || rightFoot;
+
+        canJump = leftFoot || rightFoot;
 
         staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
         Move();
@@ -155,8 +151,7 @@ public class Player : MonoBehaviour
 
         float determinDirection = Vector3.Dot(hipsRigidBody.velocity.normalized, hips.transform.forward);
         float determineMagnitue = hipsRigidBody.velocity.magnitude;
-        dashing = (hipsRigidBody.velocity.magnitude > dashVelocityMinimum) && (Mathf.Abs(determinDirection) > .5) ;
-        print("DotPrd:\t" + determinDirection + "Mag:\t" + determineMagnitue + "Should dash:\t" + dashing);
+        dashing = (hipsRigidBody.velocity.magnitude > dashVelocityMinimum) && (Mathf.Abs(determinDirection) > .5);
 
         if (dashing)
         {
@@ -301,10 +296,8 @@ public class Player : MonoBehaviour
     private void Move()
     {
         if (hips.tag != "Grabbed"){
-            //Vector2 stickDirection = inputValue.Get<Vector2>();
             Vector3 force = new Vector3(movement.x, 0, movement.y) * playerSpeed * Time.deltaTime;
             hipsRigidBody.AddForce(force, ForceMode.Impulse);
-            //Debug.LogFormat("stickDir is {0}", movement);
             if (Mathf.Abs(movement.x) >= 0.1 || Mathf.Abs(movement.y) >= 0.1)
             {
                 hips.transform.forward = new Vector3(movement.x, 0, movement.y);
@@ -396,10 +389,11 @@ public class Player : MonoBehaviour
     private void OnArcThrow(InputValue inputValue)
     {
         if (grabbing == null) { return; }
-        
-        arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
-        OnGrabDrop(null);
+
         BaseObject held = grabbing.GetComponent<BaseObject>();
+        arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
+        VictimVariables();
+        OnGrabDrop(null);
         if (held != null)
         {
             held.player.getHips().GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
@@ -409,7 +403,6 @@ public class Player : MonoBehaviour
             grabbing.GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
         }
 
-        VictimVariables();
         lineVisual.enabled = false;
         StopCoroutine(renderThrowingLine(arcThrowForceVel, "arc"));
     }
