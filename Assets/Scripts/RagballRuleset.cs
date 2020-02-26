@@ -27,6 +27,9 @@ public class RagballRuleset : MonoBehaviour
         OnRedScore += AddRedScore;
         OnBlueScore += AddBlueScore;
         transitionAnim.SetBool("Transition", false);
+
+        Game.Instance.Music.StopAudio();
+        //Game.Instance.Music.PlayAudio("game");
     }
 
     private void OnDestroy()
