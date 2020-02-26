@@ -501,7 +501,7 @@ public class Player : MonoBehaviour
     private IEnumerator renderThrowingLine(Vector3 throwForce, string throwType){
         while(grabbing)
         {
-            Debug.Log("The time is: " + Time.time);
+            //Debug.Log("The time is: " + Time.time);
             if (throwType == "direct") {throwForce = directThrowForce * directThrowDirection.forward;}
             if (throwType == "arc") {throwForce = arcThrowForce * arcThrowDirection.forward;}
             LaunchProjectile(throwForce); 
@@ -513,7 +513,6 @@ public class Player : MonoBehaviour
 
     void OnHoldDirectThrow(InputValue inputValue){
         //Makes line renderer stuff
-        Debug.Log("I am Hold Direct, here i am"); 
         directThrowForceVel = directThrowForce * directThrowDirection.forward;
         lineVisual.enabled = true; 
         if(grabbing) {StartCoroutine(renderThrowingLine(directThrowForceVel, "direct"));}
@@ -530,41 +529,8 @@ public class Player : MonoBehaviour
 
     void LaunchProjectile(Vector3 throwVelocity)
     {
-    	/*
-        Direction of player
-        hips.transform.forward
-        */
-        
-        /* <-- where the object thrown is held --> where the object thrown is landing
-        
-        	force of the throw, the weight of what's being thrown and the direction
-          		where it's landing
-              
-        	force of throw -> directThrowForceVel OR arcThrowForceVel
-          weight of object -> Found in inspector (probably)
-          //direction -> hips.transform.forward OR ArcThrowDirection/DirectThrowDirection
-        
-        */
-        //Ray camRay = cam.ScreenPointToRay(Input.mousePosition);
-        //Ray playerThrowRay = new Ray(hips.transform.position, hips.transform.forward); 
-        //RaycastHit hit;//This is the point where out mouse cursor is
-        //lineVisual.enabled = true; 
-        //playerThrowRay
-        //if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 40f))
-        //{
-        //    Debug.Log("we might get rid of this conditional statement");
-        //    Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward)*hit.distance, Color.yellow);
-            //endPoint calculation function called here
-            //getting rid of anything that deals with the mouse. 
-            //Making sure it works.
-            //cursor.SetActive(true);
-            //cursor.transform.position = hit.point + Vector3.up * 0.1f;
-
-            //Vector3 vo = CalculateVelocity(hit.point, grabPos.position, 1f);
             Vector3 vo = CalculateVelocity(CalculateEndpoint(throwVelocity), grabPos.position, 1f);
-
             Visualize(vo);
-        //}
     }
 
     Vector3 CalculateEndpoint(Vector3 initVelo){
