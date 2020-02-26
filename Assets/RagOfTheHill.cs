@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RagOfTheHill : MonoBehaviour
 {
-    public GameObject player;
     public GameObject GameManager;
 
     public float P1timer;
@@ -29,11 +28,11 @@ public class RagOfTheHill : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "RagDoll")
+        if (other.gameObject.tag == "Grabbable")
         {
             
 
-            if (player.GetComponent<Player>().playerNumber == 1)
+            if (other.GetComponent<BaseObject>().player.playerNumber == 1)
             {
 
                 if (P1timer >= 0.0f)
@@ -51,7 +50,7 @@ public class RagOfTheHill : MonoBehaviour
                   
              }
 
-            if (player.GetComponent<Player>().playerNumber == 2)
+            if (other.GetComponent<BaseObject>().player.playerNumber == 2)
             {
 
                 if (P2timer >= 0.0f)
@@ -69,7 +68,7 @@ public class RagOfTheHill : MonoBehaviour
 
             }
 
-            if (player.GetComponent<Player>().playerNumber == 3)
+            if (other.GetComponent<BaseObject>().player.playerNumber == 3)
             {
 
                 if (P3timer >= 0.0f)
@@ -87,7 +86,7 @@ public class RagOfTheHill : MonoBehaviour
 
             }
 
-            if (player.GetComponent<Player>().playerNumber == 4)
+            if (other.GetComponent<BaseObject>().player.playerNumber == 4)
             {
 
                 if (P4timer >= 0.0f)
@@ -109,24 +108,24 @@ public class RagOfTheHill : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "RagDoll")
+        if (other.gameObject.tag == "Grabbable")
         {
-            if (player.GetComponent<Player>().playerNumber == 1)
+            if (other.GetComponent<BaseObject>().player.playerNumber == 1)
             {
                 P1timer = originalTimer;
             }
 
-            if (player.GetComponent<Player>().playerNumber == 2)
+            if (other.GetComponent<BaseObject>().player.playerNumber == 2)
             {
                 P3timer = originalTimer;
             }
 
-            if (player.GetComponent<Player>().playerNumber == 3)
+            if (other.GetComponent<BaseObject>().player.playerNumber == 3)
             {
                 P3timer = originalTimer;
             }
 
-            if (player.GetComponent<Player>().playerNumber == 4)
+            if (other.GetComponent<BaseObject>().player.playerNumber == 4)
             {
                 P4timer = originalTimer;
             }

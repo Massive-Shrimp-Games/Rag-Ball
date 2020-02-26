@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class BaseObject : MonoBehaviour
 {
-    public GameObject BaseGameObject;
+    public Player player;
 }

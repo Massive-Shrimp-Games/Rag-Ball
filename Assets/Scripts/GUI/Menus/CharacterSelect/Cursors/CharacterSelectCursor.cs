@@ -16,18 +16,12 @@ public class CharacterSelectCursor : PlayerCursor
 
     protected override void OnReturn(InputValue inputValue)
     {
-        if (active)
-        {
-            SceneManager.LoadScene("LevelSelect");
-        } else
-        {
-            active = true;
-        }
+        MenuActions.ToLevelSelect();
     }
 
     protected override void OnStart(InputValue inputValue)
     {
-        SceneManager.LoadScene("Main_Game3");
+        SceneManager.LoadScene("Court");
     }
 
     private void SetImage()

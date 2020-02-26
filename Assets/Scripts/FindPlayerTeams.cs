@@ -8,25 +8,25 @@ public class FindPlayerTeams : MonoBehaviour
     public List<GameObject> RedTeam = new List<GameObject>();
     public List<GameObject> BlueTeam = new List<GameObject>();
 
-    public List<GameObject> RedTeamHips = new List<GameObject>();
-    public List<GameObject> BlueTeamHips = new List<GameObject>();
+    //public List<GameObject> RedTeamHips = new List<GameObject>();
+    //public List<GameObject> BlueTeamHips = new List<GameObject>();
 
 
     void Start()
     {
         foreach (Transform child in gameObject.transform)
         {
-            if (child.GetComponent<PlayerSize>().color == TeamColor.Red)
+            if (child.GetChild(0).GetComponent<Player>().color == TeamColor.Red)
             {
                 RedTeam.Add(child.gameObject);
             }
-            if (child.GetComponent<PlayerSize>().color == TeamColor.Blue)
+            if (child.GetChild(0).GetComponent<Player>().color == TeamColor.Blue)
             {
                 BlueTeam.Add(child.gameObject);
             }
         }
 
-        foreach (GameObject gameObject in RedTeam)
+        /*foreach (GameObject gameObject in RedTeam)
         {
             if (gameObject.GetComponent<PlayerSize>().size == Size.Small)
             {
@@ -56,7 +56,7 @@ public class FindPlayerTeams : MonoBehaviour
             {
                 BlueTeamHips.Add(gameObject.transform.GetChild(2).transform.GetChild(0).transform.GetChild(1).transform.GetChild(0).gameObject);
             }
-        }
+        }*/
 
 
     }

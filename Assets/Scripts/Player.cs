@@ -6,62 +6,81 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
 
-    public delegate void Exert(int player,int stamina);
+    public delegate void Exert(int player, int stamina);
 
     public event Exert OnPlayerExertion;
-    
+
     [SerializeField] private float dashForce; // Set in editor
-    [SerializeField] private float jumpForce; // Set in editor
+    [SerializeField] private float jumpForce = 12000; // Set in editor
     [SerializeField] private float directThrowForce; // Set in editor
     [SerializeField] private float arcThrowForce; // Set in editor
     [SerializeField] private int staggerTime; // Set in editor
 
-    //public TeamColor color;
-    
     private Vector3 directThrowForceVel;
     private Vector3 arcThrowForceVel;
 
-    public float playerSpeed;
+    public float playerSpeed = 200f;
     public int staggerCharges;
     public int staggerMaxCharge;
     public int staggerDashCharge;
     public int staggerJumpCharge;
     //private int staminaCharges;
 
-    private bool canJump;
-    public bool dashing;    // Protect this with a Getter
+
+    // Airborne Variables
+    // Set isThrown to TRUE on any player when they are thrown -> access the grabbed objects isThrown variable
+    // Set canJump to FALSE on any player when they are thrown
+    public bool isThrown = false;
+    public bool canJump;                    // Can the Player jump - the robust value we use for decision making
+    [SerializeField] bool isLanded = false; // Is the plaer on the ground - the raw value to transform into canJump
+    public bool dashing;   // Protect this with a Getter
+    public bool staggered = false;
     [SerializeField] private float dashVelocityMinimum;
     [SerializeField] private StaggerCheck staggerCheck;
 
-    private const int StaminaMaxCharge = 5;  
 
-    private const int StaminaDashCharge = 1; 
+    private const int StaminaMaxCharge = 5;
 
-    private const int StaminaJumpCharge = 1; 
+    private const int StaminaDashCharge = 1;
 
-    private int StaminaRechargeTime = 3;  
+    private const int StaminaJumpCharge = 1;
+
+    private float StaminaRechargeTime = 1.5f;
 
     private Collider hipsCollider;
 
     private bool isRecharging;
 
-    private bool hasStartedRecharging;  
-    private SpriteRenderer sp_cursor; 
+    private bool hasStartedRecharging;
+    private SpriteRenderer sp_cursor;
 
     [SerializeField] private CheckGrab grabCheckCollider;   // Set in editor
     [SerializeField] private Transform grabPos; // Set in editor
     [SerializeField] private Transform directThrowDirection;
     [SerializeField] private Transform arcThrowDirection;
-    [SerializeField] private GameObject staggerStars;
-    private TrailRenderer trailRenderer;
 
-    private GameObject grabbing;
+    [SerializeField] private GameObject grabbing;
+
+    // Instead of this, have a particle handler
+    [SerializeField] private GameObject staggerStars;
+    [SerializeField] private GameObject collisionTrigger;
+    private TrailRenderer trailRenderer;
 
     private GameObject hips;
     private Animator animator;
     private Rigidbody hipsRigidBody;
 
+
+    //Jump Variables
+    [SerializeField] private float fallMultiplier = 60f;
+    [SerializeField] private float jumpMultiplier = 12f;
+    private bool aIsPressed = false;
+
+    private Vector2 movement;
+
     public int playerNumber = 0;
+    public RagdollSize size;
+    public TeamColor color;
     private Controller controller;
 
     void Awake()
@@ -78,39 +97,34 @@ public class Player : MonoBehaviour
 
     private void AssignMaterial()
     {
-        PlayerSize player = transform.root.GetChild(playerNumber).GetComponent<PlayerSize>();
-        if(player.color == TeamColor.Red)
+        if (color == TeamColor.Red)
         {
-            if(player.size == Size.Small)
+            if(size == RagdollSize.Small)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Small");
-                transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Red_01");
-            } else if (player.size == Size.Medium)
+                
+            } else if (size == RagdollSize.Medium)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Medium");
-                transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Red_01");
-            } else if (player.size == Size.Large)
+            } else if (size == RagdollSize.Large)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Large");
-                transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Red_01");
             }
-             
+            transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Red_01");
         }
-        else if (player.color == TeamColor.Blue)
+        else if (color == TeamColor.Blue)
         {
-            if(player.size == Size.Small)
+            if(size == RagdollSize.Small)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Small");
-                transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Blue_01");
-            } else if (player.size == Size.Medium)
+            } else if (size == RagdollSize.Medium)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Medium");
-                transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Blue_01");
-            } else if (player.size == Size.Large)
+            } else if (size == RagdollSize.Large)
             {
                 transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Large");
-                transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Blue_01");
             }
+            transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Blue_01");
         }
     }
     private void Update()
@@ -118,17 +132,26 @@ public class Player : MonoBehaviour
         UpdateHeld();
         bool leftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
         bool rightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
-        canJump = leftFoot || rightFoot;
+        if (! canJump)
+        {
+            canJump = isLanded;
+        }
+        isLanded = leftFoot || rightFoot;
 
         staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
+        Move();
+        JumpPhysics();
+        UpdateThrown();
+
         if (isRecharging == false && hasStartedRecharging == true){
             StartCoroutine(rechargeStamina());
         }
 
-        dashing = hipsRigidBody.velocity.magnitude > dashVelocityMinimum;
-        staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
+        float determinDirection = Vector3.Dot(hipsRigidBody.velocity.normalized, hips.transform.forward);
+        float determineMagnitue = hipsRigidBody.velocity.magnitude;
+        dashing = (hipsRigidBody.velocity.magnitude > dashVelocityMinimum) && (Mathf.Abs(determinDirection) > .5);
 
-        if (hipsRigidBody.velocity.magnitude > 6f)
+        if (dashing)
         {
             trailRenderer.enabled = true;
         }
@@ -137,6 +160,51 @@ public class Player : MonoBehaviour
             trailRenderer.enabled = false;
         }
     }
+
+    /// <summary>
+    /// Controls decay of player as they fall, called from UPDATE
+    /// </summary>
+    private void JumpPhysics()
+    {
+        if (!canJump && !isThrown)
+        {
+            if (hips.GetComponent<Rigidbody>().velocity.y > 0 && aIsPressed)
+            {
+                hipsRigidBody.velocity += Vector3.up * Physics.gravity.y * (jumpMultiplier - 1) * Time.deltaTime;
+            }
+            else
+            {
+                hipsRigidBody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Checks if the player has landed and stops treating them as a projectile
+    /// </summary>
+    private void UpdateThrown()
+    {
+        if (isThrown && canJump)
+        {
+            isThrown = false;
+        }
+    }
+
+    /// <summary>
+    /// Set a victim's canJump and isThrown from a 'OnThrow' event
+    /// ATTN: Assumes 'grabbing' is NOT NULL
+    /// </summary>
+    private void VictimVariables()
+    {
+        if (grabbing)
+        {
+            Player victim = grabbing.GetComponent<BaseObject>().player;
+            if (victim == null) return; // This is for throwing non-players
+            victim.isThrown = true;
+            victim.canJump = false; // Don't want them getting away now, do we? H AH AH A HA HA AH HA A HA !!!!!
+        }
+    }
+
 
     void Start()
     {
@@ -175,16 +243,15 @@ public class Player : MonoBehaviour
     {
         if (grabbing != null)
         {
-            grabbing.GetComponent<Rigidbody>().position = grabPos.position;
-        }
-
-        if (hipsRigidBody.velocity.magnitude > dashVelocityMinimum)
-        {
-            //trailRenderer.enabled = true;
-        }
-        else
-        {
-            //trailRenderer.enabled = false;
+            BaseObject held = grabbing.GetComponent<BaseObject>();
+            if(held != null)
+            {
+                held.player.getHips().GetComponent<Rigidbody>().position = grabPos.position;
+            }
+            else
+            {
+                grabbing.GetComponent<Rigidbody>().position = grabPos.position;
+            }
         }
     }
 
@@ -196,60 +263,74 @@ public class Player : MonoBehaviour
         {
             controller._OnMove += OnMove;
             controller._OnJump += OnJump;
+            controller._OnJumpRelease += OnJumpRelease;
             controller._OnDash += OnDash;
             controller._OnGrabDrop += OnGrabDrop;
             controller._OnPause += OnPause;
             controller._OnArcThrow += OnArcThrow;
             controller._OnDirectThrow += OnDirectThrow;
-            controller._OnStaggerSelf += OnStaggerSelf;
         }
     }
-
     private void UnMapControls()
     {
         if (controller != null)
         {
             controller._OnMove -= OnMove;
             controller._OnJump -= OnJump;
+            controller._OnJumpRelease -= OnJumpRelease;
             controller._OnDash -= OnDash;
             controller._OnGrabDrop -= OnGrabDrop;
             controller._OnPause -= OnPause;
             controller._OnArcThrow -= OnArcThrow;
             controller._OnDirectThrow -= OnDirectThrow;
-            controller._OnStaggerSelf -= OnStaggerSelf;
         }
     }
     #endregion
 
-    #region Player Abilities
-    private void OnMove(InputValue inputValue)
+    private void Move()
     {
         if (hips.tag != "Grabbed"){
-            Vector2 stickDirection = inputValue.Get<Vector2>();
-            Vector3 force = new Vector3(stickDirection.x, 0, stickDirection.y) * playerSpeed * Time.deltaTime;
-            hipsRigidBody.AddForce(force);
-            //Debug.LogFormat("stickDir is {0}", stickDirection);
-            if (Mathf.Abs(stickDirection.x) >= 0.1 || Mathf.Abs(stickDirection.y) >= 0.1)
+            //Vector2 stickDirection = inputValue.Get<Vector2>();
+            Vector3 force = new Vector3(movement.x, 0, movement.y) * playerSpeed * Time.deltaTime;
+            hipsRigidBody.AddForce(force, ForceMode.Impulse);
+            //Debug.LogFormat("stickDir is {0}", movement);
+            if (Mathf.Abs(movement.x) >= 0.1 || Mathf.Abs(movement.y) >= 0.1)
             {
-                hips.transform.forward = new Vector3(stickDirection.x, 0, stickDirection.y);
+                hips.transform.forward = new Vector3(movement.x, 0, movement.y);
             }
             animator.Play(force.magnitude >= 0.03 ? "Walk" : "Idle");
         }
+    }
+
+    #region Player Abilities
+    private void OnMove(InputValue inputValue)
+    {
+        Vector2 stickDirection = inputValue.Get<Vector2>();
+        movement = stickDirection;
     }
 
     private void OnJump(InputValue inputValue)
     {
         if (canJump && staggerCharges >= 0 && hips.tag != "Grabbed")
         {
+            aIsPressed = true;
+            canJump = false;
             Vector3 boostDir = hips.transform.up;
             hipsRigidBody.AddForce(boostDir * jumpForce);
             staggerCharges = staggerCharges - staggerJumpCharge;
-            OnPlayerExertion(playerNumber,staggerCharges);
-            if(!hasStartedRecharging)
+            OnPlayerExertion(playerNumber, staggerCharges);
+            if (!hasStartedRecharging)
             {
                 StartCoroutine(rechargeStamina());
             }
         }
+    }
+
+    private void OnJumpRelease(InputValue inputValue)
+    {
+        // This gets the time difference and applies the jump force as a result
+        aIsPressed = false;
+        canJump = false;
     }
 
     private void OnDash(InputValue inputValue)
@@ -270,22 +351,26 @@ public class Player : MonoBehaviour
     private void OnGrabDrop(InputValue inputValue)
     {
         if (grabbing == null) {
-            if (hips.tag == "Grabbable"){
-                grabbing = grabCheckCollider.FindClosest();
+            if (collisionTrigger.tag == "Grabbable"){
+                grabbing = grabCheckCollider.FindClosest(color);
             }
             if (grabbing != null)
             {
-                grabbing.GetComponent<Rigidbody>().isKinematic = true;
+                BaseObject pl = grabbing.GetComponent<BaseObject>();
+                if (pl != null)
+                    pl.player.getHips().GetComponent<Rigidbody>().isKinematic = true;
                 grabbing.tag = "Grabbed";
                 //grabbing.GetComponentInParent<GameObject>().GetComponentInParent<GameObject>().GetComponentInParent<Player>().;
-                hips.tag = "Grabbing";
+                collisionTrigger.tag = "Grabbing";
             }
         }
-        else {
+        else
+        {
             grabbing.tag = "Grabbable";
-            hips.tag = "Grabbable";
+            collisionTrigger.tag = "Grabbable";
 
-            grabbing.GetComponent<Rigidbody>().isKinematic = false;
+            grabbing.GetComponent<BaseObject>().player.getHips().GetComponent<Rigidbody>().isKinematic = false;
+            //Game.Instance.Controllers.GetController(grabbing.GetComponent<BaseObject>().player.playerNumber).GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
             grabbing = null;
         }
     }
@@ -299,14 +384,19 @@ public class Player : MonoBehaviour
     {
         if (grabbing == null) { return; }
 
-        // Get reference to what we are holding before we release it
-        GameObject objectToThrow = grabbing;
-        OnGrabDrop(null);
-
         arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
-        objectToThrow.GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
-        staggerCharges = staggerCharges - staggerDashCharge;
-        OnPlayerExertion(playerNumber,staggerCharges);
+        OnGrabDrop(null);
+        BaseObject held = grabbing.GetComponent<BaseObject>();
+        if (held != null)
+        {
+            held.player.getHips().GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
+        }
+        else
+        {
+            grabbing.GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
+        }
+
+        VictimVariables();
     }
 
     private void OnDirectThrow(InputValue inputValue)
@@ -314,32 +404,31 @@ public class Player : MonoBehaviour
         if (grabbing == null) { return; }
         
         // Get reference to what we are holding before we release it
-        GameObject objectToThrow = grabbing;
-        grabbing.GetComponent<Rigidbody>().AddForce(directThrowForce * directThrowDirection.forward);
-        OnGrabDrop(null);
-        
+        BaseObject held = grabbing.GetComponent<BaseObject>();
         directThrowForceVel = directThrowForce * directThrowDirection.forward;
-        objectToThrow.GetComponent<Rigidbody>().AddForce(directThrowForceVel);
-        staggerCharges = staggerCharges - staggerDashCharge;
-        OnPlayerExertion(playerNumber,staggerCharges);
+        VictimVariables();
+        OnGrabDrop(null);
+        if (held != null)
+        {
+            held.player.getHips().GetComponent<Rigidbody>().AddForce(directThrowForceVel);
+        }
+        else
+        {
+            grabbing.GetComponent<Rigidbody>().AddForce(directThrowForceVel);
+        }
+        
     }
 
-    private void OnStaggerSelf(InputValue inputValue)
-    {
-        staggerStars.SetActive(true);
-        StartCoroutine("StaggerSelf");
-        if (grabbing != null)
-        {
-            OnGrabDrop(null);
-        }
-    }
     #endregion
 
-    private void StaggerSelf(bool enemyDashing, TeamColor enemyColor)
+    private void StaggerSelf(bool shouldStagger, TeamColor enemyColor)
     {
-        if (enemyDashing == true && enemyColor != gameObject.transform.root.GetChild(playerNumber).GetComponent<PlayerSize>().color)
+        if (Game.Instance == null) return;
+        if (shouldStagger == true && enemyColor != color)
         {
-            hipsRigidBody.isKinematic = true;
+            Debug.Log("Staggered guy");
+            Game.Instance.Controllers.GetController(playerNumber).GetComponent<PlayerInput>().SwitchCurrentActionMap("Menu");
+            staggered = true;
             animator.enabled = false;
             staggerStars.SetActive(true);
             if (grabbing) { OnGrabDrop(null); }
@@ -350,7 +439,11 @@ public class Player : MonoBehaviour
     private IEnumerator UnStagger()
     {
         yield return new WaitForSeconds(staggerTime);
-        hipsRigidBody.isKinematic = false;
+        if (hips.tag != "Grabbed")
+        {
+            Game.Instance.Controllers.GetController(playerNumber).GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
+        }
+        staggered = false;
         animator.enabled = true;
         staggerStars.SetActive(false);
     }
@@ -378,14 +471,7 @@ public class Player : MonoBehaviour
         }
         
     }
-    private IEnumerator waitingForUnstaggerCoroutine(int time)
-    {
-
-        yield return new WaitForSeconds(time);
-
-        UnStagger();
-    }
-
+ 
     public void ResetVelocity()
     {
         hipsRigidBody.velocity = Vector3.zero;
