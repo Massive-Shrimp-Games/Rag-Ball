@@ -24,4 +24,12 @@ public class Audio : MonoBehaviour
     {
         audioSources[name]?.Play();
     }
+
+    public void StopAudio()
+    {
+        foreach (Transform child in transform)
+        {
+            child.GetComponent<AudioSource>().Stop();
+        }
+    }
 }
