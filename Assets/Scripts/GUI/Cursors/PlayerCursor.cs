@@ -5,7 +5,7 @@ public abstract class PlayerCursor : MonoBehaviour
 {
     public MenuItem currentMenuItem;
     public int playerNumber;
-    public bool active = true;
+    public bool hasControl = true;
 
     private Controller controller;
 
@@ -57,16 +57,16 @@ public abstract class PlayerCursor : MonoBehaviour
         }
     }
 
-    private void OnNavigate(InputValue inputValue)
+    protected virtual void OnNavigate(InputValue inputValue)
     {
-        if (active)
+        if (hasControl)
         {
             currentMenuItem = currentMenuItem.Navigate(inputValue);
             MoveToCurrentMenuItem();
         }
     }
 
-    private void OnConfirm(InputValue inputValue)
+    protected virtual void OnConfirm(InputValue inputValue)
     {
         currentMenuItem.Select(this);
     }
