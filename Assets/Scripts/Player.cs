@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     // Set canJump to FALSE on any player when they are thrown
     public bool isThrown = false;
     public bool canJump;                    // Can the Player jump - the robust value we use for decision making
-    [SerializeField] bool isLanded = false; // Is the plaer on the ground - the raw value to transform into canJump
+    // [SerializeField] bool isLanded = false; // Is the plaer on the ground - the raw value to transform into canJump
     public bool dashing;   // Protect this with a Getter
     public bool staggered = false;
     [SerializeField] private float dashVelocityMinimum;
@@ -132,11 +132,14 @@ public class Player : MonoBehaviour
         UpdateHeld();
         bool leftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
         bool rightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
+        /*
         if (! canJump)
         {
             canJump = isLanded;
         }
         isLanded = leftFoot || rightFoot;
+        */
+        canJump = leftFoot || rightFoot;
 
         staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
         Move();
@@ -384,9 +387,10 @@ public class Player : MonoBehaviour
     {
         if (grabbing == null) { return; }
 
-        arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
-        OnGrabDrop(null);
         BaseObject held = grabbing.GetComponent<BaseObject>();
+        arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
+        VictimVariables();
+        OnGrabDrop(null);
         if (held != null)
         {
             held.player.getHips().GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
@@ -395,8 +399,6 @@ public class Player : MonoBehaviour
         {
             grabbing.GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
         }
-
-        VictimVariables();
     }
 
     private void OnDirectThrow(InputValue inputValue)
