@@ -498,7 +498,7 @@ public class Player : MonoBehaviour
             if (throwType == "direct") {throwForce = directThrowForce * directThrowDirection.forward;}
             if (throwType == "arc") {throwForce = arcThrowForce * arcThrowDirection.forward;}
             LaunchProjectile(throwForce); 
-            yield return new WaitForSeconds (0.25f);
+            yield return new WaitForSeconds (1/60f);
         }
         StopCoroutine(renderThrowingLine(throwForce, throwType));
         lineVisual.enabled = false;
