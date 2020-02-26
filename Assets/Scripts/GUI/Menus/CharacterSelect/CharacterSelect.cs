@@ -10,6 +10,6 @@ public static class CharacterSelect
         new CharacterSelection(TeamColor.Blue, RagdollSize.Large)
     };
 
-    public delegate void SelectEvent(PlayerCursor cursor);
+    public delegate void SelectEvent(CharacterSelectCursor cursor);
     public static SelectEvent playerSelectionEvent;
 }

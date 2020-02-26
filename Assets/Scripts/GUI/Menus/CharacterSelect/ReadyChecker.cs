@@ -18,20 +18,20 @@ public class ReadyChecker : MonoBehaviour
         CharacterSelect.playerSelectionEvent -= OnPlayerSelection;
     }
 
-    private void OnPlayerSelection(PlayerCursor cursor)
+    private void OnPlayerSelection(CharacterSelectCursor cursor)
     {
         foreach (Transform child in transform)
         {
-            if (child.name.Contains("Cursor") && child.GetComponent<PlayerCursor>().hasControl)
+            if (child.name.Contains("Cursor") && child.GetComponent<CharacterSelectCursor>().hasControl)
             {
-                LetsNot();
+                LetsNot(cursor);
                 return;
             }
         }
-        LetsGo();
+        LetsGo(cursor);
     }
 
-    private void LetsGo()
+    private void LetsGo(CharacterSelectCursor cursor)
     {
         if (bannerInstance != null)
             return;
@@ -40,13 +40,15 @@ public class ReadyChecker : MonoBehaviour
         banner.transform.SetParent(transform);
         banner.name = "LetsGo";
         bannerInstance = banner;
+        cursor.letsGo = true;
     }
 
-    private void LetsNot()
+    private void LetsNot(CharacterSelectCursor cursor)
     {
         if (bannerInstance == null)
             return;
         Destroy(bannerInstance.gameObject);
         Debug.Log("LetsNot");
+        cursor.letsGo = false;
     }
 }
