@@ -19,11 +19,12 @@ public class Player : MonoBehaviour
     private Vector3 directThrowForceVel;
     private Vector3 arcThrowForceVel;
 
-    [SerializeField] private int staggerCharges;
-    [SerializeField] private int staggerMaxCharge;
-    [SerializeField] private int staggerDashCharge;
-    [SerializeField] private int staggerJumpCharge;
-    [SerializeField] private float StaminaRechargeTime = 1.5f;
+    [SerializeField] private int staminaCharges;
+    [SerializeField] private int staminaMaxCharge;
+    [SerializeField] private int staminaDashCharge;
+    [SerializeField] private int staminaJumpCharge;
+    [SerializeField] private float staminaRechargeTime = 1.5f;
+    private bool shouldReplenishStamina;
 
     // Airborne Variables
     // Set isThrown to TRUE on any player when they are thrown -> access the grabbed objects isThrown variable
@@ -47,7 +48,6 @@ public class Player : MonoBehaviour
 
     [SerializeField] private GameObject grabbing;
 
-    // Instead of this, have a particle handler
     [SerializeField] private GameObject staggerStars;
     [SerializeField] private GameObject collisionTrigger;
     private TrailRenderer trailRenderer;
@@ -55,7 +55,6 @@ public class Player : MonoBehaviour
     private GameObject hips;
     private Animator animator;
     private Rigidbody hipsRigidBody;
-
 
     //Jump Variables
     [SerializeField] private float fallMultiplier = 60f;
@@ -79,6 +78,58 @@ public class Player : MonoBehaviour
 
         AssignMaterial();
         staggerCheck.OnStaggerSelf += StaggerSelf;
+    }
+    
+    void Start()
+    {
+        canJump = false;
+
+        if (Game.Instance == null) return; // if the preload scene hasn't been loaded
+        MapControls();
+
+        staminaMaxCharge = 5;
+        staminaCharges = staminaMaxCharge;
+        staminaDashCharge = 1;
+        staminaJumpCharge = 1;
+
+        hips = transform.GetChild(1).GetChild(0).gameObject; //set reference to player's hips
+        hipsRigidBody = hips.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
+        animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
+        hipsCollider = hips.GetComponent<Collider>();
+
+        trailRenderer = transform.GetChild(1).GetChild(0).GetComponent<TrailRenderer>();
+
+        dashing = false;
+        shouldReplenishStamina = false;
+        grabbing = null;
+    }
+
+    private void Update()
+    {
+        UpdateHeld();
+        bool leftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
+        bool rightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
+        canJump = leftFoot || rightFoot;
+
+        staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
+        Move();
+        JumpPhysics();
+        UpdateThrown();
+
+        float determinDirection = Vector3.Dot(hipsRigidBody.velocity.normalized, hips.transform.forward);
+        float determineMagnitue = hipsRigidBody.velocity.magnitude;
+        dashing = (hipsRigidBody.velocity.magnitude > dashVelocityMinimum) && (Mathf.Abs(determinDirection) > .5);
+
+        if (dashing)
+        {
+            trailRenderer.enabled = true;
+        }
+        else
+        {
+            trailRenderer.enabled = false;
+        }
+
+        shouldReplenishStamina = staminaCharges < staminaMaxCharge;
     }
 
     private void AssignMaterial()
@@ -113,41 +164,7 @@ public class Player : MonoBehaviour
             transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Blue_01");
         }
     }
-    private void Update()
-    {
-        UpdateHeld();
-        bool leftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
-        bool rightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
-        /*
-        if (! canJump)
-        {
-            canJump = isLanded;
-        }
-        isLanded = leftFoot || rightFoot;
-        */
-        canJump = leftFoot || rightFoot;
-
-        staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
-        Move();
-        JumpPhysics();
-        UpdateThrown();
-
-
-
-        float determinDirection = Vector3.Dot(hipsRigidBody.velocity.normalized, hips.transform.forward);
-        float determineMagnitue = hipsRigidBody.velocity.magnitude;
-        dashing = (hipsRigidBody.velocity.magnitude > dashVelocityMinimum) && (Mathf.Abs(determinDirection) > .5);
-
-        if (dashing)
-        {
-            trailRenderer.enabled = true;
-        }
-        else
-        {
-            trailRenderer.enabled = false;
-        }
-    }
-
+    
     /// <summary>
     /// Controls decay of player as they fall, called from UPDATE
     /// </summary>
@@ -190,33 +207,6 @@ public class Player : MonoBehaviour
             victim.isThrown = true;
             victim.canJump = false; // Don't want them getting away now, do we? H AH AH A HA HA AH HA A HA !!!!!
         }
-    }
-
-
-    void Start()
-    {
-        canJump = false;
-
-        if (Game.Instance == null) return; // if the preload scene hasn't been loaded
-        MapControls();
-
-        staggerMaxCharge = 5;
-        staggerCharges = staggerMaxCharge;
-        staggerDashCharge = 1;
-        staggerJumpCharge = 1;
-        //staminaCharges = StaminaMaxCharge;
-
-
-        hips = transform.GetChild(1).GetChild(0).gameObject; //set reference to player's hips
-        hipsRigidBody = hips.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
-        animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
-        hipsCollider = hips.GetComponent<Collider>();
-
-        trailRenderer = transform.GetChild(1).GetChild(0).GetComponent<TrailRenderer>();
-
-        
-        dashing = false;
-        grabbing = null;
     }
 
     private void OnDestroy()
@@ -296,18 +286,14 @@ public class Player : MonoBehaviour
 
     private void OnJump(InputValue inputValue)
     {
-        if (canJump && staggerCharges >= 0 && hips.tag != "Grabbed")
+        if (canJump && staminaCharges >= staminaJumpCharge && hips.tag != "Grabbed")
         {
             aIsPressed = true;
             canJump = false;
             Vector3 boostDir = hips.transform.up;
             hipsRigidBody.AddForce(boostDir * jumpForce);
-            staggerCharges = staggerCharges - staggerJumpCharge;
-            Ons(playerNumber, staggerCharges);
-            if (!hasStartedRecharging)
-            {
-                StartCoroutine(rechargeStamina());
-            }
+            staminaCharges = staminaCharges - staminaJumpCharge;
+            OnStaminaChange(playerNumber, staminaCharges);
         }
     }
 
@@ -320,16 +306,13 @@ public class Player : MonoBehaviour
 
     private void OnDash(InputValue inputValue)
     {
-        if (staggerCharges >= staggerDashCharge && hips.tag != "Grabbed")
+        if (staminaCharges >= staminaDashCharge && hips.tag != "Grabbed")
         {
             Vector3 boostDir = hips.transform.forward;
             hipsRigidBody.AddForce(boostDir * dashForce);
-            staggerCharges = staggerCharges - staggerDashCharge;
-            OnStaminaChange(playerNumber,staggerCharges);
-            if(!hasStartedRecharging)
-            {
-                StartCoroutine(rechargeStamina());
-            }
+            staminaCharges = staminaCharges - staminaDashCharge;
+            OnStaminaChange(playerNumber,staminaCharges);
+            StaminaChange
         }
     }
 
@@ -432,28 +415,18 @@ public class Player : MonoBehaviour
         staggerStars.SetActive(false);
     }
 
-    private IEnumerator rechargeStamina(){
-        hasStartedRecharging = true;
-        yield return new WaitForSeconds (StaminaRechargeTime);
-        recharger();
-        if(staggerCharges < staggerMaxCharge)
-        {
-            StartCoroutine(rechargeStamina());
-        }
-        else
-        {
-            hasStartedRecharging = false;
-        }
+    private IEnumerator RechargeStamina(){
+        yield return new WaitForSeconds (staminaRechargeTime);
+        Replenish();
     }
 
-    void recharger()
+    void Replenish()
     {
-        if (staggerCharges < staggerMaxCharge)
+        if (shouldReplenishStamina)
         {
-            staggerCharges++;
-            OnStaminaChange(playerNumber, staggerCharges);
+            staminaCharges++;
+            OnStaminaChange(playerNumber, staminaCharges);
         }
-        
     }
  
     public void ResetVelocity()
