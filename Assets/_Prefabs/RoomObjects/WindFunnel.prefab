@@ -109,8 +109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b41c5fc9de2ea34db9f9eb949c7b6ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WindFunnelToggle: 1
-  speed: 700
+  runSpeed: 700
+  stopSpeed: 0
   fanModel: {fileID: 2607264046018079669}
 --- !u!1 &4343331222861442770
 GameObject:

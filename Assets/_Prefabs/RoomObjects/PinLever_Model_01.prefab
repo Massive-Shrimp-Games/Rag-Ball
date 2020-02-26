@@ -323,13 +323,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggerSpeedThreshold: 5
-  targetObjects: []
+  targetObjects:
+  - {fileID: 0}
   materials:
   - {fileID: 2100000, guid: adb236ca6a5aa4f4d89e36754e8aa857, type: 2}
   - {fileID: 2100000, guid: faa5587c75cab024bb7fa3e288415d5c, type: 2}
   leverState: 0
-  leverRenderer: {fileID: 0}
-  leverTransform: {fileID: 0}
+  leverRenderer: {fileID: 685465858311038354}
+  leverTransform: {fileID: 4459202986124766930}
   cooldown: 3
 --- !u!65 &530560941356516099
 BoxCollider:

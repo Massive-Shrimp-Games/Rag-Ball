@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2510315224770084125
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7144596214864304299}
+  m_Layer: 0
+  m_Name: FanSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7144596214864304299
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2510315224770084125}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.67, y: -12, z: 17.27}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7210966285840519976}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2969388938024150951
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,6 +121,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.3467206, y: 1.7076428, z: 1.0572329}
   m_Center: {x: -0.011348654, y: 0.35382164, z: 0.028616428}
+--- !u!1 &6712487172609533415
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2339985153902696361}
+  m_Layer: 0
+  m_Name: LeverSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2339985153902696361
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6712487172609533415}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.67, y: -15.95, z: 9.07}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7210966285840519976}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7210966285080466833
 GameObject:
   m_ObjectHideFlags: 0
@@ -555,6 +615,8 @@ Transform:
   - {fileID: 7210966286040429734}
   - {fileID: 7210966287003530262}
   - {fileID: 7210966285907637744}
+  - {fileID: 7144596214864304299}
+  - {fileID: 2339985153902696361}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9027,11 +9089,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: b4a5f0e0d9703054b857e38f47a4d4e0, type: 2}
     - target: {fileID: 1766675971, guid: d27ed8bf09451724fafe95d0d5ce926a, type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1766675971, guid: d27ed8bf09451724fafe95d0d5ce926a, type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1766675971, guid: d27ed8bf09451724fafe95d0d5ce926a, type: 3}
       propertyPath: m_textInfo.wordCount
