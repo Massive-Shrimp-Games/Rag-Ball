@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class CharacterSelectCursor : PlayerCursor
 {
     public List<Sprite> cursorSprites;
+    public bool letsGo = false;
 
     protected override void Start()
     {
@@ -14,15 +15,32 @@ public class CharacterSelectCursor : PlayerCursor
         SetImage();
     }
 
-    protected override void OnReturn(InputValue inputValue)
+    protected override void OnConfirm(InputValue inputValue)
     {
-        MenuActions.ToLevelSelect();
+        if (letsGo)
+        {
+            SceneManager.LoadScene("Court");
+        } else
+        {
+            base.OnConfirm(inputValue);
+            CharacterSelect.playerSelectionEvent?.Invoke(this);
+        }
     }
 
-    protected override void OnStart(InputValue inputValue)
+    protected override void OnReturn(InputValue inputValue)
     {
-        SceneManager.LoadScene("Court");
+        if (hasControl)
+        {
+            MenuActions.ToLevelSelect();
+        }
+        else
+        {
+            hasControl = true;
+            CharacterSelect.playerSelectionEvent?.Invoke(this);
+        }
     }
+
+    protected override void OnStart(InputValue inputValue) { }
 
     private void SetImage()
     {
