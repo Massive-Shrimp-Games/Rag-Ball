@@ -534,13 +534,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1463392894371477787}
-  m_LocalRotation: {x: -0.6087613, y: -0, z: -0, w: 0.79335344}
+  m_LocalRotation: {x: -0.42261827, y: 0, z: 0, w: 0.9063079}
   m_LocalPosition: {x: 0, y: -0.00000013850736, z: 0.00000008185078}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 68953021133953271}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: -75, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -50, y: 0, z: 0}
 --- !u!1 &1463392894389788679
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,13 +564,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1463392894389788679}
-  m_LocalRotation: {x: -0.25881907, y: -0, z: -0, w: 0.9659259}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.00000017484801, z: 0.00000007153657}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 68953021133953271}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: -30.000002, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1464780820804070810
 GameObject:
   m_ObjectHideFlags: 0
@@ -2290,10 +2290,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9ab87fa0ca31e34fb23e370249b436f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashForce: 5000
+  dashForce: 8000
   jumpForce: 12000
-  directThrowForce: 10000
-  arcThrowForce: 10000
+  directThrowForce: 20000
+  arcThrowForce: 8000
   staggerTime: 4
   playerSpeed: 200
   staggerCharges: 0
@@ -2302,7 +2302,6 @@ MonoBehaviour:
   staggerJumpCharge: 0
   isThrown: 0
   canJump: 0
-  isLanded: 0
   dashing: 0
   staggered: 0
   dashVelocityMinimum: 6
@@ -3147,7 +3146,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7593445379743716839}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.331, z: 0}
   m_LocalScale: {x: 0.19805878, y: 0.198059, z: 0.19805898}
   m_Children: []
   m_Father: {fileID: 3679290694193894674}
@@ -3229,8 +3228,8 @@ PositionConstraint:
   m_GameObject: {fileID: 7593445379743716839}
   m_Enabled: 1
   m_Weight: 1
-  m_TranslationAtRest: {x: 0, y: 0, z: 0}
-  m_TranslationOffset: {x: 0, y: -0.8223302, z: 0.05519998}
+  m_TranslationAtRest: {x: 0, y: 0.331, z: 0}
+  m_TranslationOffset: {x: 0, y: -0.49133018, z: 0.05519998}
   m_AffectTranslationX: 1
   m_AffectTranslationY: 1
   m_AffectTranslationZ: 1
