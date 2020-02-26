@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.InputSystem; 
 
 public class Player : MonoBehaviour
 {
@@ -69,6 +69,11 @@ public class Player : MonoBehaviour
     private Animator animator;
     private Rigidbody hipsRigidBody;
 
+    //Used for creating the visualized arc when throwing
+    public int lineSegment = 3;
+    private LineRenderer lineVisual;
+    public LayerMask layer;
+
 
     //Jump Variables
     [SerializeField] private float fallMultiplier;
@@ -89,6 +94,7 @@ public class Player : MonoBehaviour
         animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
         hipsCollider = hips.gameObject.GetComponent<Collider>();
         trailRenderer = hips.GetComponent<TrailRenderer>();
+        lineVisual = hips.transform.parent.parent.GetChild(2).GetChild(1).gameObject.GetComponent<LineRenderer>(); 
 
         AssignMaterial();
         staggerCheck.OnStaggerSelf += StaggerSelf;
@@ -265,6 +271,8 @@ public class Player : MonoBehaviour
             controller._OnPause += OnPause;
             controller._OnArcThrow += OnArcThrow;
             controller._OnDirectThrow += OnDirectThrow;
+            controller._OnHoldArcThrow += OnHoldArcThrow;
+            controller._OnHoldDirectThrow += OnHoldDirectThrow;
         }
     }
     private void UnMapControls()
@@ -279,6 +287,8 @@ public class Player : MonoBehaviour
             controller._OnPause -= OnPause;
             controller._OnArcThrow -= OnArcThrow;
             controller._OnDirectThrow -= OnDirectThrow;
+            controller._OnHoldArcThrow -= OnHoldArcThrow;
+            controller._OnHoldDirectThrow -= OnHoldDirectThrow;
         }
     }
     #endregion
@@ -356,6 +366,7 @@ public class Player : MonoBehaviour
                 grabbing.tag = "Grabbed";
                 //grabbing.GetComponentInParent<GameObject>().GetComponentInParent<GameObject>().GetComponentInParent<Player>().;
                 collisionTrigger.tag = "Grabbing";
+                //lineVisual.enabled = true;
             }
         }
         else
@@ -365,7 +376,8 @@ public class Player : MonoBehaviour
 
             grabbing.GetComponent<BaseObject>().player.getHips().GetComponent<Rigidbody>().isKinematic = false;
             //Game.Instance.Controllers.GetController(grabbing.GetComponent<BaseObject>().player.playerNumber).GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
-            grabbing = null;
+            grabbing = null; 
+            //lineVisual.enabled = false;
         }
     }
 
@@ -390,6 +402,9 @@ public class Player : MonoBehaviour
         {
             grabbing.GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
         }
+
+        lineVisual.enabled = false;
+        StopCoroutine(renderThrowingLine(arcThrowForceVel, "arc"));
     }
 
     private void OnDirectThrow(InputValue inputValue)
@@ -399,6 +414,7 @@ public class Player : MonoBehaviour
         // Get reference to what we are holding before we release it
         BaseObject held = grabbing.GetComponent<BaseObject>();
         directThrowForceVel = directThrowForce * directThrowDirection.forward;
+
         VictimVariables();
         OnGrabDrop(null);
         if (held != null)
@@ -409,7 +425,8 @@ public class Player : MonoBehaviour
         {
             grabbing.GetComponent<Rigidbody>().AddForce(directThrowForceVel);
         }
-        
+        lineVisual.enabled = false;
+        StopCoroutine(renderThrowingLine(directThrowForceVel, "direct"));
     }
 
     #endregion
@@ -473,5 +490,106 @@ public class Player : MonoBehaviour
     public GameObject getHips(){
         return hips; 
     }
+
+    private IEnumerator renderThrowingLine(Vector3 throwForce, string throwType){
+        while(grabbing)
+        {
+            //Debug.Log("The time is: " + Time.time);
+            if (throwType == "direct") {throwForce = directThrowForce * directThrowDirection.forward;}
+            if (throwType == "arc") {throwForce = arcThrowForce * arcThrowDirection.forward;}
+            LaunchProjectile(throwForce); 
+            yield return new WaitForSeconds (0.25f);
+        }
+        StopCoroutine(renderThrowingLine(throwForce, throwType));
+        lineVisual.enabled = false;
+    }
+
+    void OnHoldDirectThrow(InputValue inputValue){
+        //Makes line renderer stuff
+        directThrowForceVel = directThrowForce * directThrowDirection.forward;
+        lineVisual.enabled = true; 
+        if(grabbing) {StartCoroutine(renderThrowingLine(directThrowForceVel, "direct"));}
+        else { lineVisual.enabled = false;}
+    }
+
+    void OnHoldArcThrow(InputValue inputValue){
+        //Makes line renderer stuff 
+        lineVisual.enabled = true;
+        arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
+        if(grabbing) {StartCoroutine(renderThrowingLine(arcThrowForceVel, "arc"));}
+        else { lineVisual.enabled = false;}
+    }
+
+    void LaunchProjectile(Vector3 throwVelocity)
+    {
+            Vector3 vo = CalculateVelocity(CalculateEndpoint(throwVelocity), grabPos.position, 1f);
+            Visualize(vo);
+    }
+
+    Vector3 CalculateEndpoint(Vector3 initVelo){
+        //Experimental time = 1.54 s
+        /* d = v*t + 1/2 a * t^2*/
+
+        //Vector3 spotWhereItHits = new Vector3(initVelo.x*.001f , 0f, initVelo.z*.001f); 
+        Vector3 spotWhereItHits = new Vector3(initVelo.x*.001f , initVelo.y*.001f, initVelo.z*.0001f); 
+        return spotWhereItHits;
+    }
+
+    void Visualize(Vector3 vo)
+    {
+        /*Make raycast
+        See when raycast hits collider
+        Put cursor/marker there
+        calculate line
+        */ 
+        for (int i = 0; i < lineSegment; i++)
+        {
+            Vector3 pos = CalculatePosInTime(vo, i / (float)lineSegment);
+            if (i >= lineVisual.positionCount){
+                lineVisual.positionCount = i+1; 
+            }
+            
+            lineVisual.SetPosition(i, pos);
+        }
+    }
+
+    Vector3 CalculateVelocity(Vector3 target, Vector3 origin, float time)
+    {
+        //define the distance x and y first                 --------x---------Horizontal        |y| vertical
+
+        Vector3 distance = target - origin;
+        Vector3 distanceXz = distance; //Distance on the x&Z plane....This is the same vector as the X, only the y component of the Vector is zeroed out.
+        distanceXz.y = 0f;
+
+        //create a float to represent our distance
+        float sY = distance.y; //vertical distance (peak) of the arc. Y.
+        float sXz = distanceXz.magnitude; //
+
+        //Horizontal velocity.......sxz xz plane distance
+        float Vxz = sXz * time;
+        //vertical velocity......
+        float Vy = (sY / time) + (0.5f * Mathf.Abs(Physics.gravity.y) * time);
+
+        //get the normalized distance of the xz plane. Direction is returned. length will be 1 (normalized).
+        Vector3 result = distanceXz.normalized;
+        result *= Vxz; //multiply that direction by the horizontal plane velocity
+        result.y = Vy; //Set its Y value to velocity of Y
+
+        return result;
+    }
+
+    Vector3 CalculatePosInTime(Vector3 vo, float time)
+    {
+        Vector3 Vxz = vo;
+        Vxz.y = 0f;
+
+        Vector3 result = grabPos.position + vo * time;
+        float sY = (-0.5f * Mathf.Abs(Physics.gravity.y) * (time * time)) + (vo.y * time) + grabPos.position.y;
+
+        result.y = sY;
+
+        return result;
+    }
+    
 }
 
