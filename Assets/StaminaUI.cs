@@ -32,16 +32,9 @@ public class StaminaUI : MonoBehaviour
             pl.OnPlayerExertion -= OnExert;
         }
     }
-    private void OnExert(int player, int stamina)
+    private void OnStaminaChange(int player, int stamina)
     {
-        //Debug.Log("Player: " + player + " Stamina: " + stamina);
         UIS[player].transform.GetChild(1).GetComponent<Image>().sprite = staminas[stamina];
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     IEnumerator WaitForStart()
@@ -54,7 +47,8 @@ public class StaminaUI : MonoBehaviour
         foreach (Player p in players)
         {
             int index = p.playerNumber;
-            //instantiates UIS based on number of players and assigns to the locations //NOTE: WILL THROW ERROR IF MORE PLAYERS THAN STAMINA POSITIONS
+            //instantiates UIS based on number of players and assigns to the locations
+            //NOTE: WILL THROW ERROR IF MORE PLAYERS THAN STAMINA POSITIONS
             UIS[index] = Instantiate(UIPrefab, UILocations[index].transform.position, Quaternion.identity, gameObject.transform);
 
             if (p.color == TeamColor.Red)

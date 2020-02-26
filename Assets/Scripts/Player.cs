@@ -5,11 +5,11 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    public delegate void StaminaChange(int player, int stamina);
 
-    public delegate void Exert(int player, int stamina);
+    public event StaminaChange OnStaminaChange;
 
-    public event Exert OnPlayerExertion;
-
+    [SerializeField] private float playerSpeed = 200f;
     [SerializeField] private float dashForce; // Set in editor
     [SerializeField] private float jumpForce = 12000; // Set in editor
     [SerializeField] private float directThrowForce; // Set in editor
@@ -19,13 +19,11 @@ public class Player : MonoBehaviour
     private Vector3 directThrowForceVel;
     private Vector3 arcThrowForceVel;
 
-    public float playerSpeed = 200f;
-    public int staggerCharges;
-    public int staggerMaxCharge;
-    public int staggerDashCharge;
-    public int staggerJumpCharge;
-    //private int staminaCharges;
-
+    [SerializeField] private int staggerCharges;
+    [SerializeField] private int staggerMaxCharge;
+    [SerializeField] private int staggerDashCharge;
+    [SerializeField] private int staggerJumpCharge;
+    [SerializeField] private float StaminaRechargeTime = 1.5f;
 
     // Airborne Variables
     // Set isThrown to TRUE on any player when they are thrown -> access the grabbed objects isThrown variable
@@ -38,20 +36,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float dashVelocityMinimum;
     [SerializeField] private StaggerCheck staggerCheck;
 
-
-    private const int StaminaMaxCharge = 5;
-
-    private const int StaminaDashCharge = 1;
-
-    private const int StaminaJumpCharge = 1;
-
-    private float StaminaRechargeTime = 1.5f;
-
     private Collider hipsCollider;
 
-    private bool isRecharging;
-
-    private bool hasStartedRecharging;
     private SpriteRenderer sp_cursor;
 
     [SerializeField] private CheckGrab grabCheckCollider;   // Set in editor
@@ -146,9 +132,7 @@ public class Player : MonoBehaviour
         JumpPhysics();
         UpdateThrown();
 
-        if (isRecharging == false && hasStartedRecharging == true){
-            StartCoroutine(rechargeStamina());
-        }
+
 
         float determinDirection = Vector3.Dot(hipsRigidBody.velocity.normalized, hips.transform.forward);
         float determineMagnitue = hipsRigidBody.velocity.magnitude;
@@ -233,8 +217,6 @@ public class Player : MonoBehaviour
         
         dashing = false;
         grabbing = null;
-        isRecharging = false; 
-        hasStartedRecharging = false;
     }
 
     private void OnDestroy()
@@ -321,7 +303,7 @@ public class Player : MonoBehaviour
             Vector3 boostDir = hips.transform.up;
             hipsRigidBody.AddForce(boostDir * jumpForce);
             staggerCharges = staggerCharges - staggerJumpCharge;
-            OnPlayerExertion(playerNumber, staggerCharges);
+            Ons(playerNumber, staggerCharges);
             if (!hasStartedRecharging)
             {
                 StartCoroutine(rechargeStamina());
@@ -343,7 +325,7 @@ public class Player : MonoBehaviour
             Vector3 boostDir = hips.transform.forward;
             hipsRigidBody.AddForce(boostDir * dashForce);
             staggerCharges = staggerCharges - staggerDashCharge;
-            OnPlayerExertion(playerNumber,staggerCharges);
+            OnStaminaChange(playerNumber,staggerCharges);
             if(!hasStartedRecharging)
             {
                 StartCoroutine(rechargeStamina());
@@ -469,7 +451,7 @@ public class Player : MonoBehaviour
         if (staggerCharges < staggerMaxCharge)
         {
             staggerCharges++;
-            OnPlayerExertion(playerNumber,staggerCharges);
+            OnStaminaChange(playerNumber, staggerCharges);
         }
         
     }
