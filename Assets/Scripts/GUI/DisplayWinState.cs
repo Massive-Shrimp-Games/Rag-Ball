@@ -29,6 +29,9 @@ public class DisplayWinState : MonoBehaviour
     public List<GameObject> RedPlayerList = new List<GameObject>();
     public List<GameObject> BluePlayerList = new List<GameObject>();
 
+    public GameObject RestartGameButton;
+    public GameObject BacktoMenuButton;
+
     public void Start()
     {
         RedWinText.SetActive(false);
@@ -42,6 +45,9 @@ public class DisplayWinState : MonoBehaviour
         TieLeftMidDancer.SetActive(false);
         TieRightMidDancer.SetActive(false);
         TieRightRightDancer.SetActive(false);
+
+        RestartGameButton.SetActive(false);
+        BacktoMenuButton.SetActive(false);
     }
 
     private void SetDancersActive()
@@ -96,6 +102,12 @@ public class DisplayWinState : MonoBehaviour
             SetDancersActive();
             TieWin();
         }
+    }
+
+    public void DisplayButtons()
+    {
+        RestartGameButton.SetActive(true);
+        BacktoMenuButton.SetActive(true);
     }
 
     private void RedWin()

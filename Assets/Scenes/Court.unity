@@ -351,6 +351,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3607736693838677348, guid: 24bba59be2041214c906a019fe47ec51, type: 3}
+    - {fileID: 3101806965562788420, guid: 24bba59be2041214c906a019fe47ec51, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 24bba59be2041214c906a019fe47ec51, type: 3}
 --- !u!1 &18652230 stripped
 GameObject:
@@ -430,6 +431,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: a5cdc4d28de045a4e97229e096c7b3ec, type: 2}
   RedPlayerList: []
   BluePlayerList: []
+  RestartGameButton: {fileID: 18652244}
+  BacktoMenuButton: {fileID: 18652243}
 --- !u!1 &18652238 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8708698957209345863, guid: 24bba59be2041214c906a019fe47ec51,
@@ -457,6 +460,18 @@ GameObject:
 --- !u!1 &18652242 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3607736694309273388, guid: 24bba59be2041214c906a019fe47ec51,
+    type: 3}
+  m_PrefabInstance: {fileID: 18652229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &18652243 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6840351285558013522, guid: 24bba59be2041214c906a019fe47ec51,
+    type: 3}
+  m_PrefabInstance: {fileID: 18652229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &18652244 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9016172705237637092, guid: 24bba59be2041214c906a019fe47ec51,
     type: 3}
   m_PrefabInstance: {fileID: 18652229}
   m_PrefabAsset: {fileID: 0}
