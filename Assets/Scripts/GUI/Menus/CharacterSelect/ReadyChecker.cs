@@ -38,6 +38,9 @@ public class ReadyChecker : MonoBehaviour
         Debug.Log("LetsGo");
         GameObject banner = Instantiate(letsGo);
         banner.transform.SetParent(transform);
+        banner.transform.position = transform.position;
+        banner.transform.rotation = transform.rotation;
+        banner.transform.localScale = new Vector3(1.8f,1.8f,1.8f);
         banner.name = "LetsGo";
         bannerInstance = banner;
         cursor.letsGo = true;
