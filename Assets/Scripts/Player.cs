@@ -31,7 +31,8 @@ public class Player : MonoBehaviour
     // Set isThrown to TRUE on any player when they are thrown -> access the grabbed objects isThrown variable
     // Set canJump to FALSE on any player when they are thrown
     public bool isThrown = false;
-    public bool canJump;                    // Can the Player jump - the robust value we use for decision making
+    public bool canJump = false;                // Can the Player jump - the robust value we use for decision making
+    public bool isDropped = false;              // Stupid Extra Variable grrrrrrrrr
     public bool dashing;   // Protect this with a Getter
     public bool staggered = false;
     [SerializeField] private float dashVelocityMinimum;
@@ -165,6 +166,8 @@ public class Player : MonoBehaviour
 
     /// <summary>
     /// Controls decay of player as they fall, called from UPDATE
+    /// ONLY affects players who jump, not those who are thrown
+    /// Makes the jumping more snappy
     /// </summary>
     private void JumpPhysics()
     {
@@ -183,18 +186,27 @@ public class Player : MonoBehaviour
 
     /// <summary>
     /// Checks if the player has landed and stops treating them as a projectile
+    /// Also used when a player is dropped
     /// </summary>
     private void UpdateThrown()
     {
-        if (isThrown && canJump)
+        if (canJump && isThrown)                // If player was thrown
         {
             isThrown = false;
+            MapControls();
+        }
+        else if (canJump && isDropped)          // If player was dropped
+        {
+            isDropped = false;
+            MapControls();
         }
     }
 
     /// <summary>
     /// Set a victim's canJump and isThrown from a 'OnThrow' event
     /// ATTN: Assumes 'grabbing' is NOT NULL
+    /// Allows a grabbed object to stun other players when thrown
+    /// IS NOT used when you drop a player
     /// </summary>
     private void VictimVariables()
     {
@@ -203,7 +215,7 @@ public class Player : MonoBehaviour
             Player victim = grabbing.GetComponent<BaseObject>().player;
             if (victim == null) return; // This is for throwing non-players
             victim.isThrown = true;
-            victim.canJump = false; // Don't want them getting away now, do we? H AH AH A HA HA AH HA A HA !!!!!
+            victim.canJump = false;     // Don't want them getting away now, do we? H AH AH A HA HA AH HA A HA !!!!!
         }
     }
 
@@ -352,31 +364,65 @@ public class Player : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// When a player presses (X)
+    /// Either tries garbbing a grabbable object, or dropping it if it is holding one
+    /// The grabbable object must have a `base` component and be of type `player` so that we can freeze it from moving
+    /// </summary>
+    /// <param name="inputValue">Passed by the event, mandatory for strange reasons</param>
     private void OnGrabDrop(InputValue inputValue)
     {
+        // GRAB THE PLAYER
         if (grabbing == null) {
+
+            // If there exists a grabbable object in our grabbing range
             if (collisionTrigger.tag == "Grabbable"){
                 grabbing = grabCheckCollider.FindClosest(color);
             }
+
+            // If we successfully grabbed a grabbable object
             if (grabbing != null)
             {
+                // Get the 'base' of that object
                 BaseObject pl = grabbing.GetComponent<BaseObject>();
-                if (pl != null)
+
+                // If the object is a player
+                if (pl != null) { 
                     pl.player.getHips().GetComponent<Rigidbody>().isKinematic = true;
+                }
+
+                // Notify the object its state is "grabbed"
                 grabbing.tag = "Grabbed";
-                //grabbing.GetComponentInParent<GameObject>().GetComponentInParent<GameObject>().GetComponentInParent<Player>().;
                 collisionTrigger.tag = "Grabbing";
+
+                // DEBUG - DeleteMe
+                //grabbing.GetComponentInParent<GameObject>().GetComponentInParent<GameObject>().GetComponentInParent<Player>().;
                 //lineVisual.enabled = true;
+
+                // Freeze the Victim from doing anything
+                Player victim = grabbing.GetComponent<BaseObject>().player;
+                victim.UnMapControls();
             }
         }
+        // DROP THE PLAYER
         else
         {
+            // Reset the player's state
             grabbing.tag = "Grabbable";
             collisionTrigger.tag = "Grabbable";
 
+            // Prevent the player from doing anything until they hit the ground
+            Player victim = grabbing.GetComponent<BaseObject>().player;     // Get the Vitcim
+            victim.isDropped = true;                                        // Make them fall
+            victim.canJump = false;                                         // Don't let them get back up
+
+            // Release the grabbed object from our reign
             grabbing.GetComponent<BaseObject>().player.getHips().GetComponent<Rigidbody>().isKinematic = false;
+            grabbing = null;
+
+            // DEBUG - DeleteMe
             //Game.Instance.Controllers.GetController(grabbing.GetComponent<BaseObject>().player.playerNumber).GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
-            grabbing = null; 
             //lineVisual.enabled = false;
         }
     }
@@ -386,9 +432,17 @@ public class Player : MonoBehaviour
         Game.Instance.PauseMenu.Pause(playerNumber);
     }
 
+
+    /// <summary>
+    /// Gets called ON RELEASE of the arcthrow button
+    /// </summary>
+    /// <param name="inputValue"></param>
     private void OnArcThrow(InputValue inputValue)
     {
         if (grabbing == null) { return; }
+
+        // Debug -- Who is called first? DirectThrow, or HoldDirectThrow
+        Debug.Log("THROW (Arc) !!!!!!!!!!!!!!!");
 
         BaseObject held = grabbing.GetComponent<BaseObject>();
         arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
@@ -407,16 +461,28 @@ public class Player : MonoBehaviour
         StopCoroutine(renderThrowingLine(arcThrowForceVel, "arc"));
     }
 
+
+    /// <summary>
+    /// Gets called ON RELEASE of the directthrow button
+    /// </summary>
+    /// <param name="inputValue"></param>
     private void OnDirectThrow(InputValue inputValue)
     {
+        // If we are not holding anything
         if (grabbing == null) { return; }
-        
+
+        // Debug -- Who is called first? DirectThrow, or HoldDirectThrow
+        Debug.Log("THROW (Direct) !!!!!!!!!!!!!!!");
+
         // Get reference to what we are holding before we release it
         BaseObject held = grabbing.GetComponent<BaseObject>();
         directThrowForceVel = directThrowForce * directThrowDirection.forward;
 
+        // Set the object to be a projectile
         VictimVariables();
         OnGrabDrop(null);
+
+        // Set the Throw Velocities
         if (held != null)
         {
             held.player.getHips().GetComponent<Rigidbody>().AddForce(directThrowForceVel);
@@ -425,6 +491,8 @@ public class Player : MonoBehaviour
         {
             grabbing.GetComponent<Rigidbody>().AddForce(directThrowForceVel);
         }
+
+        // Render the throwing arc
         lineVisual.enabled = false;
         StopCoroutine(renderThrowingLine(directThrowForceVel, "direct"));
     }
@@ -436,7 +504,7 @@ public class Player : MonoBehaviour
         if (Game.Instance == null) return;
         if (shouldStagger == true && enemyColor != color)
         {
-            Debug.Log("Staggered guy");
+            //Debug.Log("Staggered guy");
             Game.Instance.Controllers.GetController(playerNumber).GetComponent<PlayerInput>().SwitchCurrentActionMap("Menu");
             staggered = true;
             animator.enabled = false;
@@ -504,7 +572,14 @@ public class Player : MonoBehaviour
         lineVisual.enabled = false;
     }
 
+    /// <summary>
+    /// This causes the aiming arc to render for the DirectThrow
+    /// </summary>
+    /// <param name="inputValue"></param>
     void OnHoldDirectThrow(InputValue inputValue){
+        // Debug -- Who is called first? DirectThrow, or HoldDirectThrow
+        Debug.Log("HOLD (Direct) !!!!!!!!!!!!!!!");
+
         //Makes line renderer stuff
         directThrowForceVel = directThrowForce * directThrowDirection.forward;
         lineVisual.enabled = true; 
@@ -512,7 +587,15 @@ public class Player : MonoBehaviour
         else { lineVisual.enabled = false;}
     }
 
+    /// <summary>
+    /// This causes the aiming arc to render for the ArcThrow
+    /// </summary>
+    /// <param name="inputValue"></param>
     void OnHoldArcThrow(InputValue inputValue){
+
+        // Debug -- Who is called first? DirectThrow, or HoldDirectThrow
+        Debug.Log("HOLD (Arc) !!!!!!!!!!!!!!!");
+
         //Makes line renderer stuff 
         lineVisual.enabled = true;
         arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
