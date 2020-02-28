@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5687600174811153758}
+  - component: {fileID: 5868839430682099616}
   m_Layer: 0
   m_Name: FanPivot
   m_TagString: Untagged
@@ -31,6 +32,19 @@ Transform:
   m_Father: {fileID: 2084095272066019374}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5868839430682099616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2607264046018079669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70f8d4d503a95014cad301de6855edb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
 --- !u!1 &3078043508612137533
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,7 +386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc7ccbaebfc71c5439ac405d85af2c93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Strength: 0.2
+  Strength: 0.7
   WindDirection: {x: 0, y: 90, z: 0}
 --- !u!114 &9140610119648840572
 MonoBehaviour:
@@ -558,7 +572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc7ccbaebfc71c5439ac405d85af2c93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Strength: 0.175
+  Strength: 0.6
   WindDirection: {x: 0, y: 90, z: 0}
 --- !u!114 &9140610120802853872
 MonoBehaviour:
@@ -709,5 +723,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc7ccbaebfc71c5439ac405d85af2c93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Strength: 0.125
+  Strength: 0.4
   WindDirection: {x: 0, y: 90, z: 0}

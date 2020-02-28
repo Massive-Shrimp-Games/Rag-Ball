@@ -323,8 +323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggerSpeedThreshold: 5
-  targetObjects:
-  - {fileID: 0}
+  targetObjects: []
   materials:
   - {fileID: 2100000, guid: adb236ca6a5aa4f4d89e36754e8aa857, type: 2}
   - {fileID: 2100000, guid: faa5587c75cab024bb7fa3e288415d5c, type: 2}
