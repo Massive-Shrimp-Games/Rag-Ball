@@ -8,5 +8,7 @@ public class ControlsButton : Button
     public override void Select(PlayerCursor cursor)
     {
         controlsImage.SetActive(true);
+        controlsImage.transform.SetAsLastSibling();
+        cursor.UnmapNavigationControls();
     }
 }

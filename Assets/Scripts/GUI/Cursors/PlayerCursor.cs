@@ -57,6 +57,26 @@ public abstract class PlayerCursor : MonoBehaviour
         }
     }
 
+    public void MapNavigationControls()
+    {
+        if (controller != null)
+        {
+            controller._OnStart += OnStart;
+            controller._OnNavigate += OnNavigate;
+            controller._OnConfirm += OnConfirm;
+        }
+    }
+
+    public void UnmapNavigationControls()
+    {
+        if (controller != null)
+        {
+            controller._OnStart -= OnStart;
+            controller._OnNavigate -= OnNavigate;
+            controller._OnConfirm -= OnConfirm;
+        }
+    }
+
     protected virtual void OnNavigate(InputValue inputValue)
     {
         if (hasControl)

@@ -289,6 +289,7 @@ GameObject:
   - component: {fileID: 87373361}
   - component: {fileID: 87373363}
   - component: {fileID: 87373362}
+  - component: {fileID: 87373364}
   m_Layer: 0
   m_Name: ControlsScreen
   m_TagString: Untagged
@@ -352,6 +353,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 87373360}
   m_CullTransparentMesh: 0
+--- !u!223 &87373364
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87373360}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 1
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 100
+  m_TargetDisplay: 0
 --- !u!1 &307000938
 GameObject:
   m_ObjectHideFlags: 0

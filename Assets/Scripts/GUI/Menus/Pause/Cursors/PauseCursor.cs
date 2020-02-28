@@ -19,10 +19,15 @@ public class PauseCursor : PlayerCursor
     {
         if (Game.Instance == null) return;
         GameObject controls = GameObject.Find("ControlsScreen");
-        if (controls.active)
+        if (controls && controls.active)
+        {
             controls.SetActive(false);
+            MapNavigationControls();
+        }
         else
+        {
             Game.Instance.PauseMenu.UnPause();
+        }
     }
 
     protected override void OnStart(InputValue inputValue)
