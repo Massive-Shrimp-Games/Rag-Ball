@@ -13,6 +13,12 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
 
+
+
+
+    #region Variables
+
+
     public delegate void Exert(int player, int stamina);
 
     public event Exert OnPlayerExertion;
@@ -100,6 +106,38 @@ public class Player : MonoBehaviour
     private Controller controller;
 
 
+
+    #endregion
+
+
+
+
+
+    #region Lifecycles
+
+
+    /// <summary>
+    /// Before putting the player on screen, give them a team mesh.
+    /// Also assign their body parts and statuses.
+    /// </summary>
+    void Awake()
+    {
+        // Body Parts
+        hips = transform.GetChild(1).GetChild(0).gameObject; //set reference to player's hips
+        hipsRigidBody = hips.gameObject.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
+        animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
+        hipsCollider = hips.gameObject.GetComponent<Collider>();
+
+        // Special Effects
+        trailRenderer = hips.GetComponent<TrailRenderer>();
+        lineVisual = hips.transform.parent.parent.GetChild(2).GetChild(1).gameObject.GetComponent<LineRenderer>();
+        AssignMaterial();
+
+        // Statuses
+        staggerCheck.OnStaggerSelf += StaggerSelf;
+    }
+
+
     /// <summary>
     /// Set Initial Values and References for the player's Systems on Spawn
     /// </summary>
@@ -135,28 +173,6 @@ public class Player : MonoBehaviour
         grabbing = null;
         isRecharging = false;               // Player starts fully charged
         hasStartedRecharging = false;       // Player starts fully charged
-    }
-
-
-    /// <summary>
-    /// Before putting the player on screen, give them a team mesh.
-    /// Also assign their body parts and statuses.
-    /// </summary>
-    void Awake()
-    {
-        // Body Parts
-        hips = transform.GetChild(1).GetChild(0).gameObject; //set reference to player's hips
-        hipsRigidBody = hips.gameObject.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
-        animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
-        hipsCollider = hips.gameObject.GetComponent<Collider>();
-
-        // Special Effects
-        trailRenderer = hips.GetComponent<TrailRenderer>();
-        lineVisual = hips.transform.parent.parent.GetChild(2).GetChild(1).gameObject.GetComponent<LineRenderer>(); 
-        AssignMaterial();
-
-        // Statuses
-        staggerCheck.OnStaggerSelf += StaggerSelf;
     }
 
 
@@ -208,6 +224,17 @@ public class Player : MonoBehaviour
     {
         UnMapControls();
     }
+
+
+
+    #endregion
+
+
+
+
+
+    #region Helpers
+
 
     /// <summary>
     /// Assigns the team's Material to the Player's Renderer
@@ -322,6 +349,46 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void Move()
+    {
+        if (hips.tag != "Grabbed")
+        {
+            Vector3 force = new Vector3(movement.x, 0, movement.y) * playerSpeed * Time.deltaTime;
+            hipsRigidBody.AddForce(force, ForceMode.Impulse);
+            if (Mathf.Abs(movement.x) >= 0.1 || Mathf.Abs(movement.y) >= 0.1)
+            {
+                hips.transform.forward = new Vector3(movement.x, 0, movement.y);
+            }
+            animator.Play(force.magnitude >= 0.03 ? "Walk" : "Idle");
+        }
+    }
+
+
+    /// <summary>
+    /// WHO USES THIS AND WHY ?!?!?!?!?!
+    /// </summary>
+    public void ResetVelocity()
+    {
+        hipsRigidBody.velocity = Vector3.zero;
+    }
+
+
+    /// <summary>
+    /// Get the Player's Hips
+    /// </summary>
+    /// <returns></returns>
+    public GameObject getHips()
+    {
+        return hips;
+    }
+
+
+    #endregion
+
+
+
+
+
     #region Input Mapping
     private void MapControls()
     {
@@ -358,20 +425,13 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-    private void Move()
-    {
-        if (hips.tag != "Grabbed"){
-            Vector3 force = new Vector3(movement.x, 0, movement.y) * playerSpeed * Time.deltaTime;
-            hipsRigidBody.AddForce(force, ForceMode.Impulse);
-            if (Mathf.Abs(movement.x) >= 0.1 || Mathf.Abs(movement.y) >= 0.1)
-            {
-                hips.transform.forward = new Vector3(movement.x, 0, movement.y);
-            }
-            animator.Play(force.magnitude >= 0.03 ? "Walk" : "Idle");
-        }
-    }
+
+
+
 
     #region Player Abilities
+
+
     private void OnMove(InputValue inputValue)
     {
         Vector2 stickDirection = inputValue.Get<Vector2>();
@@ -550,7 +610,48 @@ public class Player : MonoBehaviour
         StopCoroutine(renderThrowingLine(directThrowForceVel, "direct"));
     }
 
+    /// <summary>
+    /// This causes the aiming arc to render for the DirectThrow
+    /// </summary>
+    /// <param name="inputValue"></param>
+    void OnHoldDirectThrow(InputValue inputValue)
+    {
+        // Debug -- Who is called first? DirectThrow, or HoldDirectThrow
+        Debug.Log("HOLD (Direct) !!!!!!!!!!!!!!!");
+
+        //Makes line renderer stuff
+        directThrowForceVel = directThrowForce * directThrowDirection.forward;
+        lineVisual.enabled = true;
+        if (grabbing) { StartCoroutine(renderThrowingLine(directThrowForceVel, "direct")); }
+        else { lineVisual.enabled = false; }
+    }
+
+    /// <summary>
+    /// This causes the aiming arc to render for the ArcThrow
+    /// </summary>
+    /// <param name="inputValue"></param>
+    void OnHoldArcThrow(InputValue inputValue)
+    {
+
+        // Debug -- Who is called first? DirectThrow, or HoldDirectThrow
+        Debug.Log("HOLD (Arc) !!!!!!!!!!!!!!!");
+
+        //Makes line renderer stuff 
+        lineVisual.enabled = true;
+        arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
+        if (grabbing) { StartCoroutine(renderThrowingLine(arcThrowForceVel, "arc")); }
+        else { lineVisual.enabled = false; }
+    }
+
+
+
     #endregion
+
+
+
+
+
+    #region Stagger
 
     private void StaggerSelf(bool shouldStagger, TeamColor enemyColor)
     {
@@ -602,15 +703,14 @@ public class Player : MonoBehaviour
         }
         
     }
- 
-    public void ResetVelocity()
-    {
-        hipsRigidBody.velocity = Vector3.zero;
-    }
 
-    public GameObject getHips(){
-        return hips; 
-    }
+    #endregion
+
+
+
+
+
+    #region ThrowLine
 
     private IEnumerator renderThrowingLine(Vector3 throwForce, string throwType){
         while(grabbing)
@@ -625,36 +725,6 @@ public class Player : MonoBehaviour
         lineVisual.enabled = false;
     }
 
-    /// <summary>
-    /// This causes the aiming arc to render for the DirectThrow
-    /// </summary>
-    /// <param name="inputValue"></param>
-    void OnHoldDirectThrow(InputValue inputValue){
-        // Debug -- Who is called first? DirectThrow, or HoldDirectThrow
-        Debug.Log("HOLD (Direct) !!!!!!!!!!!!!!!");
-
-        //Makes line renderer stuff
-        directThrowForceVel = directThrowForce * directThrowDirection.forward;
-        lineVisual.enabled = true; 
-        if(grabbing) {StartCoroutine(renderThrowingLine(directThrowForceVel, "direct"));}
-        else { lineVisual.enabled = false;}
-    }
-
-    /// <summary>
-    /// This causes the aiming arc to render for the ArcThrow
-    /// </summary>
-    /// <param name="inputValue"></param>
-    void OnHoldArcThrow(InputValue inputValue){
-
-        // Debug -- Who is called first? DirectThrow, or HoldDirectThrow
-        Debug.Log("HOLD (Arc) !!!!!!!!!!!!!!!");
-
-        //Makes line renderer stuff 
-        lineVisual.enabled = true;
-        arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
-        if(grabbing) {StartCoroutine(renderThrowingLine(arcThrowForceVel, "arc"));}
-        else { lineVisual.enabled = false;}
-    }
 
     void LaunchProjectile(Vector3 throwVelocity)
     {
@@ -726,6 +796,14 @@ public class Player : MonoBehaviour
 
         return result;
     }
-    
+
+
+
+    #endregion
+
+
+
+
+
 }
 
