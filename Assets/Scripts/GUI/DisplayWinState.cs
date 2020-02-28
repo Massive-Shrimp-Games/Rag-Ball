@@ -31,6 +31,7 @@ public class DisplayWinState : MonoBehaviour
 
     public GameObject RestartGameButton;
     public GameObject BacktoMenuButton;
+    public GameObject Cursor;
 
     public void Start()
     {
@@ -48,6 +49,7 @@ public class DisplayWinState : MonoBehaviour
 
         RestartGameButton.SetActive(false);
         BacktoMenuButton.SetActive(false);
+        Cursor.SetActive(false);
     }
 
     private void SetDancersActive()
@@ -108,6 +110,7 @@ public class DisplayWinState : MonoBehaviour
     {
         RestartGameButton.SetActive(true);
         BacktoMenuButton.SetActive(true);
+        Cursor.SetActive(true);
     }
 
     private void RedWin()
