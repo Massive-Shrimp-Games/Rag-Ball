@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class RagOfTheHill : MonoBehaviour
 {
-    public GameObject player;
-    //public GameObject GameManager;
+    //public GameObject player;
 
-
-    [SerializeField] private float[] playerTimers;
+    public float[] playerTimers;
 
     public int pointValue;
 
@@ -26,24 +24,17 @@ public class RagOfTheHill : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void OnTriggerStay(Collider other)
     {
         if (Game.Instance == null) return;
         BaseObject b = other.GetComponent<BaseObject>();
         if (b != null)
         {
-            
             if (playerTimers[b.player.playerNumber] >= 0.0f)
             {
                 playerTimers[b.player.playerNumber] -= Time.deltaTime;
-                int min = Mathf.FloorToInt(playerTimers[b.player.playerNumber] / 60);
-                int sec = Mathf.FloorToInt(playerTimers[b.player.playerNumber] % 60);
+                //int min = Mathf.FloorToInt(playerTimers[b.player.playerNumber] / 60);
+                //int sec = Mathf.FloorToInt(playerTimers[b.player.playerNumber] % 60);
 
             }
             if (playerTimers[b.player.playerNumber] <= 0.0f)
