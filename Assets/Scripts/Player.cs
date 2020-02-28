@@ -19,91 +19,111 @@ public class Player : MonoBehaviour
     #region Variables
 
 
-    public delegate void Exert(int player, int stamina);
 
-    public event Exert OnPlayerExertion;
+    // Team and Player
+    public int playerNumber = 0;                                        // The number of the player's controller (from input)
+    public TeamColor color;                                             // Which Goal to Score; Which Color to Display
+    private Controller controller;                                      // Get Input from ActionMap and Transfer it to the player
 
-    [SerializeField] private float dashForce; // Set in editor
-    [SerializeField] private float jumpForce; // Set in editor
-    [SerializeField] private float directThrowForce; // Set in editor
-    [SerializeField] private float arcThrowForce; // Set in editor
-    [SerializeField] private int staggerTime; // Set in editor
 
-    private Vector3 directThrowForceVel;
-    private Vector3 arcThrowForceVel;
+    // Movement
+    public float playerSpeed;                                           // How fast the player walks
+    private Vector2 movement;                                           // Which direction the player is walking
 
-    public float playerSpeed;
-    public int staggerCharges;
-    public int staggerMaxCharge;
-    public int staggerDashCharge;
-    public int staggerJumpCharge;
-    //private int staminaCharges;
+
+    // Exertion
+    public delegate void Exert(int player, int stamina);                // ???
+    public event Exert OnPlayerExertion;                                // ???
+
+
+    // Special Abilities
+    [SerializeField] private float dashForce;                           // How Hard to Dash; Set in editor
+    [SerializeField] private float jumpForce;                           // How Hard to Jump; Set in editor
+
+
+    // Direct Throw
+    [SerializeField] private float directThrowForce;                    // How hard we Direct Throw
+    private Vector3 directThrowForceVel;                                // Sum of DirectThrowForce and Direction
+    [SerializeField] private Transform directThrowDirection;            // Where we Direct Throw things
+
+    // Arc Throw
+    [SerializeField] private float arcThrowForce;                       // How hard we Arc Throw
+    private Vector3 arcThrowForceVel;                                   // Sum of ArcThrowForce and Direction
+    [SerializeField] private Transform arcThrowDirection;               // Where we Arc Throw things
+
+
+    // Stagger Costs
+    [SerializeField] private int staggerTime;                           // How long to stagger for
+    public int staggerCharges;                                          // 
+    public int staggerMaxCharge;                                        // 
+    public int staggerDashCharge;                                       // 
+    public int staggerJumpCharge;                                       // ???
+
+
+    // Stamina Costs
+    private const int StaminaMaxCharge = 5;                             // Max stamina player can hold
+    private const int StaminaDashCharge = 1;                            // How much a dash costs
+    private const int StaminaJumpCharge = 1;                            // How much a jump costs
+    private float StaminaRechargeTime = 1.5f;                           // how quickly we regain stamina
 
 
     // Airborne Variables
     // Set isThrown to TRUE on any player when they are thrown -> access the grabbed objects isThrown variable
     // Set canJump to FALSE on any player when they are thrown
     public bool isThrown = false;
-    public bool canJump = false;                // Can the Player jump - the robust value we use for decision making
-    public bool isDropped = false;              // Stupid Extra Variable grrrrrrrrr
+    public bool canJump = false;                                        // Can the Player jump - the robust value we use for decision making
+    public bool isDropped = false;                                      // Stupid Extra Variable grrrrrrrrr
 
 
     // Stagger Variables
-    public bool dashing;   // Protect this with a Getter
-    public bool staggered = false;
-    [SerializeField] private float dashVelocityMinimum;
-    [SerializeField] private StaggerCheck staggerCheck;
+    public bool dashing;                                                // TODO Protect this with a Getter
+    public bool staggered = false;                                      // Can the player move, be picked up, etc.
+    [SerializeField] private float dashVelocityMinimum;                 // Velocity of an incoming object to trigger staggered state
+    [SerializeField] private StaggerCheck staggerCheck;                 // ???
 
 
-    // Stamina
-    private const int StaminaMaxCharge = 5;
-    private const int StaminaDashCharge = 1;
-    private const int StaminaJumpCharge = 1;
-    private float StaminaRechargeTime = 1.5f;
-
-
-
-
+    // Body Parts
     private Collider hipsCollider;
-
-    private bool isRecharging;
-
-    private bool hasStartedRecharging;
-    private SpriteRenderer sp_cursor;
-
-    [SerializeField] private CheckGrab grabCheckCollider;   // Set in editor
-    [SerializeField] private Transform grabPos; // Set in editor
-    [SerializeField] private Transform directThrowDirection;
-    [SerializeField] private Transform arcThrowDirection;
-
-    [SerializeField] private GameObject grabbing;
-
-    // Instead of this, have a particle handler
-    [SerializeField] private GameObject staggerStars;
-    [SerializeField] private GameObject collisionTrigger;
-    private TrailRenderer trailRenderer;
-
     private GameObject hips;
     private Animator animator;
     private Rigidbody hipsRigidBody;
 
+
+    // Charging
+    private bool isRecharging;                                      // Is the player currently gaining stamina?
+    private bool hasStartedRecharging;                              // Did the player start gaining stamina?
+
+
+    // Menus
+    private SpriteRenderer sp_cursor;                               // What we draw on screen
+
+
+    // Grabbing
+    [SerializeField] private CheckGrab grabCheckCollider;           // Set in editor
+    [SerializeField] private Transform grabPos;                     // Set in editor
+    [SerializeField] private GameObject collisionTrigger;           // How we check for grabbable objects
+    [SerializeField] private GameObject grabbing;                   // What we are grabbing
+
+
+    // Special Effects
+    [SerializeField] private GameObject staggerStars;               // TODO Instead of this, have a particle handler
+    private TrailRenderer trailRenderer;                            // Renders a trail after the player
+    public RagdollSize size;                                        // For GameOver screen, tells us which type of character to spawn
+
+
+    // Throwing Arc
     //Used for creating the visualized arc when throwing
-    public int lineSegment = 3;
-    private LineRenderer lineVisual;
-    public LayerMask layer;
+    public int lineSegment = 3;                                     // How many segments to split the line into
+    private LineRenderer lineVisual;                                // What draws the line
+    public LayerMask layer;                                         // Which layer the line is displayed on
 
 
     //Jump Variables
-    [SerializeField] private float fallMultiplier;
-    [SerializeField] private float jumpMultiplier;
-    private bool aIsPressed = false;
+    [SerializeField] private float fallMultiplier;                  // When the player has reached the top of their arc, fall faster
+    [SerializeField] private float jumpMultiplier;                  // Before the player has reached the top of their arc, fall slower
+    private bool aIsPressed = false;                                // Is the player holding the jump button?
 
-    private Vector2 movement;
-
-    public int playerNumber = 0;
-    public RagdollSize size;
-    public TeamColor color;
-    private Controller controller;
+ 
 
 
 
@@ -114,6 +134,7 @@ public class Player : MonoBehaviour
 
 
     #region Lifecycles
+
 
 
     /// <summary>
@@ -143,12 +164,9 @@ public class Player : MonoBehaviour
     /// </summary>
     void Start()
     {
-        canJump = false;
-
         // Duplicate Case
         if (Game.Instance == null) return;      // if the preload scene hasn't been loaded
         MapControls();                          // if the preload scene HAS loaded, get the controls
-
 
         // Stamina Setup
         staggerMaxCharge = 5;
@@ -157,22 +175,21 @@ public class Player : MonoBehaviour
         staggerJumpCharge = 1;
         //staminaCharges = StaminaMaxCharge;
 
-
         // Body Setup
         hips = transform.GetChild(1).GetChild(0).gameObject;                                //set reference to player's hips
         hipsRigidBody = hips.GetComponent<Rigidbody>();                                     //Get Rigidbody for testing stun
         animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>();        //set reference to player's animator
         hipsCollider = hips.GetComponent<Collider>();
 
-
         // Special Effects
         trailRenderer = transform.GetChild(1).GetChild(0).GetComponent<TrailRenderer>();
 
-
-        dashing = false;
-        grabbing = null;
-        isRecharging = false;               // Player starts fully charged
-        hasStartedRecharging = false;       // Player starts fully charged
+        // Movement
+        canJump = false;                        // Wait until player hits the floor to jump
+        dashing = false;                        // Player not stun others on spawn fall
+        grabbing = null;                        // player not holding anyone else
+        isRecharging = false;                   // Player starts fully charged
+        hasStartedRecharging = false;           // Player starts fully charged
     }
 
 
@@ -181,7 +198,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        UpdateHeld();           // Prevent grabbed objects from falling
+        UpdateHeld();                           // Prevent grabbed objects from falling
 
         // Update the status of whether the player can jump or not
         bool leftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;     // Need to fetch these objects everytime, for unknown reasons
@@ -192,9 +209,9 @@ public class Player : MonoBehaviour
         staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
 
         // Movement Effects
-        Move();                     // ???
-        JumpPhysics();              // Apply sharp falling on player
-        UpdateThrown();             // Can the player move again/stop being a projectile?
+        Move();                                 // ???
+        JumpPhysics();                          // Apply sharp falling on player
+        UpdateThrown();                         // Can the player move again/stop being a projectile?
 
         // Once done recovering, see if player needs more stamina
         if (isRecharging == false && hasStartedRecharging == true){
@@ -222,7 +239,7 @@ public class Player : MonoBehaviour
 
     private void OnDestroy()
     {
-        UnMapControls();
+        UnMapControls();            // Reset the controls on this object so another can listen to them
     }
 
 
@@ -236,8 +253,10 @@ public class Player : MonoBehaviour
     #region Helpers
 
 
+
     /// <summary>
     /// Assigns the team's Material to the Player's Renderer
+    /// based on their Size and Color
     /// </summary>
     private void AssignMaterial()
     {
@@ -284,14 +303,19 @@ public class Player : MonoBehaviour
     /// </summary>
     private void JumpPhysics()
     {
+        // When player is airborne after pressing jump button (not after being thrown, not after being picked up)
         if (!canJump && !isThrown)
         {
+            // They are holding the jump button, and they have not reached the top of their arc
             if (hips.GetComponent<Rigidbody>().velocity.y > 0 && aIsPressed)
             {
+                // Fall softly
                 hipsRigidBody.velocity += Vector3.up * Physics.gravity.y * (jumpMultiplier - 1) * Time.deltaTime;
             }
+            // They are not holding jump, or have reached the top of their arc
             else
             {
+                // Fall sharply
                 hipsRigidBody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
             }
         }
@@ -303,12 +327,14 @@ public class Player : MonoBehaviour
     /// </summary>
     private void UpdateThrown()
     {
-        if (canJump && isThrown)                // If player was thrown
+        // If player was thrown
+        if (canJump && isThrown)
         {
             isThrown = false;
             MapControls();
         }
-        else if (canJump && isDropped)          // If player was dropped
+        // If player was dropped
+        else if (canJump && isDropped)
         {
             isDropped = false;
             MapControls();
@@ -383,6 +409,7 @@ public class Player : MonoBehaviour
     }
 
 
+
     #endregion
 
 
@@ -390,6 +417,9 @@ public class Player : MonoBehaviour
 
 
     #region Input Mapping
+
+
+
     private void MapControls()
     {
         controller = Game.Instance.Controllers.GetController(playerNumber);
@@ -423,6 +453,9 @@ public class Player : MonoBehaviour
             controller._OnHoldDirectThrow -= OnHoldDirectThrow;
         }
     }
+
+
+
     #endregion
 
 
@@ -430,6 +463,7 @@ public class Player : MonoBehaviour
 
 
     #region Player Abilities
+
 
 
     private void OnMove(InputValue inputValue)
@@ -653,6 +687,8 @@ public class Player : MonoBehaviour
 
     #region Stagger
 
+
+
     private void StaggerSelf(bool shouldStagger, TeamColor enemyColor)
     {
         if (Game.Instance == null) return;
@@ -704,6 +740,8 @@ public class Player : MonoBehaviour
         
     }
 
+
+
     #endregion
 
 
@@ -711,6 +749,8 @@ public class Player : MonoBehaviour
 
 
     #region ThrowLine
+
+
 
     private IEnumerator renderThrowingLine(Vector3 throwForce, string throwType){
         while(grabbing)
