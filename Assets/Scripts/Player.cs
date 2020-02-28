@@ -352,9 +352,9 @@ public class Player : MonoBehaviour
         if (grabbing)
         {
             Player victim = grabbing.GetComponent<BaseObject>().player;
-            if (victim == null) return; // This is for throwing non-players
+            if (victim == null) return;             // This is for throwing non-players
             victim.isThrown = true;
-            victim.canJump = false;     // Don't want them getting away now, do we? H AH AH A HA HA AH HA A HA !!!!!
+            victim.canJump = false;                 // Don't want them getting away now, do we? H AH AH A HA HA AH HA A HA !!!!!
         }
     }
 
@@ -574,6 +574,11 @@ public class Player : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Opens the pause menu
+    /// </summary>
+    /// <param name="inputValue"></param>
     private void OnPause(InputValue inputValue)
     {
         Game.Instance.PauseMenu.Pause(playerNumber);
@@ -586,15 +591,21 @@ public class Player : MonoBehaviour
     /// <param name="inputValue"></param>
     private void OnArcThrow(InputValue inputValue)
     {
+        // If we are not holding anything
         if (grabbing == null) { return; }
 
         // Debug -- Who is called first? DirectThrow, or HoldDirectThrow
         Debug.Log("THROW (Arc) !!!!!!!!!!!!!!!");
 
+        // Get reference to what we are holding before we release it
         BaseObject held = grabbing.GetComponent<BaseObject>();
         arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
+
+        // Set the object to be a projectile
         VictimVariables();
         OnGrabDrop(null);
+
+        // Set the Throw Velocities
         if (held != null)
         {
             held.player.getHips().GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
@@ -604,6 +615,7 @@ public class Player : MonoBehaviour
             grabbing.GetComponent<Rigidbody>().AddForce(arcThrowForceVel);
         }
 
+        // Render the throwing arc
         lineVisual.enabled = false;
         StopCoroutine(renderThrowingLine(arcThrowForceVel, "arc"));
     }
@@ -666,7 +678,6 @@ public class Player : MonoBehaviour
     /// <param name="inputValue"></param>
     void OnHoldArcThrow(InputValue inputValue)
     {
-
         // Debug -- Who is called first? DirectThrow, or HoldDirectThrow
         Debug.Log("HOLD (Arc) !!!!!!!!!!!!!!!");
 
@@ -689,6 +700,11 @@ public class Player : MonoBehaviour
 
 
 
+    /// <summary>
+    /// Staggers THIS Object
+    /// </summary>
+    /// <param name="shouldStagger"></param>
+    /// <param name="enemyColor"></param>
     private void StaggerSelf(bool shouldStagger, TeamColor enemyColor)
     {
         if (Game.Instance == null) return;
@@ -704,6 +720,10 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Unstaggers THIS Object
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator UnStagger()
     {
         yield return new WaitForSeconds(staggerTime);
@@ -716,6 +736,10 @@ public class Player : MonoBehaviour
         staggerStars.SetActive(false);
     }
 
+    /// <summary>
+    /// WHY DOES THIS AFFECT STAGGERS?!?!?!?
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator rechargeStamina(){
         hasStartedRecharging = true;
         yield return new WaitForSeconds (StaminaRechargeTime);
@@ -730,6 +754,9 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// ???
+    /// </summary>
     void recharger()
     {
         if (staggerCharges < staggerMaxCharge)
