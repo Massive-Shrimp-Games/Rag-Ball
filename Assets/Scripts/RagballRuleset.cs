@@ -10,8 +10,8 @@ public class RagballRuleset : MonoBehaviour
     public event Score OnRedScore;
     public event Score OnBlueScore;
 
-    public static int redScore = 0;
-    public static int blueScore = 0;
+    public int redScore = 0;
+    public int blueScore = 0;
 
     public Transform respawnPoint;
 
@@ -40,11 +40,17 @@ public class RagballRuleset : MonoBehaviour
     public void RedScore(GameObject player)
     {
         //Debug.Log("Red goal score");
-        OnRedScore(player, ++redScore);
+        if (winState == false)
+        {
+            OnRedScore(player, ++redScore);
+        }
     }
     public void BlueScore(GameObject player)
     {
-        OnBlueScore(player, ++blueScore);
+        if (winState == false)
+        {
+            OnBlueScore(player, ++blueScore);
+        }
     }
     private void AddRedScore(GameObject player, int score)
     {
@@ -66,6 +72,7 @@ public class RagballRuleset : MonoBehaviour
             BlueConfetti.Play();
             RedConfetti.Play();
             ExitConfetti.Play();
+            winState = true;
             GameObject.Find("Timer").GetComponent<Timer>().canCount = false;
             StartCoroutine(WaitForTime());
         }
@@ -74,14 +81,16 @@ public class RagballRuleset : MonoBehaviour
             BlueConfetti.Play();
             RedConfetti.Play();
             ExitConfetti.Play();
+            winState = true;
             GameObject.Find("Timer").GetComponent<Timer>().canCount = false;
             StartCoroutine(WaitForTime());
         }
-        if (RagballRuleset.blueScore == RagballRuleset.redScore && RagballRuleset.blueScore == GameModeSelect.goalLimit && GameModeSelect.goalLimit != 0)
+        if (blueScore == redScore && blueScore == GameModeSelect.goalLimit && GameModeSelect.goalLimit != 0)
         {
             BlueConfetti.Play();
             RedConfetti.Play();
             ExitConfetti.Play();
+            winState = true;
             GameObject.Find("Timer").GetComponent<Timer>().canCount = false;
             StartCoroutine(WaitForTime());
         }
@@ -97,6 +106,6 @@ public class RagballRuleset : MonoBehaviour
     private void WinStateGame()
     {
         transitionAnim.SetBool("Transition", true);
-        winState = true;
+        
     }
 }
