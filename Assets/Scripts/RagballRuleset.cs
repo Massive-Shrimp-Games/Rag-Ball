@@ -10,8 +10,8 @@ public class RagballRuleset : MonoBehaviour
     public event Score OnRedScore;
     public event Score OnBlueScore;
 
-    public static int redScore = 0;
-    public static int blueScore = 0;
+    public int redScore = 0;
+    public int blueScore = 0;
 
     public Transform respawnPoint;
 
@@ -74,7 +74,7 @@ public class RagballRuleset : MonoBehaviour
             GameObject.Find("Timer").GetComponent<Timer>().canCount = false;
             StartCoroutine(WaitForTime());
         }
-        if (RagballRuleset.blueScore == RagballRuleset.redScore && RagballRuleset.blueScore == GameModeSelect.goalLimit && GameModeSelect.goalLimit != 0)
+        if (blueScore == redScore && blueScore == GameModeSelect.goalLimit && GameModeSelect.goalLimit != 0)
         {
             BlueConfetti.Play();
             RedConfetti.Play();

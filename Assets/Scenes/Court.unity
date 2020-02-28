@@ -409,12 +409,12 @@ PrefabInstance:
     - target: {fileID: 5841481053183574192, guid: 24bba59be2041214c906a019fe47ec51,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5572062795962496790, guid: 24bba59be2041214c906a019fe47ec51,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9067979598945591431, guid: 24bba59be2041214c906a019fe47ec51,
         type: 3}
@@ -1395,6 +1395,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ba00047ae5c8704f98c603185ab3cee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  redScore: 0
+  blueScore: 0
   respawnPoint: {fileID: 1402385469}
   winState: 0
   transitionAnim: {fileID: 18652269}
