@@ -2235,6 +2235,7 @@ GameObject:
   - component: {fileID: 3679290696171531612}
   - component: {fileID: 383636676227164208}
   - component: {fileID: 9199070168674078336}
+  - component: {fileID: 7750358793255722142}
   m_Layer: 15
   m_Name: Player
   m_TagString: Player
@@ -2290,19 +2291,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9ab87fa0ca31e34fb23e370249b436f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerSpeed: 200
   dashForce: 5000
   jumpForce: 12000
   directThrowForce: 10000
   arcThrowForce: 10000
   staggerTime: 4
-  playerSpeed: 200
-  staggerCharges: 0
-  staggerMaxCharge: 0
-  staggerDashCharge: 0
-  staggerJumpCharge: 0
   isThrown: 0
   canJump: 0
-  isLanded: 0
   dashing: 0
   staggered: 0
   dashVelocityMinimum: 6
@@ -2335,6 +2331,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7750358793255722142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3679290696171531610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edca3ade181e61643972255989a1b0a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxCharge: 5
+  jumpCost: 1
+  dashCost: 1
+  rechargeTime: 1.5
 --- !u!1 &3867065261903754116
 GameObject:
   m_ObjectHideFlags: 0

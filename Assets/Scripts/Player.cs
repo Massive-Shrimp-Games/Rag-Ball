@@ -5,9 +5,8 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    public delegate void StaminaChange(int player, int stamina);
-
-    public event StaminaChange OnStaminaChange;
+    public Stamina stamina { get; private set;}
+    public enum StaminaAbility { Jump, Dash };
 
     [SerializeField] private float playerSpeed = 200f;
     [SerializeField] private float dashForce; // Set in editor
@@ -18,13 +17,6 @@ public class Player : MonoBehaviour
 
     private Vector3 directThrowForceVel;
     private Vector3 arcThrowForceVel;
-
-    [SerializeField] private int staminaCharges;
-    [SerializeField] private int staminaMaxCharge;
-    [SerializeField] private int staminaDashCharge;
-    [SerializeField] private int staminaJumpCharge;
-    [SerializeField] private float staminaRechargeTime = 1.5f;
-    private bool shouldReplenishStamina;
 
     // Airborne Variables
     // Set isThrown to TRUE on any player when they are thrown -> access the grabbed objects isThrown variable
@@ -77,6 +69,7 @@ public class Player : MonoBehaviour
         trailRenderer = hips.GetComponent<TrailRenderer>();
 
         AssignMaterial();
+        stamina = GetComponent<Stamina>();
         staggerCheck.OnStaggerSelf += StaggerSelf;
     }
     
@@ -87,11 +80,6 @@ public class Player : MonoBehaviour
         if (Game.Instance == null) return; // if the preload scene hasn't been loaded
         MapControls();
 
-        staminaMaxCharge = 5;
-        staminaCharges = staminaMaxCharge;
-        staminaDashCharge = 1;
-        staminaJumpCharge = 1;
-
         hips = transform.GetChild(1).GetChild(0).gameObject; //set reference to player's hips
         hipsRigidBody = hips.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
         animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
@@ -100,7 +88,6 @@ public class Player : MonoBehaviour
         trailRenderer = transform.GetChild(1).GetChild(0).GetComponent<TrailRenderer>();
 
         dashing = false;
-        shouldReplenishStamina = false;
         grabbing = null;
     }
 
@@ -128,8 +115,6 @@ public class Player : MonoBehaviour
         {
             trailRenderer.enabled = false;
         }
-
-        shouldReplenishStamina = staminaCharges < staminaMaxCharge;
     }
 
     private void AssignMaterial()
@@ -286,14 +271,13 @@ public class Player : MonoBehaviour
 
     private void OnJump(InputValue inputValue)
     {
-        if (canJump && staminaCharges >= staminaJumpCharge && hips.tag != "Grabbed")
+        if (canJump && stamina.CanAfford(StaminaAbility.Jump) && hips.tag != "Grabbed")
         {
             aIsPressed = true;
             canJump = false;
             Vector3 boostDir = hips.transform.up;
             hipsRigidBody.AddForce(boostDir * jumpForce);
-            staminaCharges = staminaCharges - staminaJumpCharge;
-            OnStaminaChange(playerNumber, staminaCharges);
+            stamina.AddCooldown(StaminaAbility.Jump, playerNumber);
         }
     }
 
@@ -306,13 +290,11 @@ public class Player : MonoBehaviour
 
     private void OnDash(InputValue inputValue)
     {
-        if (staminaCharges >= staminaDashCharge && hips.tag != "Grabbed")
+        if (stamina.CanAfford(StaminaAbility.Dash) && hips.tag != "Grabbed")
         {
             Vector3 boostDir = hips.transform.forward;
             hipsRigidBody.AddForce(boostDir * dashForce);
-            staminaCharges = staminaCharges - staminaDashCharge;
-            OnStaminaChange(playerNumber,staminaCharges);
-            StaminaChange
+            stamina.AddCooldown(StaminaAbility.Dash, playerNumber);
         }
     }
 
@@ -413,20 +395,6 @@ public class Player : MonoBehaviour
         staggered = false;
         animator.enabled = true;
         staggerStars.SetActive(false);
-    }
-
-    private IEnumerator RechargeStamina(){
-        yield return new WaitForSeconds (staminaRechargeTime);
-        Replenish();
-    }
-
-    void Replenish()
-    {
-        if (shouldReplenishStamina)
-        {
-            staminaCharges++;
-            OnStaminaChange(playerNumber, staminaCharges);
-        }
     }
  
     public void ResetVelocity()

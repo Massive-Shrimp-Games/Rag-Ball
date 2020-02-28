@@ -29,7 +29,7 @@ public class StaminaUI : MonoBehaviour
     {
         foreach (Player pl in players)
         {
-            pl.OnStaminaChange -= UpdateUI;
+            pl.stamina.OnStaminaChange -= UpdateUI;
         }
     }
     private void UpdateUI(int player, int stamina)
@@ -65,8 +65,9 @@ public class StaminaUI : MonoBehaviour
             }
             //sets stamina sprite
             UIS[index].transform.GetChild(1).GetComponent<Image>().sprite = staminas[5];
-            //Subscribes OnExert to every player
-            p.OnStaminaChange += UpdateUI;
+            
+            //Subscribes OnStaminaChange to every player
+            p.stamina.OnStaminaChange += UpdateUI;
         }
     }
 }
