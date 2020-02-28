@@ -328,22 +328,17 @@ public class Player : MonoBehaviour
     private void UpdateThrown()
     {
         // If player was thrown
+        // Does NOT call ReMap Controls -- defaults to DROPPING calling Remap
         if (canJump && isThrown)
         {
             isThrown = false;
-            MapControls();
-
-            // DEBUG -- whay are we mapping controls twice?
-            Debug.Log("THROWN: remap");
         }
         // If player was dropped
+        // DOES call ReMapControls
         else if (canJump && isDropped)
         {
             isDropped = false;
             MapControls();
-
-            // DEBUG -- whay are we mapping controls twice?
-            Debug.Log("DROPPED: remap");
         }
     }
 
