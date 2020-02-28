@@ -1,45 +1,57 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 
 public class ROTHManager : MonoBehaviour
 {
-    public int P0Score;
-    public int P1Score;
-    public int P2Score;
-    public int P3Score;
-    public Text P0Text;
-    
+    [SerializeField] private int[] scores;
+    [SerializeField] private Player[] players;
+    [SerializeField] private List<GameObject> UILocations;
+    [SerializeField] private GameObject UIPrefab;
+    [SerializeField] private GameObject canvasParent;
+
+    private GameObject[] UIS;
+
+    public delegate void Score(int playerNum, int scoreValue);
+
+    public event Score OnScore;
+
     // Start is called before the first frame update
     void Start()
     {
-        ActionMapEvent.InGameplay?.Invoke();
+        StartCoroutine("WaitForStart");
     }
+    IEnumerator WaitForStart()
+    {
+        yield return new WaitForEndOfFrame();
+        Debug.Log("I get my start called");
+        OnScore += addScore;
+        ActionMapEvent.InGameplay?.Invoke();
+        players = FindObjectsOfType<Player>();
+        UIS = new GameObject[players.Length];
+        UILocations = canvasParent.GetComponent<StaminaUI>().getLocations();
 
-    // Update is called once per frame
+        foreach (Player p in players)
+        {
+            int index = p.playerNumber;
+            scores[index] = 0;
+            //instantiates UIS based on number of players and assigns to the locations //NOTE: WILL THROW ERROR IF MORE PLAYERS THAN STAMINA POSITIONS
+            UIS[index] = Instantiate(UIPrefab, UILocations[index].transform.position, Quaternion.identity, canvasParent.transform);
+        }
+    }
     void Update()
     {
-        P0Text.text = P0Score.ToString();
-    }
 
-    public void P0AddScore(int ScoreValue)
-    {
-        P0Score += ScoreValue;
     }
-
-    public void P1AddScore(int ScoreValue)
+    public void OnDestroy()
     {
-        P1Score += ScoreValue;
+        OnScore -= addScore;
     }
-
-    public void P2AddScore(int ScoreValue)
+    public void addScore(int pNum, int value)
     {
-        P2Score += ScoreValue;
-    }
-
-    public void P3AddScore(int ScoreValue)
-    {
-        P3Score += ScoreValue;
+        scores[pNum] += value;
+        UIS[pNum].transform.GetChild(0).GetComponent<TextMeshPro>().text = scores[pNum].ToString();
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class StaminaUI : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] private List<GameObject> UILocations;
+    [SerializeField] protected List<GameObject> UILocations;
     [SerializeField] private GameObject UIPrefab;
     [SerializeField] private Sprite[] staminas;
 
@@ -36,6 +36,10 @@ public class StaminaUI : MonoBehaviour
     {
         //Debug.Log("Player: " + player + " Stamina: " + stamina);
         UIS[player].transform.GetChild(1).GetComponent<Image>().sprite = staminas[stamina];
+    }
+    public List<GameObject> getLocations()
+    {
+        return UILocations;
     }
 
     // Update is called once per frame
