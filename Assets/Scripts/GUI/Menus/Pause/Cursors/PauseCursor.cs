@@ -1,4 +1,5 @@
-﻿using UnityEngine.InputSystem;
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PauseCursor : PlayerCursor
 {
@@ -17,7 +18,11 @@ public class PauseCursor : PlayerCursor
     protected override void OnReturn(InputValue inputValue)
     {
         if (Game.Instance == null) return;
-        Game.Instance.PauseMenu.UnPause();
+        GameObject controls = GameObject.Find("ControlsScreen");
+        if (controls.active)
+            controls.SetActive(false);
+        else
+            Game.Instance.PauseMenu.UnPause();
     }
 
     protected override void OnStart(InputValue inputValue)

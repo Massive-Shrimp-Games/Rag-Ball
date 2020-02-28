@@ -23,6 +23,7 @@ public class RagballRuleset : MonoBehaviour
 
     private void Start()
     {
+        if (Game.Instance == null) return;
         ActionMapEvent.InGameplay?.Invoke();
         OnRedScore += AddRedScore;
         OnBlueScore += AddBlueScore;
