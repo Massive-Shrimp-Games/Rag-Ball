@@ -332,12 +332,18 @@ public class Player : MonoBehaviour
         {
             isThrown = false;
             MapControls();
+
+            // DEBUG -- whay are we mapping controls twice?
+            Debug.Log("THROWN: remap");
         }
         // If player was dropped
         else if (canJump && isDropped)
         {
             isDropped = false;
             MapControls();
+
+            // DEBUG -- whay are we mapping controls twice?
+            Debug.Log("DROPPED: remap");
         }
     }
 
@@ -594,9 +600,6 @@ public class Player : MonoBehaviour
         // If we are not holding anything
         if (grabbing == null) { return; }
 
-        // Debug -- Who is called first? DirectThrow, or HoldDirectThrow
-        Debug.Log("THROW (Arc) !!!!!!!!!!!!!!!");
-
         // Get reference to what we are holding before we release it
         BaseObject held = grabbing.GetComponent<BaseObject>();
         arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
@@ -630,9 +633,6 @@ public class Player : MonoBehaviour
         // If we are not holding anything
         if (grabbing == null) { return; }
 
-        // Debug -- Who is called first? DirectThrow, or HoldDirectThrow
-        Debug.Log("THROW (Direct) !!!!!!!!!!!!!!!");
-
         // Get reference to what we are holding before we release it
         BaseObject held = grabbing.GetComponent<BaseObject>();
         directThrowForceVel = directThrowForce * directThrowDirection.forward;
@@ -662,9 +662,6 @@ public class Player : MonoBehaviour
     /// <param name="inputValue"></param>
     void OnHoldDirectThrow(InputValue inputValue)
     {
-        // Debug -- Who is called first? DirectThrow, or HoldDirectThrow
-        Debug.Log("HOLD (Direct) !!!!!!!!!!!!!!!");
-
         //Makes line renderer stuff
         directThrowForceVel = directThrowForce * directThrowDirection.forward;
         lineVisual.enabled = true;
@@ -678,9 +675,6 @@ public class Player : MonoBehaviour
     /// <param name="inputValue"></param>
     void OnHoldArcThrow(InputValue inputValue)
     {
-        // Debug -- Who is called first? DirectThrow, or HoldDirectThrow
-        Debug.Log("HOLD (Arc) !!!!!!!!!!!!!!!");
-
         //Makes line renderer stuff 
         lineVisual.enabled = true;
         arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
@@ -710,7 +704,6 @@ public class Player : MonoBehaviour
         if (Game.Instance == null) return;
         if (shouldStagger == true && enemyColor != color)
         {
-            //Debug.Log("Staggered guy");
             Game.Instance.Controllers.GetController(playerNumber).GetComponent<PlayerInput>().SwitchCurrentActionMap("Menu");
             staggered = true;
             animator.enabled = false;
@@ -782,7 +775,6 @@ public class Player : MonoBehaviour
     private IEnumerator renderThrowingLine(Vector3 throwForce, string throwType){
         while(grabbing)
         {
-            //Debug.Log("The time is: " + Time.time);
             if (throwType == "direct") {throwForce = directThrowForce * directThrowDirection.forward;}
             if (throwType == "arc") {throwForce = arcThrowForce * arcThrowDirection.forward;}
             LaunchProjectile(throwForce); 
