@@ -1,8 +1,15 @@
-﻿using System.Collections;
+﻿
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem; 
+using UnityEngine.InputSystem;
 
+
+/// <summary>
+/// Makes this object a RagBall Player.
+/// Allows: Staggering, Moving, Dashing.
+/// </summary>
 public class Player : MonoBehaviour
 {
 
@@ -33,19 +40,23 @@ public class Player : MonoBehaviour
     public bool isThrown = false;
     public bool canJump = false;                // Can the Player jump - the robust value we use for decision making
     public bool isDropped = false;              // Stupid Extra Variable grrrrrrrrr
+
+
+    // Stagger Variables
     public bool dashing;   // Protect this with a Getter
     public bool staggered = false;
     [SerializeField] private float dashVelocityMinimum;
     [SerializeField] private StaggerCheck staggerCheck;
 
 
+    // Stamina
     private const int StaminaMaxCharge = 5;
-
     private const int StaminaDashCharge = 1;
-
     private const int StaminaJumpCharge = 1;
-
     private float StaminaRechargeTime = 1.5f;
+
+
+
 
     private Collider hipsCollider;
 
@@ -88,72 +99,100 @@ public class Player : MonoBehaviour
     public TeamColor color;
     private Controller controller;
 
+
+    /// <summary>
+    /// Set Initial Values and References for the player's Systems on Spawn
+    /// </summary>
+    void Start()
+    {
+        canJump = false;
+
+        // Duplicate Case
+        if (Game.Instance == null) return;      // if the preload scene hasn't been loaded
+        MapControls();                          // if the preload scene HAS loaded, get the controls
+
+
+        // Stamina Setup
+        staggerMaxCharge = 5;
+        staggerCharges = staggerMaxCharge;      // Max out the player staggers on Spawn
+        staggerDashCharge = 1;
+        staggerJumpCharge = 1;
+        //staminaCharges = StaminaMaxCharge;
+
+
+        // Body Setup
+        hips = transform.GetChild(1).GetChild(0).gameObject;                                //set reference to player's hips
+        hipsRigidBody = hips.GetComponent<Rigidbody>();                                     //Get Rigidbody for testing stun
+        animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>();        //set reference to player's animator
+        hipsCollider = hips.GetComponent<Collider>();
+
+
+        // Special Effects
+        trailRenderer = transform.GetChild(1).GetChild(0).GetComponent<TrailRenderer>();
+
+
+        dashing = false;
+        grabbing = null;
+        isRecharging = false;               // Player starts fully charged
+        hasStartedRecharging = false;       // Player starts fully charged
+    }
+
+
+    /// <summary>
+    /// Before putting the player on screen, give them a team mesh.
+    /// Also assign their body parts and statuses.
+    /// </summary>
     void Awake()
     {
+        // Body Parts
         hips = transform.GetChild(1).GetChild(0).gameObject; //set reference to player's hips
         hipsRigidBody = hips.gameObject.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
         animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
         hipsCollider = hips.gameObject.GetComponent<Collider>();
+
+        // Special Effects
         trailRenderer = hips.GetComponent<TrailRenderer>();
         lineVisual = hips.transform.parent.parent.GetChild(2).GetChild(1).gameObject.GetComponent<LineRenderer>(); 
-
         AssignMaterial();
+
+        // Statuses
         staggerCheck.OnStaggerSelf += StaggerSelf;
     }
 
-    private void AssignMaterial()
-    {
-        if (color == TeamColor.Red)
-        {
-            if(size == RagdollSize.Small)
-            {
-                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Small");
-                
-            } else if (size == RagdollSize.Medium)
-            {
-                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Medium");
-            } else if (size == RagdollSize.Large)
-            {
-                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Large");
-            }
-            transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Red_01");
-        }
-        else if (color == TeamColor.Blue)
-        {
-            if(size == RagdollSize.Small)
-            {
-                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Small");
-            } else if (size == RagdollSize.Medium)
-            {
-                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Medium");
-            } else if (size == RagdollSize.Large)
-            {
-                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Large");
-            }
-            transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Blue_01");
-        }
-    }
+
+    /// <summary>
+    /// Checks if Jumping, Dashing, Jumping, beingThrown, and oter Active Statuses are in Effect
+    /// </summary>
     private void Update()
     {
-        UpdateHeld();
-        bool leftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
-        bool rightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
+        UpdateHeld();           // Prevent grabbed objects from falling
 
+        // Update the status of whether the player can jump or not
+        bool leftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;     // Need to fetch these objects everytime, for unknown reasons
+        bool rightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
         canJump = leftFoot || rightFoot;
 
+        // Special Effects
         staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
-        Move();
-        JumpPhysics();
-        UpdateThrown();
 
+        // Movement Effects
+        Move();                     // ???
+        JumpPhysics();              // Apply sharp falling on player
+        UpdateThrown();             // Can the player move again/stop being a projectile?
+
+        // Once done recovering, see if player needs more stamina
         if (isRecharging == false && hasStartedRecharging == true){
             StartCoroutine(rechargeStamina());
         }
 
+        // Find the forward direction of the player
         float determinDirection = Vector3.Dot(hipsRigidBody.velocity.normalized, hips.transform.forward);
         float determineMagnitue = hipsRigidBody.velocity.magnitude;
-        dashing = (hipsRigidBody.velocity.magnitude > dashVelocityMinimum) && (Mathf.Abs(determinDirection) > .5);
 
+        // Is the player dashing?
+        dashing = (hipsRigidBody.velocity.magnitude > dashVelocityMinimum) && (Mathf.Abs(determinDirection) > .5);
+        
+        // render the Trailing Line
         if (dashing)
         {
             trailRenderer.enabled = true;
@@ -163,6 +202,53 @@ public class Player : MonoBehaviour
             trailRenderer.enabled = false;
         }
     }
+
+
+    private void OnDestroy()
+    {
+        UnMapControls();
+    }
+
+    /// <summary>
+    /// Assigns the team's Material to the Player's Renderer
+    /// </summary>
+    private void AssignMaterial()
+    {
+        if (color == TeamColor.Red)
+        {
+            if (size == RagdollSize.Small)
+            {
+                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Small");
+
+            }
+            else if (size == RagdollSize.Medium)
+            {
+                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Medium");
+            }
+            else if (size == RagdollSize.Large)
+            {
+                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Red_Large");
+            }
+            transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Red_01");
+        }
+        else if (color == TeamColor.Blue)
+        {
+            if (size == RagdollSize.Small)
+            {
+                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Small");
+            }
+            else if (size == RagdollSize.Medium)
+            {
+                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Medium");
+            }
+            else if (size == RagdollSize.Large)
+            {
+                transform.GetChild(0).gameObject.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Player/Blue_Large");
+            }
+            transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Blue_01");
+        }
+    }
+
 
     /// <summary>
     /// Controls decay of player as they fall, called from UPDATE
@@ -219,39 +305,6 @@ public class Player : MonoBehaviour
         }
     }
 
-
-    void Start()
-    {
-        canJump = false;
-
-        if (Game.Instance == null) return; // if the preload scene hasn't been loaded
-        MapControls();
-
-        staggerMaxCharge = 5;
-        staggerCharges = staggerMaxCharge;
-        staggerDashCharge = 1;
-        staggerJumpCharge = 1;
-        //staminaCharges = StaminaMaxCharge;
-
-
-        hips = transform.GetChild(1).GetChild(0).gameObject; //set reference to player's hips
-        hipsRigidBody = hips.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
-        animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
-        hipsCollider = hips.GetComponent<Collider>();
-
-        trailRenderer = transform.GetChild(1).GetChild(0).GetComponent<TrailRenderer>();
-
-        
-        dashing = false;
-        grabbing = null;
-        isRecharging = false; 
-        hasStartedRecharging = false;
-    }
-
-    private void OnDestroy()
-    {
-        UnMapControls();
-    }
     
     private void UpdateHeld()
     {
