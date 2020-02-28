@@ -320,7 +320,6 @@ GameObject:
   - component: {fileID: 1008142784070814955}
   - component: {fileID: 4820896358821487629}
   - component: {fileID: 5742212452533920421}
-  - component: {fileID: 2881985832395981620}
   m_Layer: 15
   m_Name: hips
   m_TagString: Player
@@ -498,19 +497,6 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &2881985832395981620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1008142784070814954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 252ecde952e633d44a6f75ad9bf41501, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!1 &1463392894371477787
 GameObject:
   m_ObjectHideFlags: 0
@@ -2302,7 +2288,6 @@ MonoBehaviour:
   staggerJumpCharge: 0
   isThrown: 0
   canJump: 0
-  isLanded: 0
   dashing: 0
   staggered: 0
   dashVelocityMinimum: 6
@@ -3517,6 +3502,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 68953021133953271}
     m_Modifications:
+    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
+        type: 3}
+      propertyPath: m_Name
+      value: RagdollTrail
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8130124753009482852, guid: 46cda7ba68426ef49b2bbd958eeec03a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3570,16 +3565,6 @@ PrefabInstance:
     - target: {fileID: 8130124753009482852, guid: 46cda7ba68426ef49b2bbd958eeec03a,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
-        type: 3}
-      propertyPath: m_Name
-      value: RagdollTrail
-      objectReference: {fileID: 0}
-    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

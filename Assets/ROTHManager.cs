@@ -21,6 +21,7 @@ public class ROTHManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (Game.Instance == null) return;
         StartCoroutine("WaitForStart");
     }
     IEnumerator WaitForStart()
@@ -31,6 +32,7 @@ public class ROTHManager : MonoBehaviour
         ActionMapEvent.InGameplay?.Invoke();
         players = FindObjectsOfType<Player>();
         UIS = new GameObject[players.Length];
+        scores = new int[players.Length];
         UILocations = canvasParent.GetComponent<StaminaUI>().getLocations();
 
         foreach (Player p in players)
@@ -52,6 +54,6 @@ public class ROTHManager : MonoBehaviour
     public void addScore(int pNum, int value)
     {
         scores[pNum] += value;
-        UIS[pNum].transform.GetChild(0).GetComponent<TextMeshPro>().text = scores[pNum].ToString();
+        UIS[pNum].transform.GetComponentInChildren<TextMeshProUGUI>().text = scores[pNum].ToString();
     }
 }
