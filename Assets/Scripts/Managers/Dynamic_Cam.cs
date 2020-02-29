@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [RequireComponent(typeof(Camera))]
 
@@ -21,7 +22,13 @@ public class Dynamic_Cam : MonoBehaviour
 
 	void Start()
 	{
+		if (Game.Instance == null) return;
 		cam = GetComponent<Camera>();
+		targets = new List<Transform>();
+		foreach (Transform player in GameObject.Find("Players").transform)
+		{
+			targets.Add(player.GetChild(0).GetComponent<Player>().hips.transform);
+		}
 	}
 
     public void Update()

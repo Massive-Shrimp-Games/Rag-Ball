@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject collisionTrigger;
     private TrailRenderer trailRenderer;
 
-    private GameObject hips;
+    public GameObject hips;
     private Animator animator;
     private Rigidbody hipsRigidBody;
 
