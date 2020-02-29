@@ -19,10 +19,17 @@ public class PauseCursor : PlayerCursor
     {
         if (Game.Instance == null) return;
         GameObject controls = GameObject.Find("ControlsScreen");
+        GameObject options = GameObject.Find("OptionsScreen");
         if (controls && controls.active)
         {
             controls.SetActive(false);
             MapNavigationControls();
+        }
+        else if (options && options.active)
+        {
+            options.SetActive(false);
+            currentMenuItem = GameObject.Find("Options").GetComponent<OptionsButton>();
+            MoveToCurrentMenuItem();
         }
         else
         {
