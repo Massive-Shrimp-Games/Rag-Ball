@@ -83,6 +83,10 @@ public class Player : MonoBehaviour
     public TeamColor color;
     private Controller controller;
 
+    // Arm Animation
+    // private JointFollowAnimRot armControllerLeft;           // Activate/Deactivate to Raise/Lower Left Arm
+    // private JointFollowAnimRot armControllerRight;          // Activate/Deactivate to Raise/Lower Right Arm
+
     void Awake()
     {
         hips = transform.GetChild(1).GetChild(0).gameObject; //set reference to player's hips
@@ -235,6 +239,10 @@ public class Player : MonoBehaviour
         grabbing = null;
         isRecharging = false; 
         hasStartedRecharging = false;
+
+        // Arm Assignment
+        armControllerLeft = hips.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(0).gameObject.GetComponent<JointFollowAnimRot>();
+        armControllerRight = hips.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).gameObject.GetComponent<JointFollowAnimRot>();
     }
 
     private void OnDestroy()
@@ -365,6 +373,10 @@ public class Player : MonoBehaviour
                 grabbing.tag = "Grabbed";
                 //grabbing.GetComponentInParent<GameObject>().GetComponentInParent<GameObject>().GetComponentInParent<Player>().;
                 collisionTrigger.tag = "Grabbing";
+
+                // Animate the Player to Hold the Other Player
+                // armControllerLeft.DoFollow();
+                // armControllerRight.DoFollow();
             }
         }
         else
@@ -375,6 +387,10 @@ public class Player : MonoBehaviour
             grabbing.GetComponent<BaseObject>().player.getHips().GetComponent<Rigidbody>().isKinematic = false;
             //Game.Instance.Controllers.GetController(grabbing.GetComponent<BaseObject>().player.playerNumber).GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
             grabbing = null;
+
+            // Animate the Player to Stop Holding the Other Player
+            // armControllerLeft.StopFollow();
+            // armControllerRight.StopFollow();
         }
     }
 
