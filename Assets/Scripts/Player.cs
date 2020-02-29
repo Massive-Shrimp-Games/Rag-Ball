@@ -10,11 +10,11 @@ public class Player : MonoBehaviour
 
     public event Exert OnPlayerExertion;
 
-    [SerializeField] private float dashForce; // Set in editor
-    [SerializeField] private float jumpForce; // Set in editor
+    [SerializeField] private float dashForce = OptionsMenu.dashSpeed; // Set in editor
+    [SerializeField] private float jumpForce = OptionsMenu.jumpHeight; // Set in editor
     [SerializeField] private float directThrowForce; // Set in editor
     [SerializeField] private float arcThrowForce; // Set in editor
-    [SerializeField] private int staggerTime; // Set in editor
+    [SerializeField] private int staggerTime = OptionsMenu.staggerDuration; // Set in editor
 
     private Vector3 directThrowForceVel;
     private Vector3 arcThrowForceVel;
@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
 
     private const int StaminaJumpCharge = 1;
 
-    private float StaminaRechargeTime = 1.5f;
+    private float StaminaRechargeTime = OptionsMenu.staminaRegenRate;
 
     private Collider hipsCollider;
 
@@ -98,6 +98,7 @@ public class Player : MonoBehaviour
 
         AssignMaterial();
         staggerCheck.OnStaggerSelf += StaggerSelf;
+        OptionsMenu.OptionsChangeEvent += OptionsChange;
     }
 
     private void AssignMaterial()
@@ -239,6 +240,15 @@ public class Player : MonoBehaviour
     private void OnDestroy()
     {
         UnMapControls();
+        OptionsMenu.OptionsChangeEvent -= OptionsChange;
+    }
+
+    private void OptionsChange()
+    {
+        StaminaRechargeTime = OptionsMenu.staminaRegenRate;
+        dashForce = OptionsMenu.dashSpeed;
+        jumpForce = OptionsMenu.jumpHeight;
+        staggerTime = OptionsMenu.staggerDuration;
     }
     
     private void UpdateHeld()
