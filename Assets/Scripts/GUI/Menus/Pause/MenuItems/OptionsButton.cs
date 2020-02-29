@@ -9,6 +9,7 @@ public class OptionsButton : Button
     public override void Select(PlayerCursor cursor)
     {
         optionsScreen.SetActive(true);
-        cursor.currentMenuItem = optionsScreen.transform.GetChild(1).GetComponent<MenuItem>();
+        cursor.currentMenuItem = optionsScreen.transform.GetChild(1).GetComponent<StaminaRegenSlider>();
+        cursor.MoveToCurrentMenuItem();
     }
 }

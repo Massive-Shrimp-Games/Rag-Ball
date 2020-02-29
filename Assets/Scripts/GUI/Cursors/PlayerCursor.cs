@@ -94,7 +94,7 @@ public abstract class PlayerCursor : MonoBehaviour
     protected abstract void OnStart(InputValue inputValue);
     protected abstract void OnReturn(InputValue inputValue);
 
-    private void MoveToCurrentMenuItem()
+    public void MoveToCurrentMenuItem()
     {
         Debug.Log("MoveToCurrentMenuItem");
         gameObject.transform.position = currentMenuItem.Position;

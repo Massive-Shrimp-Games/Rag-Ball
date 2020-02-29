@@ -4539,6 +4539,8 @@ MonoBehaviour:
   down: {fileID: 945600046369243510}
   left: {fileID: 0}
   right: {fileID: 0}
+  controlsScreen: {fileID: 87373360}
+  optionsScreen: {fileID: 266669513}
 --- !u!222 &4519645822736420929
 CanvasRenderer:
   m_ObjectHideFlags: 0
