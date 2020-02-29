@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class RagballRuleset : MonoBehaviour
 {
@@ -94,6 +95,11 @@ public class RagballRuleset : MonoBehaviour
             winState = true;
             GameObject.Find("Timer").GetComponent<Timer>().canCount = false;
             StartCoroutine(WaitForTime());
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) == true)
+        {
+            SceneManager.LoadScene("Court");
         }
     }
 
