@@ -22,17 +22,19 @@ public class PauseCursor : PlayerCursor
         GameObject options = GameObject.Find("OptionsScreen");
         if (controls && controls.active)
         {
-            controls.SetActive(false);
+            controls?.SetActive(false);
             MapNavigationControls();
         }
         else if (options && options.active)
         {
-            options.SetActive(false);
+            options?.SetActive(false);
             currentMenuItem = GameObject.Find("Options").GetComponent<OptionsButton>();
             MoveToCurrentMenuItem();
         }
         else
         {
+            options?.SetActive(false);
+            controls?.SetActive(false);
             Game.Instance.PauseMenu.UnPause();
         }
     }
@@ -40,6 +42,10 @@ public class PauseCursor : PlayerCursor
     protected override void OnStart(InputValue inputValue)
     {
         if (Game.Instance == null) return;
+        GameObject controls = GameObject.Find("ControlsScreen");
+        GameObject options = GameObject.Find("OptionsScreen");
+        options?.SetActive(false);
+        controls?.SetActive(false);
         Game.Instance.PauseMenu.UnPause();
     }
 }
