@@ -20,6 +20,7 @@ public class PauseCursor : PlayerCursor
         if (Game.Instance == null) return;
         GameObject controls = GameObject.Find("ControlsScreen");
         GameObject options = GameObject.Find("OptionsScreen");
+        OptionsMenu.OptionsChangeEvent?.Invoke();
         if (controls && controls.active)
         {
             controls?.SetActive(false);
@@ -47,5 +48,6 @@ public class PauseCursor : PlayerCursor
         options?.SetActive(false);
         controls?.SetActive(false);
         Game.Instance.PauseMenu.UnPause();
+        OptionsMenu.OptionsChangeEvent?.Invoke();
     }
 }
