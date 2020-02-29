@@ -12,13 +12,7 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class Player : MonoBehaviour
 {
-
-
-
-
     #region Variables
-
-
 
     // Team and Player
     public int playerNumber = 0;                                        // The number of the player's controller (from input)
@@ -37,8 +31,8 @@ public class Player : MonoBehaviour
 
 
     // Special Abilities
-    [SerializeField] private float dashForce;                           // How Hard to Dash; Set in editor
-    [SerializeField] private float jumpForce;                           // How Hard to Jump; Set in editor
+    [SerializeField] private float dashForce = OptionsMenu.dashSpeed;   // How Hard to Dash; Set in editor
+    [SerializeField] private float jumpForce = OptionsMenu.jumpHeight;  // How Hard to Jump; Set in editor
 
 
     // Direct Throw
@@ -53,7 +47,7 @@ public class Player : MonoBehaviour
 
 
     // Stagger Costs
-    [SerializeField] private int staggerTime;                           // How long to stagger for
+    [SerializeField] private int staggerTime = OptionsMenu.staggerDuration;   // How long to stagger for
     public int staggerCharges;                                          // 
     public int staggerMaxCharge;                                        // 
     public int staggerDashCharge;                                       // 
@@ -64,7 +58,7 @@ public class Player : MonoBehaviour
     private const int StaminaMaxCharge = 5;                             // Max stamina player can hold
     private const int StaminaDashCharge = 1;                            // How much a dash costs
     private const int StaminaJumpCharge = 1;                            // How much a jump costs
-    private float StaminaRechargeTime = 1.5f;                           // how quickly we regain stamina
+    private float StaminaRechargeTime = OptionsMenu.staminaRegenRate;   // how quickly we regain stamina
 
 
     // Airborne Variables
@@ -156,6 +150,7 @@ public class Player : MonoBehaviour
 
         // Statuses
         staggerCheck.OnStaggerSelf += StaggerSelf;
+        OptionsMenu.OptionsChangeEvent += OptionsChange;
     }
 
 
@@ -240,6 +235,7 @@ public class Player : MonoBehaviour
     private void OnDestroy()
     {
         UnMapControls();            // Reset the controls on this object so another can listen to them
+        OptionsMenu.OptionsChangeEvent -= OptionsChange;
     }
 
 
@@ -359,7 +355,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    
     private void UpdateHeld()
     {
         if (grabbing != null)
@@ -409,7 +404,17 @@ public class Player : MonoBehaviour
         return hips;
     }
 
-
+    /// <summary>
+    /// Updates parameters set from options menu
+    /// </summary>
+    /// <returns></returns>
+    private void OptionsChange()
+    {
+        StaminaRechargeTime = OptionsMenu.staminaRegenRate;
+        dashForce = OptionsMenu.dashSpeed;
+        jumpForce = OptionsMenu.jumpHeight;
+        staggerTime = OptionsMenu.staggerDuration;
+    }
 
     #endregion
 
