@@ -241,8 +241,8 @@ public class Player : MonoBehaviour
         hasStartedRecharging = false;
 
         // Arm Assignment
-        armControllerLeft = hips.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(0).gameObject.GetComponent<JointFollowAnimRot>();
-        armControllerRight = hips.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).gameObject.GetComponent<JointFollowAnimRot>();
+        //armControllerLeft = hips.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(0).gameObject.GetComponent<JointFollowAnimRot>();
+        //armControllerRight = hips.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).gameObject.GetComponent<JointFollowAnimRot>();
     }
 
     private void OnDestroy()

@@ -450,6 +450,11 @@ PrefabInstance:
       propertyPath: m_Convex
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8996393594590047181, guid: 85b5e5974d5e84c45b5ccc9867aac9b4,
+        type: 3}
+      propertyPath: respawnPoint
+      value: 
+      objectReference: {fileID: 960861413}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85b5e5974d5e84c45b5ccc9867aac9b4, type: 3}
 --- !u!1 &427335641

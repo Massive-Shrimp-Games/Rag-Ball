@@ -684,6 +684,64 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.12903205, y: 0.1559502, z: 0.12903208}
   m_Center: {x: -0.000000004320081, y: -0.0026698941, z: -0.00000004320081}
+--- !u!1 &2432968607206940475
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 867468867219173126}
+  - component: {fileID: 617008910378737339}
+  - component: {fileID: 8996393594590047181}
+  m_Layer: 0
+  m_Name: DeathPlane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &867468867219173126
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2432968607206940475}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.22997342, y: 0.073180065, z: 0.009038391}
+  m_LocalScale: {x: 0.020094013, y: 0.02009401, z: 0.020094013}
+  m_Children: []
+  m_Father: {fileID: 908443344551869694}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &617008910378737339
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2432968607206940475}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 84.83472, y: 1.3786079, z: 5.8406696}
+  m_Center: {x: -3.7452455, y: 6.87465, z: 6.699754}
+--- !u!114 &8996393594590047181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2432968607206940475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a69bf7d9cd0a324bbdcce64633bcf2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respawnPoint: {fileID: 0}
 --- !u!1 &2578375671575925221
 GameObject:
   m_ObjectHideFlags: 0
@@ -1176,6 +1234,7 @@ Transform:
   - {fileID: 168775895281030395}
   - {fileID: 3788433542260286834}
   - {fileID: 1583091306570499950}
+  - {fileID: 867468867219173126}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
