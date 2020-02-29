@@ -774,12 +774,12 @@ GameObject:
   - component: {fileID: 266669516}
   - component: {fileID: 266669515}
   m_Layer: 0
-  m_Name: Options
+  m_Name: OptionsScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &266669514
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1610,7 +1610,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &740235171
 Transform:
   m_ObjectHideFlags: 0
@@ -1905,6 +1905,7 @@ GameObject:
   - component: {fileID: 824234127}
   - component: {fileID: 824234129}
   - component: {fileID: 824234128}
+  - component: {fileID: 824234130}
   m_Layer: 0
   m_Name: StaminaRegenRate
   m_TagString: Untagged
@@ -1972,6 +1973,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 824234126}
   m_CullTransparentMesh: 0
+--- !u!114 &824234130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824234126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9421fe7e4dc395545be7824181686978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  up: {fileID: 0}
+  down: {fileID: 1268211235}
+  left: {fileID: 0}
+  right: {fileID: 0}
 --- !u!1 &917082779
 GameObject:
   m_ObjectHideFlags: 0
@@ -2609,6 +2626,7 @@ GameObject:
   - component: {fileID: 1268211232}
   - component: {fileID: 1268211234}
   - component: {fileID: 1268211233}
+  - component: {fileID: 1268211235}
   m_Layer: 0
   m_Name: DashSpeed
   m_TagString: Untagged
@@ -2676,6 +2694,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1268211231}
   m_CullTransparentMesh: 0
+--- !u!114 &1268211235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268211231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23711bc46a93ac34b9f855175f01235e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  up: {fileID: 824234130}
+  down: {fileID: 1774240359}
+  left: {fileID: 0}
+  right: {fileID: 0}
 --- !u!1 &1292836279
 GameObject:
   m_ObjectHideFlags: 0
@@ -3273,6 +3307,7 @@ GameObject:
   - component: {fileID: 1774240356}
   - component: {fileID: 1774240358}
   - component: {fileID: 1774240357}
+  - component: {fileID: 1774240359}
   m_Layer: 0
   m_Name: JumpHeight
   m_TagString: Untagged
@@ -3340,6 +3375,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1774240355}
   m_CullTransparentMesh: 0
+--- !u!114 &1774240359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774240355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d27905ad72a123543b17a9148fcea2ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  up: {fileID: 1268211235}
+  down: {fileID: 1992919063}
+  left: {fileID: 0}
+  right: {fileID: 0}
 --- !u!1 &1876485806
 GameObject:
   m_ObjectHideFlags: 0
@@ -3635,6 +3686,7 @@ GameObject:
   - component: {fileID: 1992919060}
   - component: {fileID: 1992919062}
   - component: {fileID: 1992919061}
+  - component: {fileID: 1992919063}
   m_Layer: 0
   m_Name: StaggerDuration
   m_TagString: Untagged
@@ -3702,6 +3754,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1992919059}
   m_CullTransparentMesh: 0
+--- !u!114 &1992919063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992919059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10ea1750bc11bc143be2843fbcdf8ebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  up: {fileID: 1774240359}
+  down: {fileID: 0}
+  left: {fileID: 0}
+  right: {fileID: 0}
 --- !u!1 &2039982487
 GameObject:
   m_ObjectHideFlags: 0
@@ -4147,6 +4215,7 @@ MonoBehaviour:
   down: {fileID: 110968075133418991}
   left: {fileID: 0}
   right: {fileID: 0}
+  optionsScreen: {fileID: 266669513}
 --- !u!1 &1159374125889485971
 GameObject:
   m_ObjectHideFlags: 0
