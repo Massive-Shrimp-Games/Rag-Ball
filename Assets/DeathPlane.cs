@@ -8,14 +8,20 @@ public class DeathPlane : MonoBehaviour
     
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log("Something hit me");
-        if (collision.gameObject.tag == "CollisionLayer")
+        if (collision.gameObject.tag == "Grabbable")
         {
-            Debug.Log("Player entered a goal");
             Player player = collision.GetComponent<BaseObject>().player;
-            
-            if (player == null) return;
+            if (player == null)
+            {
+                return;
+            }
+
             player.transform.position = respawnPoint.transform.position;
         }
+        else
+        {
+            Debug.Log("Hello, Im being grabbed");
+        }
+        
     }
 }
