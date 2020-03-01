@@ -7,10 +7,8 @@ public class Stamina : MonoBehaviour
     public delegate void StaminaChange(int player, int stamina);
     public event StaminaChange OnStaminaChange;
 
-    [SerializeField] private int maxCharge;
-    [SerializeField] private int jumpCost;
-    [SerializeField] private int dashCost;
-    [SerializeField] private float rechargeTime;
+    [SerializeField] private int maxCharge = 5;
+    private float rechargeTime = OptionsMenu.staminaRegenRate;
  
     public int charges { get; private set; }
 

@@ -420,7 +420,6 @@ TrailRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1107,7 +1106,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1212,7 +1210,6 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1928,7 +1925,6 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2240,6 +2236,7 @@ GameObject:
   - component: {fileID: 3679290696171531612}
   - component: {fileID: 383636676227164208}
   - component: {fileID: 9199070168674078336}
+  - component: {fileID: 6576041561242193136}
   m_Layer: 15
   m_Name: Player
   m_TagString: Player
@@ -2295,39 +2292,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9ab87fa0ca31e34fb23e370249b436f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNumber: 0
+  color: 0
+  playerSpeed: 200
   dashForce: 8000
   jumpForce: 12000
   directThrowForce: 20000
+  directThrowDirection: {fileID: 1463392894389788678}
   arcThrowForce: 8000
+  arcThrowDirection: {fileID: 1463392894371477786}
   staggerTime: 4
-  playerSpeed: 200
   staggerCharges: 0
   staggerMaxCharge: 0
   staggerDashCharge: 0
   staggerJumpCharge: 0
   isThrown: 0
   canJump: 0
-  isLanded: 0
+  isDropped: 0
   dashing: 0
   staggered: 0
   dashVelocityMinimum: 6
   staggerCheck: {fileID: 7426943625875570347}
   grabCheckCollider: {fileID: 4010641574527136018}
   grabPos: {fileID: 6876865634196861810}
-  directThrowDirection: {fileID: 1463392894389788678}
-  arcThrowDirection: {fileID: 1463392894371477786}
+  collisionTrigger: {fileID: 7565254737649259438}
   grabbing: {fileID: 0}
   staggerStars: {fileID: 2110709679184220633}
-  collisionTrigger: {fileID: 7565254737649259438}
+  size: 1
   lineSegment: 10
   layer:
     serializedVersion: 2
     m_Bits: 0
   fallMultiplier: 60
   jumpMultiplier: 12
-  playerNumber: 0
-  size: 1
-  color: 0
 --- !u!54 &9199070168674078336
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2344,6 +2341,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6576041561242193136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3679290696171531610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edca3ade181e61643972255989a1b0a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxCharge: 5
 --- !u!1 &3867065261903754116
 GameObject:
   m_ObjectHideFlags: 0
@@ -3187,7 +3197,6 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -3336,7 +3345,6 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -3528,6 +3536,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 68953021133953271}
     m_Modifications:
+    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
+        type: 3}
+      propertyPath: m_Name
+      value: RagdollTrail
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8130124753009482852, guid: 46cda7ba68426ef49b2bbd958eeec03a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3583,16 +3601,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
-        type: 3}
-      propertyPath: m_Name
-      value: RagdollTrail
-      objectReference: {fileID: 0}
-    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46cda7ba68426ef49b2bbd958eeec03a, type: 3}
 --- !u!4 &1378363881667528155 stripped
@@ -3608,6 +3616,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3679290694193894674}
     m_Modifications:
+    - target: {fileID: 7154583340518013978, guid: 0ef678bbdb1bd184e82c9661e8b2c0ab,
+        type: 3}
+      propertyPath: m_Name
+      value: LineRenderer
+      objectReference: {fileID: 0}
     - target: {fileID: 2606533489033805280, guid: 0ef678bbdb1bd184e82c9661e8b2c0ab,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3662,11 +3675,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7154583340518013978, guid: 0ef678bbdb1bd184e82c9661e8b2c0ab,
-        type: 3}
-      propertyPath: m_Name
-      value: LineRenderer
       objectReference: {fileID: 0}
     - target: {fileID: 5152641253197324077, guid: 0ef678bbdb1bd184e82c9661e8b2c0ab,
         type: 3}
