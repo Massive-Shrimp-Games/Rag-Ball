@@ -33,9 +33,6 @@ public class RagOfTheHill : MonoBehaviour
             if (playerTimers[b.player.playerNumber] >= 0.0f)
             {
                 playerTimers[b.player.playerNumber] -= Time.deltaTime;
-                //int min = Mathf.FloorToInt(playerTimers[b.player.playerNumber] / 60);
-                //int sec = Mathf.FloorToInt(playerTimers[b.player.playerNumber] % 60);
-
             }
             if (playerTimers[b.player.playerNumber] <= 0.0f)
             {

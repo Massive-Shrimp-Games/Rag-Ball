@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ROTHManager : MonoBehaviour
 {
-    [SerializeField] private int[] scores;
+    public int[] scores;
     [SerializeField] private Player[] players;
     [SerializeField] private List<GameObject> UILocations;
     [SerializeField] private GameObject UIPrefab;
@@ -42,10 +42,6 @@ public class ROTHManager : MonoBehaviour
             //instantiates UIS based on number of players and assigns to the locations //NOTE: WILL THROW ERROR IF MORE PLAYERS THAN STAMINA POSITIONS
             UIS[index] = Instantiate(UIPrefab, UILocations[index].transform.position, Quaternion.identity, canvasParent.transform);
         }
-    }
-    void Update()
-    {
-
     }
     public void OnDestroy()
     {
