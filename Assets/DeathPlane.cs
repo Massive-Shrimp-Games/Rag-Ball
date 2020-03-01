@@ -5,12 +5,15 @@ using UnityEngine;
 public class DeathPlane : MonoBehaviour
 {
     public Transform respawnPoint;
-    
-    private void OnTriggerEnter(Collider collision)
+    private GameObject player;
+
+    public void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "Grabbable")
+        if (other.gameObject.tag == "Grabbable")
         {
-            Player player = collision.GetComponent<BaseObject>().player;
+            Debug.Log("Respawn Me!!!");
+            player = other.transform.parent.gameObject;
+            Debug.Log(player);
             if (player == null)
             {
                 return;

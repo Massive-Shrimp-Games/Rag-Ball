@@ -29,16 +29,8 @@ public class Dynamic_Cam : MonoBehaviour
 		{
 			targets.Add(player.GetChild(0).GetComponent<Player>().hips.transform);
 		}
+        
 	}
-
-    public void Update()
-    {
-        if (transform.position.y > 14.95f)
-        {
-
-        }
-    }
-
 
     public void LateUpdate()
 	{
