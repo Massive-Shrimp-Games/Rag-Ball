@@ -18,6 +18,8 @@ public class Controller : MonoBehaviour
     public event InputEventHandler _OnNavigate;
     public event InputEventHandler _OnConfirm;
     public event InputEventHandler _OnReturn;
+    public event InputEventHandler _OnHoldDirectThrow;
+    public event InputEventHandler _OnHoldArcThrow;
 
     private void OnMove(InputValue inputValue)
     {
@@ -57,6 +59,16 @@ public class Controller : MonoBehaviour
     private void OnDirectThrow(InputValue inputValue)
     {
         _OnDirectThrow?.Invoke(inputValue);
+    }
+
+    private void OnHoldDirectThrow(InputValue inputValue)
+    {
+        _OnHoldDirectThrow?.Invoke(inputValue);
+    }
+
+    private void OnHoldArcThrow(InputValue inputValue)
+    {
+        _OnHoldArcThrow?.Invoke(inputValue);
     }
 
     private void OnStaggerSelf(InputValue inputValue)

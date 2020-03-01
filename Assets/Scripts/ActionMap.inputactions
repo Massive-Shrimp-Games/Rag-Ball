@@ -76,6 +76,22 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "HoldArcThrow",
+                    "type": "Button",
+                    "id": "ab1d3917-fff6-486d-9587-5c466c27a6f4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "HoldDirectThrow",
+                    "type": "Button",
+                    "id": "aa9d7a52-6970-44d3-8646-86ff6aaf7e20",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -237,7 +253,7 @@
                     "name": "",
                     "id": "ffad2369-72f3-4997-b1f1-6c354de94aac",
                     "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
+                    "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "ArcThrow",
@@ -259,7 +275,7 @@
                     "name": "",
                     "id": "754b425d-8cb3-41f4-be92-9606a0779dce",
                     "path": "<Gamepad>/leftShoulder",
-                    "interactions": "",
+                    "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "DirectThrow",
@@ -318,6 +334,28 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "JumpRelease",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7c51e5c3-0dfd-4170-88b1-a7d7e5e21308",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "HoldArcThrow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "53673de0-ea6e-4a10-8024-40b08075be28",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "HoldDirectThrow",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

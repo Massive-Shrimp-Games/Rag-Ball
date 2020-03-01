@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class OptionsButton : Button
 {
+    public GameObject optionsScreen;
+
     public override void Select(PlayerCursor cursor)
     {
-        Debug.Log("Button Options");
+        optionsScreen.SetActive(true);
+        cursor.currentMenuItem = optionsScreen.transform.GetChild(1).GetComponent<StaminaRegenSlider>();
+        cursor.MoveToCurrentMenuItem();
     }
 }

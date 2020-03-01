@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class ControlsButton : Button
 {
+    public GameObject controlsImage;
     public override void Select(PlayerCursor cursor)
     {
-        Debug.Log("Button Controls");
+        controlsImage.SetActive(true);
+        controlsImage.transform.SetAsLastSibling();
+        cursor.UnmapNavigationControls();
     }
 }
