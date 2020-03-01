@@ -14,61 +14,30 @@ public class Stamina : MonoBehaviour
  
     public int charges { get; private set; }
 
-    private Queue<Player.StaminaAbility> cooldowns;
-    private bool isEmptying;
-
     private void Awake()
     {
         charges = maxCharge;
-        isEmptying = false;
-        cooldowns = new Queue<Player.StaminaAbility>();
-    }
-
-    private void Update() {
-        //print(charges);
-        print(cooldowns.Count);
     }
 
     // isEmptying isn't letting anything ge
-    private void EmptyQueue(int playerNumber) {
-        // One source -- if this is already emptying, don't touch it
-        if (isEmptying) { return; }
-        isEmptying = true;
+    private IEnumerator StartCooldown(int playerNumber, float abilityStartTime) {
+        float replenishAt = abilityStartTime + rechargeTime;
+        yield return new WaitUntil(() => Time.time > replenishAt);
         
-        while (cooldowns.Peek() != null) {
-            print("In the while loop!");
-            // Wait for stamina recharge time and regain stamina
-            StartCoroutine("WaitCooldownTimer");
-            
-            Player.StaminaAbility cd = cooldowns.Dequeue();
-            int cost = (cd == Player.StaminaAbility.Jump) ? jumpCost : dashCost;
-            charges += cost;
-            OnStaminaChange(playerNumber, charges);
-        }
-
-        isEmptying = false;
+        charges++;
+        OnStaminaChange(playerNumber, charges);        
     }
 
-    public void AddCooldown(Player.StaminaAbility playerAbility, int playerNumber) {
+    public void AddCooldown(int playerNumber) {
         // Deplete stamina charges
-        int cost = (playerAbility == Player.StaminaAbility.Jump) ? jumpCost : dashCost;
-        charges -= cost;
+        charges--;
         OnStaminaChange(playerNumber, charges);
 
-        // Add cooldown, even if the queue is currently emptying itself
-        cooldowns.Enqueue(playerAbility);
-
         // Immediately start cooldown timer
-        EmptyQueue(playerNumber);
+        StartCoroutine(StartCooldown(playerNumber, Time.time));
     }
 
-    public bool CanAfford(Player.StaminaAbility playerAbility) {
-        int cost = (playerAbility == Player.StaminaAbility.Jump) ? jumpCost : dashCost;
-        return charges >= cost;
-    }
-
-    private IEnumerator WaitCooldownTimer()
-    {
-        yield return new WaitForSeconds(rechargeTime);
+    public bool CanAfford() {
+        return charges > 0;
     }
 }

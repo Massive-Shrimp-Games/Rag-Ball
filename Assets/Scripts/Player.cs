@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     public Stamina stamina { get; private set;}
-    public enum StaminaAbility { Jump, Dash };
 
     [SerializeField] private float playerSpeed = 200f;
     [SerializeField] private float dashForce; // Set in editor
@@ -271,13 +270,13 @@ public class Player : MonoBehaviour
 
     private void OnJump(InputValue inputValue)
     {
-        if (canJump && stamina.CanAfford(StaminaAbility.Jump) && hips.tag != "Grabbed")
+        if (canJump && stamina.CanAfford() && hips.tag != "Grabbed")
         {
             aIsPressed = true;
             canJump = false;
             Vector3 boostDir = hips.transform.up;
             hipsRigidBody.AddForce(boostDir * jumpForce);
-            stamina.AddCooldown(StaminaAbility.Jump, playerNumber);
+            stamina.AddCooldown(playerNumber);
         }
     }
 
@@ -290,11 +289,11 @@ public class Player : MonoBehaviour
 
     private void OnDash(InputValue inputValue)
     {
-        if (stamina.CanAfford(StaminaAbility.Dash) && hips.tag != "Grabbed")
+        if (stamina.CanAfford() && hips.tag != "Grabbed")
         {
             Vector3 boostDir = hips.transform.forward;
             hipsRigidBody.AddForce(boostDir * dashForce);
-            stamina.AddCooldown(StaminaAbility.Dash, playerNumber);
+            stamina.AddCooldown(playerNumber);
         }
     }
 
