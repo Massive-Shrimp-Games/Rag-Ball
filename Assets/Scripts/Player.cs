@@ -12,6 +12,8 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class Player : MonoBehaviour
 {
+    public Stamina stamina { get; private set;}
+    
     #region Variables
 
     // Team and Player
@@ -23,12 +25,6 @@ public class Player : MonoBehaviour
     // Movement
     public float playerSpeed;                                           // How fast the player walks
     private Vector2 movement;                                           // Which direction the player is walking
-
-
-    // Exertion
-    public delegate void Exert(int player, int stamina);                // ???
-    public event Exert OnPlayerExertion;                                // ???
-
 
     // Special Abilities
     [SerializeField] private float dashForce = OptionsMenu.dashSpeed;   // How Hard to Dash; Set in editor
@@ -52,13 +48,6 @@ public class Player : MonoBehaviour
     public int staggerMaxCharge;                                        // 
     public int staggerDashCharge;                                       // 
     public int staggerJumpCharge;                                       // ???
-
-
-    // Stamina Costs
-    private const int StaminaMaxCharge = 5;                             // Max stamina player can hold
-    private const int StaminaDashCharge = 1;                            // How much a dash costs
-    private const int StaminaJumpCharge = 1;                            // How much a jump costs
-    private float StaminaRechargeTime = OptionsMenu.staminaRegenRate;   // how quickly we regain stamina
 
 
     // Airborne Variables
@@ -111,7 +100,6 @@ public class Player : MonoBehaviour
     private LineRenderer lineVisual;                                // What draws the line
     public LayerMask layer;                                         // Which layer the line is displayed on
 
-
     //Jump Variables
     [SerializeField] private float fallMultiplier;                  // When the player has reached the top of their arc, fall faster
     [SerializeField] private float jumpMultiplier;                  // Before the player has reached the top of their arc, fall slower
@@ -147,6 +135,7 @@ public class Player : MonoBehaviour
         trailRenderer = hips.GetComponent<TrailRenderer>();
         lineVisual = hips.transform.parent.parent.GetChild(2).GetChild(1).gameObject.GetComponent<LineRenderer>();
         AssignMaterial();
+        stamina = GetComponent<Stamina>();
 
         // Statuses
         staggerCheck.OnStaggerSelf += StaggerSelf;
@@ -159,68 +148,40 @@ public class Player : MonoBehaviour
     /// </summary>
     void Start()
     {
-        // Duplicate Case
-        if (Game.Instance == null) return;      // if the preload scene hasn't been loaded
-        MapControls();                          // if the preload scene HAS loaded, get the controls
+        if (Game.Instance == null) return; // if the preload scene hasn't been loaded
+        MapControls();
 
-        // Stamina Setup
-        staggerMaxCharge = 5;
-        staggerCharges = staggerMaxCharge;      // Max out the player staggers on Spawn
-        staggerDashCharge = 1;
-        staggerJumpCharge = 1;
-        //staminaCharges = StaminaMaxCharge;
-
-        // Body Setup
-        hips = transform.GetChild(1).GetChild(0).gameObject;                                //set reference to player's hips
-        hipsRigidBody = hips.GetComponent<Rigidbody>();                                     //Get Rigidbody for testing stun
-        animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>();        //set reference to player's animator
+        hips = transform.GetChild(1).GetChild(0).gameObject; //set reference to player's hips
+        hipsRigidBody = hips.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
+        animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
         hipsCollider = hips.GetComponent<Collider>();
 
-        // Special Effects
         trailRenderer = transform.GetChild(1).GetChild(0).GetComponent<TrailRenderer>();
 
-        // Movement
-        canJump = false;                        // Wait until player hits the floor to jump
-        dashing = false;                        // Player not stun others on spawn fall
-        grabbing = null;                        // player not holding anyone else
-        isRecharging = false;                   // Player starts fully charged
-        hasStartedRecharging = false;           // Player starts fully charged
+        canJump = false;
+        dashing = false;
+        grabbing = null;
     }
-
 
     /// <summary>
     /// Checks if Jumping, Dashing, Jumping, beingThrown, and oter Active Statuses are in Effect
     /// </summary>
     private void Update()
     {
-        UpdateHeld();                           // Prevent grabbed objects from falling
-
-        // Update the status of whether the player can jump or not
-        bool leftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;     // Need to fetch these objects everytime, for unknown reasons
+        UpdateHeld();
+        bool leftFoot = hips.transform.Find("thigh.L/shin.L/foot.L").GetComponent<MagicSlipper>().touching;
         bool rightFoot = hips.transform.Find("thigh.R/shin.R/foot.R").GetComponent<MagicSlipper>().touching;
         canJump = leftFoot || rightFoot;
 
-        // Special Effects
         staggerStars.transform.Rotate(staggerStars.transform.up, 1f);
+        Move();
+        JumpPhysics();
+        UpdateThrown();
 
-        // Movement Effects
-        Move();                                 // ???
-        JumpPhysics();                          // Apply sharp falling on player
-        UpdateThrown();                         // Can the player move again/stop being a projectile?
-
-        // Once done recovering, see if player needs more stamina
-        if (isRecharging == false && hasStartedRecharging == true){
-            StartCoroutine(rechargeStamina());
-        }
-
-        // Find the forward direction of the player
         float determinDirection = Vector3.Dot(hipsRigidBody.velocity.normalized, hips.transform.forward);
         float determineMagnitue = hipsRigidBody.velocity.magnitude;
-
-        // Is the player dashing?
         dashing = (hipsRigidBody.velocity.magnitude > dashVelocityMinimum) && (Mathf.Abs(determinDirection) > .5);
-        
-        // render the Trailing Line
+
         if (dashing)
         {
             trailRenderer.enabled = true;
@@ -230,8 +191,7 @@ public class Player : MonoBehaviour
             trailRenderer.enabled = false;
         }
     }
-
-
+    
     private void OnDestroy()
     {
         UnMapControls();            // Reset the controls on this object so another can listen to them
@@ -290,7 +250,6 @@ public class Player : MonoBehaviour
             transform.Find("Pivot/Character_DirectionalCircle_Red_01_0").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/Character_DirectionalCircle_Blue_01");
         }
     }
-
 
     /// <summary>
     /// Controls decay of player as they fall, called from UPDATE
@@ -410,7 +369,6 @@ public class Player : MonoBehaviour
     /// <returns></returns>
     private void OptionsChange()
     {
-        StaminaRechargeTime = OptionsMenu.staminaRegenRate;
         dashForce = OptionsMenu.dashSpeed;
         jumpForce = OptionsMenu.jumpHeight;
         staggerTime = OptionsMenu.staggerDuration;
@@ -480,18 +438,13 @@ public class Player : MonoBehaviour
 
     private void OnJump(InputValue inputValue)
     {
-        if (canJump && staggerCharges >= 0 && hips.tag != "Grabbed")
+        if (canJump && stamina.CanAfford() && hips.tag != "Grabbed")
         {
             aIsPressed = true;
             canJump = false;
             Vector3 boostDir = hips.transform.up;
             hipsRigidBody.AddForce(boostDir * jumpForce);
-            staggerCharges = staggerCharges - staggerJumpCharge;
-            OnPlayerExertion(playerNumber, staggerCharges);
-            if (!hasStartedRecharging)
-            {
-                StartCoroutine(rechargeStamina());
-            }
+            stamina.AddCooldown(playerNumber);
         }
     }
 
@@ -504,16 +457,11 @@ public class Player : MonoBehaviour
 
     private void OnDash(InputValue inputValue)
     {
-        if (staggerCharges >= staggerDashCharge && hips.tag != "Grabbed")
+        if (stamina.CanAfford() && hips.tag != "Grabbed")
         {
             Vector3 boostDir = hips.transform.forward;
             hipsRigidBody.AddForce(boostDir * dashForce);
-            staggerCharges = staggerCharges - staggerDashCharge;
-            OnPlayerExertion(playerNumber,staggerCharges);
-            if(!hasStartedRecharging)
-            {
-                StartCoroutine(rechargeStamina());
-            }
+            stamina.AddCooldown(playerNumber);
         }
     }
 
@@ -727,37 +675,6 @@ public class Player : MonoBehaviour
         staggered = false;
         animator.enabled = true;
         staggerStars.SetActive(false);
-    }
-
-    /// <summary>
-    /// WHY DOES THIS AFFECT STAGGERS?!?!?!?
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator rechargeStamina(){
-        hasStartedRecharging = true;
-        yield return new WaitForSeconds (StaminaRechargeTime);
-        recharger();
-        if(staggerCharges < staggerMaxCharge)
-        {
-            StartCoroutine(rechargeStamina());
-        }
-        else
-        {
-            hasStartedRecharging = false;
-        }
-    }
-
-    /// <summary>
-    /// ???
-    /// </summary>
-    void recharger()
-    {
-        if (staggerCharges < staggerMaxCharge)
-        {
-            staggerCharges++;
-            OnPlayerExertion(playerNumber,staggerCharges);
-        }
-        
     }
 
 

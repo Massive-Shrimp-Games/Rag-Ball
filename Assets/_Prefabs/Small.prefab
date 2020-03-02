@@ -191,6 +191,7 @@ GameObject:
   - component: {fileID: 3497456957624983321}
   - component: {fileID: 6774387264750367331}
   - component: {fileID: 6582401991683237434}
+  - component: {fileID: 2706110313343493617}
   m_Layer: 15
   m_Name: SmallRagdoll
   m_TagString: Player
@@ -246,38 +247,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9ab87fa0ca31e34fb23e370249b436f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNumber: 0
+  color: 0
+  playerSpeed: 250
   dashForce: 5000
   jumpForce: 12000
   directThrowForce: 15000
+  directThrowDirection: {fileID: 9042069887705401004}
   arcThrowForce: 10000
+  arcThrowDirection: {fileID: 1828887986657502809}
   staggerTime: 4
-  playerSpeed: 250
   staggerCharges: 0
   staggerMaxCharge: 0
   staggerDashCharge: 0
   staggerJumpCharge: 0
   isThrown: 0
   canJump: 0
+  isDropped: 0
   dashing: 0
   staggered: 0
   dashVelocityMinimum: 6
   staggerCheck: {fileID: 881053083548078805}
   grabCheckCollider: {fileID: 3647011347342446850}
   grabPos: {fileID: 1981789918045049293}
-  directThrowDirection: {fileID: 9042069887705401004}
-  arcThrowDirection: {fileID: 1828887986657502809}
+  collisionTrigger: {fileID: 1927279694411064079}
   grabbing: {fileID: 0}
   staggerStars: {fileID: 2022658520650986930}
-  collisionTrigger: {fileID: 1927279694411064079}
+  size: 0
   lineSegment: 3
   layer:
     serializedVersion: 2
     m_Bits: 0
   fallMultiplier: 6
   jumpMultiplier: 1.1
-  playerNumber: 0
-  size: 0
-  color: 0
+--- !u!114 &2706110313343493617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491507306222218506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edca3ade181e61643972255989a1b0a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxCharge: 5
 --- !u!1 &584908761311759686
 GameObject:
   m_ObjectHideFlags: 0
