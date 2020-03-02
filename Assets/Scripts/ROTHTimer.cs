@@ -60,6 +60,7 @@ public class ROTHTimer : MonoBehaviour
                 winner = i;
             }
         }
+        winner = winner + 1;
         WinText.text = "Player " + winner.ToString() + " Wins!";
         //WinText.enabled = true;
     }
