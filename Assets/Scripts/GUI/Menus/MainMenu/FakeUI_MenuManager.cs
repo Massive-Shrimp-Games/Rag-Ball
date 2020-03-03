@@ -36,8 +36,11 @@ public class FakeUI_MenuManager : MonoBehaviour
 
     public Text CourtSelectTitle;
     public Text CourtChanger;
-    public Image Court1Img;
-    public Image Court2Img;
+    public Image PlaceholderCourt1Img;
+    public Image PlaceholderCourt2Img;
+    public RawImage UnknownCourtImg;
+    public RawImage RB_Court1Img;
+    public RawImage RoTH_Court1Img;
     public Image FancyNextImg;
     //
     [Space(10)]
@@ -147,27 +150,98 @@ public class FakeUI_MenuManager : MonoBehaviour
             } else{
                 FancyNextImg.color = Color.magenta;
                 CourtSelectTitle.color = Color.black;
-
-                
                  }
 
+            //Check for which menu was picked in previous selection.
 
-            if (REALMENUCourt.text == "Court 1")
+            if (REALMENUGamemode.text == "RagBall")
+            {
+                //Ragball mode.
+                PlaceholderCourt1Img.enabled = false;
+                RoTH_Court1Img.enabled = false;
+                if (REALMENUCourt.text == "Court 1")
                 {
-                CourtChanger.text = REALMENUCourt.text;
-                    Court1Img.enabled = true;
-                    Court2Img.enabled = false;
-                } else if (REALMENUCourt.text == "Court 2")
+                    //Og Court. 
+                    CourtChanger.text = REALMENUCourt.text;
+                    RB_Court1Img.enabled = true;
+                    PlaceholderCourt2Img.enabled = false;
+                    UnknownCourtImg.enabled = false;
+                }
+                else if (REALMENUCourt.text == "Court 2")
                 {
-                CourtChanger.text = REALMENUCourt.text;
-                    Court1Img.enabled = false;
-                    Court2Img.enabled = true;
+                    //Second court (currently placeholder)
+                    CourtChanger.text = REALMENUCourt.text;
+                    RB_Court1Img.enabled = false;
+                    PlaceholderCourt2Img.enabled = true;
+                    UnknownCourtImg.enabled = false;
+                } // so and and so forth... this can be expanded for as many courts are added.
+                else
+                {
+                    CourtChanger.text = REALMENUCourt.text;
+                    UnknownCourtImg.enabled = true;
+                    RB_Court1Img.enabled = false;
+                    PlaceholderCourt2Img.enabled = false;
+                    //If there's no setting in the fake menu manager for a new court, it will display a question mark. :)
+                }
+
+            }
+            else if (REALMENUGamemode.text == "Rag of the Hill")
+            {
+                //RoTH Game mode.
+                PlaceholderCourt1Img.enabled = false;
+                RB_Court1Img.enabled = false;
+                if (REALMENUCourt.text == "Court 1")
+                {
+                    //OG Sandcastle.
+                    CourtChanger.text = REALMENUCourt.text;
+                    RoTH_Court1Img.enabled = true;
+                    PlaceholderCourt2Img.enabled = false;
+                    UnknownCourtImg.enabled = false;
+                }
+                else if (REALMENUCourt.text == "Court 2")
+                {
+                    CourtChanger.text = REALMENUCourt.text;
+                    RoTH_Court1Img.enabled = false;
+                    PlaceholderCourt2Img.enabled = true;
+                    UnknownCourtImg.enabled = false;
                 }
                 else
                 {
-                    Debug.Log("No court image, dumbyoafadjksfdsjkhfgbshydf");
+                    CourtChanger.text = REALMENUCourt.text;
+                    UnknownCourtImg.enabled = true;
+                    RoTH_Court1Img.enabled = false;
+                    PlaceholderCourt2Img.enabled = false;
                 }
             }
+            else
+            {
+                //Capture The Rag, currently. 
+                RoTH_Court1Img.enabled = false;
+                RB_Court1Img.enabled = false;
+                if (REALMENUCourt.text == "Court 1")
+                {
+                    CourtChanger.text = REALMENUCourt.text;
+                    PlaceholderCourt1Img.enabled = true;
+                    PlaceholderCourt2Img.enabled = false;
+                    UnknownCourtImg.enabled = false;
+                }
+                else if (REALMENUCourt.text == "Court 2")
+                {
+                    CourtChanger.text = REALMENUCourt.text;
+                    PlaceholderCourt1Img.enabled = false;
+                    PlaceholderCourt2Img.enabled = true;
+                    UnknownCourtImg.enabled = false;
+                }
+                else
+                {
+                    CourtChanger.text = REALMENUCourt.text;
+                    UnknownCourtImg.enabled = true;
+                    PlaceholderCourt1Img.enabled = false;
+                    PlaceholderCourt2Img.enabled = false;
+                }
+            }
+        }
+            
             //else
             //{
             //Do char Sel checks here. Only necessary if charsel choices come up
