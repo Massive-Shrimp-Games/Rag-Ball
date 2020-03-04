@@ -13,6 +13,8 @@ public class ROTHManager : MonoBehaviour
     [SerializeField] private GameObject canvasParent;
     [SerializeField] public GameObject endCanv;
 
+    [SerializeField] private Material[] mats;
+
     private GameObject[] UIS;
 
     public delegate void Score(int playerNum, int scoreValue);
@@ -40,8 +42,10 @@ public class ROTHManager : MonoBehaviour
         {
             int index = p.playerNumber;
             scores[index] = 0;
+            p.gameObject.transform.GetChild(0).GetComponent<Renderer>().material = mats[index];
             //instantiates UIS based on number of players and assigns to the locations //NOTE: WILL THROW ERROR IF MORE PLAYERS THAN STAMINA POSITIONS
             UIS[index] = Instantiate(UIPrefab, UILocations[index].transform.position, Quaternion.identity, canvasParent.transform);
+
         }
     }
     public void OnDestroy()

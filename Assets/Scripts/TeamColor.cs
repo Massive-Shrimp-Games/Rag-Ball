@@ -1,5 +1,7 @@
 ﻿public enum TeamColor
 {
     Red,
-    Blue
+    Blue,
+    Tan,
+    Purple
 }
