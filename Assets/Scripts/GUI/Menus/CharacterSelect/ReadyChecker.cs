@@ -28,10 +28,10 @@ public class ReadyChecker : MonoBehaviour
                 return;
             }
         }
-        LetsGo(cursor);
+        LetsGo();
     }
 
-    private void LetsGo(CharacterSelectCursor cursor)
+    private void LetsGo()
     {
         if (bannerInstance != null)
             return;
@@ -42,7 +42,13 @@ public class ReadyChecker : MonoBehaviour
         banner.transform.localScale = new Vector3(1.8f,1.8f,1.8f);
         banner.name = "LetsGo";
         bannerInstance = banner;
-        cursor.letsGo = true;
+        foreach (Transform child in transform)
+        {
+            if (child.name.Contains("Cursor"))
+            {
+                child.GetComponent<CharacterSelectCursor>().letsGo = true;
+            }
+        }
     }
 
     private void LetsNot(CharacterSelectCursor cursor)
