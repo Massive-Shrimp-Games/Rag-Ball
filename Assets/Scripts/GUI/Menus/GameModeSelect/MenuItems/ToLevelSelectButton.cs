@@ -5,6 +5,12 @@ public class ToLevelSelectButton : Button
 {
     public override void Select(PlayerCursor cursor)
     {
-        MenuActions.ToLevelSelect();
+        if(GameModeSelect.gameMode == GameMode.Mode.RagOfTheHill)
+        {
+            SceneManager.LoadScene("RagOfTheHill");
+            //MenuActions.ToCharacterSelect();
+        } else {
+            MenuActions.ToLevelSelect();
+        }
     }
 }
