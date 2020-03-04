@@ -1206,6 +1206,11 @@ MonoBehaviour:
     type: 3}
   canvasParent: {fileID: 697025059}
   endCanv: {fileID: 3607736693936858213}
+  mats:
+  - {fileID: 2100000, guid: ea544229d07fcbe4d863dd5e5c78f161, type: 2}
+  - {fileID: 2100000, guid: 93a0c7bb8994421428fa1d941d64be28, type: 2}
+  - {fileID: 2100000, guid: df3fa9e2e22eef242bce6e14b5b8456a, type: 2}
+  - {fileID: 2100000, guid: 11984928e57ee6248bfc5277dd335951, type: 2}
 --- !u!4 &890823712
 Transform:
   m_ObjectHideFlags: 0
@@ -1710,8 +1715,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1353868002}
-  - component: {fileID: 1353868001}
   - component: {fileID: 1353868000}
+  - component: {fileID: 1353868001}
   m_Layer: 0
   m_Name: Players
   m_TagString: Untagged
@@ -1742,18 +1747,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1353867999}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68c01f605633b0d46b5d1ed20a5fea6f, type: 3}
+  m_Script: {fileID: 11500000, guid: a5b674e0912738d4fb1f26803c5134ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smallPrefabber: {fileID: 11400000, guid: 6a2ae7c31a745b744a92510cf434e947, type: 2}
+  smallPrefabber: {fileID: 0}
   mediumPrefabber: {fileID: 11400000, guid: 248eefa651b5f92469e5ca2f6f8596a7, type: 2}
-  largePrefabber: {fileID: 11400000, guid: aaecb4c77c483c04195272dab858b3d4, type: 2}
+  largePrefabber: {fileID: 0}
   spawnPoints:
   - {fileID: 960861413}
   - {fileID: 104431512}
   - {fileID: 1023051468}
   - {fileID: 1566192974}
   parent: {fileID: 1353868002}
+  teamColors: 00000000010000000200000003000000
 --- !u!4 &1353868002
 Transform:
   m_ObjectHideFlags: 0
