@@ -99,8 +99,8 @@ public class FakeUI_MenuManager : MonoBehaviour
             } else if (rt.anchoredPosition.y < -75 && rt.anchoredPosition.y > -400)
             {
                 //Score
-                GMPosition.anchoredPosition3D = new Vector3(-270, -1018, -260);
-                GMPosition.localScale = new Vector3((float)6.697672, (float)6.993937, (float)10.39527);
+                GMPosition.anchoredPosition3D = new Vector3(-300, -1018, -260);
+                GMPosition.localScale = new Vector3((float)4.697672, (float)6.993937, (float)10.39527);
             }
             else
             {
