@@ -89,6 +89,22 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""HoldArcThrow"",
+                    ""type"": ""Button"",
+                    ""id"": ""ab1d3917-fff6-486d-9587-5c466c27a6f4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""HoldDirectThrow"",
+                    ""type"": ""Button"",
+                    ""id"": ""aa9d7a52-6970-44d3-8646-86ff6aaf7e20"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -250,7 +266,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""ffad2369-72f3-4997-b1f1-6c354de94aac"",
                     ""path"": ""<Gamepad>/rightShoulder"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(behavior=1)"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""ArcThrow"",
@@ -272,7 +288,7 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""754b425d-8cb3-41f4-be92-9606a0779dce"",
                     ""path"": ""<Gamepad>/leftShoulder"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(behavior=1)"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""DirectThrow"",
@@ -331,6 +347,28 @@ public class @ActionMap : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""JumpRelease"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7c51e5c3-0dfd-4170-88b1-a7d7e5e21308"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""HoldArcThrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""53673de0-ea6e-4a10-8024-40b08075be28"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""HoldDirectThrow"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -468,6 +506,8 @@ public class @ActionMap : IInputActionCollection, IDisposable
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_JumpRelease = m_Player.FindAction("JumpRelease", throwIfNotFound: true);
+        m_Player_HoldArcThrow = m_Player.FindAction("HoldArcThrow", throwIfNotFound: true);
+        m_Player_HoldDirectThrow = m_Player.FindAction("HoldDirectThrow", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Start = m_Menu.FindAction("Start", throwIfNotFound: true);
@@ -532,6 +572,8 @@ public class @ActionMap : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_JumpRelease;
+    private readonly InputAction m_Player_HoldArcThrow;
+    private readonly InputAction m_Player_HoldDirectThrow;
     public struct PlayerActions
     {
         private @ActionMap m_Wrapper;
@@ -545,6 +587,8 @@ public class @ActionMap : IInputActionCollection, IDisposable
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @JumpRelease => m_Wrapper.m_Player_JumpRelease;
+        public InputAction @HoldArcThrow => m_Wrapper.m_Player_HoldArcThrow;
+        public InputAction @HoldDirectThrow => m_Wrapper.m_Player_HoldDirectThrow;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -581,6 +625,12 @@ public class @ActionMap : IInputActionCollection, IDisposable
                 @JumpRelease.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJumpRelease;
                 @JumpRelease.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJumpRelease;
                 @JumpRelease.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJumpRelease;
+                @HoldArcThrow.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldArcThrow;
+                @HoldArcThrow.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldArcThrow;
+                @HoldArcThrow.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldArcThrow;
+                @HoldDirectThrow.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldDirectThrow;
+                @HoldDirectThrow.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldDirectThrow;
+                @HoldDirectThrow.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldDirectThrow;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -612,6 +662,12 @@ public class @ActionMap : IInputActionCollection, IDisposable
                 @JumpRelease.started += instance.OnJumpRelease;
                 @JumpRelease.performed += instance.OnJumpRelease;
                 @JumpRelease.canceled += instance.OnJumpRelease;
+                @HoldArcThrow.started += instance.OnHoldArcThrow;
+                @HoldArcThrow.performed += instance.OnHoldArcThrow;
+                @HoldArcThrow.canceled += instance.OnHoldArcThrow;
+                @HoldDirectThrow.started += instance.OnHoldDirectThrow;
+                @HoldDirectThrow.performed += instance.OnHoldDirectThrow;
+                @HoldDirectThrow.canceled += instance.OnHoldDirectThrow;
             }
         }
     }
@@ -702,6 +758,8 @@ public class @ActionMap : IInputActionCollection, IDisposable
         void OnDash(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnJumpRelease(InputAction.CallbackContext context);
+        void OnHoldArcThrow(InputAction.CallbackContext context);
+        void OnHoldDirectThrow(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {

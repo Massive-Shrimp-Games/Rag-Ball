@@ -29,6 +29,10 @@ public class DisplayWinState : MonoBehaviour
     public List<GameObject> RedPlayerList = new List<GameObject>();
     public List<GameObject> BluePlayerList = new List<GameObject>();
 
+    public GameObject RestartGameButton;
+    public GameObject BacktoMenuButton;
+    public GameObject Cursor;
+
     public void Start()
     {
         RedWinText.SetActive(false);
@@ -42,6 +46,10 @@ public class DisplayWinState : MonoBehaviour
         TieLeftMidDancer.SetActive(false);
         TieRightMidDancer.SetActive(false);
         TieRightRightDancer.SetActive(false);
+
+        RestartGameButton.SetActive(false);
+        BacktoMenuButton.SetActive(false);
+        Cursor.SetActive(false);
     }
 
     private void SetDancersActive()
@@ -75,27 +83,35 @@ public class DisplayWinState : MonoBehaviour
         GameObject.Find("Stamina_Canvas").SetActive(false);
         GameObject.Find("Main Camera").transform.position = new Vector3(0.55f, 4.79f, 1.21f);
         GameObject.Find("Main Camera").transform.Rotate(-18.372f, 0f, 0f);
-        if (RagballRuleset.redScore >= GameModeSelect.goalLimit && GameModeSelect.goalLimit != 0)
+        RagballRuleset ruleset = GameObject.Find("Ruleset").GetComponent<RagballRuleset>();
+        if (ruleset.redScore >= GameModeSelect.goalLimit && GameModeSelect.goalLimit != 0)
         {
             RedWinText.SetActive(true);
             isWinState = true;
             SetDancersActive();
             RedWin();
         }
-        if (RagballRuleset.blueScore >= GameModeSelect.goalLimit && GameModeSelect.goalLimit != 0)
+        if (ruleset.blueScore >= GameModeSelect.goalLimit && GameModeSelect.goalLimit != 0)
         {
             BlueWinText.SetActive(true);
             isWinState = true;
             SetDancersActive();
             BlueWin();
         }
-        if (RagballRuleset.redScore == RagballRuleset.blueScore)
+        if (ruleset.redScore == ruleset.blueScore)
         {
             TieWinText.SetActive(true);
             isTieState = true;
             SetDancersActive();
             TieWin();
         }
+    }
+
+    public void DisplayButtons()
+    {
+        RestartGameButton.SetActive(true);
+        BacktoMenuButton.SetActive(true);
+        Cursor.SetActive(true);
     }
 
     private void RedWin()

@@ -5,42 +5,55 @@ using UnityEngine;
 
 /// <summary>
 /// Activates and Deactivates a List of GameObjects
-/// https://docs.unity3d.com/ScriptReference/GameObject.SetActive.html
-/// https://docs.unity3d.com/ScriptReference/GameObject-activeSelf.html
-/// https://answers.unity.com/questions/13356/how-can-i-assign-materials-using-c-code.html?_ga=2.257422796.611847350.1580512480-1535617163.1580512480
-/// https://youtu.be/dJB07ZSiW7k (Scripting: Change Material of an Object | Unity Tutorial)
+/// see: https://docs.unity3d.com/ScriptReference/GameObject.SetActive.html
+/// see: https://docs.unity3d.com/ScriptReference/GameObject-activeSelf.html
+/// see: https://answers.unity.com/questions/13356/how-can-i-assign-materials-using-c-code.html?_ga=2.257422796.611847350.1580512480-1535617163.1580512480
+/// see: https://youtu.be/dJB07ZSiW7k (Scripting: Change Material of an Object | Unity Tutorial)
 /// </summary>
 public class LeverToggle : MonoBehaviour
 {
 
     // Activate the Lever
-    [SerializeField] private float triggerSpeedThreshold = 5f;
-    private float incomingSpeed;
+    [SerializeField] private float triggerSpeedThreshold = 5f;          // Speed which we trigger on
+    private float incomingSpeed;                                        // Speed of Object that could trigger us
 
 
     // Message the targets
-    [SerializeField] private List<GameObject> targetObjects = new List<GameObject>();
+    public List<GameObject> targetObjects = new List<GameObject>();     // Where we store objects to activate/deactivate
 
 
     // Change the appearance of the Lever
-    [SerializeField] private List<Material> materials = new List<Material>();
-    [SerializeField] private bool leverState = true;                                       // Controls position of Lever
-    [SerializeField] private MeshRenderer leverRenderer;
-    [SerializeField] private Transform leverTransform;
-    [SerializeField] private int cooldown = 1;  // The cooldown between allowed lever-collisions
-    private bool canToggle = true;              // 
+    [SerializeField] private List<Material> materials = new List<Material>();       // Holds On and Off Material
+    [SerializeField] public bool leverState = true;                                 // Controls position of Lever and activates children -- can be set in script
+    [SerializeField] private MeshRenderer leverRenderer;                            // Where we set the new material
+    [SerializeField] private Transform leverTransform;                              // Control position of lever
+    [SerializeField] private int cooldown = 1;                                      // The cooldown between allowed lever-collisions
+    private bool canToggle = true;                                                  // The boolean which lets us know we can be triggered
 
-
+    /// <summary>
+    /// Sets the initial state of the children and the appearance
+    /// </summary>
     private void Start()
     {
-        leverTransform = GameObject.Find("PinLever_Model_01").transform;
+        leverTransform = this.transform.parent.transform;
         leverRenderer = GameObject.Find("InnerCylinder").GetComponent<MeshRenderer>();
+        
+        // If we start ON
         if(leverState)
         {
-            TriggerActivate();
+            // Set All Children to ON
+            //TriggerActivate();
+
+            // Set the Appearance
+            leverRenderer.sharedMaterial = materials[0];
         }
+        // If we start OFF
         else
         {
+            // Set All Childen to OFF
+            TriggerActivate();
+            
+            // Set the Appearance
             leverRenderer.sharedMaterial = materials[1];
         }
     }

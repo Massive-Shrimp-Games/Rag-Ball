@@ -35,7 +35,6 @@ public class ReadyChecker : MonoBehaviour
     {
         if (bannerInstance != null)
             return;
-        Debug.Log("LetsGo");
         GameObject banner = Instantiate(letsGo);
         banner.transform.SetParent(transform);
         banner.transform.position = transform.position;
