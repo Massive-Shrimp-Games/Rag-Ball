@@ -12,8 +12,6 @@ public class FakeUI_MenuManager : MonoBehaviour
     public Image FakeGMCursor;
     //All rect position placements for cursor:
     private RectTransform GMPosition;
-   
-
     //All game mode canvases.
     public Text gamemodeTitle;
     public GameObject GameModeOne;
@@ -38,7 +36,8 @@ public class FakeUI_MenuManager : MonoBehaviour
     [Space(10)]
     [Header("Level Select Menu Objects")]
     //All level select canvases
-
+    public Image FakeLSCursor;
+    private RectTransform LSPosition;
     public Text CourtSelectTitle;
     public Text CourtChanger;
     public Image PlaceholderCourt1Img;
@@ -46,7 +45,7 @@ public class FakeUI_MenuManager : MonoBehaviour
     public RawImage UnknownCourtImg;
     public RawImage RB_Court1Img;
     public RawImage RoTH_Court1Img;
-    public Image FancyNextImg;
+    public Image FancyNextImg;   
     //
     [Space(10)]
     public Text REALMENUCourt;
@@ -64,9 +63,13 @@ public class FakeUI_MenuManager : MonoBehaviour
         GMPosition = FakeGMCursor.GetComponent<RectTransform>();
         GMPosition.anchoredPosition3D = new Vector3(0, -79, 0);
         GMPosition.localScale = new Vector3((float)8.6241, (float)8.6241, (float)8.6241);
+        //
+        LSPosition = FakeLSCursor.GetComponent<RectTransform>();
+        LSPosition.anchoredPosition3D = new Vector3(394, 354, 217);
+        LSPosition.localScale = new Vector3((float)7.850089, (float)7.850089, (float)7.850089);
+         
 
-     
-    }
+}
 
     // Update is called once per frame
     void Update()
@@ -75,8 +78,10 @@ public class FakeUI_MenuManager : MonoBehaviour
         CurrentMenuNumber = cameraAnimationChecker.GetInteger("MenuType");
         if (CurrentMenuNumber == 0)
         {
+            //GAMEMODE
             RectTransform rt = GMCursor.GetComponent<RectTransform>();
-
+            FakeGMCursor.enabled = true;
+            FakeLSCursor.enabled = false;
             //get those pogchamps ready
             if (rt.anchoredPosition.y > 0)
             {
@@ -138,16 +143,18 @@ public class FakeUI_MenuManager : MonoBehaviour
         else if (CurrentMenuNumber == 1)
         {
             //Do level select checks here.
+            FakeLSCursor.enabled = true;
+            FakeGMCursor.enabled = false;
             RectTransform rt = LVCursor.GetComponent<RectTransform>();
             if (rt.anchoredPosition.y > -420)
             {
                 //court
-                CourtSelectTitle.color = Color.magenta;
-                FancyNextImg.color = Color.white;
+                LSPosition.anchoredPosition3D = new Vector3(394, 354, 217);
+                LSPosition.localScale = new Vector3((float)7.850089, (float)7.850089, (float)7.850089);
             } else{
-                FancyNextImg.color = Color.magenta;
-                CourtSelectTitle.color = Color.black;
-                 }
+                LSPosition.anchoredPosition3D = new Vector3(756, -272, 192);
+                LSPosition.localScale = new Vector3((float)5.473788, (float)7.850089, (float)7.850089);
+            }
 
             //Check for which menu was picked in previous selection.
 
