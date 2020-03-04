@@ -137,8 +137,22 @@ public class FakeUI_MenuManager : MonoBehaviour
             }
             //do your checks for Game Mode Selects Here.
             //Use to test: gamemodeTitle.text = REALMENUGamemode.text;
-            TimerChanger.text = REALMENUTime.text;
-            ScoreChanger.text = REALMENUScore.text;
+            if (REALMENUTime.text == "No Limit" || REALMENUTime.text == "No Limits")
+            {
+                TimerChanger.text = "--:--";
+            }
+            else
+            {
+                TimerChanger.text = (REALMENUTime.text + ":00");
+            }
+           if (REALMENUScore.text == "No Limit"){
+                ScoreChanger.text = "X";
+            }
+            else
+            {
+                ScoreChanger.text = REALMENUScore.text;
+            }
+            
         }
         else if (CurrentMenuNumber == 1)
         {
