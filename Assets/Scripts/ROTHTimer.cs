@@ -62,6 +62,8 @@ public class ROTHTimer : MonoBehaviour
         }
         winner = winner + 1;
         WinText.text = "Player " + winner.ToString() + " Wins!";
+        manager.endCanv.SetActive(true);
+        ActionMapEvent.InMenu?.Invoke();
         //WinText.enabled = true;
     }
 }

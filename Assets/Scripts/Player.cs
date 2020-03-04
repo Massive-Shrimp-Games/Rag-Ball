@@ -88,9 +88,6 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject grabbing;                   // What we are grabbing
 
 
-    public GameObject hips;
-    private Animator animator;
-    private Rigidbody hipsRigidBody;
     // Special Effects
     [SerializeField] private GameObject staggerStars;               // TODO Instead of this, have a particle handler
     private TrailRenderer trailRenderer;                            // Renders a trail after the player
@@ -317,44 +314,6 @@ public class Player : MonoBehaviour
         }
     }
 
-
-    void Start()
-    {
-        canJump = false;
-
-        if (Game.Instance == null) return; // if the preload scene hasn't been loaded
-        MapControls();
-
-        staggerMaxCharge = 5;
-        staggerCharges = staggerMaxCharge;
-        staggerDashCharge = 1;
-        staggerJumpCharge = 1;
-        //staminaCharges = StaminaMaxCharge;
-
-
-        hips = transform.GetChild(1).GetChild(0).gameObject; //set reference to player's hips
-        hipsRigidBody = hips.GetComponent<Rigidbody>(); //Get Rigidbody for testing stun
-        animator = transform.parent.GetChild(1).gameObject.GetComponent<Animator>(); //set reference to player's animator
-        hipsCollider = hips.GetComponent<Collider>();
-
-        trailRenderer = transform.GetChild(1).GetChild(0).GetComponent<TrailRenderer>();
-
-        
-        dashing = false;
-        grabbing = null;
-        isRecharging = false; 
-        hasStartedRecharging = false;
-
-        // Arm Assignment
-        //armControllerLeft = hips.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(0).gameObject.GetComponent<JointFollowAnimRot>();
-        //armControllerRight = hips.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(1).gameObject.GetComponent<JointFollowAnimRot>();
-    }
-
-    private void OnDestroy()
-    {
-        UnMapControls();
-    }
-    
     private void UpdateHeld()
     {
         if (grabbing != null)
@@ -563,6 +522,9 @@ public class Player : MonoBehaviour
             grabbing.GetComponent<BaseObject>().player.getHips().GetComponent<Rigidbody>().isKinematic = false;
             grabbing = null;
 
+            // DEBUG - DeleteMe
+            //Game.Instance.Controllers.GetController(grabbing.GetComponent<BaseObject>().player.playerNumber).GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
+            //lineVisual.enabled = false;
         }
     }
 

@@ -11,6 +11,7 @@ public class ROTHManager : MonoBehaviour
     [SerializeField] private List<GameObject> UILocations;
     [SerializeField] private GameObject UIPrefab;
     [SerializeField] private GameObject canvasParent;
+    [SerializeField] public GameObject endCanv;
 
     private GameObject[] UIS;
 

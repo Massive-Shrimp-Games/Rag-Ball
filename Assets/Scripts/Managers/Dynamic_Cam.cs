@@ -27,7 +27,7 @@ public class Dynamic_Cam : MonoBehaviour
 		targets = new List<Transform>();
 		foreach (Transform player in GameObject.Find("Players").transform)
 		{
-			targets.Add(player.GetChild(0).GetComponent<Player>().hips.transform);
+			targets.Add(player.GetChild(0).GetComponent<Player>().getHips().transform);
 		}
         
 	}
