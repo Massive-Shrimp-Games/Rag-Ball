@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pipe : MonoBehaviour
 {
-    [SerializeField] private TeamColor color;
+    public TeamColor color;
 
     private RagballRuleset ruleset;
     private ParticleSystem confetti;

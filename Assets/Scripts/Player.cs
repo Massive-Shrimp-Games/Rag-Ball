@@ -445,6 +445,8 @@ public class Player : MonoBehaviour
             Vector3 boostDir = hips.transform.up;
             hipsRigidBody.AddForce(boostDir * jumpForce);
             stamina.AddCooldown(playerNumber);
+            Game.Instance.SFX.PlayAudio("jump");
+
         }
     }
 
@@ -462,6 +464,8 @@ public class Player : MonoBehaviour
             Vector3 boostDir = hips.transform.forward;
             hipsRigidBody.AddForce(boostDir * dashForce);
             stamina.AddCooldown(playerNumber);
+            Game.Instance.SFX.PlayAudio("dash");
+
         }
     }
 
@@ -567,6 +571,8 @@ public class Player : MonoBehaviour
         }
 
         // Render the throwing arc
+        Game.Instance.SFX.PlayAudio("throw");
+
         lineVisual.enabled = false;
         StopCoroutine(renderThrowingLine(arcThrowForceVel, "arc"));
     }
@@ -600,6 +606,7 @@ public class Player : MonoBehaviour
         }
 
         // Render the throwing arc
+        Game.Instance.SFX.PlayAudio("throw");
         lineVisual.enabled = false;
         StopCoroutine(renderThrowingLine(directThrowForceVel, "direct"));
     }
@@ -656,6 +663,7 @@ public class Player : MonoBehaviour
             staggered = true;
             animator.enabled = false;
             staggerStars.SetActive(true);
+             Game.Instance.SFX.PlayAudio("stagger");
             if (grabbing) { OnGrabDrop(null); }
             StartCoroutine("UnStagger");
         }
@@ -673,6 +681,7 @@ public class Player : MonoBehaviour
             Game.Instance.Controllers.GetController(playerNumber).GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
         }
         staggered = false;
+        Game.Instance.SFX.StopSound("stagger");
         animator.enabled = true;
         staggerStars.SetActive(false);
     }
