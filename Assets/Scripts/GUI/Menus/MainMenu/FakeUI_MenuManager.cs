@@ -9,6 +9,11 @@ public class FakeUI_MenuManager : MonoBehaviour
     public Animator cameraAnimationChecker;
     private int CurrentMenuNumber = 0;
     [Header("Game Mode Menu Objects")]
+    public Image FakeGMCursor;
+    //All rect position placements for cursor:
+    private RectTransform GMPosition;
+   
+
     //All game mode canvases.
     public Text gamemodeTitle;
     public GameObject GameModeOne;
@@ -55,8 +60,12 @@ public class FakeUI_MenuManager : MonoBehaviour
     {
         //get all the menuItemManagers
 
+        
+        GMPosition = FakeGMCursor.GetComponent<RectTransform>();
+        GMPosition.anchoredPosition3D = new Vector3(0, -79, 0);
+        GMPosition.localScale = new Vector3((float)8.6241, (float)8.6241, (float)8.6241);
 
-
+     
     }
 
     // Update is called once per frame
@@ -71,40 +80,28 @@ public class FakeUI_MenuManager : MonoBehaviour
             //get those pogchamps ready
             if (rt.anchoredPosition.y > 0)
             {
-                //Gamemode selection
-                gamemodeTitle.color = Color.magenta;
-                //else
-                timerTitle.color = Color.black;
-                scoreTitle.color = Color.black;
-                NextChanger.color = Color.black;
 
+                //Gamemode selection
+                GMPosition.anchoredPosition3D = new Vector3(0, -79, 0);
+                GMPosition.localScale = new Vector3((float)8.6241, (float)8.6241, (float)8.6241);
 
             } else if (rt.anchoredPosition.y < 0 && rt.anchoredPosition.y > -75)
             {
                 //Timer
-                timerTitle.color = Color.magenta;
-                //
-                scoreTitle.color = Color.black;
-                gamemodeTitle.color = Color.black;
-                NextChanger.color = Color.black;
+                GMPosition.anchoredPosition3D = new Vector3(180, -880, -187);
+                GMPosition.localScale = new Vector3((float)5.049587, (float)7.837323, (float)7.837323);
 
             } else if (rt.anchoredPosition.y < -75 && rt.anchoredPosition.y > -400)
             {
                 //Score
-                scoreTitle.color = Color.magenta;
-                //
-                timerTitle.color = Color.black;
-                gamemodeTitle.color = Color.black;
-                NextChanger.color = Color.black;
-
+                GMPosition.anchoredPosition3D = new Vector3(-270, -1018, -260);
+                GMPosition.localScale = new Vector3((float)6.697672, (float)6.993937, (float)10.39527);
             }
             else
             {
-                timerTitle.color = Color.black;
-                gamemodeTitle.color = Color.black;
-                scoreTitle.color = Color.black;
-                NextChanger.color = Color.white;
                 //next
+                GMPosition.anchoredPosition3D = new Vector3(89, -1419, -443);
+                GMPosition.localScale = new Vector3((float)5.206972, (float)8.08639, (float)10.39527);
             }
 
             if (REALMENUGamemode.text == "RagBall")
