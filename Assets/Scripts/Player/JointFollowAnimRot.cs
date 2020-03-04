@@ -1,28 +1,37 @@
-﻿using System.Collections;
+﻿
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JointFollowAnimRot : MonoBehaviour {
 
-	public bool invert;
+/// <summary>
+/// Allows a joint to follow another joint
+/// </summary>
+public class JointFollowAnimRot : MonoBehaviour
+{
 
-	public float torqueForce;
-	public float angularDamping;
-	public float maxForce;
-	public float springForce;
-	public float springDamping;
+	public bool invert;                         // Do we follow regularly, or oppositely?
 
-	public Vector3 targetVel;
+	public float torqueForce;                   // How strongly to follow
+	public float angularDamping;                // How much smoothing to apply
+	public float maxForce;                      // Max force we can exert to follow
+	public float springForce;                   // If we want to limit the activity of the springs
+	public float springDamping;                 // If we want to limit the springs' speed
 
-	public Transform target;
-	private GameObject limb;
-	private JointDrive drive;
-	private SoftJointLimitSpring spring;
-	private ConfigurableJoint joint;
-	private Quaternion startingRotation;
+	public Vector3 targetVel;                   // If we want to set this to another direction
 
-	void Start () {
+	public Transform target;                    // What we want to follow
+	private GameObject limb;                    // ???
+	private JointDrive drive;                   // ???
+	private SoftJointLimitSpring spring;        // OUR spring to use
+	private ConfigurableJoint joint;            // OUR joint to move
+	private Quaternion startingRotation;        // What rotation do we start with?
 
+    private bool doFollow;                      // Are we active or not?
+
+	void Start ()
+    {
 		torqueForce = 500f;
 		angularDamping = 0.0f;
 		maxForce = 500f;
@@ -58,14 +67,49 @@ public class JointFollowAnimRot : MonoBehaviour {
 		joint.zMotion = ConfigurableJointMotion.Locked;
 
 		startingRotation = Quaternion.Inverse(target.localRotation);
+
+        doFollow = true;
 	}
 
-	void LateUpdate () {
-		if (invert) 
-			joint.targetRotation = Quaternion.Inverse(target.localRotation * startingRotation);
-		else
-			joint.targetRotation = target.localRotation * startingRotation;
-	}
+
+    /// <summary>
+    /// 
+    /// </summary>
+	void LateUpdate ()
+    {
+        // If we are actively tring to follow the target
+        if (doFollow)
+        {
+            // If we are following the inverse of the target
+		    if (invert)
+            {
+			    joint.targetRotation = Quaternion.Inverse(target.localRotation * startingRotation);
+            }
+            // If we are following the target regularly
+            else
+            {
+			    joint.targetRotation = target.localRotation * startingRotation;
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// Activates this Joint to Follow the Animator Joint
+    /// </summary>
+    public void DoFollow()
+    {
+        doFollow = true;
+    }
+
+
+    /// <summary>
+    /// Deactivates this Joint to Follow the Animator Joint
+    /// </summary>
+    public void StopFollow()
+    {
+        doFollow = false;
+    }
 
 
 }
