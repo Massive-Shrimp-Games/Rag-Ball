@@ -7,6 +7,6 @@ public class PlayAgainButton : Button
 {
     public override void Select(PlayerCursor cursor)
     {
-        SceneManager.LoadScene("Court");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

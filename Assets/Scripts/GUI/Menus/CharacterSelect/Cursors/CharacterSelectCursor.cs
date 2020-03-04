@@ -19,7 +19,12 @@ public class CharacterSelectCursor : PlayerCursor
     {
         if (letsGo)
         {
-            SceneManager.LoadScene("Court");
+            if(GameModeSelect.gameMode == GameMode.Mode.RagOfTheHill)
+            {
+                SceneManager.LoadScene("RagOfTheHill");
+            } else {
+                SceneManager.LoadScene("Court");
+            }
         } else
         {
             base.OnConfirm(inputValue);
