@@ -32,4 +32,8 @@ public class Audio : MonoBehaviour
             child.GetComponent<AudioSource>().Stop();
         }
     }
+        public void StopSound(string name)
+    {
+        audioSources[name]?.Stop();
+    }
 }

@@ -6,10 +6,10 @@ public class attractionPipe : MonoBehaviour
 {
     public GameObject FunnelPoint;
     [SerializeField] private float magnitude;
-    //public GameObject pipe;
-    //public TeamColor color;
+    public GameObject pipe;
+    public TeamColor color;
 
-    /*private void Start()
+    private void Start()
     {
         pipe = this.transform.parent.gameObject;
         color = pipe.GetComponent<Pipe>().color;
@@ -19,11 +19,11 @@ public class attractionPipe : MonoBehaviour
     {
         
         Debug.Log(col);
-        if (col.tag == "Player")
+        if (col.tag == "Attractor")
         {
-            Debug.Log("It's a boy!");
+            Debug.Log("It's a boy");
             Player player = col.GetComponent<BaseObject>().player;
-            Rigidbody colRigidbody = player.transform.GetChild(1).transform.GetChild(0).transform.GetComponent<Rigidbody>();
+            Rigidbody colRigidbody = col.GetComponent<Rigidbody>();
             if (player == null) return;
             if (player.color == color)
             {
@@ -37,22 +37,9 @@ public class attractionPipe : MonoBehaviour
             }
             else
             {
-                Debug.Log("Hello, Im being grabbed");
+                Debug.Log("Help, I'm not being succed");
             }
         }
         
-    }*/
-        void OnTriggerStay(Collider col)
-    {
-        Rigidbody colRigidbody = col.GetComponent<Rigidbody>();
-
-
-        if (colRigidbody != null)
-        {
-            Vector3 directionDraw = FunnelPoint.transform.position - colRigidbody.position;
-            Vector3 drawForce = directionDraw.normalized * magnitude;
-            colRigidbody.AddForce(drawForce);
-        }
     }
-        
 }

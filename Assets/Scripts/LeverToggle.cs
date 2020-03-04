@@ -28,7 +28,8 @@ public class LeverToggle : MonoBehaviour
     [SerializeField] private MeshRenderer leverRenderer;                            // Where we set the new material
     [SerializeField] private Transform leverTransform;                              // Control position of lever
     [SerializeField] private int cooldown = 1;                                      // The cooldown between allowed lever-collisions
-    private bool canToggle = true;                                                  // The boolean which lets us know we can be triggered
+    private bool canToggle = true;  
+    private bool firstPlay = false;                                                // The boolean which lets us know we can be triggered
 
     /// <summary>
     /// Sets the initial state of the children and the appearance
@@ -95,13 +96,18 @@ public class LeverToggle : MonoBehaviour
         {
             //Debug.Log("thrown to the left");
             leverTransform.Rotate(0, 180, 0);
+            if (firstPlay == true) {Game.Instance.SFX.PlayAudio("switch");}
             leverRenderer.sharedMaterial = materials[0];
+            firstPlay = true;
         }
         else
         {
+            
             //Debug.Log("thrown to the right");
             leverTransform.Rotate(0, 180, 0);
+            if (firstPlay == true) {Game.Instance.SFX.PlayAudio("switch");}
             leverRenderer.sharedMaterial = materials[1];
+            firstPlay = true;
         }
 
         // Toggle all of the objects
