@@ -6,13 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class RagballRuleset : MonoBehaviour
 {
+
     public delegate void Score(GameObject player,int score);
 
-    public event Score OnRedScore;
-    public event Score OnBlueScore;
-
+    // Score Variables
+    [Header("Score Variables")]
     public int redScore = 0;
     public int blueScore = 0;
+    public event Score OnRedScore;
+    public event Score OnBlueScore;
 
     public Transform respawnPoint;
 
@@ -24,7 +26,7 @@ public class RagballRuleset : MonoBehaviour
 
     // Fan Variables
     [Header("Fan Variables")]
-    public bool FanEnabled;
+    public bool FanEnabled = false;
     public GameObject Fan_Spinner;
     public GameObject Fan_Lever;
     private LeverToggle leverToggle;
@@ -32,10 +34,17 @@ public class RagballRuleset : MonoBehaviour
 
     // Pipe Moving Variables
     [Header("Pipe Variables")]
-    public bool pipesMove;
+    public bool pipesMove = false;
     [SerializeField] private GameObject leftPipe;
     [SerializeField] private GameObject rightPipe;
     [SerializeField] private float pipeSpeed = 2;
+
+    // Wall Removal Variables
+    [Header("Wall Removal Variables")]
+    public bool noWalls = false;
+    public GameObject sceneWalls;
+    public GameObject sceneColliders;
+    public GameObject sceneSteps;
 
     private void Start()
     {
@@ -52,6 +61,9 @@ public class RagballRuleset : MonoBehaviour
 
         // Pipe Movement
         EnablePipeMover();
+
+        // Wall Removal
+        RemoveWalls();
 
         //Game.Instance.Music.PlayAudio("game");
     }
@@ -177,6 +189,25 @@ public class RagballRuleset : MonoBehaviour
             rightPipe.GetComponent<PipePingPong>().enabled = true;
             leftPipe.GetComponent<PipePingPong>().SetSpeed(pipeSpeed);
             rightPipe.GetComponent<PipePingPong>().SetSpeed(pipeSpeed);
+        }
+    }
+
+
+    /// <summary>
+    /// Removes all walls and hanging objects, instantiates a DEATHPLANE to catch players
+    /// </summary>
+    private void RemoveWalls()
+    {
+        if(noWalls)
+        {
+            // Remove Walls
+            sceneWalls.SetActive(false);
+
+            // Remove Colliders
+            sceneColliders.SetActive(false);
+
+            // Remove Steps
+            sceneSteps.SetActive(false);
         }
     }
 }

@@ -32,7 +32,8 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.LogFormat("Timer: {0}", timer);
+        // Why is this here?
+        // Debug.LogFormat("Timer: {0}", timer);
         if (timer > 0.0f && canCount)
         {
             timer -= Time.deltaTime;
