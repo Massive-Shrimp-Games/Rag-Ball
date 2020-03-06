@@ -39,6 +39,11 @@ public class PlayerFactory : MonoBehaviour
     private void Start()
     {
         if (Game.Instance == null) return;
+        Init();
+    }
+
+    protected virtual void Init()
+    {
         for (int i = 0; i < Game.Instance.Controllers.Count(); i++) {
             CreatePlayer(i, spawnPoints[i], parent, CharacterSelect.playerSelections[i].color, CharacterSelect.playerSelections[i].size);
         }
