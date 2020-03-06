@@ -44,4 +44,7 @@ public abstract class MenuItem : MonoBehaviour
     abstract public MenuItem Navigate(InputValue inputValue);
     abstract public void Select(PlayerCursor cursor);
     public virtual void updateDisplay() {}
+    public virtual Vector3 localScale() {
+        return Vector3.one;
+    }
 }

@@ -10,6 +10,7 @@ public class FakeUI_MenuManager : MonoBehaviour
     private int CurrentMenuNumber = 0;
     [Header("Game Mode Menu Objects")]
     public Image FakeGMCursor;
+    public PlayerCursor cursor;
     //All rect position placements for cursor:
     private RectTransform GMPosition;
     //All game mode canvases.
@@ -160,15 +161,8 @@ public class FakeUI_MenuManager : MonoBehaviour
             FakeLSCursor.enabled = true;
             FakeGMCursor.enabled = false;
             RectTransform rt = LVCursor.GetComponent<RectTransform>();
-            if (rt.anchoredPosition.y > -420)
-            {
-                //court
-                LSPosition.anchoredPosition3D = new Vector3(394, 354, 217);
-                LSPosition.localScale = new Vector3((float)7.850089, (float)7.850089, (float)7.850089);
-            } else{
-                LSPosition.anchoredPosition3D = new Vector3(756, -272, 192);
-                LSPosition.localScale = new Vector3((float)5.473788, (float)7.850089, (float)7.850089);
-            }
+            LSPosition.localScale = cursor.currentMenuItem.localScale();
+            LSPosition.position = rt.position;
 
             //Check for which menu was picked in previous selection.
 

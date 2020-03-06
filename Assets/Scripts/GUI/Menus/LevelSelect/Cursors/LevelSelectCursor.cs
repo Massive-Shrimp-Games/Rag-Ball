@@ -8,5 +8,5 @@ public class LevelSelectCursor : PlayerCursor
         MenuActions.ToGameModeSelect();
     }
 
-    protected override void OnStart(InputValue inputValue) { }
+    protected override void OnStart(InputValue inputValue) {}
 }

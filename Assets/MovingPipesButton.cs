@@ -23,4 +23,7 @@ public class MovingPipesButton : Button
         }
     }
     public override void updateDisplay() {}
+    public override Vector3 localScale() {
+        return new Vector3(3f, 9f,3f);
+    }
 }
