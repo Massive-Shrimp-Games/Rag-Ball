@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MovingPipesButton : Button
+public class SlippyFloorsButton : Button
 {
     // Start is called before the first frame update
     public Image checkBox;
@@ -14,11 +14,11 @@ public class MovingPipesButton : Button
     public override void Select(PlayerCursor cursor)
     {
         //Set the static to the opposite of what it is
-        LevelSelect.pipesMove = !LevelSelect.pipesMove;
+        LevelSelect.slipperyFloor = !LevelSelect.slipperyFloor;
         updateDisplay();
     }
     public override void updateDisplay() {
-        if(LevelSelect.pipesMove)
+        if(LevelSelect.slipperyFloor)
         {
             checkBox.sprite = turnedOn;
         } else {
