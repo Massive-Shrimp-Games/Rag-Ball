@@ -22,6 +22,21 @@ public class RagballRuleset : MonoBehaviour
     public ParticleSystem RedConfetti;
     public ParticleSystem ExitConfetti;
 
+    // Fan Variables
+    [Header("Fan Variables")]
+    public bool FanEnabled;
+    public GameObject Fan_Spinner;
+    public GameObject Fan_Lever;
+    private LeverToggle leverToggle;
+    public Transform[] spawnPoints;
+
+    // Pipe Moving Variables
+    [Header("Pipe Variables")]
+    public bool pipesMove;
+    [SerializeField] private GameObject leftPipe;
+    [SerializeField] private GameObject rightPipe;
+    [SerializeField] private float pipeSpeed = 2;
+
     private void Start()
     {
         if (Game.Instance == null) return;
@@ -31,6 +46,13 @@ public class RagballRuleset : MonoBehaviour
         transitionAnim.SetBool("Transition", false);
 
         Game.Instance.Music.StopAudio();
+
+        // Fan Presence
+        SpawnFan();
+
+        // Pipe Movement
+        EnablePipeMover();
+
         //Game.Instance.Music.PlayAudio("game");
     }
 
@@ -114,5 +136,47 @@ public class RagballRuleset : MonoBehaviour
     {
         transitionAnim.SetBool("Transition", true);
         
+    }
+
+    /// <summary>
+    /// This spawns a Lever and a Fan, binds the Fan to the Lever, and sets all states to ON
+    /// </summary>
+    private void SpawnFan()
+    {
+        if (FanEnabled)
+        {
+            // Spawn the Fan
+            GameObject fan = Instantiate(Fan_Spinner);
+            // Spawn the Lever
+            GameObject fan_lever = Instantiate(Fan_Lever);
+
+            // Move the fan into position
+            fan.transform.position = spawnPoints[0].position;
+            // Move the lever into position
+            fan_lever.transform.position = spawnPoints[1].position;
+
+            // Find the Lever Toggle
+            leverToggle = fan_lever.transform.GetChild(1).GetComponent<LeverToggle>();
+
+            // set the state of the lever to OFF
+            leverToggle.leverState = false;
+
+            // Add the Fan to the Lever's Children
+            leverToggle.targetObjects.Add(fan.transform.GetChild(0).gameObject);
+        }
+    }
+
+    /// <summary>
+    /// Activates the `PipePingPong.cs` on the Goal Components
+    /// </summary>
+    private void EnablePipeMover()
+    {
+        if (pipesMove)
+        {
+            leftPipe.GetComponent<PipePingPong>().enabled = true;
+            rightPipe.GetComponent<PipePingPong>().enabled = true;
+            leftPipe.GetComponent<PipePingPong>().SetSpeed(pipeSpeed);
+            rightPipe.GetComponent<PipePingPong>().SetSpeed(pipeSpeed);
+        }
     }
 }

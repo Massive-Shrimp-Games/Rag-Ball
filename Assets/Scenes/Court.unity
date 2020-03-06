@@ -1286,6 +1286,18 @@ MonoBehaviour:
   BlueConfetti: {fileID: 2024786991}
   RedConfetti: {fileID: 475136707}
   ExitConfetti: {fileID: 1056471359}
+  FanEnabled: 0
+  Fan_Spinner: {fileID: 9140610119780382002, guid: 35182304c2b8d1741a3a97bde03ac18d,
+    type: 3}
+  Fan_Lever: {fileID: 7099308503011680711, guid: f3fe92962aab7e9429b89d5c3857087d,
+    type: 3}
+  spawnPoints:
+  - {fileID: 2138586666}
+  - {fileID: 1208132567}
+  pipesMove: 1
+  leftPipe: {fileID: 1145197586}
+  rightPipe: {fileID: 1291297202}
+  pipeSpeed: 5
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2123,6 +2135,12 @@ Transform:
   m_Father: {fileID: 1523843289}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!1 &1145197586 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 706245385187639146, guid: dca91cf26c37f2bd5a468491f48d0841,
+    type: 3}
+  m_PrefabInstance: {fileID: 2024786989}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1177399549 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 789791380421709037, guid: f7da6972512cf744587081503b326830,
@@ -2724,25 +2742,20 @@ PrefabInstance:
       propertyPath: color
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7144596214864304299, guid: f8064d293b637ce42830cbb2e021d756,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -11.5
-      objectReference: {fileID: 0}
     - target: {fileID: 2510315224770084125, guid: f8064d293b637ce42830cbb2e021d756,
         type: 3}
       propertyPath: m_Name
       value: FanSpawnPoint
       objectReference: {fileID: 0}
-    - target: {fileID: 2339985153902696361, guid: f8064d293b637ce42830cbb2e021d756,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -16.2
-      objectReference: {fileID: 0}
     - target: {fileID: 6712487172609533415, guid: f8064d293b637ce42830cbb2e021d756,
         type: 3}
       propertyPath: m_Name
       value: LeverSpawnPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 5755962268588251149, guid: f8064d293b637ce42830cbb2e021d756,
+        type: 3}
+      propertyPath: FanEnabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8064d293b637ce42830cbb2e021d756, type: 3}
@@ -3076,6 +3089,12 @@ PrefabInstance:
       objectReference: {fileID: 311634988}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3fe92962aab7e9429b89d5c3857087d, type: 3}
+--- !u!1 &1291297202 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 706245385187639146, guid: dca91cf26c37f2bd5a468491f48d0841,
+    type: 3}
+  m_PrefabInstance: {fileID: 475136705}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1362820249
 GameObject:
   m_ObjectHideFlags: 0
@@ -3200,12 +3219,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1529030658}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10bc045ede21ef64c8d02223e0b51bff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FanEnabled: 1
+  FanEnabled: 0
   Fan_Spinner: {fileID: 9140610119780382002, guid: 35182304c2b8d1741a3a97bde03ac18d,
     type: 3}
   Fan_Lever: {fileID: 7099308503011680711, guid: f3fe92962aab7e9429b89d5c3857087d,
