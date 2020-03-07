@@ -57,6 +57,9 @@ public class RagballRuleset : MonoBehaviour
         Game.Instance.Music.StopAudio();
 
         // Fan Presence
+        FanEnabled = LevelSelect.hasFan;
+        pipesMove = LevelSelect.pipesMove;
+        noWalls = LevelSelect.hasWalls;
         SpawnFan();
 
         // Pipe Movement

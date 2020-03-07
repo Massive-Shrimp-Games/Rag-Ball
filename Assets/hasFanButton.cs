@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SlippyFloorsButton : Button
+public class hasFanButton : Button
 {
     // Start is called before the first frame update
     public Image checkBox;
@@ -14,11 +14,11 @@ public class SlippyFloorsButton : Button
     public override void Select(PlayerCursor cursor)
     {
         //Set the static to the opposite of what it is
-        LevelSelect.slipperyFloor = !LevelSelect.slipperyFloor;
+        LevelSelect.hasFan = !LevelSelect.hasFan;
         updateDisplay();
     }
     public override void updateDisplay() {
-        if(LevelSelect.slipperyFloor)
+        if(LevelSelect.hasFan)
         {
             checkBox.sprite = turnedOn;
         } else {

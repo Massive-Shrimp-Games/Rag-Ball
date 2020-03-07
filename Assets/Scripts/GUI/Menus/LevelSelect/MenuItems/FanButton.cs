@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlipperyFloorButton : Button
+public class FanButton : Button
 {
     public override void Select(PlayerCursor cursor)
     {
-        LevelSelect.slipperyFloor = !LevelSelect.slipperyFloor;
+        LevelSelect.hasFan = !LevelSelect.hasFan;
     }
 }

@@ -1247,7 +1247,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Slippy Floors
+  m_Text: Enable Fan
 --- !u!222 &497581286
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4363,7 +4363,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: has walls
+  m_Text: No Walls
 --- !u!222 &1571056365
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4712,7 +4712,7 @@ GameObject:
   - component: {fileID: 1711603162}
   - component: {fileID: 1711603163}
   m_Layer: 5
-  m_Name: SlippyFloor
+  m_Name: Fan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
