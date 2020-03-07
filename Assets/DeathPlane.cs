@@ -9,17 +9,22 @@ public class DeathPlane : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Grabbable")
+        if ((other.gameObject.tag == "Grabbable") || (other.gameObject.tag == "Player"))
         {
             Debug.Log("Respawn Me!!!");
             player = other.transform.parent.gameObject;
             Debug.Log(player);
-            if (player == null)
+            if (!player)
             {
                 return;
             }
 
-            player.transform.position = respawnPoint.transform.position;
+            // NOT lerp
+            // player.transform.position = respawnPoint.transform.position;
+
+            // Using LERP
+            // https://answers.unity.com/questions/478307/im-using-translate-but-want-to-use-lerp-c.html
+            player.transform.position = Vector3.Lerp(player.transform.position, respawnPoint.transform.position, 1f);
         }
         else
         {
