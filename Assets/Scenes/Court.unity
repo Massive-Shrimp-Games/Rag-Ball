@@ -1615,11 +1615,11 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 2138586666}
   - {fileID: 1208132567}
-  pipesMove: 1
+  pipesMove: 0
   leftPipe: {fileID: 1145197586}
   rightPipe: {fileID: 1291297202}
   pipeSpeed: 5
-  noWalls: 1
+  noWalls: 0
   sceneWalls: {fileID: 650319801}
   sceneColliders: {fileID: 814098642}
   sceneSteps: {fileID: 1784462258}
@@ -1927,6 +1927,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3082285046352375766, guid: 35182304c2b8d1741a3a97bde03ac18d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9140610119780382029, guid: 35182304c2b8d1741a3a97bde03ac18d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1980,11 +1985,6 @@ PrefabInstance:
     - target: {fileID: 9140610119780382029, guid: 35182304c2b8d1741a3a97bde03ac18d,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3082285046352375766, guid: 35182304c2b8d1741a3a97bde03ac18d,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2705,6 +2705,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7210966286642950211, guid: f8064d293b637ce42830cbb2e021d756,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7210966287003530263, guid: f8064d293b637ce42830cbb2e021d756,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7210966285840519976, guid: f8064d293b637ce42830cbb2e021d756,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2766,16 +2776,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7210966286040429735, guid: f8064d293b637ce42830cbb2e021d756,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7210966286642950211, guid: f8064d293b637ce42830cbb2e021d756,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7210966287003530263, guid: f8064d293b637ce42830cbb2e021d756,
         type: 3}
       propertyPath: m_IsActive
       value: 1
