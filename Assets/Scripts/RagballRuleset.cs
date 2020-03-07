@@ -6,13 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class RagballRuleset : MonoBehaviour
 {
+
     public delegate void Score(GameObject player,int score);
 
-    public event Score OnRedScore;
-    public event Score OnBlueScore;
-
+    // Score Variables
+    [Header("Score Variables")]
     public int redScore = 0;
     public int blueScore = 0;
+    public event Score OnRedScore;
+    public event Score OnBlueScore;
 
     public Transform respawnPoint;
 
@@ -21,6 +23,28 @@ public class RagballRuleset : MonoBehaviour
     public ParticleSystem BlueConfetti;
     public ParticleSystem RedConfetti;
     public ParticleSystem ExitConfetti;
+
+    // Fan Variables
+    [Header("Fan Variables")]
+    public bool FanEnabled = false;
+    public GameObject Fan_Spinner;
+    public GameObject Fan_Lever;
+    private LeverToggle leverToggle;
+    public Transform[] spawnPoints;
+
+    // Pipe Moving Variables
+    [Header("Pipe Variables")]
+    public bool pipesMove = false;
+    [SerializeField] private GameObject leftPipe;
+    [SerializeField] private GameObject rightPipe;
+    [SerializeField] private float pipeSpeed = 2;
+
+    // Wall Removal Variables
+    [Header("Wall Removal Variables")]
+    public bool noWalls = false;
+    public GameObject sceneWalls;
+    public GameObject sceneColliders;
+    public GameObject sceneSteps;
 
     private void Start()
     {
@@ -31,6 +55,16 @@ public class RagballRuleset : MonoBehaviour
         transitionAnim.SetBool("Transition", false);
 
         Game.Instance.Music.StopAudio();
+
+        // Fan Presence
+        SpawnFan();
+
+        // Pipe Movement
+        EnablePipeMover();
+
+        // Wall Removal
+        RemoveWalls();
+
         //Game.Instance.Music.PlayAudio("game");
     }
 
@@ -114,5 +148,66 @@ public class RagballRuleset : MonoBehaviour
     {
         transitionAnim.SetBool("Transition", true);
         
+    }
+
+    /// <summary>
+    /// This spawns a Lever and a Fan, binds the Fan to the Lever, and sets all states to ON
+    /// </summary>
+    private void SpawnFan()
+    {
+        if (FanEnabled)
+        {
+            // Spawn the Fan
+            GameObject fan = Instantiate(Fan_Spinner);
+            // Spawn the Lever
+            GameObject fan_lever = Instantiate(Fan_Lever);
+
+            // Move the fan into position
+            fan.transform.position = spawnPoints[0].position;
+            // Move the lever into position
+            fan_lever.transform.position = spawnPoints[1].position;
+
+            // Find the Lever Toggle
+            leverToggle = fan_lever.transform.GetChild(1).GetComponent<LeverToggle>();
+
+            // set the state of the lever to OFF
+            leverToggle.leverState = false;
+
+            // Add the Fan to the Lever's Children
+            leverToggle.targetObjects.Add(fan.transform.GetChild(0).gameObject);
+        }
+    }
+
+    /// <summary>
+    /// Activates the `PipePingPong.cs` on the Goal Components
+    /// </summary>
+    private void EnablePipeMover()
+    {
+        if (pipesMove)
+        {
+            leftPipe.GetComponent<PipePingPong>().enabled = true;
+            rightPipe.GetComponent<PipePingPong>().enabled = true;
+            leftPipe.GetComponent<PipePingPong>().SetSpeed(pipeSpeed);
+            rightPipe.GetComponent<PipePingPong>().SetSpeed(pipeSpeed);
+        }
+    }
+
+
+    /// <summary>
+    /// Removes all walls and hanging objects, instantiates a DEATHPLANE to catch players
+    /// </summary>
+    private void RemoveWalls()
+    {
+        if(noWalls)
+        {
+            // Remove Walls
+            sceneWalls.SetActive(false);
+
+            // Remove Colliders
+            sceneColliders.SetActive(false);
+
+            // Remove Steps
+            sceneSteps.SetActive(false);
+        }
     }
 }
