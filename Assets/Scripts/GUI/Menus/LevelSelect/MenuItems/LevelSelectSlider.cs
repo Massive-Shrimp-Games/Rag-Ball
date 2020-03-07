@@ -1,4 +1,5 @@
 ﻿using UnityEngine.InputSystem;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class LevelSelectSlider : HorizontalSlider
@@ -25,5 +26,8 @@ public class LevelSelectSlider : HorizontalSlider
             transform.GetChild(1).GetComponent<Text>().text = "Court 1";
         else if (LevelSelect.level == GameLevel.Level.Court2)
             transform.GetChild(1).GetComponent<Text>().text = "Court 2";
+    }
+    public override Vector3 localScale() {
+        return new Vector3(7.850089f, 7.850089f, 7.850089f);
     }
 }
