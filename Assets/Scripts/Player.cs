@@ -183,8 +183,15 @@ public class Player : MonoBehaviour
             ArrowArc.GetComponent<SpriteRenderer>().sprite = BlueArrow;
         }
         ROTHScoreObject.GetComponent<TextMeshPro>().text = "0";
-        if(GameModeSelect.gameMode == GameMode.Mode.RagOfTheHill)
-            ROTHScoreObject.SetActive(true);
+        ROTHScoreObject.SetActive(true);
+        if(color == TeamColor.Red)
+        {
+            ROTHScoreObject.GetComponent<TextMeshPro>().color = Color.red;
+        } else
+        {
+            ROTHScoreObject.GetComponent<TextMeshPro>().color = Color.cyan;
+        }
+        ROTHScoreObject.GetComponent<TextMeshPro>().text = "P" + playerNumber;
     }
 
     /// <summary>
@@ -222,7 +229,7 @@ public class Player : MonoBehaviour
     public void updateScore(int score)
     {
         ROTHScore = score;
-        ROTHScoreObject.GetComponent<TextMeshPro>().text = ROTHScore.ToString();
+        ROTHScoreObject.GetComponent<TextMeshPro>().text = "P" + playerNumber + ": " + ROTHScore.ToString();
     }
     private void OnDestroy()
     {
