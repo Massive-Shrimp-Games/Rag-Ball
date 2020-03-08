@@ -19,7 +19,14 @@ public class Player : MonoBehaviour
     // Team and Player
     public int playerNumber = 0;                                        // The number of the player's controller (from input)
     public TeamColor color;                                             // Which Goal to Score; Which Color to Display
-    private Controller controller;                                      // Get Input from ActionMap and Transfer it to the player
+    private Controller controller;          
+    
+    //Arrow
+    [SerializeField] private Sprite BlueArrow;
+    [SerializeField] private Sprite RedArrow;
+    [SerializeField] private GameObject Arrow;
+    [SerializeField] private GameObject ArrowArc;
+                                                                       // Get Input from ActionMap and Transfer it to the player
 
 
     // Movement
@@ -161,6 +168,16 @@ public class Player : MonoBehaviour
         canJump = false;
         dashing = false;
         grabbing = null;
+
+        if(color == TeamColor.Red)
+        {
+            Arrow.GetComponent<SpriteRenderer>().sprite = RedArrow;
+            ArrowArc.GetComponent<SpriteRenderer>().sprite = RedArrow;
+        } else if (color == TeamColor.Blue)
+        {
+            Arrow.GetComponent<SpriteRenderer>().sprite = BlueArrow;
+            ArrowArc.GetComponent<SpriteRenderer>().sprite = BlueArrow;
+        }
     }
 
     /// <summary>
@@ -701,13 +718,22 @@ public class Player : MonoBehaviour
     private IEnumerator renderThrowingLine(Vector3 throwForce, string throwType){
         while(grabbing)
         {
-            if (throwType == "direct") {throwForce = directThrowForce * directThrowDirection.forward;}
-            if (throwType == "arc") {throwForce = arcThrowForce * arcThrowDirection.forward;}
-            LaunchProjectile(throwForce); 
+            Vector3 angle = Arrow.transform.forward;
+            if (throwType == "direct") {
+                Arrow.SetActive(true);
+                ArrowArc.SetActive(false);
+            }
+            if (throwType == "arc") {
+                ArrowArc.SetActive(true);
+                Arrow.SetActive(false);
+            }
+            //LaunchProjectile(throwForce); 
             yield return new WaitForSeconds (1/60f);
         }
+        Arrow.SetActive(false);
+        ArrowArc.SetActive(false);
         StopCoroutine(renderThrowingLine(throwForce, throwType));
-        lineVisual.enabled = false;
+        //lineVisual.enabled = false;
     }
 
 
