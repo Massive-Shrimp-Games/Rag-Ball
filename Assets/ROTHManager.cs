@@ -34,6 +34,7 @@ public class ROTHManager : MonoBehaviour
         OnScore += addScore;
         ActionMapEvent.InGameplay?.Invoke();
         players = FindObjectsOfType<Player>();
+        Player[] temp = new Player[players.Length];
         UIS = new GameObject[players.Length];
         scores = new int[players.Length];
         UILocations = canvasParent.GetComponent<StaminaUI>().getLocations();
@@ -42,11 +43,13 @@ public class ROTHManager : MonoBehaviour
         {
             int index = p.playerNumber;
             scores[index] = 0;
+            temp[p.playerNumber] = p;
             p.gameObject.transform.GetChild(0).GetComponent<Renderer>().material = mats[index];
             //instantiates UIS based on number of players and assigns to the locations //NOTE: WILL THROW ERROR IF MORE PLAYERS THAN STAMINA POSITIONS
-            UIS[index] = Instantiate(UIPrefab, UILocations[index].transform.position, Quaternion.identity, canvasParent.transform);
+            //UIS[index] = Instantiate(UIPrefab, UILocations[index].transform.position, Quaternion.identity, canvasParent.transform);
 
         }
+        players = temp;
     }
     public void OnDestroy()
     {
@@ -55,6 +58,7 @@ public class ROTHManager : MonoBehaviour
     public void addScore(int pNum, int value)
     {
         scores[pNum] += value;
-        UIS[pNum].transform.GetComponentInChildren<TextMeshProUGUI>().text = scores[pNum].ToString();
+        players[pNum].updateScore(scores[pNum]);
+        //UIS[pNum].transform.GetComponentInChildren<TextMeshProUGUI>().text = scores[pNum].ToString();
     }
 }
