@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 
 /// <summary>
@@ -83,6 +84,9 @@ public class Player : MonoBehaviour
     private bool isRecharging;                                      // Is the player currently gaining stamina?
     private bool hasStartedRecharging;                              // Did the player start gaining stamina?
 
+    //score for ROTH (gross but effective)
+    private int ROTHScore = 0;
+    [SerializeField] GameObject ROTHScoreObject;
 
     // Menus
     private SpriteRenderer sp_cursor;                               // What we draw on screen
@@ -178,6 +182,9 @@ public class Player : MonoBehaviour
             Arrow.GetComponent<SpriteRenderer>().sprite = BlueArrow;
             ArrowArc.GetComponent<SpriteRenderer>().sprite = BlueArrow;
         }
+        ROTHScoreObject.GetComponent<TextMeshPro>().text = "0";
+        if(GameModeSelect.gameMode == GameMode.Mode.RagOfTheHill)
+            ROTHScoreObject.SetActive(true);
     }
 
     /// <summary>
@@ -207,8 +214,16 @@ public class Player : MonoBehaviour
         {
             trailRenderer.enabled = false;
         }
+        if(ROTHScoreObject.active)
+        {
+            ROTHScoreObject.transform.eulerAngles = Vector3.zero;
+        }
     }
-    
+    public void updateScore(int score)
+    {
+        ROTHScore = score;
+        ROTHScoreObject.GetComponent<TextMeshPro>().text = ROTHScore.ToString();
+    }
     private void OnDestroy()
     {
         UnMapControls();            // Reset the controls on this object so another can listen to them
