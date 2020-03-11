@@ -144,7 +144,7 @@ public class Player : MonoBehaviour
 
         // Special Effects
         trailRenderer = hips.GetComponent<TrailRenderer>();
-        lineVisual = hips.transform.parent.parent.GetChild(2).GetChild(1).gameObject.GetComponent<LineRenderer>();
+        //lineVisual = hips.transform.parent.parent.GetChild(2).GetChild(1).gameObject.GetComponent<LineRenderer>();
         AssignMaterial();
         stamina = GetComponent<Stamina>();
 
