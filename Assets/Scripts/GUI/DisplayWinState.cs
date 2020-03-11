@@ -31,6 +31,7 @@ public class DisplayWinState : MonoBehaviour
 
     public GameObject RestartGameButton;
     public GameObject BacktoMenuButton;
+    public GameObject CreditsButton;
     public GameObject Cursor;
 
     public void Start()
@@ -49,6 +50,7 @@ public class DisplayWinState : MonoBehaviour
 
         RestartGameButton.SetActive(false);
         BacktoMenuButton.SetActive(false);
+        CreditsButton.SetActive(false);
         Cursor.SetActive(false);
     }
 
@@ -111,6 +113,7 @@ public class DisplayWinState : MonoBehaviour
     {
         RestartGameButton.SetActive(true);
         BacktoMenuButton.SetActive(true);
+        CreditsButton.SetActive(true);
         Cursor.SetActive(true);
     }
 

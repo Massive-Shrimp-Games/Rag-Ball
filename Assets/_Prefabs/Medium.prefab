@@ -2472,7 +2472,7 @@ GameObject:
   - component: {fileID: 5496535931709627459}
   - component: {fileID: 7107845635592737848}
   - component: {fileID: 2528073972409360071}
-  m_Layer: 15
+  m_Layer: 5
   m_Name: ROTHScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4016,16 +4016,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 68953021133953271}
     m_Modifications:
-    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
-        type: 3}
-      propertyPath: m_Name
-      value: RagdollTrail
-      objectReference: {fileID: 0}
-    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8130124753009482852, guid: 46cda7ba68426ef49b2bbd958eeec03a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4079,6 +4069,16 @@ PrefabInstance:
     - target: {fileID: 8130124753009482852, guid: 46cda7ba68426ef49b2bbd958eeec03a,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
+        type: 3}
+      propertyPath: m_Name
+      value: RagdollTrail
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130124753009482874, guid: 46cda7ba68426ef49b2bbd958eeec03a,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
