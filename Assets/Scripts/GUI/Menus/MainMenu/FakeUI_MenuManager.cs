@@ -147,7 +147,7 @@ public class FakeUI_MenuManager : MonoBehaviour
                 TimerChanger.text = (REALMENUTime.text + ":00");
             }
            if (REALMENUScore.text == "No Limit"){
-                ScoreChanger.text = "X";
+                ScoreChanger.text = "∞";
             }
             else
             {
