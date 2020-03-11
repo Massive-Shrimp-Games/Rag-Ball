@@ -8275,7 +8275,9 @@ PrefabInstance:
     - target: {fileID: 2388746426371163213, guid: e8094ead0b1bfe04c9fc0cb60007e503,
         type: 3}
       propertyPath: m_Text
-      value: Capture The Rag
+      value: 'Capture The Rag
+
+        (Coming soon!)'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8094ead0b1bfe04c9fc0cb60007e503, type: 3}
