@@ -43,6 +43,7 @@ public class RagballRuleset : MonoBehaviour
     [Header("Wall Removal Variables")]
     public bool noWalls = false;
     public GameObject sceneWalls;
+    public GameObject sceneWallsForNoWallsChoice; 
     public GameObject sceneColliders;
     public GameObject sceneSteps;
 
@@ -211,6 +212,11 @@ public class RagballRuleset : MonoBehaviour
 
             // Remove Steps
             sceneSteps.SetActive(false);
+
+            sceneWallsForNoWallsChoice.SetActive(true); 
+        }
+        else{
+            sceneWallsForNoWallsChoice.SetActive(false); 
         }
     }
 }
