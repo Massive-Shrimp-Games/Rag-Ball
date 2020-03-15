@@ -612,7 +612,7 @@ public class Player : MonoBehaviour
         // Render the throwing arc
         Game.Instance.SFX.PlayAudio("throw");
 
-        lineVisual.enabled = false;
+        //lineVisual.enabled = false;
         StopCoroutine(renderThrowingLine(arcThrowForceVel, "arc"));
     }
 
@@ -646,7 +646,7 @@ public class Player : MonoBehaviour
 
         // Render the throwing arc
         Game.Instance.SFX.PlayAudio("throw");
-        lineVisual.enabled = false;
+        //lineVisual.enabled = false;
         StopCoroutine(renderThrowingLine(directThrowForceVel, "direct"));
     }
 
@@ -658,9 +658,9 @@ public class Player : MonoBehaviour
     {
         //Makes line renderer stuff
         directThrowForceVel = directThrowForce * directThrowDirection.forward;
-        lineVisual.enabled = true;
+        //lineVisual.enabled = true;
         if (grabbing) { StartCoroutine(renderThrowingLine(directThrowForceVel, "direct")); }
-        else { lineVisual.enabled = false; }
+        //else { lineVisual.enabled = false; }
     }
 
     /// <summary>
@@ -670,10 +670,10 @@ public class Player : MonoBehaviour
     void OnHoldArcThrow(InputValue inputValue)
     {
         //Makes line renderer stuff 
-        lineVisual.enabled = true;
+        //lineVisual.enabled = true;
         arcThrowForceVel = arcThrowForce * arcThrowDirection.forward;
         if (grabbing) { StartCoroutine(renderThrowingLine(arcThrowForceVel, "arc")); }
-        else { lineVisual.enabled = false; }
+        //else { lineVisual.enabled = false; }
     }
 
 
@@ -742,6 +742,7 @@ public class Player : MonoBehaviour
         {
             Vector3 angle = Arrow.transform.forward;
             if (throwType == "direct") {
+                Debug.Log("DirectThrow");
                 Arrow.SetActive(true);
                 ArrowArc.SetActive(false);
             }
@@ -762,7 +763,6 @@ public class Player : MonoBehaviour
     void LaunchProjectile(Vector3 throwVelocity)
     {
             Vector3 vo = CalculateVelocity(CalculateEndpoint(throwVelocity), grabPos.position, 1f);
-            Visualize(vo);
     }
 
     Vector3 CalculateEndpoint(Vector3 initVelo){
@@ -772,24 +772,6 @@ public class Player : MonoBehaviour
         //Vector3 spotWhereItHits = new Vector3(initVelo.x*.001f , 0f, initVelo.z*.001f); 
         Vector3 spotWhereItHits = new Vector3(initVelo.x*.001f , initVelo.y*.001f, initVelo.z*.0001f); 
         return spotWhereItHits;
-    }
-
-    void Visualize(Vector3 vo)
-    {
-        /*Make raycast
-        See when raycast hits collider
-        Put cursor/marker there
-        calculate line
-        */ 
-        for (int i = 0; i < lineSegment; i++)
-        {
-            Vector3 pos = CalculatePosInTime(vo, i / (float)lineSegment);
-            if (i >= lineVisual.positionCount){
-                lineVisual.positionCount = i+1; 
-            }
-            
-            lineVisual.SetPosition(i, pos);
-        }
     }
 
     Vector3 CalculateVelocity(Vector3 target, Vector3 origin, float time)
