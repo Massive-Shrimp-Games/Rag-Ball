@@ -16,6 +16,7 @@ public class ROTHTimer : MonoBehaviour
     private float timer;
     public bool canCount = true;
     private bool doOnce = false;
+    public bool usingTimer = false;
     [SerializeField] private ROTHManager manager;
 
 
@@ -23,6 +24,8 @@ public class ROTHTimer : MonoBehaviour
     {
         timer = GameModeSelect.timeLimit;
         timer = (timer * 60);
+        if(timer > 0.0f)
+            usingTimer = true;
     }
 
     // Update is called once per frame
@@ -37,7 +40,7 @@ public class ROTHTimer : MonoBehaviour
             TimerText.text = min.ToString("00") + " : " + sec.ToString("00");
         }
 
-        else if (timer <= 0.0f && !doOnce)
+        else if (timer <= 0.0f && usingTimer && !doOnce)
         {
             Debug.Log("Timer <= 0");
             doOnce = true;
