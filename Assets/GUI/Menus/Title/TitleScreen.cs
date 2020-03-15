@@ -43,6 +43,7 @@ public class TitleScreen : MonoBehaviour
 
     private void OnStart(InputValue inputValue)
     {
+        Game.Instance.Music.StopAudio();
         SceneManager.LoadScene("MainMenu");
     }
 
