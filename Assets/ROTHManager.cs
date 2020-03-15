@@ -26,6 +26,9 @@ public class ROTHManager : MonoBehaviour
     {
         if (Game.Instance == null) return;
         StartCoroutine("WaitForStart");
+
+        // Stop any incoming music (BackGround Music plays automatically)
+        Game.Instance.Music.StopAudio();
     }
     IEnumerator WaitForStart()
     {
