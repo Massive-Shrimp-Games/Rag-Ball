@@ -51,18 +51,19 @@ public class Pipe : MonoBehaviour
         if (collision.gameObject.tag == "Grabbable")
         {
             Debug.Log("Player entered a goal");
-            Player player = collision.GetComponent<BaseObject>().player;
-            if (player == null) return;
-            if (player.color == color)
+            BaseObject baseObject = collision.GetComponent<BaseObject>();
+            if (baseObject == null) return;
+            Player player = baseObject.player;
+            if (player != null && player.color == color)
             {
                 if (color == TeamColor.Red)
                 {
                     Debug.Log("player has same color");
-                    ruleset.BlueScore(player.transform.gameObject);
+                    ruleset.BlueScore(player.gameObject);
                 }
                 else
                 {
-                    ruleset.RedScore(player.transform.gameObject);
+                    ruleset.RedScore(player.gameObject);
                 }
                 confetti.Play();
             }
