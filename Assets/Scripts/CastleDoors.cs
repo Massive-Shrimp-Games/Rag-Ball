@@ -9,15 +9,10 @@ public class CastleDoors : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Grabbable")
+        BaseObject p = other.GetComponent<BaseObject>();
+        if (p)
         {
-            Debug.Log("Respawn Me!!!");
-            player = other.transform.parent.gameObject;
-            Debug.Log(player);
-            if (player == null)
-            {
-                return;
-            }
+            player = p.player.getHips();
 
             player.transform.position = DoorPoints[Random.Range(0,3)].transform.position;
             player.transform.rotation = DoorPoints[0].transform.rotation;
