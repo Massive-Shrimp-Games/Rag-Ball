@@ -144,7 +144,7 @@ public class Player : MonoBehaviour
 
         // Special Effects
         trailRenderer = hips.GetComponent<TrailRenderer>();
-        lineVisual = hips.transform.parent.parent.GetChild(2).GetChild(1).gameObject.GetComponent<LineRenderer>();
+        //lineVisual = hips.transform.parent.parent.GetChild(2).GetChild(1).gameObject.GetComponent<LineRenderer>();
         AssignMaterial();
         stamina = GetComponent<Stamina>();
 
@@ -191,7 +191,7 @@ public class Player : MonoBehaviour
         {
             ROTHScoreObject.GetComponent<TextMeshPro>().color = Color.cyan;
         }
-        ROTHScoreObject.GetComponent<TextMeshPro>().text = "P" + (playerNumber+1);
+        ROTHScoreObject.GetComponent<TextMeshPro>().text = "P" + (playerNumber + 1);
     }
 
     /// <summary>
@@ -229,7 +229,7 @@ public class Player : MonoBehaviour
     public void updateScore(int score)
     {
         ROTHScore = score;
-        ROTHScoreObject.GetComponent<TextMeshPro>().text = "P" + (playerNumber+1) + ": " + ROTHScore.ToString();
+        ROTHScoreObject.GetComponent<TextMeshPro>().text = "P" + (playerNumber + 1) + ": " + ROTHScore.ToString();
     }
     private void OnDestroy()
     {
