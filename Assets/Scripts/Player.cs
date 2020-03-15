@@ -191,7 +191,7 @@ public class Player : MonoBehaviour
         {
             ROTHScoreObject.GetComponent<TextMeshPro>().color = Color.cyan;
         }
-        ROTHScoreObject.GetComponent<TextMeshPro>().text = "P" + playerNumber;
+        ROTHScoreObject.GetComponent<TextMeshPro>().text = "P" + (playerNumber+1);
     }
 
     /// <summary>
@@ -229,7 +229,7 @@ public class Player : MonoBehaviour
     public void updateScore(int score)
     {
         ROTHScore = score;
-        ROTHScoreObject.GetComponent<TextMeshPro>().text = "P" + playerNumber + ": " + ROTHScore.ToString();
+        ROTHScoreObject.GetComponent<TextMeshPro>().text = "P" + (playerNumber+1) + ": " + ROTHScore.ToString();
     }
     private void OnDestroy()
     {
