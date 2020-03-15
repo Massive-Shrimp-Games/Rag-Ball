@@ -19,16 +19,20 @@ public class CharacterSelectCursor : PlayerCursor
     {
         if (letsGo)
         {
-            if(GameModeSelect.gameMode == GameMode.Mode.RagOfTheHill)
+            if (GameModeSelect.gameMode == GameMode.Mode.RagOfTheHill)
             {
                 SceneManager.LoadScene("RagOfTheHill");
-            } else {
+            }
+            else
+            {
                 SceneManager.LoadScene("Court");
             }
-        } else
+        }
+        else
         {
             base.OnConfirm(inputValue);
             CharacterSelect.playerSelectionEvent?.Invoke(this);
+            GetComponent<Image>().color = Color.magenta;
         }
     }
 
@@ -42,6 +46,8 @@ public class CharacterSelectCursor : PlayerCursor
         {
             hasControl = true;
             CharacterSelect.playerSelectionEvent?.Invoke(this);
+            GetComponent<Image>().color = Color.white;
+
         }
     }
 
