@@ -20,7 +20,7 @@ public class MenuControl : MonoBehaviour
         currentMenu = MenuType.GameModeSelect;
         MapCameraActions();
         ppVol = gameObject.GetComponent<PostProcessVolume>();
-        ppVol.profile.TryGetSettings(out depthLayer);   
+        ppVol.profile.TryGetSettings(out depthLayer);  
     }
 
     private void OnDestroy()

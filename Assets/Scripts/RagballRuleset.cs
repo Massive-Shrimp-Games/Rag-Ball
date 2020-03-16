@@ -96,14 +96,14 @@ public class RagballRuleset : MonoBehaviour
     {
         Player p = player.GetComponent<Player>();
         if (p == null) return;
-        p.getHips().transform.position = respawnPoint.transform.position;
+        p.movePlayer(respawnPoint.transform);
     }
 
     private void AddBlueScore(GameObject player, int score)
     {
         Player p = player.GetComponent<Player>();
         if (p == null) return;
-        p.getHips().transform.position = respawnPoint.transform.position;
+        p.movePlayer(respawnPoint.transform);
     }
 
     private void Update()
