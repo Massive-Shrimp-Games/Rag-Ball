@@ -13,11 +13,11 @@ public class DeathPlane : MonoBehaviour
         if (p != null)
         {
             Debug.Log("Respawn Me!!!");
-            player = p.player.getHips();
+            //player = p.player.getHips();
 
 
             // NOT lerp
-            player.transform.position = respawnPoint.transform.position;
+            p.player.movePlayer(respawnPoint.transform);
 
             // Using LERP
             // https://answers.unity.com/questions/478307/im-using-translate-but-want-to-use-lerp-c.html
