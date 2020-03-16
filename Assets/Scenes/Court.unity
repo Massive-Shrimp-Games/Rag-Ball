@@ -2064,7 +2064,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: ddd7eeec429963e46b4e6a26584d87f8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fec213394814d264dab8b8503606cb19, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3267,6 +3267,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7210966286642950211, guid: f8064d293b637ce42830cbb2e021d756,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7210966287003530263, guid: f8064d293b637ce42830cbb2e021d756,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7210966285840519976, guid: f8064d293b637ce42830cbb2e021d756,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3328,16 +3338,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7210966286040429735, guid: f8064d293b637ce42830cbb2e021d756,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7210966286642950211, guid: f8064d293b637ce42830cbb2e021d756,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7210966287003530263, guid: f8064d293b637ce42830cbb2e021d756,
         type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -3880,16 +3880,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.33017847
       objectReference: {fileID: 0}
-    - target: {fileID: 6712487172609533415, guid: f8064d293b637ce42830cbb2e021d756,
-        type: 3}
-      propertyPath: m_Name
-      value: LeverSpawnPoint
-      objectReference: {fileID: 0}
-    - target: {fileID: 2510315224770084125, guid: f8064d293b637ce42830cbb2e021d756,
-        type: 3}
-      propertyPath: m_Name
-      value: FanSpawnPoint
-      objectReference: {fileID: 0}
     - target: {fileID: 8853141555378878544, guid: f8064d293b637ce42830cbb2e021d756,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -3904,6 +3894,16 @@ PrefabInstance:
         type: 3}
       propertyPath: color
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2510315224770084125, guid: f8064d293b637ce42830cbb2e021d756,
+        type: 3}
+      propertyPath: m_Name
+      value: FanSpawnPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 6712487172609533415, guid: f8064d293b637ce42830cbb2e021d756,
+        type: 3}
+      propertyPath: m_Name
+      value: LeverSpawnPoint
       objectReference: {fileID: 0}
     - target: {fileID: 5755962268588251149, guid: f8064d293b637ce42830cbb2e021d756,
         type: 3}
