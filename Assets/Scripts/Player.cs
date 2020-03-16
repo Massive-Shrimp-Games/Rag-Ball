@@ -231,6 +231,16 @@ public class Player : MonoBehaviour
         ROTHScore = score;
         ROTHScoreObject.GetComponent<TextMeshPro>().text = "P" + (playerNumber + 1) + ": " + ROTHScore.ToString();
     }
+    public void movePlayer(Transform p)
+    {
+        hips.transform.position = p.position;
+        hips.transform.rotation = p.rotation;
+        foreach(Rigidbody rb in gameObject.GetComponentsInChildren<Rigidbody>())
+        {
+            rb.velocity = Vector3.zero;
+        }
+
+    }
     private void OnDestroy()
     {
         UnMapControls();            // Reset the controls on this object so another can listen to them
